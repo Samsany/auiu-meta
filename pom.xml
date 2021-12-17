@@ -8,7 +8,7 @@
         <version>2.6.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.samphanie</groupId>
+    <groupId>com.auiucloud</groupId>
     <artifactId>auiu-meta</artifactId>
     <version>1.0.0_beta</version>
     <name>auiu-meta</name>
