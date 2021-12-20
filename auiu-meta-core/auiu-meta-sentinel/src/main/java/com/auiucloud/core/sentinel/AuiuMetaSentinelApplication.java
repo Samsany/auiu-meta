@@ -3,6 +3,9 @@ package com.auiucloud.core.sentinel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author dries
+ */
 @SpringBootApplication
 public class AuiuMetaSentinelApplication {
 
