@@ -41,8 +41,7 @@
     </scm>
 
     <properties>
-        <auiumeta.core.version>1.0.0_beta</auiumeta.core.version>
-        <java.version>11</java.version>
+        <auiumeta.core.version>1.0.1</auiumeta.core.version>
 
         <spring.boot.version>2.6.1</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
@@ -64,6 +63,83 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- AUIU-META 基础包 -->
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-common</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-database</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-mybatis</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-security</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-validator</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-oss</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-file</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-sms</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-redis</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-rabbit</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-web</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-cloud</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-seata</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-sentinel</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auiucloud</groupId>
+                <artifactId>auiu-meta-feign</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+
             <!-- 微服务基础包 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

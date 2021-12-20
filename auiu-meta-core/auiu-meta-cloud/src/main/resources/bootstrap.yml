@@ -1,0 +1,34 @@
+spring:
+  profiles:
+    active: @spring.active@
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+
+  cloud:
+    nacos:
+      config:
+        namespace: @config.namespace@
+        server-addr: @config.server-addr@
+        group: @config.group@
+        file-extension: yaml
+        # prefix: mate
+      discovery:
+        namespace: @config.namespace@
+        server-addr: @config.server-addr@
+        watch:
+          enabled: false
+    sentinel:
+      # ????sentinel
+      enabled: true
+      filter:
+        enabled: true
+      # ??Sentinel??????
+      eager: true
+      transport:
+        #port: @sentinel.port@
+        dashboard: @sentinel.dashboard@
+
+feign:
+  sentinel:
+    enabled: true

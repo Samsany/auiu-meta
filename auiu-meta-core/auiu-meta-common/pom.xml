@@ -8,22 +8,22 @@
         <version>1.0.1</version>
     </parent>
 
-    <artifactId>auiu-meta-cloud</artifactId>
+    <artifactId>auiu-meta-common</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <scope>provided</scope>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId></groupId>-->
-<!--            <artifactId></artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -1,17 +1,13 @@
-package com.auiucloud.cloud;
+package com.auiucloud.core.mybatis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author dries
- * @date 2021/12/17
- */
 @SpringBootApplication
-public class AuiuMetaCloudApplication {
+public class AuiuMetaMybatisApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuiuMetaCloudApplication.class, args);
+        SpringApplication.run(AuiuMetaMybatisApplication.class, args);
     }
 
 }

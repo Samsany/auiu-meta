@@ -36,7 +36,21 @@
 
     <modules>
         <module>auiu-meta-dependencies</module>
+        <module>auiu-meta-common</module>
+        <module>auiu-meta-database</module>
+        <module>auiu-meta-mybatis</module>
+        <module>auiu-meta-security</module>
+        <module>auiu-meta-validator</module>
+        <module>auiu-meta-oss</module>
+        <module>auiu-meta-file</module>
+        <module>auiu-meta-sms</module>
+        <module>auiu-meta-redis</module>
+        <module>auiu-meta-rabbit</module>
+        <module>auiu-meta-web</module>
         <module>auiu-meta-cloud</module>
+        <module>auiu-meta-seata</module>
+        <module>auiu-meta-sentinel</module>
+        <module>auiu-meta-feign</module>
     </modules>
 
     <properties>
@@ -186,4 +200,22 @@
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active>dev</spring.active>
+                <config.server-addr>127.0.0.1:8848</config.server-addr>
+                <config.namespace />
+                <config.group>DEFAULT_GROUP</config.group>
+                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
+                <sentinel.port>8719</sentinel.port>
+                <sentinel.dashboard>127.0.0.1:8080</sentinel.dashboard>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 </project>
