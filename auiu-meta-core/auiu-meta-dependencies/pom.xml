@@ -85,11 +85,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>auiu-meta-mybatis</artifactId>
-                <version>${auiumeta.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-security</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>

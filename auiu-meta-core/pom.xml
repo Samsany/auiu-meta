@@ -38,7 +38,6 @@
         <module>auiu-meta-dependencies</module>
         <module>auiu-meta-common</module>
         <module>auiu-meta-database</module>
-        <module>auiu-meta-mybatis</module>
         <module>auiu-meta-security</module>
         <module>auiu-meta-validator</module>
         <module>auiu-meta-oss</module>

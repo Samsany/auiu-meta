@@ -2,7 +2,7 @@
 mybatis-plus:
   mapper-locations: classpath:com/auiucloud/**/mapper/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.auiucloud.**.entity
+  typeAliasesPackage: com.auiucloud.**.model,com.auiucloud.**.entity
   # 支持统配符 * 或者 ; 分割
   # typeEnumsPackage: com.auiucloud.entity.enums
   global-config:
