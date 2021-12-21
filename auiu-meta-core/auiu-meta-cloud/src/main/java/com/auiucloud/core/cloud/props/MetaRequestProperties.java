@@ -1,8 +1,6 @@
 package com.auiucloud.core.cloud.props;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 
@@ -14,7 +12,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  */
 @Data
 @RefreshScope
-@ConfigurationProperties("mate.request")
+@ConfigurationProperties("auiu-cloud.request")
 public class MetaRequestProperties {
     /**
      * 是否开启日志链路追踪

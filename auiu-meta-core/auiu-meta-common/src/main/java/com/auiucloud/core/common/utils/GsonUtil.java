@@ -86,7 +86,7 @@ public class GsonUtil {
     public static <T> List<T> fromJsonList(String json, Class<T> cls) {
         ArrayList<T> mList = new ArrayList<T>();
 
-        JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+        JsonArray array = JsonParser.parseString(json).getAsJsonArray();
         for (final JsonElement elem : array) {
             mList.add(gson.fromJson(elem, cls));
         }

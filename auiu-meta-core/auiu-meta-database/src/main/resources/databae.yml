@@ -1,0 +1,30 @@
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:com/auiucloud/**/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.auiucloud.**.entity
+  # 支持统配符 * 或者 ; 分割
+  # typeEnumsPackage: com.auiucloud.entity.enums
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      # 主键类型  0:"数据库ID自增", 1:"不操作", 2:"用户输入ID",3:"数字型snowflake", 4:"全局唯一ID UUID", 5:"字符串型snowflake";
+      id-type: 0
+      # 字段策略
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_empty
+      # 驼峰下划线转换
+      table-underline: true
+      # 逻辑删除配置
+      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+    # mybatis-plus配置控制台打印完整带参数SQL语句
+    # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
