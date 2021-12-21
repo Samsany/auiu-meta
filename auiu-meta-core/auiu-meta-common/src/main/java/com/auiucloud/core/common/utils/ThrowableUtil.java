@@ -34,7 +34,7 @@ public class ThrowableUtil {
         for (StackTraceElement stet : elements) {
             strBuff.append(stet).append("\n");
         }
-        return exceptionName + ":" + exceptionMessage + "\n\t" + strBuff.toString();
+        return exceptionName + ":" + exceptionMessage + "\n\t" + strBuff;
     }
 
 }
