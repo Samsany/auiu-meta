@@ -68,7 +68,7 @@ public class ApiResponse<T> implements Serializable {
     }
 
     /*** 失败返回结果 */
-    public static <T> ApiResponse<T> failed() {
+    public static <T> ApiResponse<T> fail() {
         return fail(ResultCode.USER_ERROR_A0500);
     }
 

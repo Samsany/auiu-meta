@@ -55,8 +55,8 @@
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
         <mybatis.plus.generator.version>3.5.1</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
-        <swagger.version>2.10.5</swagger.version>
-        <swagger.models.version>1.6.2</swagger.models.version>
+        <swagger.version>3.0.0</swagger.version>
+        <swagger.models.version>1.6.3</swagger.models.version>
         <knife4j.version>3.0.3</knife4j.version>
         <easypoi.version>4.4.0</easypoi.version>
         <lombok.version>1.18.20</lombok.version>
