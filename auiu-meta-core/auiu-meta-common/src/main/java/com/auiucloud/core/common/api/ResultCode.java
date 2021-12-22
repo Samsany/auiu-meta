@@ -22,7 +22,7 @@ public enum ResultCode implements IResultCode {
     /**
      * 业务异常
      */
-    FAILED(400, "业务异常"),
+    FAILURE(400, "业务异常"),
     /**
      * 服务未找到
      */

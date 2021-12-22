@@ -1,6 +1,6 @@
 package com.auiucloud.core.database.config;
 
-import com.alibaba.fastjson.serializer.ToStringSerializer;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

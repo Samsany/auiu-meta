@@ -69,7 +69,7 @@ public class ApiResponse<T> implements Serializable {
 
     /*** 失败返回结果 */
     public static <T> ApiResponse<T> failed() {
-        return failed(ResultCode.USER_ERROR_A0500);
+        return fail(ResultCode.USER_ERROR_A0500);
     }
 
     /**
@@ -77,7 +77,7 @@ public class ApiResponse<T> implements Serializable {
      *
      * @param resultCode 返回码
      */
-    public static <T> ApiResponse<T> failed(IResultCode resultCode) {
+    public static <T> ApiResponse<T> fail(IResultCode resultCode) {
         return new ApiResponse<T>(resultCode.getCode(), resultCode.getMessage(), System.currentTimeMillis(), null);
     }
 
@@ -86,7 +86,7 @@ public class ApiResponse<T> implements Serializable {
      *
      * @param message 提示信息
      */
-    public static <T> ApiResponse<T> failed(int code, String message) {
+    public static <T> ApiResponse<T> fail(int code, String message) {
         return new ApiResponse<T>(code, message, System.currentTimeMillis(), null);
     }
 
@@ -95,7 +95,7 @@ public class ApiResponse<T> implements Serializable {
      *
      * @param message 提示信息
      */
-    public static <T> ApiResponse<T> failed(String message) {
+    public static <T> ApiResponse<T> fail(String message) {
         return new ApiResponse<T>(ResultCode.ERROR.getCode(), message, System.currentTimeMillis(), null);
     }
 
@@ -104,18 +104,18 @@ public class ApiResponse<T> implements Serializable {
      *
      * @param data 获取的数据
      */
-    public static <T> ApiResponse<T> failed(IResultCode resultCode, T data) {
+    public static <T> ApiResponse<T> fail(IResultCode resultCode, T data) {
         return new ApiResponse<T>(resultCode.getCode(), resultCode.getMessage(), System.currentTimeMillis(), data);
     }
 
     /*** 未登录返回结果 */
     public static <T> ApiResponse<T> unauthorized(T data) {
-        return failed(ResultCode.USER_ERROR_A0230, data);
+        return fail(ResultCode.USER_ERROR_A0230, data);
     }
 
     /*** 未授权返回结果 */
     public static <T> ApiResponse<T> forbidden(T data) {
-        return failed(ResultCode.USER_ERROR_A0301, data);
+        return fail(ResultCode.USER_ERROR_A0301, data);
     }
 
     public boolean successful() {
