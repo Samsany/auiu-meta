@@ -16,6 +16,15 @@
             <artifactId>auiu-meta-common</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-feign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-sentinel</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
@@ -24,15 +33,7 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.auiucloud</groupId>
-            <artifactId>auiu-meta-feign</artifactId>
-        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.auiucloud</groupId>-->
-<!--            <artifactId>auiu-meta-sentinel</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
 
 </project>

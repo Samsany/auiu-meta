@@ -108,16 +108,6 @@ public class ApiResponse<T> implements Serializable {
         return new ApiResponse<T>(resultCode.getCode(), resultCode.getMessage(), System.currentTimeMillis(), data);
     }
 
-    /*** 未登录返回结果 */
-    public static <T> ApiResponse<T> unauthorized(T data) {
-        return fail(ResultCode.USER_ERROR_A0230, data);
-    }
-
-    /*** 未授权返回结果 */
-    public static <T> ApiResponse<T> forbidden(T data) {
-        return fail(ResultCode.USER_ERROR_A0301, data);
-    }
-
     public boolean successful() {
         return code == ResultCode.SUCCESS.getCode();
     }

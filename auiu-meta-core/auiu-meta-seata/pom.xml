@@ -11,7 +11,15 @@
     <artifactId>auiu-meta-seata</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-common</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 

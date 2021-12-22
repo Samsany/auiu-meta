@@ -28,6 +28,10 @@ public enum ResultCode implements IResultCode {
      */
     NOT_FOUND(404, "服务未找到"),
     /**
+     * Too Many Requests
+     */
+    TOO_MANY_REQUESTS(429, "Too Many Requests, please retry later."),
+    /**
      * 服务异常
      */
     ERROR(500, "服务异常"),
@@ -66,6 +70,8 @@ public enum ResultCode implements IResultCode {
     USER_ERROR_A0201(10201, "用户不存在或密码错误"),
     USER_ERROR_A0202(10202, "用户账户被冻结"),
     USER_ERROR_A0203(10203, "用户账户已作废"),
+    USER_ERROR_A0204(10204, "用户账户被锁定"),
+    USER_ERROR_A0205(10205, "用户账户已过期"),
     USER_ERROR_A0210(10210, "用户密码错误"),
     USER_ERROR_A0211(10211, "用户输入密码错误次数超限"),
     USER_ERROR_A0212(10212, "用户密码已过期"),

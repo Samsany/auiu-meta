@@ -47,10 +47,9 @@
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <spring.security.version>2.5.5</spring.security.version>
         <spring-boot-admin.version>2.5.4</spring-boot-admin.version>
-
         <alibaba.cloud.version>2021.1</alibaba.cloud.version>
         <sentinel.version>1.8.2</sentinel.version>
-
+        <justauth.version>1.4.0</justauth.version>
         <mysql.version>8.0.25</mysql.version>
         <druid.version>1.2.8</druid.version>
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
@@ -174,6 +173,12 @@
                 <groupId>org.springframework.security.oauth.boot</groupId>
                 <artifactId>spring-security-oauth2-autoconfigure</artifactId>
                 <version>${spring.security.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xkcoding.justauth</groupId>
+                <artifactId>justauth-spring-boot-starter</artifactId>
+                <version>${justauth.version}</version>
             </dependency>
             <!-- 数据库相关包 -->
             <dependency>

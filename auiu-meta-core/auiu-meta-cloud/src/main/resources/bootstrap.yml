@@ -18,16 +18,16 @@ spring:
         server-addr: @config.server-addr@
         watch:
           enabled: false
-#    sentinel:
-#      enabled: true
-#      filter:
-#        enabled: true
-#      # 取消控制台懒加载，项目启动即连接Sentinel
-#      eager: true
-#      transport:
-#        dashboard: @sentinel.dashboard@
-#
-## Feign开启对Sentinel支持
-#feign:
-#  sentinel:
-#    enabled: true
+    sentinel:
+      enabled: true
+      filter:
+        enabled: true
+      # 取消控制台懒加载，项目启动即连接Sentinel
+      eager: true
+      transport:
+        dashboard: @sentinel.dashboard@
+
+# Feign开启对Sentinel支持
+feign:
+  sentinel:
+    enabled: true
