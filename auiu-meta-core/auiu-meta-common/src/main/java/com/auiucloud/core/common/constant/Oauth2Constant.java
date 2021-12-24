@@ -6,6 +6,9 @@ package com.auiucloud.core.common.constant;
  */
 public class Oauth2Constant {
 
+    public static final String JWT_TOKEN_PREFIX = "Bearer ";
+    public static final String JWT_TOKEN_HEADER = "Authorization";
+
     public static final String ALL = "/**";
 
     public static final String OAUTH_ALL = "/oauth/**";
@@ -56,4 +59,28 @@ public class Oauth2Constant {
     public static final String DEFAULT_PARAMETER_NAME_SOCIAL = "social";
 
 
+    /**
+     * 字段描述开始：用户ID
+     */
+    public static final String AUIU_MATE_USER_ID = "userId";
+
+    /**
+     * 用户名
+     */
+    public static final String AUIU_MATE_USER_NAME = "username";
+
+    /**
+     * 用户头像
+     */
+    public static final String AUIU_MATE_AVATAR = "avatar";
+
+    /**
+     * 用户权限ID
+     */
+    public static final String AUIU_MATE_ROLE_IDS = "roleIds";
+
+    /**
+     * 用户类型
+     */
+    public static final String AUIU_MATE_TYPE = "type";
 }

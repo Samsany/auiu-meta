@@ -23,4 +23,5 @@ public class UserContext {
     public static void removeUser() {
         USER_HOLDER.remove();
     }
+
 }

@@ -1,10 +1,10 @@
-package com.auiucloud.core.validator;
+package com.auiucloud.gateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuiuMetaValidatorApplicationTests {
+class AuiuMetaGatewayApplicationTests {
 
     @Test
     void contextLoads() {

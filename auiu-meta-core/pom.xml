@@ -50,6 +50,7 @@
         <module>auiu-meta-seata</module>
         <module>auiu-meta-sentinel</module>
         <module>auiu-meta-feign</module>
+        <module>auiu-meta-log</module>
     </modules>
 
     <properties>

@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.1</version>
+        <version>2.6.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -43,7 +43,7 @@
     <properties>
         <auiumeta.core.version>1.0.1</auiumeta.core.version>
 
-        <spring.boot.version>2.6.1</spring.boot.version>
+        <spring.boot.version>2.6.2</spring.boot.version>
         <spring.cloud.version>2021.0.0</spring.cloud.version>
         <spring.security.version>2.5.5</spring.security.version>
         <spring-boot-admin.version>2.5.4</spring-boot-admin.version>
@@ -67,6 +67,7 @@
         <jackson.version>2.13.0</jackson.version>
         <gson.version>2.8.8</gson.version>
         <fastjson.version>1.2.79</fastjson.version>
+        <nimbus.version>9.15.2</nimbus.version>
         <transmittable-thread-local.version>2.12.3</transmittable-thread-local.version>
     </properties>
 
@@ -269,6 +270,11 @@
                 <groupId>jakarta.servlet</groupId>
                 <artifactId>jakarta.servlet-api</artifactId>
                 <version>${jakarta.servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
