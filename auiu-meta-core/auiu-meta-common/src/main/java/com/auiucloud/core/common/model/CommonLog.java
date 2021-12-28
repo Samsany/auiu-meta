@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.domain;
+package com.auiucloud.core.common.model;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -99,7 +99,7 @@ public class CommonLog implements Serializable {
      * 删除标识
      */
     @ApiModelProperty(value = "删除标识")
-    private String isDeleted;
+    private boolean deleted;
     /**
      * 异常信息
      */

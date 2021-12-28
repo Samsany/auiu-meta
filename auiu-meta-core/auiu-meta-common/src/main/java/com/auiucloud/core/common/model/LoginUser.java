@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.domain;
+package com.auiucloud.core.common.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

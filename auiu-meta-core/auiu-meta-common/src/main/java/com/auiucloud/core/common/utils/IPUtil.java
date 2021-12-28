@@ -2,7 +2,7 @@ package com.auiucloud.core.common.utils;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
-import com.auiucloud.core.common.domain.IpAddress;
+import com.auiucloud.core.common.model.IpAddress;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 

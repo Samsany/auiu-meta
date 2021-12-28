@@ -1,6 +1,6 @@
 package com.auiucloud.core.common.context;
 
-import com.auiucloud.core.common.domain.LoginUser;
+import com.auiucloud.core.common.model.LoginUser;
 
 /**
  * 用户上下文

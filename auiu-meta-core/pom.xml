@@ -43,6 +43,7 @@
         <module>auiu-meta-oss</module>
         <module>auiu-meta-file</module>
         <module>auiu-meta-sms</module>
+        <module>auiu-meta-rule</module>
         <module>auiu-meta-redis</module>
         <module>auiu-meta-rabbit</module>
         <module>auiu-meta-web</module>

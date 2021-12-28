@@ -1,7 +1,6 @@
 package com.auiucloud.core.database.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -25,7 +24,6 @@ public class BaseEntity implements Serializable {
     /**
      * 创建人
      */
-    @JsonIgnore
     @ApiModelProperty(value = "创建人")
     private String createBy;
 
@@ -46,4 +44,10 @@ public class BaseEntity implements Serializable {
      */
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
+
+    /**
+     * 删除标识
+     */
+    @ApiModelProperty(value = "删除标识")
+    private boolean deleted;
 }
