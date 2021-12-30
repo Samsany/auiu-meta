@@ -1,7 +1,7 @@
 package com.auiucloud.gateway.filter;
 
 import com.auiucloud.core.cloud.props.MetaRequestProperties;
-import com.auiucloud.core.common.constant.MateConstant;
+import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.utils.UUIDUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +31,9 @@ public class PreRequestFilter implements GlobalFilter, Ordered {
         if (metaRequestProperties.isTrace()) {
             // ID生成
             String traceId = UUIDUtil.shortUuid();
-            MDC.put(MateConstant.LOG_TRACE_ID, traceId);
+            MDC.put(MetaConstant.LOG_TRACE_ID, traceId);
             ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate()
-                    .headers(h -> h.add(MateConstant.MATE_TRACE_ID, traceId))
+                    .headers(h -> h.add(MetaConstant.META_TRACE_ID, traceId))
                     .build();
             ServerWebExchange build = exchange.mutate().request(serverHttpRequest).build();
             return chain.filter(build);

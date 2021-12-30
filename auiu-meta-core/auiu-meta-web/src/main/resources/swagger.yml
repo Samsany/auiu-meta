@@ -1,5 +1,5 @@
 # Swagger属性配置
-mate:
+auiu-cloud:
   swagger:
     enable: false
     title: AUIUCLOUD文档管理中心
@@ -11,7 +11,7 @@ mate:
     contact-email: samphsanie@gmail.com
 # knife4j配置
 knife4j:
-  enable: ${auiu-cloud.swagger.enable}
+  enable: ${auiu-cloud.swagger.enabled}
   # 开启生产环境屏蔽
   production: false
   # 开启认证

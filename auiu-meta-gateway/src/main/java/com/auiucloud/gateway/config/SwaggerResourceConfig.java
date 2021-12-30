@@ -1,6 +1,6 @@
 package com.auiucloud.gateway.config;
 
-import com.auiucloud.core.common.constant.MateConstant;
+import com.auiucloud.core.common.constant.MetaConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,11 +40,11 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
 
-    /**
-     * 网关应用名称
-     */
-    @Value("${spring.application.name}")
-    private String self;
+//    /**
+//     * 网关应用名称
+//     */
+//    @Value("${spring.application.name}")
+//    private String self;
 
     @Override
     public List<SwaggerResource> get() {
@@ -68,7 +68,7 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);
-        swaggerResource.setSwaggerVersion(MateConstant.AUIU_APP_VERSION);
+        swaggerResource.setSwaggerVersion(MetaConstant.AUIU_APP_VERSION);
         return swaggerResource;
     }
 

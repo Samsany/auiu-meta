@@ -1,11 +1,7 @@
 package com.auiucloud.core.cloud.filter;
 
-import cn.hutool.core.util.StrUtil;
-import com.auiucloud.core.cloud.props.MetaApiProperties;
 import com.auiucloud.core.cloud.props.MetaRequestProperties;
-import com.auiucloud.core.common.constant.MateConstant;
 import com.auiucloud.core.common.utils.TraceUtil;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;

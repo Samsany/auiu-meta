@@ -1,6 +1,12 @@
 package com.auiucloud.core.common.utils;
 
 import cn.hutool.json.JSONUtil;
+import com.auiucloud.core.common.api.ApiResponse;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,13 +49,13 @@ public class ResponseUtil {
      * @param value       响应内容
      * @return Mono<Void>
      */
-//    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, String contentType,
-//                                                   HttpStatus status, Object value) {
-//        response.setStatusCode(status);
-//        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-//        Result<?> result = Result.fail(status.value(), value.toString());
-//        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONObject.toJSONString(result).getBytes());
-//        return response.writeWith(Mono.just(dataBuffer));
-//    }
+    public static Mono<Void> webFluxResponseWriter(ServerHttpResponse response, String contentType,
+                                                   HttpStatus status, Object value) {
+        response.setStatusCode(status);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
+        ApiResponse<?> result = ApiResponse.fail(status.value(), value.toString());
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(result).getBytes());
+        return response.writeWith(Mono.just(dataBuffer));
+    }
 
 }

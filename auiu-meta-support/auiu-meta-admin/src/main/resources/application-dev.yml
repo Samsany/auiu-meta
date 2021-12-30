@@ -1,0 +1,15 @@
+server:
+  port: 20002
+spring:
+  application:
+    name: ${artifactId}
+  #数据源配置
+  datasource:
+    url: ${auiu-cloud.datasource.url}
+    username: ${auiu-cloud.datasource.username}
+    password: ${auiu-cloud.datasource.password}
+
+## 配置日志显示在spring boot admin
+logging:
+  file:
+    name: logs/app/auiu-meta-admin/auiu-meta-admin.log

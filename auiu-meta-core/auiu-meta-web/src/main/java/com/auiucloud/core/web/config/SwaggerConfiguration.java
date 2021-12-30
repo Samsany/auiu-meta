@@ -1,11 +1,12 @@
 package com.auiucloud.core.web.config;
 
-import com.auiucloud.core.common.constant.MateConstant;
+import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
 import com.auiucloud.core.web.props.MateSwaggerProperties;
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.paths.DefaultPathProvider;
 import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import javax.servlet.ServletRequest;
@@ -40,8 +42,8 @@ import java.util.Map;
  * @date 2021/12/22
  */
 @Configuration
-@EnableSwagger2WebMvc
-@AllArgsConstructor
+@EnableSwagger2
+@RequiredArgsConstructor
 @Import(BeanValidatorPluginsConfiguration.class)
 @EnableConfigurationProperties(MateSwaggerProperties.class)
 @PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:swagger.yml")
@@ -89,7 +91,7 @@ public class SwaggerConfiguration {
         }
         return apiSelectorBuilder.paths(PathSelectors.any())
                 .build()
-                .enable(swaggerProperties.isEnable())
+                .enable(swaggerProperties.isEnabled())
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
                 .pathProvider(pathProvider())
@@ -108,7 +110,7 @@ public class SwaggerConfiguration {
                         swaggerProperties.getContactUrl(),
                         swaggerProperties.getContactEmail())
                 )
-                .version(MateConstant.AUIU_APP_VERSION)
+                .version(MetaConstant.AUIU_APP_VERSION)
                 .build();
     }
 

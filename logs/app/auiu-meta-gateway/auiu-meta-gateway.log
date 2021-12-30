@@ -1,0 +1,800 @@
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:00.902 INFO 22230 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:00.929 INFO 22230 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:00.995 WARN 22230 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:01.019 INFO 22230 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:01.189 INFO 22230 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:01.201 INFO 22230 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:02.355 WARN 22230 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:02.373 INFO 22230 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:02.391 ERROR 22230 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:02.393 WARN 22230 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:08:02.396 WARN 22230 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.392 INFO 22305 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.415 INFO 22305 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.477 WARN 22305 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.494 WARN 22305 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.511 WARN 22305 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.512 INFO 22305 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:35.521 INFO 22305 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:36.766 WARN 22305 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:36.787 INFO 22305 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:36.808 ERROR 22305 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:36.809 WARN 22305 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:11:36.810 WARN 22305 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.543 INFO 22324 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.572 INFO 22324 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.674 WARN 22324 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.705 INFO 22324 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.760 INFO 22324 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:20.772 INFO 22324 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:21.944 WARN 22324 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:21.963 INFO 22324 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:21.981 ERROR 22324 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:21.984 WARN 22324 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:12:21.984 WARN 22324 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.188 INFO 22344 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.215 INFO 22344 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.289 WARN 22344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.315 WARN 22344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.339 WARN 22344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.340 INFO 22344 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:03.350 INFO 22344 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:04.588 WARN 22344 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:04.607 INFO 22344 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:04.627 ERROR 22344 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:04.630 WARN 22344 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:14:04.632 WARN 22344 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.679 INFO 22374 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.702 INFO 22374 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.774 WARN 22374 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.803 WARN 22374 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta.properties] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.826 WARN 22374 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-dev.properties] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.827 INFO 22374 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.properties,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.properties,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:00.836 INFO 22374 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:01.975 WARN 22374 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:01.993 INFO 22374 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:02.011 ERROR 22374 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:02.014 WARN 22374 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:02.015 WARN 22374 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.241 INFO 22383 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.266 INFO 22383 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.357 WARN 22383 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.388 WARN 22383 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta.properties] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.419 WARN 22383 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-dev.properties] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.420 INFO 22383 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.properties,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.properties,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:21.429 INFO 22383 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:22.732 WARN 22383 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:22.750 INFO 22383 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:22.767 ERROR 22383 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:22.769 WARN 22383 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:22.770 WARN 22383 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.173 INFO 22413 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.192 INFO 22413 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.262 WARN 22413 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.287 INFO 22413 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.332 INFO 22413 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:54.343 INFO 22413 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:55.518 WARN 22413 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:55.538 INFO 22413 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:55.560 ERROR 22413 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:55.562 WARN 22413 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:16:55.563 WARN 22413 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.203 INFO 22476 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.246 INFO 22476 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.335 WARN 22476 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.365 INFO 22476 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.419 INFO 22476 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:06.432 INFO 22476 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:07.740 WARN 22476 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:07.761 INFO 22476 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:07.782 ERROR 22476 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:07.784 WARN 22476 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:19:07.785 WARN 22476 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.060 INFO 22689 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.086 INFO 22689 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.198 INFO 22689 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.234 WARN 22689 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.260 WARN 22689 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.286 WARN 22689 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.287 INFO 22689 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:12.296 INFO 22689 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:13.639 WARN 22689 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:13.658 INFO 22689 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:13.678 ERROR 22689 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:13.680 WARN 22689 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:32:13.682 WARN 22689 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.612 INFO 22725 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.635 INFO 22725 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.709 INFO 22725 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.748 WARN 22725 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.773 WARN 22725 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.800 WARN 22725 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.801 INFO 22725 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:23.810 INFO 22725 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:25.001 WARN 22725 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:25.023 INFO 22725 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:25.041 ERROR 22725 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:25.043 WARN 22725 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:33:25.045 WARN 22725 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.093 INFO 22882 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.117 INFO 22882 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.210 INFO 22882 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.295 WARN 22882 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.322 WARN 22882 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.351 WARN 22882 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.352 INFO 22882 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:18.362 INFO 22882 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:19.751 WARN 22882 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:19.771 INFO 22882 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:19.791 ERROR 22882 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 11:42:19.793 WARN 22882 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.764 INFO 23370 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.788 INFO 23370 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.880 INFO 23370 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.945 WARN 23370 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.972 WARN 23370 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.995 WARN 23370 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:49.995 INFO 23370 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:50.006 INFO 23370 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:51.234 WARN 23370 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:51.254 INFO 23370 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:51.272 ERROR 23370 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:51.274 WARN 23370 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:19:51.276 WARN 23370 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.259 INFO 23415 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.280 INFO 23415 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.364 INFO 23415 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.457 WARN 23415 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.487 WARN 23415 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.666 WARN 23415 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.667 INFO 23415 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:02.676 INFO 23415 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:03.832 WARN 23415 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:03.850 INFO 23415 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:23:03.869 ERROR 23415 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.053 INFO 24639 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.075 INFO 24639 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.156 INFO 24639 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.219 WARN 24639 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.244 WARN 24639 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.270 WARN 24639 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.271 INFO 24639 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:58.280 INFO 24639 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:59.533 WARN 24639 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:59.551 INFO 24639 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:59.570 ERROR 24639 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:59.572 WARN 24639 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:30:59.574 WARN 24639 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.284 INFO 24816 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.303 INFO 24816 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.395 INFO 24816 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.426 WARN 24816 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.454 WARN 24816 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.477 WARN 24816 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.477 INFO 24816 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:16.485 INFO 24816 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:17.837 WARN 24816 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:17.857 INFO 24816 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:17.878 ERROR 24816 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:39:17.881 WARN 24816 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.801 INFO 24849 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.821 INFO 24849 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.893 INFO 24849 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.927 WARN 24849 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.949 WARN 24849 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.969 WARN 24849 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.970 INFO 24849 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:08.978 INFO 24849 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:10.150 WARN 24849 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:10.169 INFO 24849 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:10.193 ERROR 24849 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:10.196 WARN 24849 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:41:10.199 WARN 24849 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:12.808 INFO 24864 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:12.828 INFO 24864 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:12.914 INFO 24864 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:12.980 WARN 24864 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:13.005 WARN 24864 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:13.028 WARN 24864 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:13.029 INFO 24864 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:13.039 INFO 24864 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:14.242 WARN 24864 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:14.262 INFO 24864 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:14.281 ERROR 24864 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:14.284 WARN 24864 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:42:14.285 WARN 24864 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:15.980 INFO 24884 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.006 INFO 24884 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.097 INFO 24884 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.165 WARN 24884 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.191 WARN 24884 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.218 WARN 24884 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.219 INFO 24884 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:16.232 INFO 24884 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:17.636 WARN 24884 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:17.660 INFO 24884 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:17.705 ERROR 24884 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:17.712 WARN 24884 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:43:17.717 WARN 24884 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.135 INFO 25308 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.162 INFO 25308 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.248 INFO 25308 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.319 WARN 25308 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.345 WARN 25308 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.365 WARN 25308 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.366 INFO 25308 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:50.379 INFO 25308 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:51.838 WARN 25308 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:51.857 INFO 25308 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:51.877 ERROR 25308 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:51.879 WARN 25308 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 13:52:51.886 WARN 25308 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:00.914 INFO 25472 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:00.938 INFO 25472 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.029 INFO 25472 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.088 WARN 25472 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.116 WARN 25472 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.141 WARN 25472 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.142 INFO 25472 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:01.153 INFO 25472 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:02.381 WARN 25472 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:02.400 INFO 25472 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:02.420 ERROR 25472 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:02.423 WARN 25472 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:00:02.424 WARN 25472 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.389 INFO 25538 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.412 INFO 25538 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.488 WARN 25538 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-cloud-dev.yml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.514 INFO 25538 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.551 WARN 25538 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.576 WARN 25538 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.599 WARN 25538 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.600 INFO 25538 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:07.611 INFO 25538 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:08.809 WARN 25538 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'redisTemplate' defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=com.auiucloud.core.redis.config.RedisConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class]] for bean 'redisTemplate': There is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration; factoryMethodName=redisTemplate; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class]] bound.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:08.832 INFO 25538 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:08.853 ERROR 25538 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'redisTemplate', defined in class path resource [com/auiucloud/core/redis/config/RedisConfiguration.class], could not be registered. A bean with that name has already been defined in class path resource [org/springframework/boot/autoconfigure/data/redis/RedisAutoConfiguration.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:08.855 WARN 25538 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:02:08.856 WARN 25538 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.455 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.478 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.560 INFO 25789 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.624 WARN 25789 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.653 WARN 25789 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.678 WARN 25789 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.679 INFO 25789 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:33.691 INFO 25789 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.079 INFO 25789 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.082 INFO 25789 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.112 INFO 25789 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.417 INFO 25789 [] [main] org.springframework.cloud.context.scope.GenericScope BeanFactory id=a2138975-8669-3a4f-a8e5-55fb6844a7ed
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.659 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.661 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.662 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$526/0x000000080057ec40] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.667 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.777 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'spring.cloud.sentinel-com.alibaba.cloud.sentinel.SentinelProperties' of type [com.alibaba.cloud.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.854 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration' of type [com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.869 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.870 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:35.872 INFO 25789 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.134 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [After]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.135 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Before]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.135 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Between]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.135 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Cookie]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Header]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Host]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Method]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Path]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Query]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [ReadBody]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [RemoteAddr]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Weight]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.136 INFO 25789 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.255 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由开始
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.300 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-uaa,RouteDefinition{id='auiu-meta-uaa', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-uaa/**}}], filters=[], uri=lb://auiu-meta-uaa, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.306 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-system,RouteDefinition{id='auiu-meta-system', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-system/**}}], filters=[FilterDefinition{name='RequestRateLimiter', args={key-resolver=#{@remoteAddressKeyResolver}, redis-rate-limiter.burstCapacity=20, redis-rate-limiter.replenishRate=20}}], uri=lb://meta-system, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.306 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-component,RouteDefinition{id='auiu-meta-component', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-component/**}}], filters=[], uri=lb://auiu-meta-component, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.306 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-code,RouteDefinition{id='auiu-meta-code', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-code/**}}], filters=[], uri=lb://auiu-meta-code, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.307 INFO 25789 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由完成
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.308 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-dynamic-routes.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.309 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-dynamic-routes.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.683 INFO 25789 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.684 INFO 25789 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Environment :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.687 INFO 25789 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.869 INFO 25789 [] [main] com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration [Sentinel SpringCloudGateway] register SentinelGatewayFilter with order: -2147483648
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:37.994 INFO 25789 [] [main] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver Exposing 20 endpoint(s) beneath base path '/actuator'
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:38.766 WARN 25789 [] [main] org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.180 INFO 25789 [] [main] org.springframework.boot.web.embedded.netty.NettyWebServer Netty started on port 10001
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.194 INFO 25789 [] [main] com.alibaba.nacos.client.naming [BEAT] adding beat: BeatInfo{port=10001, ip='192.168.0.131', weight=1.0, serviceName='DEFAULT_GROUP@@auiu-meta-gateway', cluster='DEFAULT', metadata={preserved.register.source=SPRING_CLOUD}, scheduled=false, period=5000, stopped=false} to beat map.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.194 INFO 25789 [] [main] com.alibaba.nacos.client.naming [REGISTER-SERVICE] 4af1f54f-5abf-4ec8-a8b0-20d50885d42b registering service DEFAULT_GROUP@@auiu-meta-gateway with instance: Instance{instanceId='null', ip='192.168.0.131', port=10001, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={preserved.register.source=SPRING_CLOUD}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.251 INFO 25789 [] [main] com.alibaba.cloud.nacos.registry.NacosServiceRegistry nacos registry, DEFAULT_GROUP auiu-meta-gateway 192.168.0.131:10001 register finished
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.395 INFO 25789 [] [boundedElastic-3] com.alibaba.nacos.client.naming new ips(1) service: DEFAULT_GROUP@@auiu-meta-gateway -> [{"instanceId":"192.168.0.131#10001#DEFAULT#DEFAULT_GROUP@@auiu-meta-gateway","ip":"192.168.0.131","port":10001,"weight":1.0,"healthy":true,"enabled":true,"ephemeral":true,"clusterName":"DEFAULT","serviceName":"DEFAULT_GROUP@@auiu-meta-gateway","metadata":{"preserved.register.source":"SPRING_CLOUD"},"instanceHeartBeatInterval":5000,"instanceHeartBeatTimeOut":15000,"ipDeleteTimeout":30000}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:39.402 INFO 25789 [] [boundedElastic-3] com.alibaba.nacos.client.naming current ips:(1) service: DEFAULT_GROUP@@auiu-meta-gateway -> [{"instanceId":"192.168.0.131#10001#DEFAULT#DEFAULT_GROUP@@auiu-meta-gateway","ip":"192.168.0.131","port":10001,"weight":1.0,"healthy":true,"enabled":true,"ephemeral":true,"clusterName":"DEFAULT","serviceName":"DEFAULT_GROUP@@auiu-meta-gateway","metadata":{"preserved.register.source":"SPRING_CLOUD"},"instanceHeartBeatInterval":5000,"instanceHeartBeatTimeOut":15000,"ipDeleteTimeout":30000}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.581 INFO 25789 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication Started AuiuMetaGatewayApplication in 8.79 seconds (JVM running for 9.857)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.585 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway-dev.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.585 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway-dev.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-cloud.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-cloud.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.586 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-cloud-dev.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:40.587 INFO 25789 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:15:41.339 WARN 25789 [] [boundedElastic-2] org.springframework.boot.actuate.redis.RedisReactiveHealthIndicator Redis health check failed
+
+org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to 47.100.74.170:6379
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.translateException(LettuceConnectionFactory.java:1689)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1597)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1383)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1366)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedReactiveConnection(LettuceConnectionFactory.java:1117)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:509)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:103)
+	at reactor.core.publisher.MonoSupplier.call(MonoSupplier.java:86)
+	at reactor.core.publisher.FluxSubscribeOnCallable$CallableSubscribeOnSubscription.run(FluxSubscribeOnCallable.java:227)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to 47.100.74.170:6379
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78)
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56)
+	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:330)
+	at io.lettuce.core.RedisClient.connect(RedisClient.java:216)
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:115)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:115)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1595)
+	... 15 common frames omitted
+Caused by: io.lettuce.core.RedisCommandExecutionException: NOAUTH HELLO must be called with the client already authenticated, otherwise the HELLO AUTH <user> <pass> option can be used to authenticate the client and select the RESP protocol version at the same time
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:137)
+	at io.lettuce.core.internal.ExceptionFactory.createExecutionException(ExceptionFactory.java:110)
+	at io.lettuce.core.protocol.AsyncCommand.completeResult(AsyncCommand.java:120)
+	at io.lettuce.core.protocol.AsyncCommand.complete(AsyncCommand.java:111)
+	at io.lettuce.core.protocol.CommandWrapper.complete(CommandWrapper.java:63)
+	at io.lettuce.core.protocol.CommandHandler.complete(CommandHandler.java:746)
+	at io.lettuce.core.protocol.CommandHandler.decode(CommandHandler.java:681)
+	at io.lettuce.core.protocol.CommandHandler.channelRead(CommandHandler.java:598)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1410)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:379)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:365)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:919)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:166)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:722)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:658)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:584)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:496)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:986)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.322 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [polling-resp] config changed. dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.323 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker get changedGroupKeys:[auiu-meta-cloud-dev.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.356 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [data-received] dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, md5=7f632b7242e8db9a59b8ca00b77da022, content=#spring配置
+spring:
+  redis:
+    #redis 单机环境配置
+    host: 47.100.74.170
+    port: 6379
+    password: Zx..., type=yaml
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.358 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [notify-context] dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, md5=7f632b7242e8db9a59b8ca00b77da022
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.659 WARN 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[null.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.683 WARN 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[null-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.683 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-null-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-null.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.687 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] org.springframework.boot.SpringApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.697 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] org.springframework.boot.SpringApplication Started application in 0.332 seconds (JVM running for 230.969)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.885 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] org.springframework.cloud.endpoint.event.RefreshEventListener Refresh keys changed: [spring.redis.password]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.890 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [notify-ok] dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, md5=7f632b7242e8db9a59b8ca00b77da022, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@655bee6c 
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:19:21.891 INFO 25789 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [notify-listener] time cost=533ms in ClientWorker, dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, md5=7f632b7242e8db9a59b8ca00b77da022, listener=com.alibaba.cloud.nacos.refresh.NacosContextRefresher$1@655bee6c 
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.382 WARN 25789 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.381 WARN 25789 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Start destroying Publisher
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.382 WARN 25789 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.385 WARN 25789 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.396 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.cloud.nacos.registry.NacosServiceRegistry De-registering from Nacos Server now...
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.397 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming [BEAT] removing beat: DEFAULT_GROUP@@auiu-meta-gateway:192.168.0.131:10001 from beat map.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.397 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming [DEREGISTER-SERVICE] 4af1f54f-5abf-4ec8-a8b0-20d50885d42b deregistering service DEFAULT_GROUP@@auiu-meta-gateway with instance: Instance{instanceId='null', ip='192.168.0.131', port=10001, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.480 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.cloud.nacos.registry.NacosServiceRegistry De-registration finished.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:04.481 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown begin
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:06.957 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown stop
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:06.959 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown begin
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:09.974 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown begin
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.987 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown stop
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.989 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.991 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.991 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown stop
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.991 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown begin
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.992 WARN 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming [NamingHttpClientManager] Start destroying NacosRestTemplate
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.993 WARN 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming [NamingHttpClientManager] Destruction of the end
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.993 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.identify.CredentialWatcher [null] CredentialWatcher is stopped
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.993 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.identify.CredentialService [null] CredentialService is freed
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.993 INFO 25789 [] [SpringApplicationShutdownHook] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown stop
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:12.995 WARN 25789 [] [SpringApplicationShutdownHook] org.springframework.beans.factory.support.DisposableBeanAdapter Custom destroy method 'close' on bean with name 'nacosServiceRegistry' threw an exception: java.lang.NullPointerException
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.620 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.645 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.727 INFO 25905 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.812 WARN 25905 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.839 WARN 25905 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.860 WARN 25905 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.861 INFO 25905 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:20.875 INFO 25905 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.350 INFO 25905 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.353 INFO 25905 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.380 INFO 25905 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.675 INFO 25905 [] [main] org.springframework.cloud.context.scope.GenericScope BeanFactory id=a2138975-8669-3a4f-a8e5-55fb6844a7ed
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.894 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.896 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.897 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$527/0x000000080057e840] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:22.901 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:23.011 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'spring.cloud.sentinel-com.alibaba.cloud.sentinel.SentinelProperties' of type [com.alibaba.cloud.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:23.073 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration' of type [com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:23.086 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:23.087 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:23.088 INFO 25905 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [After]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Before]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Between]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Cookie]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Header]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Host]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Method]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Path]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Query]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [ReadBody]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.283 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [RemoteAddr]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.284 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Weight]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.284 INFO 25905 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.392 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由开始
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.416 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-uaa,RouteDefinition{id='auiu-meta-uaa', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-uaa/**}}], filters=[], uri=lb://auiu-meta-uaa, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.421 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-system,RouteDefinition{id='auiu-meta-system', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-system/**}}], filters=[FilterDefinition{name='RequestRateLimiter', args={key-resolver=#{@remoteAddressKeyResolver}, redis-rate-limiter.burstCapacity=20, redis-rate-limiter.replenishRate=20}}], uri=lb://meta-system, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.421 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-component,RouteDefinition{id='auiu-meta-component', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-component/**}}], filters=[], uri=lb://auiu-meta-component, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.421 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-code,RouteDefinition{id='auiu-meta-code', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-code/**}}], filters=[], uri=lb://auiu-meta-code, order=0, metadata={}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.421 INFO 25905 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由完成
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.423 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-dynamic-routes.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.423 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-dynamic-routes.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.822 INFO 25905 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.823 INFO 25905 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Environment :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.823 INFO 25905 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:24.987 INFO 25905 [] [main] com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration [Sentinel SpringCloudGateway] register SentinelGatewayFilter with order: -2147483648
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:25.126 INFO 25905 [] [main] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver Exposing 20 endpoint(s) beneath base path '/actuator'
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:25.895 WARN 25905 [] [main] org.springframework.cloud.loadbalancer.config.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:26.334 INFO 25905 [] [main] org.springframework.boot.web.embedded.netty.NettyWebServer Netty started on port 10001
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:26.349 INFO 25905 [] [main] com.alibaba.nacos.client.naming [BEAT] adding beat: BeatInfo{port=10001, ip='192.168.0.131', weight=1.0, serviceName='DEFAULT_GROUP@@auiu-meta-gateway', cluster='DEFAULT', metadata={preserved.register.source=SPRING_CLOUD}, scheduled=false, period=5000, stopped=false} to beat map.
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:26.350 INFO 25905 [] [main] com.alibaba.nacos.client.naming [REGISTER-SERVICE] 4af1f54f-5abf-4ec8-a8b0-20d50885d42b registering service DEFAULT_GROUP@@auiu-meta-gateway with instance: Instance{instanceId='null', ip='192.168.0.131', port=10001, weight=1.0, healthy=true, enabled=true, ephemeral=true, clusterName='DEFAULT', serviceName='null', metadata={preserved.register.source=SPRING_CLOUD}}
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:26.407 INFO 25905 [] [main] com.alibaba.cloud.nacos.registry.NacosServiceRegistry nacos registry, DEFAULT_GROUP auiu-meta-gateway 192.168.0.131:10001 register finished
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.562 INFO 25905 [] [com.alibaba.nacos.client.naming.updater] com.alibaba.nacos.client.naming new ips(1) service: DEFAULT_GROUP@@auiu-meta-gateway -> [{"instanceId":"192.168.0.131#10001#DEFAULT#DEFAULT_GROUP@@auiu-meta-gateway","ip":"192.168.0.131","port":10001,"weight":1.0,"healthy":true,"enabled":true,"ephemeral":true,"clusterName":"DEFAULT","serviceName":"DEFAULT_GROUP@@auiu-meta-gateway","metadata":{"preserved.register.source":"SPRING_CLOUD"},"ipDeleteTimeout":30000,"instanceHeartBeatInterval":5000,"instanceHeartBeatTimeOut":15000}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.575 INFO 25905 [] [com.alibaba.nacos.client.naming.updater] com.alibaba.nacos.client.naming current ips:(1) service: DEFAULT_GROUP@@auiu-meta-gateway -> [{"instanceId":"192.168.0.131#10001#DEFAULT#DEFAULT_GROUP@@auiu-meta-gateway","ip":"192.168.0.131","port":10001,"weight":1.0,"healthy":true,"enabled":true,"ephemeral":true,"clusterName":"DEFAULT","serviceName":"DEFAULT_GROUP@@auiu-meta-gateway","metadata":{"preserved.register.source":"SPRING_CLOUD"},"ipDeleteTimeout":30000,"instanceHeartBeatInterval":5000,"instanceHeartBeatTimeOut":15000}]
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.672 INFO 25905 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication Started AuiuMetaGatewayApplication in 8.654 seconds (JVM running for 9.641)
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway-dev.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway-dev.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-gateway+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.676 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-gateway, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.677 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-cloud.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.677 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-cloud.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.677 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-cloud-dev.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.0.131:10001] 2021-12-30 14:20:27.677 INFO 25905 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-139.196.120.28_8848-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-cloud-dev.yaml, group=DEFAULT_GROUP, cnt=1

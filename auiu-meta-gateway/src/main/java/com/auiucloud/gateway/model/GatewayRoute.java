@@ -14,8 +14,8 @@ import java.util.List;
  */
 @Data
 public class GatewayRoute implements Serializable {
-
     private static final long serialVersionUID = 7949469082270266974L;
+
     List<RouteDefinition> routes;
 
 }

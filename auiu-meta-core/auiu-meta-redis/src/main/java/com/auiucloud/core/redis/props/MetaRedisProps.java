@@ -14,6 +14,6 @@ public class MetaRedisProps {
     /**
      * 是否开启
      */
-    private boolean enable = true;
+    private boolean enabled = true;
 
 }

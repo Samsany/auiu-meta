@@ -4,6 +4,7 @@ import com.auiucloud.core.redis.core.RedisService;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author dries
  * @date 2021/12/22
  */
+@Service
 public class RedisServiceImpl implements RedisService {
 
     @Resource

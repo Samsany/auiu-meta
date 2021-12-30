@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.auiucloud.core.log.config.LogConfiguration
+
+org.springframework.context.ApplicationContextInitializer=\
+  com.auiucloud.core.log.config.TransmitLocalMDCInitializer

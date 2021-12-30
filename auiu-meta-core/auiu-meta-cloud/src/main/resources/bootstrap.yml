@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: @spring.active@
+
   main:
     allow-bean-definition-overriding: true
     allow-circular-references: true
@@ -12,19 +13,38 @@ spring:
         server-addr: @config.server-addr@
         group: @config.group@
         file-extension: yaml
-        # prefix: mate
+        # dataId 的完整格式: ${prefix}-${spring.profiles.active}.${file-extension}
+        # prefix: @config.prefix@
+        # 用于共享的配置文件
+        shared-configs:
+          - data-id: @artifactId@-@spring.active@.${spring.cloud.nacos.config.file-extension}
+            group: DEFAULT_GROUP # 默认为DEFAULT_GROUP
+            refresh: true
+
+          - data-id: @artifactId@.${spring.cloud.nacos.config.file-extension}
+            refresh: true
+
+         # 常规配置文件
+         # 优先级大于 shared-configs，在 shared-configs 之后加载
+#        extension-configs:
+#          - data-id: auiu-meta.yaml
+#            group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
+#            refresh: true   # 是否动态刷新，默认为false
+
       discovery:
         namespace: @config.namespace@
         server-addr: @config.server-addr@
         watch:
           enabled: false
     sentinel:
+      # 是否开启sentinel
       enabled: true
       filter:
         enabled: true
       # 取消控制台懒加载，项目启动即连接Sentinel
       eager: true
       transport:
+        #port: @sentinel.port@
         dashboard: @sentinel.dashboard@
 
 # Feign开启对Sentinel支持

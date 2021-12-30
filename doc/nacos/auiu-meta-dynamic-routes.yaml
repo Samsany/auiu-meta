@@ -1,0 +1,45 @@
+routes:
+  # meta-uaa
+  - id: auiu-meta-uaa
+    predicates:
+      - name: Path
+        args:
+          _genkey_0: /auiu-meta-uaa/**
+    filters: []
+    uri: lb://auiu-meta-uaa
+    order: 0
+  # auiu-meta-system
+  - id: auiu-meta-system
+    predicates:
+      - name: Path
+        args:
+          _genkey_0: /auiu-meta-system/**
+    filters:
+      - name: RequestRateLimiter
+        args:
+          # 限流策略
+          key-resolver: '#{@remoteAddressKeyResolver}'
+          # 令牌桶每秒填充率
+          redis-rate-limiter.burstCapacity: 20
+          # 令牌桶容量
+          redis-rate-limiter.replenishRate: 20
+    uri: lb://meta-system
+    order: 0
+  # auiu-meta-component
+  - id: auiu-meta-component
+    predicates:
+      - name: Path
+        args:
+          _genkey_0: /auiu-meta-component/**
+    filters: []
+    uri: lb://auiu-meta-component
+    order: 0
+  # auiu-meta-code
+  - id: auiu-meta-code
+    predicates:
+      - name: Path
+        args:
+          _genkey_0: /auiu-meta-code/**
+    filters: []
+    uri: lb://auiu-meta-code
+    order: 0

@@ -35,7 +35,7 @@ public class RedisConfiguration {
     @SuppressWarnings("all")
     @Bean(name = "redisTemplate")
     @ConditionalOnClass(RedisOperations.class)
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisSerializer<Object> serializer = redisSerializer();
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);

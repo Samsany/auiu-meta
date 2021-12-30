@@ -22,7 +22,6 @@ import java.io.FileNotFoundException;
  * @date 2021/12/22
  */
 @Slf4j
-@ResponseBody
 @RestControllerAdvice
 public class BaseExceptionHandler {
 

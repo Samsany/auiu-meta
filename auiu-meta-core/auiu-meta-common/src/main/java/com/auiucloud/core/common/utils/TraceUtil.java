@@ -1,7 +1,7 @@
 package com.auiucloud.core.common.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.core.common.constant.MateConstant;
+import com.auiucloud.core.common.constant.MetaConstant;
 import org.slf4j.MDC;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +22,9 @@ public class TraceUtil {
      * @return traceId
      */
     public static String getTraceId(HttpServletRequest request) {
-        String traceId = request.getParameter(MateConstant.MATE_TRACE_ID);
+        String traceId = request.getParameter(MetaConstant.META_TRACE_ID);
         if (StrUtil.isBlank(traceId)) {
-            traceId = request.getHeader(MateConstant.MATE_TRACE_ID);
+            traceId = request.getHeader(MetaConstant.META_TRACE_ID);
         }
         return traceId;
     }
@@ -35,7 +35,7 @@ public class TraceUtil {
      */
     public static void mdcTraceId (String traceId) {
         if (StrUtil.isNotBlank(traceId)) {
-            MDC.put(MateConstant.LOG_TRACE_ID, traceId);
+            MDC.put(MetaConstant.LOG_TRACE_ID, traceId);
         }
     }
 

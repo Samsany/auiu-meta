@@ -17,6 +17,7 @@ import java.util.List;
 public class YamlPropertyLoaderFactory extends DefaultPropertySourceFactory {
 
     @Override
+    @SuppressWarnings("all")
     public PropertySource<?> createPropertySource(String name, EncodedResource resource) throws IOException {
         List<PropertySource<?>> sources = new YamlPropertySourceLoader()
                 .load(

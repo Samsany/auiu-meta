@@ -43,7 +43,7 @@ public class MetaApiProperties {
     /**
      * 是否启用网关鉴权模式
      */
-    private boolean enable;
+    private boolean enabled;
 
     /**
      * 首次加载合并ENDPOINTS

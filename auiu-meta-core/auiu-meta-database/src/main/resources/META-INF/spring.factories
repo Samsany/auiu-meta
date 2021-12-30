@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.auiucloud.core.database.config.DruidConfiguration,\
+  com.auiucloud.core.database.config.JacksonConfiguration,\
+  com.auiucloud.core.database.config.MybatisPlusConfiguration

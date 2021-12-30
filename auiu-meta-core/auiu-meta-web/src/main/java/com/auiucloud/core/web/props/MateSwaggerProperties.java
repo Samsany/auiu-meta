@@ -19,7 +19,7 @@ import java.util.List;
 public class MateSwaggerProperties {
 
     /*** 是否开启swagger */
-    private boolean enable = true;
+    private boolean enabled = true;
     /*** API文档生成基础路径 */
     private String basePackage;
     /*** group */
