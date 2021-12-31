@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.auiucloud</groupId>
-        <artifactId>auiu-meta-support</artifactId>
+        <artifactId>auiu-meta-platform</artifactId>
         <version>1.0.1</version>
     </parent>
 
@@ -25,6 +25,10 @@
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-rule</artifactId>
         </dependency>
         <dependency>
             <groupId>de.codecentric</groupId>

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @date 2021/12/24
  */
 @FeignClient(value = FeignConstant.AUIU_MATE_CLOUD_LOG_PRODUCER)
-public interface ICommonLogService {
+public interface ICommonLogProvider {
 
     /**
      * 向消息中心发送消息
@@ -21,7 +21,7 @@ public interface ICommonLogService {
      * @param commonLog 普通日志
      * @return 状态
      */
-    @PostMapping("/provider/common-log/send")
-    ApiResponse<?> sendCommonLog(CommonLog commonLog);
+//    @PostMapping("/provider/common-log/send")
+//    ApiResponse<?> sendCommonLog(CommonLog commonLog);
 
 }

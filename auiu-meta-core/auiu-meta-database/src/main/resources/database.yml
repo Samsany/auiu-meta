@@ -2,7 +2,7 @@
 mybatis-plus:
   mapper-locations: classpath:com/auiucloud/**/mapper/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.auiucloud.**.model,com.auiucloud.**.entity
+  typeAliasesPackage: com.auiucloud.**.model,com.auiucloud.**.domain,com.auiucloud.**.domain
   # 支持统配符 * 或者 ; 分割
   # typeEnumsPackage: com.auiucloud.entity.enums
   global-config:
@@ -24,7 +24,7 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
-    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
     # mybatis-plus配置控制台打印完整带参数SQL语句
     # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

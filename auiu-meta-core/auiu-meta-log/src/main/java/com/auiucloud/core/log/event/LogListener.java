@@ -1,8 +1,8 @@
 package com.auiucloud.core.log.event;
 
 import com.auiucloud.core.common.model.CommonLog;
-import com.auiucloud.core.log.feign.ICommonLogService;
-import com.auiucloud.core.log.feign.ISysLogService;
+import com.auiucloud.core.log.feign.ICommonLogProvider;
+import com.auiucloud.core.log.feign.ISysLogProvider;
 import com.auiucloud.core.log.props.LogProperties;
 import com.auiucloud.core.log.props.LogType;
 import lombok.extern.slf4j.Slf4j;
@@ -19,20 +19,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogListener {
 
-    private ISysLogService sysLogService;
-    private ICommonLogService commonLogService;
+    private ISysLogProvider sysLogService;
+    private ICommonLogProvider commonLogService;
     private LogProperties logProperties;
 
     public LogListener() {
 
     }
 
-    public LogListener(ISysLogService sysLogService, LogProperties logProperties) {
+    public LogListener(ISysLogProvider sysLogService, LogProperties logProperties) {
         this.sysLogService = sysLogService;
         this.logProperties = logProperties;
     }
 
-    public LogListener(ICommonLogService commonLogService, LogProperties logProperties) {
+    public LogListener(ICommonLogProvider commonLogService, LogProperties logProperties) {
         this.commonLogService = commonLogService;
         this.logProperties = logProperties;
     }
@@ -45,7 +45,8 @@ public class LogListener {
         // 发送日志到kafka
         log.info("发送日志:{}", commonLog);
         if (logProperties.getLogType().equals(LogType.KAFKA)) {
-            commonLogService.sendCommonLog(commonLog);
+            // TODO 发送日志到kafka
+            // commonLogService.sendCommonLog(commonLog);
         } else {
             sysLogService.set(commonLog);
         }

@@ -1,8 +1,8 @@
 package com.auiucloud.core.log.config;
 
 import com.auiucloud.core.log.event.LogListener;
-import com.auiucloud.core.log.feign.ICommonLogService;
-import com.auiucloud.core.log.feign.ISysLogService;
+import com.auiucloud.core.log.feign.ICommonLogProvider;
+import com.auiucloud.core.log.feign.ISysLogProvider;
 import com.auiucloud.core.log.props.LogProperties;
 import com.auiucloud.core.log.props.LogType;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +25,15 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableConfigurationProperties(value = LogProperties.class)
 public class LogConfiguration {
 
-    private final ISysLogService logService;
-    private final ICommonLogService commonLogService;
+    private final ISysLogProvider sysLogProvider;
+    // private final ICommonLogProvider commonLogService;
     private final LogProperties logProperties;
 
     @Bean
     public LogListener sysLogListener() {
-        if (logProperties.getLogType().equals(LogType.KAFKA)) {
-            return new LogListener(commonLogService, logProperties);
-        }
-        return new LogListener(logService, logProperties);
+//        if (logProperties.getLogType().equals(LogType.KAFKA)) {
+//            return new LogListener(commonLogService, logProperties);
+//        }
+        return new LogListener(sysLogProvider, logProperties);
     }
 }

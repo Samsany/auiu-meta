@@ -19,7 +19,7 @@ public class FeignConstant {
     /**
      * 系统服务
      */
-    public final String AUIU_MATE_CLOUD_SYSTEM = "auiu-meta-system";
+    public final String AUIU_MATE_CLOUD_ADMIN = "auiu-meta-admin";
 
     /**
      * 认证服务

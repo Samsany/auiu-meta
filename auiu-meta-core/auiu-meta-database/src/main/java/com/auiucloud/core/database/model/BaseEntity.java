@@ -1,6 +1,7 @@
 package com.auiucloud.core.database.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -48,6 +49,7 @@ public class BaseEntity implements Serializable {
     /**
      * 删除标识
      */
+    @JsonIgnore
     @ApiModelProperty(value = "删除标识")
     private boolean deleted;
 }
