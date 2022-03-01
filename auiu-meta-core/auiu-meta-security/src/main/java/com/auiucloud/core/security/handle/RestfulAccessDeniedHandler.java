@@ -3,7 +3,10 @@ package com.auiucloud.core.security.handle;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.api.ApiResponse;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
@@ -22,12 +25,7 @@ import java.io.IOException;
 public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException ex) throws IOException, ServletException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        log.error("用户未授权操作: {}", ex.getMessage());
-        response.getWriter().write(JSONUtil.toJsonStr(ApiResponse.fail(ResultCode.USER_ERROR_A0301)));
-        response.getWriter().flush();
+        log.error("处理未授权: {}", ex.getMessage());
+        ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), ApiResponse.fail(ResultCode.USER_ERROR_A0301));
     }
 }

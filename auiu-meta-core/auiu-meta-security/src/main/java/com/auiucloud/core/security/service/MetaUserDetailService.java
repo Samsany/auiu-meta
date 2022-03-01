@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @author dries
  * @date 2021/12/22
  */
-public interface AuiuUserDetailService extends UserDetailsService {
+public interface MetaUserDetailService extends UserDetailsService {
     /**
      * 根据手机号登录
      *

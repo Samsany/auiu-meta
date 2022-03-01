@@ -1,6 +1,7 @@
 package com.auiucloud.core.database.config;
 
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
+import com.auiucloud.core.database.handler.MybatisPlusMetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -11,6 +12,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * mybatis plus配置中心
@@ -23,13 +28,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:database.yml")
 @MapperScan("com.auiucloud.**.mapper.**")
-public class MybatisPlusConfiguration {
+public class MybatisPlusConfiguration implements WebMvcConfigurer {
 
     /**
      * 单页分页条数限制(默认无限制,参见 插件#handlerLimit 方法)
      */
     private static final Long MAX_LIMIT = 1000L;
 
+    /**
+     * SQL 过滤器避免SQL 注入
+     * @param argumentResolvers
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new SqlFilterArgumentResolver());
+    }
 
     /**
      * 新的分页插件,一缓和二缓遵循mybatis的规则,
@@ -56,5 +69,13 @@ public class MybatisPlusConfiguration {
     @Bean
     public OptimisticLockerInnerInterceptor optimisticLockerInterceptor() {
         return new OptimisticLockerInnerInterceptor();
+    }
+
+    /**
+     * 审计字段自动填充
+     */
+    @Bean
+    public MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler() {
+        return new MybatisPlusMetaObjectHandler();
     }
 }

@@ -5,13 +5,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author dries
  * @date 2021/12/22
  */
 @Getter
-public class SecurityUser extends User {
+public class MetaUser extends User {
 
     private static final long serialVersionUID = 4501920308335108690L;
 
@@ -21,9 +22,9 @@ public class SecurityUser extends User {
     private final Long id;
 
     /**
-     * 部门ID
+     * 角色ID
      */
-    private final String roleId;
+    private final Set<Long> roleIds;
     /**
      * 部门ID
      */
@@ -44,10 +45,10 @@ public class SecurityUser extends User {
      */
     private final int type;
 
-    public SecurityUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, String roleId, Long departId, String mobile, String avatar, int type) {
+    public MetaUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, Set<Long> roleIds, Long departId, String mobile, String avatar, int type) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
-        this.roleId = roleId;
+        this.roleIds = roleIds;
         this.departId = departId;
         this.mobile = mobile;
         this.avatar = avatar;

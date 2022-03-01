@@ -1,9 +1,11 @@
 package com.auiucloud.core.security.handle;
 
-import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.api.ApiResponse;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
@@ -22,13 +24,9 @@ import java.io.IOException;
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        log.error("路径无权限: {}", request.getRequestURL());
+        log.error("处理未认证: {}", request.getRequestURL());
         log.error(ex.getMessage());
-        response.getWriter().println(JSONUtil.parse(ApiResponse.fail(ResultCode.USER_ERROR_A0230)));
-        response.getWriter().flush();
+
+        ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), ApiResponse.fail(ResultCode.USER_ERROR_A0230));
     }
 }

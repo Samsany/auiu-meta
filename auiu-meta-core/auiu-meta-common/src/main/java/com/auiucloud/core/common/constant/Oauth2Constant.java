@@ -8,6 +8,11 @@ public class Oauth2Constant {
 
     public static final String JWT_TOKEN_PREFIX = "Bearer ";
     public static final String JWT_TOKEN_HEADER = "Authorization";
+    /**
+     * JWT存储权限属性
+     */
+    public static final String ROLE_PREFIX = "ROLE_";
+    public static final String AUTHORITY_CLAIM_NAME = "authorities";
 
     public static final String ALL = "/**";
 
@@ -58,29 +63,48 @@ public class Oauth2Constant {
      */
     public static final String DEFAULT_PARAMETER_NAME_SOCIAL = "social";
 
-
     /**
      * 字段描述开始：用户ID
      */
-    public static final String AUIU_MATE_USER_ID = "userId";
+    public static final String META_USER = "user";
+    /**
+     * 字段描述开始：用户ID
+     */
+    public static final String META_USER_ID = "userId";
 
     /**
      * 用户名
      */
-    public static final String AUIU_MATE_USER_NAME = "username";
+    public static final String META_USER_NAME = "username";
 
     /**
      * 用户头像
      */
-    public static final String AUIU_MATE_AVATAR = "avatar";
+    public static final String META_AVATAR = "avatar";
 
     /**
      * 用户权限ID
      */
-    public static final String AUIU_MATE_ROLE_IDS = "roleIds";
+    public static final String META_ROLE_IDS = "roleIds";
 
     /**
      * 用户类型
      */
-    public static final String AUIU_MATE_TYPE = "type";
+    public static final String META_TYPE = "type";
+
+    /**
+     * JWT唯一标识
+     */
+    public static final String META_USER_JTI = "jti";
+
+    /*** 自定义client表名 */
+    public static final String META_CLIENT_TABLE = "oauth_client_details";
+    /**
+     * 基础查询语句
+     */
+    public static final String META_CLIENT_BASE = "select client_id, CONCAT('{noop}',client_secret) as client_secret, resource_ids, scope, " +
+            "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity," +
+            "refresh_token_validity, additional_information, autoapprove from " + META_CLIENT_TABLE;
+    public static final String FIND_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " order by client_id";
+    public static final String SELECT_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where client_id = ?";
 }

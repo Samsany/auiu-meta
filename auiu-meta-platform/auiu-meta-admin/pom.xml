@@ -16,6 +16,10 @@
     <dependencies>
         <dependency>
             <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-admin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-cloud</artifactId>
         </dependency>
         <dependency>

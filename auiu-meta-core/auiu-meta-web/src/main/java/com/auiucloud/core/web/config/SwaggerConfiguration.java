@@ -83,9 +83,12 @@ public class SwaggerConfiguration {
         };
     }
 
-    @Bean(value = "defaultApi3")
+    // SWAGGER_12 = new DocumentationType("swagger", "1.2");
+    // SWAGGER_2 = new DocumentationType("swagger", "2.0");
+    // OAS_30 = new DocumentationType("openApi", "3.0");
+    @Bean(value = "userApi")
     public Docket createRestApi() {
-        ApiSelectorBuilder apiSelectorBuilder = new Docket(DocumentationType.OAS_30)
+        ApiSelectorBuilder apiSelectorBuilder = new Docket(DocumentationType.SWAGGER_2)
                 // 用来创建该API的基本信息，展示在文档的页面中（自定义展示的信息）
                 .apiInfo(groupApiInfo())
                 // 设置哪些接口暴露给Swagger展示
@@ -154,6 +157,11 @@ public class SwaggerConfiguration {
         return securityReferences;
     }
 
+    /**
+     * Spring Boot 2.6.x整合Swagger启动失败报错问题解决
+     * 错误原因：Spring MVC 的路径匹配策略是 ant-path-matcher，而 Spring Boot 2.6.x版本的默认匹配策略是 path-pattern-matcher
+     * @return
+     */
     @Bean
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {

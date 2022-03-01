@@ -53,8 +53,7 @@ public class ResponseUtil {
                                                    HttpStatus status, Object value) {
         response.setStatusCode(status);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-        ApiResponse<?> result = ApiResponse.fail(status.value(), value.toString());
-        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(result).getBytes());
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(value).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
     }
 

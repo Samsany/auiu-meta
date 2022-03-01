@@ -26,13 +26,17 @@ public class IgnoreUrlPropsConfig {
      * 认证中心默认忽略验证地址
      */
     private static final String[] SECURITY_ENDPOINTS = {
+            "/error/**",
             "/auth/**",
             "/oauth/token",
             "/login/*",
             "/actuator/**",
-            "/v3/api-docs",
+            "/druid/**",
+            "/v2/api-docs/**",
+            "/v3/api-docs/**",
             "/doc.html",
             "/webjars/**",
+            "/assets/**",
             "**/favicon.ico",
             "/swagger-resources/**"
     };

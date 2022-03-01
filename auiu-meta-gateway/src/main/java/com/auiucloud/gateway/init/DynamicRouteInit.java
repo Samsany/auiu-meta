@@ -10,6 +10,7 @@ import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.gateway.model.GatewayRoute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.annotation.Configuration;
 import org.yaml.snakeyaml.Yaml;
@@ -32,6 +33,7 @@ public class DynamicRouteInit {
 
     private final RouteDefinitionWriter routeDefinitionWriter;
     private final NacosConfigProperties nacosProperties;
+    private final GatewayProperties gatewayProperties;
 
     @PostConstruct
     public void initRoute() {
@@ -47,7 +49,7 @@ public class DynamicRouteInit {
             log.info("初始化网关路由开始");
             updateRoute(content);
             log.info("初始化网关路由完成");
-            // 开户监听，实现动态
+            // 监听配置，实现动态路由
             configService.addListener(MetaConstant.CONFIG_DATA_ID_DYNAMIC_ROUTES, nacosProperties.getGroup(), new Listener() {
                 @Override
                 public void receiveConfigInfo(String configInfo) {
@@ -72,6 +74,8 @@ public class DynamicRouteInit {
             log.info("加载路由：{},{}", route.getId(), route);
             routeDefinitionWriter.save(Mono.just(route)).subscribe();
         });
+
+        gatewayProperties.setRoutes(gatewayRoute.getRoutes());
     }
 
 }

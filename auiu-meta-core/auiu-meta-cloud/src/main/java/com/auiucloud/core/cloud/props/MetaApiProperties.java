@@ -24,15 +24,20 @@ public class MetaApiProperties {
      * 监控中心和swagger需要访问的url
      */
     private static final String[] ENDPOINTS = {
-            "/oauth/**",
+            "/error/**",
+            "/auth/**",
+            "/oauth/token",
+            "/login/*",
             "/actuator/**",
+            "/druid/**",
+            "/v2/api-docs/**",
             "/v3/api-docs/**",
             "/doc.html",
-            "/druid/**",
-            "/error/**",
+            "/webjars/**",
             "/assets/**",
-            "/auth/logout",
-            "/auth/code"
+            "**/favicon.ico",
+            "/swagger-resources/**",
+            "/**/rsa/publicKey"
     };
 
     /**
@@ -43,7 +48,7 @@ public class MetaApiProperties {
     /**
      * 是否启用网关鉴权模式
      */
-    private boolean enabled;
+    private boolean enabled = true;
 
     /**
      * 首次加载合并ENDPOINTS

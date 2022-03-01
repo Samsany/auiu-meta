@@ -1,6 +1,7 @@
 package com.auiucloud.gateway.config;
 
 import com.auiucloud.core.common.constant.MetaConstant;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,9 @@ import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author dries
@@ -22,7 +25,7 @@ import java.util.List;
 @Slf4j
 @Primary
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SwaggerResourceConfig implements SwaggerResourcesProvider {
 
     /**
@@ -40,12 +43,6 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
 
-//    /**
-//     * 网关应用名称
-//     */
-//    @Value("${spring.application.name}")
-//    private String self;
-
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
@@ -53,21 +50,21 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         // 获取所有路由的ID
         routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
         // 过滤出配置文件中定义的路由->过滤出Path Route Predicate->根据路径拼接成api-docs路径->生成SwaggerResource
-        gatewayProperties.getRoutes().stream().filter(routeDefinition -> routes.contains(routeDefinition.getId())).forEach(route -> route.getPredicates().stream()
-                .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
-                .forEach(predicateDefinition ->
-                        resources.add(
-                                swaggerResource(route.getId(),
-                                        predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("*", SWAGGER3URL)))
-                ));
+        gatewayProperties.getRoutes().stream()
+                .filter(routeDefinition -> routes.contains(routeDefinition.getId()))
+                .forEach(route -> route.getPredicates().stream()
+                        .filter(predicateDefinition -> ("Path").equalsIgnoreCase(predicateDefinition.getName()))
+                        .forEach(predicateDefinition ->
+                                resources.add(swaggerResource(route.getId(), predicateDefinition.getArgs().get(NameUtils.GENERATED_NAME_PREFIX + "0").replace("/**", SWAGGER2URL)))
+                        ));
         return resources;
     }
 
-    private SwaggerResource swaggerResource(String name, String location) {
-        log.info("name:{},location:{}", name, location);
+    private SwaggerResource swaggerResource(String name, String url) {
+        log.info("name:{},location:{}", name, url);
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
-        swaggerResource.setLocation(location);
+        swaggerResource.setUrl(url);
         swaggerResource.setSwaggerVersion(MetaConstant.AUIU_APP_VERSION);
         return swaggerResource;
     }

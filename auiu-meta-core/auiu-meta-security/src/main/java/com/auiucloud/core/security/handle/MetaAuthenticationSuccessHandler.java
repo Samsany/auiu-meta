@@ -7,5 +7,5 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2021/12/22
  */
 @Slf4j
-public class AuiuAuthenticationSuccessHandler {
+public class MetaAuthenticationSuccessHandler {
 }

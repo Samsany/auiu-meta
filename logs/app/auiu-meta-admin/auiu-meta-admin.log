@@ -1,300 +1,893 @@
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:56.509 WARN 26165 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:56.531 WARN 26165 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:56.553 WARN 26165 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:56.554 INFO 26165 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:56.614 INFO 26165 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:58.206 INFO 26165 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:58.210 INFO 26165 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:58.231 INFO 26165 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:58.457 WARN 26165 [] [main] o.m.s.mapper.ClassPathMapperScanner      [2m:[0;39m No MyBatis mapper was found in '[com.auiucloud.**.mapper.**]' package. Please check your configuration.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:58.608 INFO 26165 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=0ef47d6b-ae11-3c34-b713-9389de5b4aca
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.444 INFO 26165 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.452 INFO 26165 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.453 INFO 26165 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.453 INFO 26165 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.561 INFO 26165 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:26:59.561 INFO 26165 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 2907 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:00.209 INFO 26165 [] [main] c.a.c.s.SentinelWebAutoConfiguration     [2m:[0;39m [Sentinel Starter] register SentinelWebInterceptor with urlPatterns: [/**].
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:00.408 INFO 26165 [] [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure [2m:[0;39m Init DruidDataSource
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:02.931 INFO 26165 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} inited
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:03.576 INFO 26165 [] [main] o.s.b.a.e.web.EndpointLinksResolver      [2m:[0;39m Exposing 20 endpoint(s) beneath base path '/actuator'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:03.969 WARN 26165 [] [main] ion$DefaultTemplateResolverConfiguration [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:04.038 WARN 26165 [] [main] ConfigServletWebServerApplicationContext [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.auiucloud.core.log.config.LogConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.auiucloud.core.log.feign.ISysLogProvider' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:10.098 INFO 26165 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:10.107 INFO 26165 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:10.118 INFO 26165 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Stopping service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:10.147 INFO 26165 [] [main] ConditionEvaluationReportLoggingListener [2m:[0;39m
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 00:33:32.179 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
 
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 14:27:10.172 ERROR 26165 [] [main] o.s.b.d.LoggingFailureAnalysisReporter   [2m:[0;39m
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Parameter 0 of constructor in com.auiucloud.core.log.config.LogConfiguration required a bean of type 'com.auiucloud.core.log.feign.ISysLogProvider' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'com.auiucloud.core.log.feign.ISysLogProvider' in your configuration.
-
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:49.676 WARN 28001 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:49.705 WARN 28001 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:49.730 WARN 28001 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:49.732 INFO 28001 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:49.787 INFO 28001 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:51.701 INFO 28001 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:51.704 INFO 28001 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:51.735 INFO 28001 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:52.161 INFO 28001 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=76bd7caf-fdab-33ae-9c49-3602918e95f8
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.108 INFO 28001 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.118 INFO 28001 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.119 INFO 28001 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.120 INFO 28001 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.246 INFO 28001 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.246 INFO 28001 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 3411 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.637 WARN 28001 [] [main] ConfigServletWebServerApplicationContext [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sysLogProvider' defined in file [/Users/dries/WorkSpace/IdeaProjects/auiu-meta/auiu-meta-platform/auiu-meta-admin/target/classes/com/auiucloud/admin/feign/SysLogProvider.class]: Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sysLogServiceImpl': Unsatisfied dependency expressed through field 'baseMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sysLogMapper' defined in file [/Users/dries/WorkSpace/IdeaProjects/auiu-meta/auiu-meta-platform/auiu-meta-admin/target/classes/com/auiucloud/admin/mapper/SysLogMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration': Unsatisfied dependency expressed through constructor parameter 0; nested exception is org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'mybatis-plus-com.baomidou.mybatisplus.autoconfigure.MybatisPlusProperties': Could not bind properties to 'MybatisPlusProperties' : prefix=mybatis-plus, ignoreInvalidFields=false, ignoreUnknownFields=true; nested exception is org.springframework.boot.context.properties.bind.BindException: Failed to bind properties under 'mybatis-plus.configuration.default-enum-type-handler' to java.lang.Class<org.apache.ibatis.type.TypeHandler<?>>
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.639 INFO 28001 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Stopping service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.744 INFO 28001 [] [main] ConditionEvaluationReportLoggingListener [2m:[0;39m 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:40:53.764 ERROR 28001 [] [main] o.s.b.d.LoggingFailureAnalysisReporter   [2m:[0;39m 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Failed to bind properties under 'mybatis-plus.configuration.default-enum-type-handler' to java.lang.Class<org.apache.ibatis.type.TypeHandler<?>>:
-
-    Property: mybatis-plus.configuration.default-enum-type-handler
-    Value: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
-    Origin: class path resource [database.yml] - 27:32
-    Reason: failed to convert java.lang.String to java.lang.Class<org.apache.ibatis.type.TypeHandler<?>> (caused by java.lang.ClassNotFoundException: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler)
-
-Action:
-
-Update your application's configuration
-
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:01.664 WARN 28139 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:01.689 WARN 28139 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:01.712 WARN 28139 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:01.713 INFO 28139 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:01.773 INFO 28139 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:03.478 INFO 28139 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:03.482 INFO 28139 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:03.507 INFO 28139 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:03.922 INFO 28139 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=dcb64cd8-88b9-35c1-84a2-74e77ea340ae
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.733 INFO 28139 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.741 INFO 28139 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.742 INFO 28139 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.742 INFO 28139 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.854 INFO 28139 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:04.854 INFO 28139 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 3039 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:05.217 INFO 28139 [] [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure [2m:[0;39m Init DruidDataSource
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:07.760 INFO 28139 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} inited
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:08.721 INFO 28139 [] [main] c.a.c.s.SentinelWebAutoConfiguration     [2m:[0;39m [Sentinel Starter] register SentinelWebInterceptor with urlPatterns: [/**].
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:09.342 INFO 28139 [] [main] o.s.b.a.e.web.EndpointLinksResolver      [2m:[0;39m Exposing 20 endpoint(s) beneath base path '/actuator'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:09.712 WARN 28139 [] [main] ion$DefaultTemplateResolverConfiguration [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:09.776 WARN 28139 [] [main] ConfigServletWebServerApplicationContext [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.auiucloud.core.log.config.LogConfiguration': Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:15.856 INFO 28139 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:15.866 INFO 28139 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:15.875 INFO 28139 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Stopping service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:15.912 INFO 28139 [] [main] ConditionEvaluationReportLoggingListener [2m:[0;39m 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:45:15.941 ERROR 28139 [] [main] o.s.b.d.LoggingFailureAnalysisReporter   [2m:[0;39m 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Parameter 1 of constructor in com.auiucloud.core.log.config.LogConfiguration required a bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' in your configuration.
-
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:41.883 WARN 28263 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:41.914 WARN 28263 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:41.942 WARN 28263 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:41.943 INFO 28263 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:42.007 INFO 28263 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:43.648 INFO 28263 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:43.652 INFO 28263 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:43.676 INFO 28263 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:44.072 INFO 28263 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=dcb64cd8-88b9-35c1-84a2-74e77ea340ae
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:44.956 INFO 28263 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:44.963 INFO 28263 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:44.965 INFO 28263 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:44.965 INFO 28263 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:45.085 INFO 28263 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:45.085 INFO 28263 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 3039 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:45.440 INFO 28263 [] [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure [2m:[0;39m Init DruidDataSource
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:48.174 INFO 28263 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} inited
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:49.175 INFO 28263 [] [main] c.a.c.s.SentinelWebAutoConfiguration     [2m:[0;39m [Sentinel Starter] register SentinelWebInterceptor with urlPatterns: [/**].
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:50.037 INFO 28263 [] [main] o.s.b.a.e.web.EndpointLinksResolver      [2m:[0;39m Exposing 20 endpoint(s) beneath base path '/actuator'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:50.468 WARN 28263 [] [main] ion$DefaultTemplateResolverConfiguration [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:50.537 WARN 28263 [] [main] ConfigServletWebServerApplicationContext [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'com.auiucloud.core.log.config.LogConfiguration': Unsatisfied dependency expressed through constructor parameter 1; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:56.597 INFO 28263 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:56.609 INFO 28263 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:56.617 INFO 28263 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Stopping service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:56.647 INFO 28263 [] [main] ConditionEvaluationReportLoggingListener [2m:[0;39m 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:49:56.673 ERROR 28263 [] [main] o.s.b.d.LoggingFailureAnalysisReporter   [2m:[0;39m 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Parameter 1 of constructor in com.auiucloud.core.log.config.LogConfiguration required a bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' that could not be found.
-
-
-Action:
-
-Consider defining a bean of type 'com.auiucloud.core.log.feign.ICommonLogProvider' in your configuration.
-
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:41.160 WARN 28286 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:41.202 WARN 28286 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:41.243 WARN 28286 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:41.244 INFO 28286 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:41.297 INFO 28286 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:42.950 INFO 28286 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:42.953 INFO 28286 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:42.980 INFO 28286 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:43.366 INFO 28286 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=dcb64cd8-88b9-35c1-84a2-74e77ea340ae
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.203 INFO 28286 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.210 INFO 28286 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.211 INFO 28286 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.212 INFO 28286 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.325 INFO 28286 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.326 INFO 28286 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 2991 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:44.688 INFO 28286 [] [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure [2m:[0;39m Init DruidDataSource
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:47.187 INFO 28286 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} inited
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:48.136 INFO 28286 [] [main] c.a.c.s.SentinelWebAutoConfiguration     [2m:[0;39m [Sentinel Starter] register SentinelWebInterceptor with urlPatterns: [/**].
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:48.740 INFO 28286 [] [main] o.s.b.a.e.web.EndpointLinksResolver      [2m:[0;39m Exposing 20 endpoint(s) beneath base path '/actuator'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:49.112 WARN 28286 [] [main] ion$DefaultTemplateResolverConfiguration [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:49.686 WARN 28286 [] [main] iguration$LoadBalancerCaffeineWarnLogger [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.006 INFO 28286 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Starting ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.022 INFO 28286 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat started on port(s): 20002 (http) with context path ''
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.106 INFO 28286 [] [main] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m nacos registry, DEFAULT_GROUP auiu-meta-admin 192.168.0.131:20002 register finished
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.114 WARN 28286 [] [main] ConfigServletWebServerApplicationContext [2m:[0;39m Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.125 INFO 28286 [] [main] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registering from Nacos Server now...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:50.150 INFO 28286 [] [main] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registration finished.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:58.298 WARN 28286 [] [main] o.s.b.f.support.DisposableBeanAdapter    [2m:[0;39m Custom destroy method 'close' on bean with name 'nacosServiceRegistry' threw an exception: java.lang.NullPointerException
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:58.336 INFO 28286 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:58.343 INFO 28286 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.355 INFO 28286 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Pausing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.361 WARN 28286 [] [main] org.apache.tomcat.util.net.NioEndpoint   [2m:[0;39m Failed to unlock acceptor for [http-nio-20002] because the local address was not available
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.362 INFO 28286 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Stopping service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.370 ERROR 28286 [] [http-nio-20002-Acceptor] org.apache.tomcat.util.net.Acceptor      [2m:[0;39m Socket accept failed
-
-java.nio.channels.AsynchronousCloseException: null
-	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
-	at java.base/sun.nio.ch.ServerSocketChannelImpl.end(ServerSocketChannelImpl.java:269)
-	at java.base/sun.nio.ch.ServerSocketChannelImpl.accept(ServerSocketChannelImpl.java:288)
-	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:542)
-	at org.apache.tomcat.util.net.NioEndpoint.serverSocketAccept(NioEndpoint.java:78)
-	at org.apache.tomcat.util.net.Acceptor.run(Acceptor.java:129)
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at java.base/java.lang.Thread.run(Thread.java:834)
-
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.381 INFO 28286 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Stopping ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.384 INFO 28286 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Destroying ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.404 INFO 28286 [] [main] ConditionEvaluationReportLoggingListener [2m:[0;39m 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:50:59.427 ERROR 28286 [] [main] o.s.boot.SpringApplication               [2m:[0;39m Application run failed
-
-org.springframework.context.ApplicationContextException: Failed to start bean 'documentationPluginsBootstrapper'; nested exception is java.lang.NullPointerException
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
-	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
-	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
-	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
-	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
-	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:730)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:412)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1290)
-	at com.auiucloud.admin.AuiuMetaAdminApplication.main(AuiuMetaAdminApplication.java:16)
-Caused by: java.lang.NullPointerException: null
-	at springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns(WebMvcPatternsRequestConditionWrapper.java:56)
-	at springfox.documentation.RequestHandler.sortedPaths(RequestHandler.java:113)
-	at springfox.documentation.spi.service.contexts.Orderings.lambda$byPatternsCondition$3(Orderings.java:89)
-	at java.base/java.util.Comparator.lambda$comparing$77a9974f$1(Comparator.java:469)
-	at java.base/java.util.TimSort.countRunAndMakeAscending(TimSort.java:355)
-	at java.base/java.util.TimSort.sort(TimSort.java:234)
-	at java.base/java.util.Arrays.sort(Arrays.java:1515)
-	at java.base/java.util.ArrayList.sort(ArrayList.java:1750)
-	at java.base/java.util.stream.SortedOps$RefSortingSink.end(SortedOps.java:392)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.Sink$ChainedReference.end(Sink.java:258)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:485)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider.requestHandlers(WebMvcRequestHandlerProvider.java:81)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1655)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:484)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.withDefaults(AbstractDocumentationPluginsBootstrapper.java:107)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.buildContext(AbstractDocumentationPluginsBootstrapper.java:91)
-	at springfox.documentation.spring.web.plugins.AbstractDocumentationPluginsBootstrapper.bootstrapDocumentationPlugins(AbstractDocumentationPluginsBootstrapper.java:82)
-	at springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper.start(DocumentationPluginsBootstrapper.java:100)
-	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
 	... 14 common frames omitted
 
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:19.881 WARN 28531 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:19.906 WARN 28531 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:19.927 WARN 28531 [] [main] c.a.c.n.c.NacosPropertySourceBuilder     [2m:[0;39m Ignore the empty nacos configuration and get it based on dataId[auiu-meta-admin-dev.yaml] & group[DEFAULT_GROUP]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:19.928 INFO 28531 [] [main] b.c.PropertySourceBootstrapConfiguration [2m:[0;39m Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-admin,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:19.991 INFO 28531 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m The following profiles are active: dev
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:22.016 INFO 28531 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Multiple Spring Data modules found, entering strict repository configuration mode!
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:22.020 INFO 28531 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:22.050 INFO 28531 [] [main] .s.d.r.c.RepositoryConfigurationDelegate [2m:[0;39m Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:22.853 INFO 28531 [] [main] o.s.cloud.context.scope.GenericScope     [2m:[0;39m BeanFactory id=46d4cbd1-9d54-3662-b1d9-01531024c032
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.154 INFO 28531 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat initialized with port(s): 20002 (http)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.161 INFO 28531 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Initializing ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.163 INFO 28531 [] [main] o.apache.catalina.core.StandardService   [2m:[0;39m Starting service [Tomcat]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.163 INFO 28531 [] [main] org.apache.catalina.core.StandardEngine  [2m:[0;39m Starting Servlet engine: [Apache Tomcat/9.0.56]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.286 INFO 28531 [] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring embedded WebApplicationContext
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.287 INFO 28531 [] [main] w.s.c.ServletWebServerApplicationContext [2m:[0;39m Root WebApplicationContext: initialization completed in 4250 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:24.772 INFO 28531 [] [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure [2m:[0;39m Init DruidDataSource
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:27.270 INFO 28531 [] [main] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} inited
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:28.385 INFO 28531 [] [main] c.a.c.s.SentinelWebAutoConfiguration     [2m:[0;39m [Sentinel Starter] register SentinelWebInterceptor with urlPatterns: [/**].
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:29.131 INFO 28531 [] [main] o.s.b.a.e.web.EndpointLinksResolver      [2m:[0;39m Exposing 20 endpoint(s) beneath base path '/actuator'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:29.600 WARN 28531 [] [main] ion$DefaultTemplateResolverConfiguration [2m:[0;39m Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:30.179 WARN 28531 [] [main] iguration$LoadBalancerCaffeineWarnLogger [2m:[0;39m Spring Cloud LoadBalancer is currently working with the default cache. You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:30.520 INFO 28531 [] [main] o.a.coyote.http11.Http11NioProtocol      [2m:[0;39m Starting ProtocolHandler ["http-nio-20002"]
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:30.535 INFO 28531 [] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  [2m:[0;39m Tomcat started on port(s): 20002 (http) with context path ''
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:30.629 INFO 28531 [] [main] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m nacos registry, DEFAULT_GROUP auiu-meta-admin 192.168.0.131:20002 register finished
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:30.846 INFO 28531 [] [main] c.a.admin.AuiuMetaAdminApplication       [2m:[0;39m Started AuiuMetaAdminApplication in 13.014 seconds (JVM running for 14.476)
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:31.003 INFO 28531 [] [RMI TCP Connection(10)-192.168.0.131] o.a.c.c.C.[Tomcat].[localhost].[/]       [2m:[0;39m Initializing Spring DispatcherServlet 'dispatcherServlet'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:31.004 INFO 28531 [] [RMI TCP Connection(10)-192.168.0.131] o.s.web.servlet.DispatcherServlet        [2m:[0;39m Initializing Servlet 'dispatcherServlet'
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 15:56:31.007 INFO 28531 [] [RMI TCP Connection(10)-192.168.0.131] o.s.web.servlet.DispatcherServlet        [2m:[0;39m Completed initialization in 2 ms
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 19:22:30.763 INFO 28531 [] [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registering from Nacos Server now...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 19:22:30.788 INFO 28531 [] [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registration finished.
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 19:22:34.793 WARN 28531 [] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    [2m:[0;39m Custom destroy method 'close' on bean with name 'nacosServiceRegistry' threw an exception: java.lang.NullPointerException
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 19:22:34.947 INFO 28531 [] [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
-[auiu-meta-admin:192.168.0.131:20002] 2021-12-30 19:22:34.968 INFO 28531 [] [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 00:33:32.181 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 00:33:32.181 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 01:56:10.517 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 01:56:10.518 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 01:56:10.518 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 03:19:38.042 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 03:19:38.043 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 03:19:38.043 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 04:44:25.585 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 04:44:25.586 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 04:44:25.587 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 06:29:00.217 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 06:29:00.218 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 06:29:00.218 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 07:52:35.581 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 07:52:35.582 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 07:52:35.582 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 08:57:03.313 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 08:57:03.314 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 08:57:03.314 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 09:16:33.904 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.c.config.http.ServerHttpAgent      [2m:[0;39m [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 09:16:33.907 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 09:16:33.908 ERROR 2446 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] c.a.n.client.config.impl.ClientWorker    [2m:[0;39m longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.GeneratedConstructorAccessor83.newInstance(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 11:11:19.802 INFO 2446 [] [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registering from Nacos Server now...
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 11:11:19.841 INFO 2446 [] [SpringApplicationShutdownHook] c.a.c.n.registry.NacosServiceRegistry    [2m:[0;39m De-registration finished.
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 11:11:25.878 WARN 2446 [] [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    [2m:[0;39m Custom destroy method 'close' on bean with name 'nacosServiceRegistry' threw an exception: java.lang.NullPointerException
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 11:11:26.097 INFO 2446 [] [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closing ...
+[auiu-meta-admin:192.168.0.131:20002] 2022-02-09 11:11:26.101 INFO 2446 [] [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   [2m:[0;39m {dataSource-1} closed

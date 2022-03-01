@@ -16,6 +16,7 @@
     </properties>
 
     <modules>
+        <module>auiu-meta-admin-api</module>
         <module>auiu-meta-admin</module>
     </modules>
 

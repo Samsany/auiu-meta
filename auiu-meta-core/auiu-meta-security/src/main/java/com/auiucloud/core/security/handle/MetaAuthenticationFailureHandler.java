@@ -19,7 +19,7 @@ import java.io.IOException;
  * @date 2021/12/22
  */
 @Slf4j
-public class AuiuAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class MetaAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         ApiResponse<?> apiResponse = null;

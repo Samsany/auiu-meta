@@ -44,6 +44,11 @@ public class SecurityUtil {
     public static JSONObject getJwtPayload() {
         // 从token中解析用户信息
         String realToken = getRealToken();
+        return getJwtPayload(realToken);
+    }
+
+    public static JSONObject getJwtPayload(String realToken) {
+        // 从token中解析用户信息
         JWSObject jwsObject;
         try {
             jwsObject = JWSObject.parse(realToken);
@@ -56,11 +61,11 @@ public class SecurityUtil {
     }
 
     public static Long getUserId() {
-        return getJwtPayload().getLong(Oauth2Constant.AUIU_MATE_USER_ID);
+        return getJwtPayload().getLong(Oauth2Constant.META_USER_ID);
     }
 
     public static String getUsername() {
-        return getJwtPayload().getStr(Oauth2Constant.AUIU_MATE_USER_NAME);
+        return getJwtPayload().getStr(Oauth2Constant.META_USER_NAME);
     }
 
     /**
@@ -72,10 +77,10 @@ public class SecurityUtil {
         // 然后根据token获取用户登录信息，这里省略获取用户信息的过程
         JSONObject jwtPayload = getJwtPayload();
         LoginUser loginUser = new LoginUser();
-        loginUser.setUserId(jwtPayload.getStr(Oauth2Constant.AUIU_MATE_USER_NAME));
-        loginUser.setAccount(jwtPayload.getStr(Oauth2Constant.AUIU_MATE_USER_NAME));
-        loginUser.setRoleIds((Set<String>) jwtPayload.get(Oauth2Constant.AUIU_MATE_ROLE_IDS));
-        loginUser.setType(jwtPayload.getInt(Oauth2Constant.AUIU_MATE_TYPE));
+        loginUser.setUserId(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
+        loginUser.setAccount(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
+        loginUser.setRoleIds((Set<String>) jwtPayload.get(Oauth2Constant.META_ROLE_IDS));
+        loginUser.setType(jwtPayload.getInt(Oauth2Constant.META_TYPE));
         UserContext.setUser(loginUser);
         return loginUser;
     }

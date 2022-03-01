@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.auiucloud.core.security.config.IgnoreUrlPropsConfig,\
-  com.auiucloud.core.security.config.MetaResourceServerConfig,\
-  com.auiucloud.core.security.config.MetaSecurityConfig
+  com.auiucloud.core.security.config.MetaSecurityConfig,\
+  com.auiucloud.core.security.config.AuthPropsConfig,\
+  com.auiucloud.core.security.config.AuthenticationBeanConfig
