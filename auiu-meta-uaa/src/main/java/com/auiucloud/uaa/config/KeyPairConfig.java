@@ -16,7 +16,7 @@ public class KeyPairConfig {
 
     @Bean
     public KeyPair keyPair() {
-        ClassPathResource ksFile = new ClassPathResource("meta-cloud.jks");
+        ClassPathResource ksFile = new ClassPathResource("certs/meta-cloud.jks");
         KeyStoreKeyFactory ksFactory = new KeyStoreKeyFactory(ksFile, "Zxx131013@".toCharArray());
         return ksFactory.getKeyPair("meta-cloud");
     }

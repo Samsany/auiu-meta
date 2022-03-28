@@ -1,0 +1,314 @@
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:13.990 INFO 7509 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.017 INFO 7509 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.146 INFO 7509 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.311 WARN 7509 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.389 WARN 7509 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.460 WARN 7509 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.461 INFO 7509 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:14.471 INFO 7509 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:15.987 INFO 7509 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:15.991 INFO 7509 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.018 INFO 7509 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.351 INFO 7509 [] [main] org.springframework.cloud.context.scope.GenericScope BeanFactory id=8db0a90f-d66b-3a93-b7b8-7f578859418c
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.575 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.576 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.578 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$532/0x0000000800586c40] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.581 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.693 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'spring.cloud.sentinel-com.alibaba.cloud.sentinel.SentinelProperties' of type [com.alibaba.cloud.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.752 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration' of type [com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.764 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.766 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:16.769 INFO 7509 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.154 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [After]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.156 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Before]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Between]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Cookie]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Header]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Host]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Method]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Path]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Query]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [ReadBody]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [RemoteAddr]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Weight]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.157 INFO 7509 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.262 INFO 7509 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由开始
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.288 INFO 7509 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-uaa,RouteDefinition{id='auiu-meta-uaa', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-uaa/**}}], filters=[], uri=lb://auiu-meta-uaa, order=0, metadata={}}
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.292 INFO 7509 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-admin,RouteDefinition{id='auiu-meta-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-admin/**}}], filters=[FilterDefinition{name='RequestRateLimiter', args={key-resolver=#{@remoteAddressKeyResolver}, redis-rate-limiter.burstCapacity=20, redis-rate-limiter.replenishRate=20}}], uri=lb://auiu-meta-admin, order=0, metadata={}}
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.293 INFO 7509 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由完成
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.294 INFO 7509 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-dynamic-routes.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.295 INFO 7509 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-dynamic-routes.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.683 INFO 7509 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.683 INFO 7509 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Environment :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.683 INFO 7509 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:18.866 INFO 7509 [] [main] com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration [Sentinel SpringCloudGateway] register SentinelGatewayFilter with order: -2147483648
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.013 INFO 7509 [] [main] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver Exposing 20 endpoint(s) beneath base path '/actuator'
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.183 WARN 7509 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.reactive.WebFluxSecurityConfiguration': Unsatisfied dependency expressed through method 'setSecurityWebFilterChains' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'securityWebFilterChain' defined in class path resource [com/auiucloud/gateway/config/MeatResourceServerConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.web.server.SecurityWebFilterChain]: Factory method 'securityWebFilterChain' threw exception; nested exception is org.springframework.web.util.pattern.PatternParseException: No more pattern data allowed after {*...} or ** pattern element
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.184 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.184 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.184 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:19.184 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:22.200 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:22.202 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.215 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.216 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.216 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.217 WARN 7509 [] [main] com.alibaba.nacos.client.naming [NamingHttpClientManager] Start destroying NacosRestTemplate
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.218 WARN 7509 [] [main] com.alibaba.nacos.client.naming [NamingHttpClientManager] Destruction of the end
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.218 INFO 7509 [] [main] com.alibaba.nacos.client.identify.CredentialWatcher [null] CredentialWatcher is stopped
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.218 INFO 7509 [] [main] com.alibaba.nacos.client.identify.CredentialService [null] CredentialService is freed
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.218 INFO 7509 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.274 INFO 7509 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:31:25.292 ERROR 7509 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Invalid mapping pattern detected: /**/rsa/publicKey
+^
+No more pattern data allowed after {*...} or ** pattern element
+
+Action:
+
+Fix this pattern in your application or switch to the legacy parser implementation with 'spring.mvc.pathmatch.matching-strategy=ant_path_matcher'.
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:48:22.292 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.http.ServerHttpAgent [NACOS Exception httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:48:22.298 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:48:22.298 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker longPolling error : 
+
+java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1974)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection$10.run(HttpURLConnection.java:1969)
+	at java.base/java.security.AccessController.doPrivileged(Native Method)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getChainedException(HttpURLConnection.java:1968)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1536)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getBody(JdkHttpClientResponse.java:60)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handleError(AbstractResponseHandler.java:51)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:44)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.execute(NacosRestTemplate.java:483)
+	at com.alibaba.nacos.common.http.client.NacosRestTemplate.postForm(NacosRestTemplate.java:407)
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:155)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+Caused by: java.io.IOException: Server returned HTTP response code: 502 for URL: http://nacos.myxiaxiang.cn:80/nacos/v1/cs/configs/listener
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1924)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1520)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:527)
+	at com.alibaba.nacos.common.http.client.response.JdkHttpClientResponse.getStatusCode(JdkHttpClientResponse.java:75)
+	at com.alibaba.nacos.common.http.client.handler.AbstractResponseHandler.handle(AbstractResponseHandler.java:43)
+	... 14 common frames omitted
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:01.864 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.http.ServerHttpAgent [NACOS SocketTimeoutException httpPost] currentServerAddr: http://nacos.myxiaxiang.cn:80， err : Read timed out
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:01.868 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.http.ServerHttpAgent no available server, currentServerAddr : http://nacos.myxiaxiang.cn:80
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:01.868 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [check-update] get changed dataId exception
+
+java.net.ConnectException: no available server, currentServerAddr : http://nacos.myxiaxiang.cn:80
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:190)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:01.869 ERROR 7509 [] [com.alibaba.nacos.client.Worker.longPolling.fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] com.alibaba.nacos.client.config.impl.ClientWorker longPolling error : 
+
+java.net.ConnectException: no available server, currentServerAddr : http://nacos.myxiaxiang.cn:80
+	at com.alibaba.nacos.client.config.http.ServerHttpAgent.httpPost(ServerHttpAgent.java:190)
+	at com.alibaba.nacos.client.config.http.MetricsHttpAgent.httpPost(MetricsHttpAgent.java:68)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateConfigStr(ClientWorker.java:441)
+	at com.alibaba.nacos.client.config.impl.ClientWorker.checkUpdateDataIds(ClientWorker.java:408)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$LongPollingRunnable.run(ClientWorker.java:596)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:834)
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:02.524 WARN 7509 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:02.524 WARN 7509 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Start destroying Publisher
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:02.529 WARN 7509 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Destruction of the end
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:02.532 WARN 7509 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:07.793 INFO 8344 [] [main] com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor LOCAL_SNAPSHOT_PATH:/Users/dries/nacos/config
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:07.820 INFO 8344 [] [main] com.alibaba.nacos.client.config.impl.Limiter limitTime:5.0
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.025 INFO 8344 [] [main] com.alibaba.nacos.client.config.utils.JvmUtil isMultiInstance:false
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.226 WARN 8344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.295 WARN 8344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.375 WARN 8344 [] [main] com.alibaba.cloud.nacos.client.NacosPropertySourceBuilder Ignore the empty nacos configuration and get it based on dataId[auiu-meta-gateway-dev.yaml] & group[DEFAULT_GROUP]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.377 INFO 8344 [] [main] org.springframework.cloud.bootstrap.config.PropertySourceBootstrapConfiguration Located property source: [BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway-dev.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-gateway,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud.yaml,DEFAULT_GROUP'}, BootstrapPropertySource {name='bootstrapProperties-auiu-meta-cloud-dev.yaml,DEFAULT_GROUP'}]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:08.390 INFO 8344 [] [main] com.auiucloud.gateway.AuiuMetaGatewayApplication The following profiles are active: dev
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:09.839 INFO 8344 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Multiple Spring Data modules found, entering strict repository configuration mode!
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:09.842 INFO 8344 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:09.873 INFO 8344 [] [main] org.springframework.data.repository.config.RepositoryConfigurationDelegate Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.165 INFO 8344 [] [main] org.springframework.cloud.context.scope.GenericScope BeanFactory id=8db0a90f-d66b-3a93-b7b8-7f578859418c
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.395 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration' of type [org.springframework.cloud.commons.config.CommonsConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.397 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.398 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'loadBalancerClientsDefaultsMappingsProvider' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerDefaultMappingsProviderAutoConfiguration$$Lambda$532/0x0000000800586c40] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.401 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'defaultsBindHandlerAdvisor' of type [org.springframework.cloud.commons.config.DefaultsBindHandlerAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.497 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'spring.cloud.sentinel-com.alibaba.cloud.sentinel.SentinelProperties' of type [com.alibaba.cloud.sentinel.SentinelProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.554 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration' of type [com.alibaba.cloud.sentinel.custom.SentinelAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.564 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.565 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig' of type [org.springframework.cloud.client.loadbalancer.reactive.LoadBalancerBeanPostProcessorAutoConfiguration$ReactorDeferringLoadBalancerFilterConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:10.567 INFO 8344 [] [main] org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker Bean 'reactorDeferringLoadBalancerExchangeFilterFunction' of type [org.springframework.cloud.client.loadbalancer.reactive.DeferringLoadBalancerExchangeFilterFunction] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.079 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [After]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.079 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Before]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.079 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Between]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.079 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Cookie]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Header]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Host]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Method]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Path]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Query]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [ReadBody]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [RemoteAddr]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [Weight]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.080 INFO 8344 [] [main] org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator Loaded RoutePredicateFactory [CloudFoundryRouteService]
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.176 INFO 8344 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由开始
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.209 INFO 8344 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-uaa,RouteDefinition{id='auiu-meta-uaa', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-uaa/**}}], filters=[], uri=lb://auiu-meta-uaa, order=0, metadata={}}
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.213 INFO 8344 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 加载路由：auiu-meta-admin,RouteDefinition{id='auiu-meta-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/auiu-meta-admin/**}}], filters=[FilterDefinition{name='RequestRateLimiter', args={key-resolver=#{@remoteAddressKeyResolver}, redis-rate-limiter.burstCapacity=20, redis-rate-limiter.replenishRate=20}}], uri=lb://auiu-meta-admin, order=0, metadata={}}
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.213 INFO 8344 [] [main] com.auiucloud.gateway.init.DynamicRouteInit 初始化网关路由完成
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.214 INFO 8344 [] [main] com.alibaba.nacos.client.config.impl.ClientWorker [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [subscribe] auiu-meta-dynamic-routes.yaml+DEFAULT_GROUP+4af1f54f-5abf-4ec8-a8b0-20d50885d42b
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.215 INFO 8344 [] [main] com.alibaba.nacos.client.config.impl.CacheData [fixed-nacos.myxiaxiang.cn_80-4af1f54f-5abf-4ec8-a8b0-20d50885d42b] [add-listener] ok, tenant=4af1f54f-5abf-4ec8-a8b0-20d50885d42b, dataId=auiu-meta-dynamic-routes.yaml, group=DEFAULT_GROUP, cnt=1
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.565 INFO 8344 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.565 INFO 8344 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Environment :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.565 INFO 8344 [] [main] com.alibaba.nacos.client.naming initializer namespace from System Property :null
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.722 INFO 8344 [] [main] com.alibaba.cloud.sentinel.gateway.scg.SentinelSCGAutoConfiguration [Sentinel SpringCloudGateway] register SentinelGatewayFilter with order: -2147483648
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.843 INFO 8344 [] [main] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver Exposing 20 endpoint(s) beneath base path '/actuator'
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.997 WARN 8344 [] [main] org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'org.springframework.security.config.annotation.web.reactive.WebFluxSecurityConfiguration': Unsatisfied dependency expressed through method 'setSecurityWebFilterChains' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'securityWebFilterChain' defined in class path resource [com/auiucloud/gateway/config/MeatResourceServerConfig.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.security.web.server.SecurityWebFilterChain]: Factory method 'securityWebFilterChain' threw exception; nested exception is org.springframework.web.util.pattern.PatternParseException: No more pattern data allowed after {*...} or ** pattern element
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.998 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.998 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.beat.BeatReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.999 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:12.999 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:16.008 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.PushReceiver do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:16.012 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.029 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.backups.FailoverReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.034 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.core.HostReactor do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.035 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown begin
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.040 WARN 8344 [] [main] com.alibaba.nacos.client.naming [NamingHttpClientManager] Start destroying NacosRestTemplate
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.040 WARN 8344 [] [main] com.alibaba.nacos.client.naming [NamingHttpClientManager] Destruction of the end
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.040 INFO 8344 [] [main] com.alibaba.nacos.client.identify.CredentialWatcher [null] CredentialWatcher is stopped
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.040 INFO 8344 [] [main] com.alibaba.nacos.client.identify.CredentialService [null] CredentialService is freed
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.040 INFO 8344 [] [main] com.alibaba.nacos.client.naming com.alibaba.nacos.client.naming.net.NamingProxy do shutdown stop
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.109 INFO 8344 [] [main] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:55:19.128 ERROR 8344 [] [main] org.springframework.boot.diagnostics.LoggingFailureAnalysisReporter 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Invalid mapping pattern detected: /**/rsa/publicKey
+^
+No more pattern data allowed after {*...} or ** pattern element
+
+Action:
+
+Fix this pattern in your application or switch to the legacy parser implementation with 'spring.mvc.pathmatch.matching-strategy=ant_path_matcher'.
+
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:58:33.170 WARN 8344 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Start destroying common HttpClient
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:58:33.170 WARN 8344 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Start destroying Publisher
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:58:33.176 WARN 8344 [] [Thread-24] com.alibaba.nacos.common.notify.NotifyCenter [NotifyCenter] Destruction of the end
+[auiu-meta-gateway:192.168.43.142:88] 2022-03-04 13:58:33.190 WARN 8344 [] [Thread-4] com.alibaba.nacos.common.http.HttpClientBeanHolder [HttpClientBeanHolder] Destruction of the end
