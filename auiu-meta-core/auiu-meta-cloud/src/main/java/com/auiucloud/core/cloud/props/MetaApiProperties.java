@@ -35,9 +35,9 @@ public class MetaApiProperties {
             "/doc.html",
             "/webjars/**",
             "/assets/**",
-            "**/favicon.ico",
+            "/favicon.ico",
             "/swagger-resources/**",
-            "/**/rsa/publicKey"
+            "/*/rsa/publicKey"
     };
 
     /**

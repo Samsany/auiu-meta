@@ -1,6 +1,6 @@
 package com.auiucloud.core.feign.fallback;
 
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -34,20 +34,20 @@ public class MateFeignFallback<T> implements MethodInterceptor {
         log.error("MateFeignFallback:[{}.{}] serviceId:[{}] message:[{}]", targetType.getName(), method.getName(), targetName, errorMessage);
         Class<?> returnType = method.getReturnType();
         // 暂时不支持 flux，rx，异步等，返回值不是 R，直接返回 null。
-        if (ApiResponse.class != returnType) {
+        if (ApiResult.class != returnType) {
             return null;
         }
         // 非 FeignException
         if (!(cause instanceof FeignException)) {
-            return ApiResponse.fail(ResultCode.FAILURE, errorMessage);
+            return ApiResult.fail(ResultCode.FAILURE, errorMessage);
         }
         FeignException exception = (FeignException) cause;
         byte[] content = exception.content();
         // 如果返回的数据为空
         if (ObjectUtils.isEmpty(content)) {
-            return ApiResponse.fail(ResultCode.FAILURE, errorMessage);
+            return ApiResult.fail(ResultCode.FAILURE, errorMessage);
         }
-        return ApiResponse.fail(Arrays.toString(content));
+        return ApiResult.fail(Arrays.toString(content));
     }
 
     @Override

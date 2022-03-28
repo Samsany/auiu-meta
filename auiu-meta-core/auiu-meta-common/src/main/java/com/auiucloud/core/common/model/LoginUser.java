@@ -56,7 +56,7 @@ public class LoginUser implements Serializable {
 //    private String roleId;
 
     /**
-     * 角色id
+     * 角色id集合
      */
     @ApiModelProperty(hidden = true)
     private Set<String> roleIds;

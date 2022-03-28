@@ -4,7 +4,7 @@ import com.alibaba.cloud.sentinel.feign.SentinelFeignAutoConfiguration;
 import com.alibaba.csp.sentinel.adapter.spring.webflux.callback.BlockRequestHandler;
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.fastjson.JSONObject;
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -46,7 +46,7 @@ public class SentinelConfiguration {
         public BlockExceptionHandler webmvcBlockExceptionHandler() {
             return (request, response, e) -> {
                 response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
-                ApiResponse<?> result = ApiResponse.fail("Too many request, please retry later.");
+                ApiResult<?> result = ApiResult.fail("Too many request, please retry later.");
                 response.getWriter().print(JSONObject.toJSONString(result));
             };
         }
@@ -64,7 +64,7 @@ public class SentinelConfiguration {
             return (exchange, t) ->
                     ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromValue(ApiResponse.fail(t.getMessage())));
+                            .body(BodyInserters.fromValue(ApiResult.fail(t.getMessage())));
         }
     }
 

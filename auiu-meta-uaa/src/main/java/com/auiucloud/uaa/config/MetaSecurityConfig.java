@@ -1,7 +1,6 @@
 package com.auiucloud.uaa.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +20,6 @@ import org.springframework.security.core.userdetails.UserDetailsPasswordService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,8 +35,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
-    private String jwkSetUri;
+//    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+//    private String jwkSetUri;
 
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -83,9 +80,10 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .authenticationEntryPoint(authenticationEntryPoint)
 //                        .accessDeniedHandler(accessDeniedHandler)
 //                )
-                .oauth2ResourceServer(resourceServer -> resourceServer
-                        .jwt().jwtAuthenticationConverter(jwtAuthenticationTokenConverter())
-                );
+//                .oauth2ResourceServer(resourceServer -> resourceServer
+//                        .jwt().jwtAuthenticationConverter(jwtAuthenticationTokenConverter())
+//                );
+        ;
     }
 
     @Override
@@ -97,11 +95,6 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder)
                 // 配置密码自动升级服务
                 .userDetailsPasswordManager(userDetailsPasswordService);
-    }
-
-    @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
     }
 
     private Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationTokenConverter() {

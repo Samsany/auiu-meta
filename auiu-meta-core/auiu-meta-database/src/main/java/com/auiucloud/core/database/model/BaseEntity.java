@@ -1,5 +1,6 @@
 package com.auiucloud.core.database.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
@@ -47,9 +48,16 @@ public class BaseEntity implements Serializable {
     private LocalDateTime updateTime;
 
     /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
+    /**
      * 删除标识
      */
     @JsonIgnore
     @ApiModelProperty(value = "删除标识")
+    @TableField(value = "is_deleted")
     private boolean deleted;
 }

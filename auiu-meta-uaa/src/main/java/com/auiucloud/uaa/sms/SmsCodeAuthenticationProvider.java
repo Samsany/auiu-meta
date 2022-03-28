@@ -1,6 +1,6 @@
 package com.auiucloud.uaa.sms;
 
-import com.auiucloud.uaa.service.AuthUserDetailsService;
+import com.auiucloud.uaa.service.impl.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
-    private final AuthUserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

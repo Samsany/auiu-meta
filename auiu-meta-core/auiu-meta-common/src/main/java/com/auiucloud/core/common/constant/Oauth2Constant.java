@@ -6,6 +6,8 @@ package com.auiucloud.core.common.constant;
  */
 public class Oauth2Constant {
 
+    public static final String META_CLIENT_ADMIN_ID = "meta-admin";
+
     public static final String JWT_TOKEN_PREFIX = "Bearer ";
     public static final String JWT_TOKEN_HEADER = "Authorization";
     /**
@@ -14,22 +16,17 @@ public class Oauth2Constant {
     public static final String ROLE_PREFIX = "ROLE_";
     public static final String AUTHORITY_CLAIM_NAME = "authorities";
 
+    public static final int LOGIN_USERNAME_TYPE = 1;
+    public static final int LOGIN_MOBILE_TYPE = 2;
+
     public static final String ALL = "/**";
-
     public static final String OAUTH_ALL = "/oauth/**";
-
     public static final String OAUTH_AUTHORIZE = "/oauth/authorize";
-
     public static final String OAUTH_CHECK_TOKEN = "/oauth/check_token";
-
     public static final String OAUTH_CONFIRM_ACCESS = "/oauth/confirm_access";
-
     public static final String OAUTH_TOKEN = "/oauth/token";
-
     public static final String OAUTH_TOKEN_KEY = "/oauth/token_key";
-
     public static final String OAUTH_ERROR = "/oauth/error";
-
     public static final String OAUTH_MOBILE = "/oauth/mobile";
 
     /**
@@ -64,7 +61,7 @@ public class Oauth2Constant {
     public static final String DEFAULT_PARAMETER_NAME_SOCIAL = "social";
 
     /**
-     * 字段描述开始：用户ID
+     * 字段描述开始：用户
      */
     public static final String META_USER = "user";
     /**

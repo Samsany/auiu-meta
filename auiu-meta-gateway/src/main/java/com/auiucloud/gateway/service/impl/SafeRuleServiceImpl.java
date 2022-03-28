@@ -4,13 +4,13 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.utils.IPUtil;
 import com.auiucloud.core.common.utils.ResponseUtil;
-import com.auiucloud.gateway.service.ISafeRuleService;
 import com.auiucloud.core.rule.constant.RuleConstant;
 import com.auiucloud.core.rule.model.BlackList;
 import com.auiucloud.core.rule.service.IRuleCacheService;
+import com.auiucloud.gateway.service.ISafeRuleService;
 import com.google.common.base.Stopwatch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class SafeRuleServiceImpl implements ISafeRuleService {
             if (forbid.get()) {
                 log.info("属于黑名单地址 - {}", originUri.getPath());
                 return ResponseUtil.webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE,
-                        HttpStatus.NOT_ACCEPTABLE, ApiResponse.fail(HttpStatus.NOT_ACCEPTABLE.value(), "已列入黑名单，访问受限"));
+                        HttpStatus.NOT_ACCEPTABLE, ApiResult.fail(HttpStatus.NOT_ACCEPTABLE.value(), "已列入黑名单，访问受限"));
             }
         } catch (Exception e) {
             log.error("黑名单检查异常: {} - {}", e.getMessage(), stopwatch.stop());

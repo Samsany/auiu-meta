@@ -1,6 +1,6 @@
 package com.auiucloud.core.security.handle;
 
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +27,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
         log.error("处理未认证: {}", request.getRequestURL());
         log.error(ex.getMessage());
 
-        ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), ApiResponse.fail(ResultCode.USER_ERROR_A0230));
+        ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), ApiResult.fail(ResultCode.USER_ERROR_A0230));
     }
 }

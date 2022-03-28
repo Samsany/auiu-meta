@@ -1,6 +1,6 @@
 package com.auiucloud.gateway.handler;
 
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +12,6 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.net.URI;
 
 /**
  * 自定义返回结果：未登录或登录过期
@@ -30,6 +28,6 @@ public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPo
         log.error("处理未认证: {}", exchange.getRequest().getURI());
         log.error(ex.getMessage());
         ServerHttpResponse response = exchange.getResponse();
-        return ResponseUtil.webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK, ApiResponse.fail(ResultCode.USER_ERROR_A0230));
+        return ResponseUtil.webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK, ApiResult.fail(ResultCode.USER_ERROR_A0230));
     }
 }

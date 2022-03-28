@@ -1,6 +1,6 @@
 package com.auiucloud.core.log.feign;
 
-import com.auiucloud.core.common.api.ApiResponse;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.common.model.CommonLog;
 import com.auiucloud.core.feign.constant.FeignConstant;
@@ -22,6 +22,6 @@ public interface ISysLogProvider {
      * @return Result
      */
     @PostMapping(ProviderConstant.PROVIDER_LOG_SET)
-    ApiResponse<Boolean> set(@RequestBody CommonLog commonLog);
+    ApiResult<Boolean> set(@RequestBody CommonLog commonLog);
 
 }

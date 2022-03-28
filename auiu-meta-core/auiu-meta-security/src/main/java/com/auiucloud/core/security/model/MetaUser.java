@@ -1,6 +1,7 @@
 package com.auiucloud.core.security.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -12,6 +13,7 @@ import java.util.Set;
  * @date 2021/12/22
  */
 @Getter
+@Setter
 public class MetaUser extends User {
 
     private static final long serialVersionUID = 4501920308335108690L;
@@ -24,11 +26,11 @@ public class MetaUser extends User {
     /**
      * 角色ID
      */
-    private final Set<Long> roleIds;
+    private final Set<String> roleIds;
     /**
      * 部门ID
      */
-    private final Long departId;
+    private final Long deptId;
 
     /**
      * 手机号
@@ -45,11 +47,11 @@ public class MetaUser extends User {
      */
     private final int type;
 
-    public MetaUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, Long id, Set<Long> roleIds, Long departId, String mobile, String avatar, int type) {
+    public MetaUser(Long id, String username, Long deptId, Set<String> roleIds, String mobile, String avatar, String password, int type, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
         this.roleIds = roleIds;
-        this.departId = departId;
+        this.deptId = deptId;
         this.mobile = mobile;
         this.avatar = avatar;
         this.type = type;

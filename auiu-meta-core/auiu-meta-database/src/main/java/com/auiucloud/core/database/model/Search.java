@@ -52,7 +52,7 @@ public class Search implements Serializable {
      * 当前页
      */
     @ApiModelProperty(value = "当前页")
-    private Integer current = 1;
+    private Integer pageNum = 1;
 
     /**
      * 每页的数量

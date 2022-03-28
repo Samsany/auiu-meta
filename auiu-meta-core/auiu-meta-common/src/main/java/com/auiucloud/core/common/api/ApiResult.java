@@ -1,0 +1,152 @@
+package com.auiucloud.core.common.api;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serializable;
+
+/**
+ * @author dries
+ * @date 2021/12/21
+ */
+@Getter
+@Setter
+@ApiModel(value = "统一响应报文")
+public class ApiResult<T> implements Serializable {
+    private static final long serialVersionUID = -3018546779590723199L;
+
+    @ApiModelProperty(value = "状态码", required = true)
+    private int code;
+
+    @ApiModelProperty(value = "消息内容", required = true)
+    private String message;
+
+    @ApiModelProperty(value = "时间戳", required = true)
+    private long time;
+
+    @ApiModelProperty(value = "业务数据")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private T data;
+
+    public ApiResult() {
+        this.time = System.currentTimeMillis();
+    }
+
+    public ApiResult(IResultCode resultCode) {
+        this(resultCode.getCode(), resultCode.getMessage(), null);
+    }
+
+    public ApiResult(IResultCode resultCode, String message) {
+        this(resultCode.getCode(), message, null);
+    }
+
+    public ApiResult(IResultCode resultCode, T data) {
+        this(resultCode.getCode(), resultCode.getMessage(), data);
+    }
+
+    public ApiResult(IResultCode resultCode, String message, T data) {
+        this(resultCode.getCode(), message, data);
+    }
+
+    public ApiResult(int code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.time = System.currentTimeMillis();
+    }
+
+    /*** 成功返回结果, 无参 */
+    public static <T> ApiResult<T> success() {
+        return new ApiResult<>(ResultCode.SUCCESS.getCode(),
+                ResultCode.SUCCESS.getMessage(),
+                null);
+    }
+
+    /**
+     * 成功返回结果
+     *
+     * @param message 提示信息
+     */
+    public static <T> ApiResult<T> success(String message) {
+        return new ApiResult<>(ResultCode.SUCCESS, message);
+    }
+
+    /**
+     * 成功返回结果
+     *
+     * @param data 获取的数据
+     */
+    public static <T> ApiResult<T> data(T data) {
+        return new ApiResult<>(ResultCode.SUCCESS, data);
+    }
+
+    /**
+     * 成功返回结果
+     *
+     * @param data    获取的数据
+     * @param message 提示信息
+     */
+    public static <T> ApiResult<T> data(String message, T data) {
+        return new ApiResult<>(ResultCode.SUCCESS, message, data);
+    }
+
+    /**
+     * 成功返回结果
+     *
+     * @param code    错误编码
+     * @param data    获取的数据
+     * @param message 提示信息
+     */
+    public static <T> ApiResult<T> data(int code, String message, T data) {
+        return new ApiResult<>(code, message, data);
+    }
+
+    /*** 失败返回结果 */
+    public static <T> ApiResult<T> fail() {
+        return fail(ResultCode.USER_ERROR_A0500);
+    }
+
+    /**
+     * 失败返回结果, 无 data
+     *
+     * @param resultCode 返回码
+     */
+    public static <T> ApiResult<T> fail(IResultCode resultCode) {
+        return new ApiResult<>(resultCode);
+    }
+
+    /**
+     * 失败返回结果，自定义消息提示，无 data
+     *
+     * @param message 提示信息
+     */
+    public static <T> ApiResult<T> fail(int code, String message) {
+        return new ApiResult<>(code, message, null);
+    }
+
+    /**
+     * 失败返回结果，自定义消息提示，无 data
+     *
+     * @param message 提示信息
+     */
+    public static <T> ApiResult<T> fail(String message) {
+        return new ApiResult<>(ResultCode.ERROR, message);
+    }
+
+    /**
+     * 失败返回结果
+     *
+     * @param data 获取的数据
+     */
+    public static <T> ApiResult<T> fail(IResultCode resultCode, T data) {
+        return new ApiResult<>(resultCode, data);
+    }
+
+    public boolean successful() {
+        return code == ResultCode.SUCCESS.getCode();
+    }
+
+}

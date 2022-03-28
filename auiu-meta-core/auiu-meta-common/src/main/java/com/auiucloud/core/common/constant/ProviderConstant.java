@@ -15,6 +15,16 @@ public class ProviderConstant {
     public final String PROVIDER = "/provider";
 
     /**
+     * 根据username查询用户信息
+     */
+    public final String PROVIDER_USER_USERNAME = PROVIDER + "/user/username";
+
+    /**
+     * 根据手机号查询用户信息
+     */
+    public final String PROVIDER_USER_MOBILE = PROVIDER + "/user/mobile";
+
+    /**
      * 日志配置
      */
     public final String PROVIDER_LOG_SET = PROVIDER + "/log/set";

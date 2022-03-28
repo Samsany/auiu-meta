@@ -3,11 +3,15 @@ server:
 spring:
   application:
     name: @artifactId@
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  # 配置RSA的公钥访问地址
   security:
     oauth2:
       resourceserver:
         jwt:
-          # 配置RSA的公钥访问地址
           jwk-set-uri: 'http://localhost:${server.port}/auiu-meta-uaa/rsa/publicKey'
   cloud:
     gateway:
