@@ -57,5 +57,5 @@ public class OauthClientDetails {
     /**
      * 自动授权
      */
-    private String autoapprove;
+    private String autoApprove;
 }

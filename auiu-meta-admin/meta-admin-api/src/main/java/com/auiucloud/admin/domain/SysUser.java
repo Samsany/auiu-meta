@@ -103,21 +103,6 @@ public class SysUser extends BaseEntity {
     /**
      * 是否启用 【 0 - 禁用  1 - 启用】
      */
-    private boolean enabled;
-
-    /**
-     * 账户是否过期 【 1 - 未过期 0- 过期】
-     */
-    private boolean accountNonExpired;
-
-    /**
-     * 账户是否锁定 【 1 - 未锁定 0 - 锁定】
-     */
-    private boolean accountNonLocked;
-
-    /**
-     * 账户是否可用（是否被删除）【 1 - 可用  0- 不可用】
-     */
-    private boolean credentialsNonExpired;
+    private boolean status;
 
 }

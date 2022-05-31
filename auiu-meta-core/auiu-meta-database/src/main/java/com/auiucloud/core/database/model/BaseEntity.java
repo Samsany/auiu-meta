@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 595630788503119633L;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键ID")
     @TableId
     private Long id;
 
@@ -57,7 +57,7 @@ public class BaseEntity implements Serializable {
      * 删除标识
      */
     @JsonIgnore
-    @ApiModelProperty(value = "删除标识")
+    @ApiModelProperty(value = "删除标识(0-存在 1-已删除)")
     @TableField(value = "is_deleted")
     private boolean deleted;
 }
