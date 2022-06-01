@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,7 +36,7 @@ public class SysUserInfo implements Serializable {
      * 系统角色标识组
      */
     @ApiModelProperty(value = "系统角色标识组")
-    private Set<String> roleIds;
+    private List<String> roles;
 
     /**
      * 登录类型　1：用户名密码登录　2：手机号登录　3：社交登录

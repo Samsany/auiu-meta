@@ -11,7 +11,6 @@ import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.RequestHolder;
 import com.auiucloud.core.security.model.MetaUser;
 import com.auiucloud.core.security.service.MetaUserDetailService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -29,7 +28,6 @@ import java.util.Collection;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements MetaUserDetailService {
 
     @Resource
@@ -72,9 +70,9 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
         SysUser user = userInfo.getSysUser();
         log.info("用户名：{}", userInfo.getSysUser().getAccount());
         Collection<? extends GrantedAuthority> authorities
-                = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getRoleIds()));
+                = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getRoles()));
         log.info("authorities: {}", authorities);
-        return new MetaUser(user.getId(), user.getAccount(), user.getDeptId(), userInfo.getRoleIds(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
+        return new MetaUser(user.getId(), user.getAccount(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
                 user.isStatus(), true, true, true,
                 authorities);
     }

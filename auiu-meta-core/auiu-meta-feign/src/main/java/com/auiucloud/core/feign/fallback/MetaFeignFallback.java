@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class MateFeignFallback<T> implements MethodInterceptor {
+public class MetaFeignFallback<T> implements MethodInterceptor {
 
     private final Class<T> targetType;
     private final String targetName;
@@ -31,7 +31,7 @@ public class MateFeignFallback<T> implements MethodInterceptor {
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         String errorMessage = cause.getMessage();
-        log.error("MateFeignFallback:[{}.{}] serviceId:[{}] message:[{}]", targetType.getName(), method.getName(), targetName, errorMessage);
+        log.error("MetaFeignFallback:[{}.{}] serviceId:[{}] message:[{}]", targetType.getName(), method.getName(), targetName, errorMessage);
         Class<?> returnType = method.getReturnType();
         // 暂时不支持 flux，rx，异步等，返回值不是 R，直接返回 null。
         if (ApiResult.class != returnType) {
@@ -58,7 +58,7 @@ public class MateFeignFallback<T> implements MethodInterceptor {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MateFeignFallback<?> that = (MateFeignFallback<?>) o;
+        MetaFeignFallback<?> that = (MetaFeignFallback<?>) o;
         return targetType.equals(that.targetType);
     }
 

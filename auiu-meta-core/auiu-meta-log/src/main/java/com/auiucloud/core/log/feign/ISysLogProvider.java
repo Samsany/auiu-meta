@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author dries
  * @date 2021/12/24
  */
-@FeignClient(value = FeignConstant.AUIU_MATE_CLOUD_ADMIN)
+@FeignClient(value = FeignConstant.AUIU_META_CLOUD_ADMIN)
 public interface ISysLogProvider {
 
     /**

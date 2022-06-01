@@ -17,8 +17,11 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
+ * 自定义client表，并将数据缓存到redis，处理缓存优化
+ * 当client数据变化时，同步至redis
+ *
  * @author dries
- * @date 2022/2/9
+ * @date 2022/3/1
  */
 @Slf4j
 @Setter
@@ -28,9 +31,9 @@ public class ClientDetailsServiceImpl extends JdbcClientDetailsService {
     @Resource
     private DataSource dataSource;
     @Resource
-    private PasswordEncoder passwordEncoder;
-    @Resource
     private RedisService redisService;
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     public ClientDetailsServiceImpl(DataSource dataSource) {
         super(dataSource);
@@ -42,6 +45,8 @@ public class ClientDetailsServiceImpl extends JdbcClientDetailsService {
         ClientDetailsServiceImpl clientDetailsService = new ClientDetailsServiceImpl(dataSource);
         clientDetailsService.setRedisService(redisService);
         clientDetailsService.setPasswordEncoder(passwordEncoder);
+        clientDetailsService.setFindClientDetailsSql(Oauth2Constant.FIND_CLIENT_DETAIL_SQL);
+        clientDetailsService.setSelectClientDetailsSql(Oauth2Constant.SELECT_CLIENT_DETAIL_SQL);
         return clientDetailsService;
     }
 

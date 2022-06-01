@@ -10,3 +10,10 @@ spring:
     username: ${auiu-cloud.datasource.username}
     password: ${auiu-cloud.datasource.password}
 
+# spring security安全验证配置白名单
+auiu-cloud:
+  security:
+    ignoreUrls:
+      - "/auth/**"
+      - "/oauth/token"
+      - "/login/*"

@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
-* @author dries
-* @description 针对表【sys_log(系统日志表)】的数据库操作Service
-* @createDate 2021-12-30 14:59:09
-*/
+ * @author dries
+ * @description 针对表【sys_log(系统日志表)】的数据库操作Service
+ * @createDate 2022-05-31 14:59:09
+ */
 public interface ISysLogService extends IService<SysLog> {
 
     /**

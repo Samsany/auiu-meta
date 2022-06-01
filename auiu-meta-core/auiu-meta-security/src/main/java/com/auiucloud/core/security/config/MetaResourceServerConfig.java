@@ -26,16 +26,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableAutoConfiguration(exclude = UserDetailsServiceAutoConfiguration.class)
 public class MetaResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private final IgnoreUrlPropsConfig ignoreUrlPropsConfig;
-//    private final RedisConnectionFactory redisConnectionFactory;
-//
-//    /**
-//     * 配置token存储到redis中
-//     */
-//    @Bean
-//    public RedisTokenStore redisTokenStore() {
-//        return new RedisTokenStore(redisConnectionFactory);
-//    }
+    private final AuthPropsConfig authPropsConfig;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -49,13 +40,14 @@ public class MetaResourceServerConfig extends ResourceServerConfigurerAdapter {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config = http.authorizeRequests();
-        ignoreUrlPropsConfig.getUrls().forEach(url -> config.antMatchers(url).permitAll());
-        ignoreUrlPropsConfig.getIgnoreSecurity().forEach(url -> config.antMatchers(url).permitAll());
+        authPropsConfig.getIgnoreUrls().forEach(url -> config.antMatchers(url).permitAll());
         config
                 // 任何请求
                 .anyRequest()
                 // 都需要身份认证
-                .authenticated();
+                .authenticated()
+                //csrf跨站请求
+                .and().csrf().disable();
     }
 
     @Override

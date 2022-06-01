@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author dries
@@ -26,7 +26,7 @@ public class MetaUser extends User {
     /**
      * 角色ID
      */
-    private final Set<String> roleIds;
+    private final List<String> roles;
     /**
      * 部门ID
      */
@@ -47,10 +47,10 @@ public class MetaUser extends User {
      */
     private final int type;
 
-    public MetaUser(Long id, String username, Long deptId, Set<String> roleIds, String mobile, String avatar, String password, int type, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public MetaUser(Long id, String username, Long deptId, List<String> roles, String mobile, String avatar, String password, int type, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
-        this.roleIds = roleIds;
+        this.roles = roles;
         this.deptId = deptId;
         this.mobile = mobile;
         this.avatar = avatar;

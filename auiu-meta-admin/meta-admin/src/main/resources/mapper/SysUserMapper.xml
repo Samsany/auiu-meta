@@ -10,22 +10,19 @@
         <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
         <result property="realName" column="real_name" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="gender" column="gender" jdbcType="TINYINT"/>
         <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
-        <result property="registerSource" column="register_source" jdbcType="VARCHAR"/>
-        <result property="city" column="city" jdbcType="VARCHAR"/>
-        <result property="enabled" column="enabled" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="builtIn" column="built_in" jdbcType="TINYINT"/>
         <result property="loginDate" column="login_date" jdbcType="TIMESTAMP"/>
         <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
         <result property="registerIp" column="register_ip" jdbcType="VARCHAR"/>
         <result property="registerAddress" column="register_address" jdbcType="VARCHAR"/>
-        <result property="accountNonExpired" column="account_non_expired" jdbcType="TINYINT"/>
-        <result property="accountNonLocked" column="account_non_locked" jdbcType="TINYINT"/>
-        <result property="credentialsNonExpired" column="credentials_non_expired" jdbcType="TINYINT"/>
+        <result property="registerSource" column="register_source" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
@@ -40,22 +37,19 @@
                dept_id,
                real_name,
                nickname,
-               password,
                avatar,
                mobile,
                email,
+               password,
                gender,
                birthday,
-               register_source,
-               city,
-               enabled,
+               status,
+               built_in,
                login_date,
                login_ip,
                register_ip,
                register_address,
-               account_non_expired,
-               account_non_locked,
-               credentials_non_expired,
+               register_source,
                create_time,
                update_time,
                create_by,

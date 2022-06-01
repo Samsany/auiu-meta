@@ -4,11 +4,13 @@ import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.security.config.AuthPropsConfig;
 import com.auiucloud.core.security.model.MetaUser;
 import com.auiucloud.core.security.service.impl.SingleLoginTokenServices;
+import com.auiucloud.uaa.service.impl.ClientDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +20,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.password.ResourceOwnerPasswordTokenGranter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
@@ -27,13 +31,11 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import java.security.KeyPair;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 认证服务器配置
+ *
  * @author dries
  * @date 2022/2/27
  */
@@ -43,10 +45,11 @@ import java.util.Map;
 public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final KeyPair keyPair;
-    private final UserDetailsService userDetailsService;
-    private final RedisConnectionFactory redisConnectionFactory;
     private final AuthPropsConfig authPropsConfig;
-    private final ClientDetailsService clientService;
+    private final UserDetailsService userDetailsService;
+    private final ClientDetailsServiceImpl clientService;
+    private final AuthenticationManager authenticationManager;
+    private final RedisConnectionFactory redisConnectionFactory;
 
     /**
      * 配置Token存储到Redis中
@@ -60,8 +63,8 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      * 配置授权访问接入点
      */
     @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        super.configure(endpoints);
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        // super.configure(endpoints);
         DefaultTokenServices tokenServices = createDefaultTokenServices();
         // token增强链
         TokenEnhancerChain chain = new TokenEnhancerChain();
@@ -72,7 +75,7 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
         addUserDetailsService(tokenServices);
         endpoints
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-                // .tokenGranter(tokenGranter(endpoints, tokenServices))
+                .tokenGranter(tokenGranter(endpoints, tokenServices))
                 .tokenStore(redisTokenStore()) // 从 token 中读取特定字段构成 Authentication
                 .tokenServices(tokenServices)
                 .accessTokenConverter(jwtAccessTokenConverter());
@@ -86,14 +89,14 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        super.configure(clients);
+        clients.withClientDetails(clientService);
     }
 
     /**
      * 配置授权服务器的Token接入点
      */
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+    public void configure(AuthorizationServerSecurityConfigurer security) {
         security
                 // 允许表单认证请求
                 .allowFormAuthenticationForClients()
@@ -125,7 +128,7 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
                 additionMessage.put(Oauth2Constant.META_USER_ID, String.valueOf(user.getId()));
                 additionMessage.put(Oauth2Constant.META_USER_NAME, user.getUsername());
                 additionMessage.put(Oauth2Constant.META_AVATAR, user.getAvatar());
-                additionMessage.put(Oauth2Constant.META_ROLE_IDS, String.valueOf(user.getRoleIds()));
+                additionMessage.put(Oauth2Constant.META_ROLES, String.valueOf(user.getRoles()));
                 additionMessage.put(Oauth2Constant.META_TYPE, user.getType());
             }
             ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionMessage);
@@ -138,6 +141,29 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setKeyPair(keyPair);
         return converter;
+    }
+
+    /**
+     * 重点
+     * 先获取已经有的五种授权，然后添加我们自己的进去
+     *
+     * @param endpoints AuthorizationServerEndpointsConfigurer
+     * @return TokenGranter
+     */
+    private TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints, DefaultTokenServices tokenServices) {
+        List<TokenGranter> granters = new ArrayList<>(Collections.singletonList(endpoints.getTokenGranter()));
+        //        // 短信验证码模式
+        //        granters.add(new SmsCodeTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+        //                endpoints.getOAuth2RequestFactory(), redisService));
+        //        // 验证码模式
+        //        granters.add(new CaptchaTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+        //                endpoints.getOAuth2RequestFactory(), redisService));
+        //        // 社交登录模式
+        //        granters.add(new SocialTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+        //                endpoints.getOAuth2RequestFactory(), redisService, factory));
+        // 增加密码模式
+        granters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
+        return new CompositeTokenGranter(granters);
     }
 
     /**

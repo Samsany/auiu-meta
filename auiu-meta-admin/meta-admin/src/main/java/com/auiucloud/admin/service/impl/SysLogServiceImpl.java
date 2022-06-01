@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * @author dries
  * @description 针对表【sys_log(系统日志表)】的数据库操作Service实现
- * @createDate 2021-12-30 14:59:09
+ * @createDate 2022-05-31 14:59:09
  */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements ISysLogService {

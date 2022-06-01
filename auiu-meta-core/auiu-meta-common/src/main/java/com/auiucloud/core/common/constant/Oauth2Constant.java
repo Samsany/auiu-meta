@@ -6,7 +6,7 @@ package com.auiucloud.core.common.constant;
  */
 public class Oauth2Constant {
 
-    public static final String META_CLIENT_ADMIN_ID = "meta-admin";
+    public static final String META_CLIENT_ADMIN_ID = "meta-admin-client";
 
     public static final String JWT_TOKEN_PREFIX = "Bearer ";
     public static final String JWT_TOKEN_HEADER = "Authorization";
@@ -80,9 +80,9 @@ public class Oauth2Constant {
     public static final String META_AVATAR = "avatar";
 
     /**
-     * 用户权限ID
+     * 用户角色编码
      */
-    public static final String META_ROLE_IDS = "roleIds";
+    public static final String META_ROLES = "roles";
 
     /**
      * 用户类型
@@ -99,9 +99,9 @@ public class Oauth2Constant {
     /**
      * 基础查询语句
      */
-    public static final String META_CLIENT_BASE = "select client_id, CONCAT('{noop}',client_secret) as client_secret, resource_ids, scope, " +
+    public static final String META_CLIENT_BASE = "select client_id, client_secret, resource_ids, scope, " +
             "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity," +
-            "refresh_token_validity, additional_information, auto_approve from " + META_CLIENT_TABLE;
+            "refresh_token_validity, additional_information, auto_approve as autoapprove from " + META_CLIENT_TABLE;
     public static final String FIND_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " order by client_id";
     public static final String SELECT_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where client_id = ?";
 }

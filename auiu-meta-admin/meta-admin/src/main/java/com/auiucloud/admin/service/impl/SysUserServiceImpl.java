@@ -28,6 +28,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         queryWrapper.eq(SysUser::getAccount, username);
         return this.baseMapper.selectOne(queryWrapper);
     }
+
 }
 
 

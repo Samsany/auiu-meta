@@ -79,7 +79,7 @@ public class SecurityUtil {
         LoginUser loginUser = new LoginUser();
         loginUser.setUserId(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
         loginUser.setAccount(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
-        loginUser.setRoleIds((Set<String>) jwtPayload.get(Oauth2Constant.META_ROLE_IDS));
+        loginUser.setRoleIds((Set<String>) jwtPayload.get(Oauth2Constant.META_ROLES));
         loginUser.setType(jwtPayload.getInt(Oauth2Constant.META_TYPE));
         UserContext.setUser(loginUser);
         return loginUser;

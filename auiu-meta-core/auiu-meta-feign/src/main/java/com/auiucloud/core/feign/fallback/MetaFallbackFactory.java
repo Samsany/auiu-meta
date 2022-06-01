@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.FallbackFactory;
  * @date 2021/12/22
  */
 @RequiredArgsConstructor
-public class MateFallbackFactory<T> implements FallbackFactory<T> {
+public class MetaFallbackFactory<T> implements FallbackFactory<T> {
 
     private final Target<T> target;
 
@@ -23,7 +23,7 @@ public class MateFallbackFactory<T> implements FallbackFactory<T> {
         Enhancer enhancer = new Enhancer();
         enhancer.setSuperclass(targetType);
         enhancer.setUseCache(true);
-        enhancer.setCallback(new MateFeignFallback<>(targetType, targetName, cause));
+        enhancer.setCallback(new MetaFeignFallback<>(targetType, targetName, cause));
         return (T) enhancer.create();
     }
 }

@@ -4,6 +4,7 @@ import com.auiucloud.admin.dto.SysUserInfo;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
+import com.auiucloud.core.feign.fallback.MetaFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author dries
  * @date 2022/2/10
  */
-@FeignClient(value = FeignConstant.AUIU_MATE_CLOUD_ADMIN)
+@FeignClient(value = FeignConstant.AUIU_META_CLOUD_ADMIN, fallbackFactory = MetaFallbackFactory.class)
 public interface ISysUserProvider {
 
     /**

@@ -10,6 +10,6 @@ spring:
     password: ${auiu-cloud.datasource.password}
 
 ## 配置日志显示在spring boot admin
-logging:
-  file:
-    name: logs/app/auiu-meta-admin/auiu-meta-admin.log
+#logging:
+#  file:
+#    name: logs/app/auiu-meta-admin/auiu-meta-admin.log

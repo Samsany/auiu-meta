@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @author dries
  * @date 2021/12/24
  */
-@FeignClient(value = FeignConstant.AUIU_MATE_CLOUD_LOG_PRODUCER)
+@FeignClient(value = FeignConstant.AUIU_META_CLOUD_LOG_PRODUCER)
 public interface ICommonLogProvider {
 
     /**

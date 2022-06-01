@@ -3,8 +3,11 @@ package com.auiucloud.admin.domain;
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
@@ -12,13 +15,19 @@ import java.util.Date;
  * 系统用户表
  *
  * @author dries
+ * @TableName sys_user
+ * @createDate 2022-05-31 14:59:09
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName(value = "sys_user")
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "SysUser对象", description = "系统用户表")
 public class SysUser extends BaseEntity {
-    private static final long serialVersionUID = 4340352143097572220L;
+
+    private static final long serialVersionUID = -4048530401942903801L;
 
     /**
      * 账号
@@ -41,11 +50,6 @@ public class SysUser extends BaseEntity {
     private String nickname;
 
     /**
-     * 加密密码
-     */
-    private String password;
-
-    /**
      * 头像
      */
     private String avatar;
@@ -61,24 +65,29 @@ public class SysUser extends BaseEntity {
     private String email;
 
     /**
-     * 性别【0-女性 1-男性 2-未知】
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 性别(0-女性 1-男性 2-未知)
      */
     private Integer gender;
 
     /**
-     * 生日
+     * 出生日期
      */
     private Date birthday;
 
     /**
-     * 注册方式
+     * 是否启用(0-禁用 1-启用)
      */
-    private String registerSource;
+    private boolean status;
 
     /**
-     * 城市
+     * 内置用户(0-否 1-是)
      */
-    private String city;
+    private boolean builtIn;
 
     /**
      * 最后登录时间
@@ -101,8 +110,8 @@ public class SysUser extends BaseEntity {
     private String registerAddress;
 
     /**
-     * 是否启用 【 0 - 禁用  1 - 启用】
+     * 注册方式
      */
-    private boolean status;
+    private String registerSource;
 
 }

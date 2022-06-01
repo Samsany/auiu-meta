@@ -92,7 +92,7 @@ public class BaseExceptionHandler {
         if (StringUtils.contains(message, "Bad credentials")) {
             message = "您输入的密码不正确";
         } else if (StringUtils.contains(ex.toString(), "InternalAuthenticationServiceException")) {
-            message = "您输入的用户名不存在";
+            message = "内部认证服务异常";
         }
         return ApiResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), message);
     }
