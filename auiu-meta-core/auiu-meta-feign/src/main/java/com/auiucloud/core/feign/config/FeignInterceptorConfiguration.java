@@ -7,7 +7,6 @@ import com.auiucloud.core.common.utils.TraceUtil;
 import feign.RequestInterceptor;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -20,7 +19,6 @@ import java.util.Enumeration;
  * @author dries
  * @date 2021/12/22
  */
-@Configuration
 public class FeignInterceptorConfiguration {
 
     /**

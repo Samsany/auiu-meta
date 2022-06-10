@@ -46,6 +46,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
                 .stream().map(SysRole::getRoleCode).collect(Collectors.toList());
     }
 
+
 }
 
 

@@ -54,4 +54,13 @@
                is_deleted
         from sys_menu
     </sql>
+    <select id="routes" resultType="com.auiucloud.admin.domain.SysMenu">
+        <include refid="Base_Column_List"/>
+        WHERE id in (
+        SELECT menu_id from sys_role_menu where role_id in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        )
+    </select>
 </mapper>

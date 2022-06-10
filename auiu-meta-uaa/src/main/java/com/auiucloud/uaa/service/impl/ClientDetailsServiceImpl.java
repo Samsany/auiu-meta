@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,6 @@ public class ClientDetailsServiceImpl extends JdbcClientDetailsService {
         if (ObjectUtil.isEmpty(clientDetails)) {
             clientDetails = getCacheClient(clientId);
         }
-        clientDetails.getAuthorizedGrantTypes().add(Oauth2Constant.CLIENT_CREDENTIALS);
         return clientDetails;
     }
 
@@ -80,11 +80,14 @@ public class ClientDetailsServiceImpl extends JdbcClientDetailsService {
             if (ObjectUtil.isNotEmpty(clientDetails)) {
                 redisService.set(clientKey(clientId), clientDetails);
                 log.debug("Cache clientId:{}, clientDetails:{}", clientId, clientDetails);
+                return clientDetails;
+            } else {
+                throw new NoSuchClientException("No client with requested id: " + clientId);
             }
         } catch (Exception e) {
             log.error("Exception for clientId:{}, message:{}", clientId, e.getMessage());
+            throw new NoSuchClientException("No client with requested id: " + clientId);
         }
-        return clientDetails;
     }
 
     private String clientKey(String clientId) {

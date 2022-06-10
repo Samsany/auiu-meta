@@ -75,7 +75,7 @@ public class DynamicRouteInit {
             routeDefinitionWriter.save(Mono.just(route)).subscribe();
         });
 
-        gatewayProperties.setRoutes(gatewayRoute.getRoutes());
+        // gatewayProperties.setRoutes(gatewayRoute.getRoutes());
     }
 
 }

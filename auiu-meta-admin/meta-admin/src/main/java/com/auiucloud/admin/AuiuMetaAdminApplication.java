@@ -1,16 +1,16 @@
 package com.auiucloud.admin;
 
+import com.auiucloud.core.feign.annotation.EnableMetaFeign;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author dries
  */
+@EnableMetaFeign
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.auiucloud")
 public class AuiuMetaAdminApplication {
 
     public static void main(String[] args) {

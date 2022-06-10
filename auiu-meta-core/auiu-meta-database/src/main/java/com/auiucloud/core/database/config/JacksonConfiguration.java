@@ -18,7 +18,7 @@ import java.math.BigInteger;
 public class JacksonConfiguration {
 
     /**
-     * 解决jackson序列化时精度缺失问题
+     * Jackson全局转化long类型为String，解决jackson序列化时long类型缺失精度问题
      *
      * @return Jackson2ObjectMapperBuilderCustomizer 注入的对象
      */

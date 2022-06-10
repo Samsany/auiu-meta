@@ -49,22 +49,12 @@ public class LoginUser implements Serializable {
 //     */
 //    @ApiModelProperty(hidden = true)
 //    private String postId;
-//    /**
-//     * 角色id
-//     */
-//    @ApiModelProperty(hidden = true)
-//    private String roleId;
 
     /**
      * 角色id集合
      */
     @ApiModelProperty(hidden = true)
-    private Set<String> roleIds;
-    /**
-     * 角色名
-     */
-    @ApiModelProperty(hidden = true)
-    private String roleName;
+    private Set<String> roles;
 
     /**
      * 登录类型

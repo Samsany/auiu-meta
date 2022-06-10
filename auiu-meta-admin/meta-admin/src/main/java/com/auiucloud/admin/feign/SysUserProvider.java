@@ -56,12 +56,11 @@ public class SysUserProvider implements ISysUserProvider {
 
         // 用户信息组装
         // sysRolePermissionProvider.getRolesByUserId();
-        List<String> roleCodeList = sysUserRoleService.getRoleCodeListByUserId(sysUser.getId());
+        List<String> roles = sysUserRoleService.getRoleCodeListByUserId(sysUser.getId());
         SysUserInfo userInfo = SysUserInfo.builder()
                 .sysUser(sysUser)
                 .username(sysUser.getAccount())
-                .roles(roleCodeList)
-                // .permissions(new HashSet<>()).roleIds(new HashSet<>())
+                .roles(roles)
                 .tenantId("")
                 .build();
         log.debug("feign调用：userInfo:{}", userInfo);

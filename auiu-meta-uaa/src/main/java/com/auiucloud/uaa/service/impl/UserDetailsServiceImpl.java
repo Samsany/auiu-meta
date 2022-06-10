@@ -6,6 +6,7 @@ import com.auiucloud.admin.domain.SysUser;
 import com.auiucloud.admin.dto.SysUserInfo;
 import com.auiucloud.admin.feign.ISysUserProvider;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.RequestHolder;
@@ -38,19 +39,22 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         String clientId = request.getParameter("client_id");
 
+        UserDetails userDetails = null;
         if (Oauth2Constant.META_CLIENT_ADMIN_ID.equals(clientId)) {
             ApiResult<SysUserInfo> result = sysUserProvider.getUserByUsername(username);
             if (result.successful() && ObjectUtil.isNotNull(result.getData())) {
                 SysUserInfo userInfo = result.getData();
                 userInfo.setType(Oauth2Constant.LOGIN_USERNAME_TYPE);
                 userInfo.setUsername(username);
-                return buildUserDetails(userInfo);
-            } else {
-                throw new ApiException("该用户：" + username + "不存在");
+                userDetails = buildUserDetails(userInfo);
             }
+            if (ObjectUtil.isNotNull(userDetails)) {
+                throw new UsernameNotFoundException(ResultCode.USER_ERROR_A0201.getMessage());
+            }
+            return userDetails;
+        } else {
+            throw new ApiException("暂不支持的客户端：" + clientId);
         }
-
-        throw new ApiException("暂不支持的客户端：" + clientId);
     }
 
     @Override

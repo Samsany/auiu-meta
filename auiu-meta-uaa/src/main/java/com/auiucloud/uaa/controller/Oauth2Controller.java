@@ -34,8 +34,15 @@ public class Oauth2Controller {
 
     @Log(value = "用户登录", exception = "用户登录请求异常")
     @ApiOperation("用户登录Get")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "grant_type", value = "授权模式", paramType = "query", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "refresh_token", value = "刷新token", paramType = "query", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "username", value = "用户名", paramType = "query", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "scope", value = "使用范围", paramType = "query", dataTypeClass = String.class)
+    })
     @GetMapping("/token")
-    public ApiResult<?> getAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public ApiResult<?> getAccessToken(@ApiIgnore Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.getAccessToken(principal, parameters).getBody());
     }
 
@@ -49,7 +56,7 @@ public class Oauth2Controller {
             @ApiImplicitParam(name = "scope", value = "使用范围", paramType = "query", dataTypeClass = String.class)
     })
     @PostMapping("/token")
-    public ApiResult<?> postAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public ApiResult<?> postAccessToken(@ApiIgnore Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());
     }
 
