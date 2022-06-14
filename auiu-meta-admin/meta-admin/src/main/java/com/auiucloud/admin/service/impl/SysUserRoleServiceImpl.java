@@ -1,5 +1,6 @@
 package com.auiucloud.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.admin.domain.SysRole;
 import com.auiucloud.admin.domain.SysUserRole;
 import com.auiucloud.admin.mapper.SysUserRoleMapper;
@@ -11,10 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,9 +39,13 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         List<SysUserRole> roleListByUserId = this.getSysUserRoleListByUserId(userId);
         Set<Long> roleIds = Optional.ofNullable(roleListByUserId).orElse(Collections.emptyList())
                 .stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
-        List<SysRole> sysRoles = sysRoleService.getRoleListByIds(roleIds);
-        return Optional.ofNullable(sysRoles).orElse(Collections.emptyList())
-                .stream().map(SysRole::getRoleCode).collect(Collectors.toList());
+        List<SysRole> sysRoles = new ArrayList<>();
+        if (CollUtil.isNotEmpty(roleIds)) {
+            sysRoles = sysRoleService.getRoleListByIds(roleIds);
+        }
+        return sysRoles.stream()
+                .map(SysRole::getRoleCode)
+                .collect(Collectors.toList());
     }
 
 
