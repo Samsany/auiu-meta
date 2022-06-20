@@ -23,6 +23,8 @@ public class MetaUser extends User {
      */
     private final Long id;
 
+    private final String nickname;
+
     /**
      * 角色ID
      */
@@ -47,9 +49,10 @@ public class MetaUser extends User {
      */
     private final int type;
 
-    public MetaUser(Long id, String username, Long deptId, List<String> roles, String mobile, String avatar, String password, int type, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public MetaUser(Long id, String username, String nickname, Long deptId, List<String> roles, String mobile, String avatar, String password, int type, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.id = id;
+        this.nickname = nickname;
         this.roles = roles;
         this.deptId = deptId;
         this.mobile = mobile;

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -49,7 +50,7 @@ public class SysUserProvider implements ISysUserProvider {
      * @param sysUser 用户信息
      * @return SysUserInfo
      */
-    public SysUserInfo getSysUserInfo(SysUser sysUser) {
+    private SysUserInfo getSysUserInfo(SysUser sysUser) {
         if (ObjectUtil.isNull(sysUser)) {
             return null;
         }
@@ -61,6 +62,7 @@ public class SysUserProvider implements ISysUserProvider {
                 .sysUser(sysUser)
                 .username(sysUser.getAccount())
                 .roles(roles)
+                .permissions(Collections.emptyList())
                 .tenantId("")
                 .build();
         log.debug("feign调用：userInfo:{}", userInfo);

@@ -54,7 +54,7 @@
                is_deleted
         from sys_menu
     </sql>
-    <select id="routes" resultType="com.auiucloud.admin.domain.SysMenu">
+    <select id="routes" resultMap="BaseResultMap">
         <include refid="Base_Column_List"/>
         WHERE id in (
         SELECT menu_id from sys_role_menu where role_id in

@@ -8,19 +8,19 @@ import com.auiucloud.admin.feign.ISysUserProvider;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.Oauth2Constant;
-import com.auiucloud.core.common.exception.ApiException;
-import com.auiucloud.core.common.utils.RequestHolder;
+import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.security.model.MetaUser;
 import com.auiucloud.core.security.service.MetaUserDetailService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**
@@ -36,8 +36,10 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        HttpServletRequest request = RequestHolder.getHttpServletRequest();
-        String clientId = request.getParameter("client_id");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String clientId = authentication.getName();
+        log.info("客户端ID：{}", clientId);
 
         UserDetails userDetails = null;
         if (Oauth2Constant.META_CLIENT_ADMIN_ID.equals(clientId)) {
@@ -48,12 +50,12 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
                 userInfo.setUsername(username);
                 userDetails = buildUserDetails(userInfo);
             }
-            if (ObjectUtil.isNotNull(userDetails)) {
-                throw new UsernameNotFoundException(ResultCode.USER_ERROR_A0201.getMessage());
+            if (ObjectUtil.isNull(userDetails)) {
+                throw new TokenException(ResultCode.USER_ERROR_A0201.getMessage());
             }
             return userDetails;
         } else {
-            throw new ApiException("暂不支持的客户端：" + clientId);
+            throw new TokenException("暂不支持的客户端：" + clientId);
         }
     }
 
@@ -69,15 +71,15 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
 
     private UserDetails buildUserDetails(SysUserInfo userInfo) {
         if (ObjectUtil.isNull(userInfo)) {
-            throw new ApiException("该用户：" + userInfo.getUsername() + "不存在");
+            throw new TokenException("该用户：" + userInfo.getUsername() + "不存在");
         }
         SysUser user = userInfo.getSysUser();
         log.info("用户名：{}", userInfo.getSysUser().getAccount());
         Collection<? extends GrantedAuthority> authorities
                 = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getRoles()));
         log.info("authorities: {}", authorities);
-        return new MetaUser(user.getId(), user.getAccount(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
-                user.isStatus(), true, true, true,
+        return new MetaUser(user.getId(), user.getAccount(), user.getNickname(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
+                user.isStatus(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),
                 authorities);
     }
 

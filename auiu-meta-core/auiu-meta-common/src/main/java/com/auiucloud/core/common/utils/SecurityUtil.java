@@ -5,7 +5,6 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.context.UserContext;
-import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.common.model.LoginUser;
 import com.nimbusds.jose.JWSObject;
@@ -54,7 +53,7 @@ public class SecurityUtil {
             jwsObject = JWSObject.parse(realToken);
         } catch (ParseException ex) {
             log.error("解析用户信息异常: {}", ex.getMessage());
-            throw new ApiException(ex.getMessage());
+            throw new TokenException(ex.getMessage());
         }
         String payload = jwsObject.getPayload().toString();
         return JSONUtil.parseObj(payload);

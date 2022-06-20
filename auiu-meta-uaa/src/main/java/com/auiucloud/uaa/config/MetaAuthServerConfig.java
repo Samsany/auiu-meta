@@ -174,11 +174,11 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
     private DefaultTokenServices createDefaultTokenServices() {
         DefaultTokenServices tokenServices = new SingleLoginTokenServices(authPropsConfig.isSingleLogin());
         tokenServices.setTokenStore(redisTokenStore());
+        // 支持刷新Token
+        tokenServices.setSupportRefreshToken(Boolean.TRUE);
         // refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
         // 1.重复使用：access_token过期刷新时， refresh token过期时间未改变，仍以初次生成的时间为准
         // 2.非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新而无需失效再次登录
-        // 支持刷新Token
-        tokenServices.setSupportRefreshToken(Boolean.TRUE);
         tokenServices.setReuseRefreshToken(Boolean.FALSE);
         tokenServices.setClientDetailsService(clientService);
         addUserDetailsService(tokenServices);

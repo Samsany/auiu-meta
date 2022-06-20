@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -24,7 +24,7 @@ import java.util.List;
  * @date 2021/12/21
  */
 @Order(Ordered.HIGHEST_PRECEDENCE)
-@Configuration
+@AutoConfiguration
 @EnableTransactionManagement
 @PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:database.yml")
 @MapperScan("com.auiucloud.**.mapper.**")
@@ -78,4 +78,5 @@ public class MybatisPlusConfiguration implements WebMvcConfigurer {
     public MybatisPlusMetaObjectHandler mybatisPlusMetaObjectHandler() {
         return new MybatisPlusMetaObjectHandler();
     }
+
 }

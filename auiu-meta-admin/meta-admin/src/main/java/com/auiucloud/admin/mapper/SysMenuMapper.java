@@ -14,6 +14,7 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
     List<SysMenu> routes(List<Long> roles);
+
 }
 
 

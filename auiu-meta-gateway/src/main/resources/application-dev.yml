@@ -12,7 +12,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:${server.port}/auiu-meta-uaa/rsa/publicKey'
+          jwk-set-uri: 'http://localhost:${server.port}/meta-uaa/rsa/publicKey'
   cloud:
     gateway:
       discovery:

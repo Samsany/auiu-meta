@@ -85,6 +85,21 @@ public class SysUser extends BaseEntity {
     private boolean status;
 
     /**
+     * 账户是否过期(0-过期 1-未过期)
+     */
+    private boolean accountNonExpired;
+
+    /**
+     * 账户是否锁定(0-锁定 1-未锁定)
+     */
+    private boolean accountNonLocked;
+
+    /**
+     * 证书(密码)是否过期(0-过期 1-未过期)
+     */
+    private boolean credentialsNonExpired;
+
+    /**
      * 内置用户(0-否 1-是)
      */
     private boolean builtIn;

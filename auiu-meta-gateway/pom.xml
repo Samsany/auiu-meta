@@ -7,7 +7,7 @@
         <groupId>com.auiucloud</groupId>
         <version>1.0.1</version>
     </parent>
-    <artifactId>auiu-meta-gateway</artifactId>
+    <artifactId>meta-gateway</artifactId>
     <description>API网关服务 - Spring Cloud Gateway</description>
 
     <properties>

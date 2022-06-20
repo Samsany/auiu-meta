@@ -8,7 +8,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author dries
@@ -30,7 +29,7 @@ public class SysUserInfo implements Serializable {
      * 系统权限标识组
      */
     @ApiModelProperty("系统权限标识组")
-    private Set<String> permissions;
+    private List<String> permissions;
 
     /**
      * 系统角色标识组

@@ -5,6 +5,7 @@ import com.auiucloud.admin.domain.SysUserRole;
 import com.auiucloud.admin.mapper.SysMenuMapper;
 import com.auiucloud.admin.service.ISysMenuService;
 import com.auiucloud.admin.service.ISysUserRoleService;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> routes() {
-        // TODO 超级管理员
+        // 超级管理员特殊处理
         Long userId = SecurityUtil.getUserId();
+        if (userId.equals(CommonConstant.NODE_ONE_ID)) {
+            return this.list();
+        }
+
         List<SysUserRole> sysUserRoles = sysUserRoleService.getSysUserRoleListByUserId(userId);
         List<Long> roleIds = Optional.ofNullable(sysUserRoles).orElse(Collections.emptyList())
                 .stream().map(SysUserRole::getRoleId).collect(Collectors.toList());

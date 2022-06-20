@@ -75,6 +75,11 @@ public class Oauth2Constant {
     public static final String META_USER_NAME = "username";
 
     /**
+     * 用户昵称
+     */
+    public static final String META_NICK_NAME = "nickname";
+
+    /**
      * 用户头像
      */
     public static final String META_AVATAR = "avatar";

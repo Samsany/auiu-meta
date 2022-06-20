@@ -1,5 +1,6 @@
 package com.auiucloud.uaa.config;
 
+import com.auiucloud.core.security.handle.MetaAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 /**
  * 安全配置中心
@@ -31,6 +33,14 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
 
     /**
+     * 默认密码处理器
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    /**
      * Spring Security OAuth2 支持 grant_type=password
      * 必须要配置 AuthenticationManager
      *
@@ -41,6 +51,11 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
     @SneakyThrows
     public AuthenticationManager authenticationManagerBean() {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler mateAuthenticationFailureHandler() {
+        return new MetaAuthenticationFailureHandler();
     }
 
     @Override
@@ -70,14 +85,6 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .jwt().jwtAuthenticationConverter(jwtAuthenticationTokenConverter())
 //                );
 //        ;
-    }
-
-    /**
-     * 默认密码处理器
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override

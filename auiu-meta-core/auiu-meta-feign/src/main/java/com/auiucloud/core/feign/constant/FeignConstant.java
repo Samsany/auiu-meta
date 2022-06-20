@@ -14,7 +14,7 @@ public class FeignConstant {
     /**
      * 网关
      */
-    public final String AUIU_META_CLOUD_GATEWAY = "auiu-meta-gateway";
+    public final String AUIU_META_CLOUD_GATEWAY = "meta-gateway";
 
     /**
      * 系统服务
@@ -24,11 +24,11 @@ public class FeignConstant {
     /**
      * 认证服务
      */
-    public final String AUIU_META_CLOUD_UAA = "auiu-meta-uaa";
+    public final String AUIU_META_CLOUD_UAA = "meta-uaa";
 
     /**
      * 消息生产者
      */
-    public final String AUIU_META_CLOUD_LOG_PRODUCER = "auiu-meta-log-producer";
+    public final String AUIU_META_CLOUD_LOG_PRODUCER = "meta-log-producer";
 
 }

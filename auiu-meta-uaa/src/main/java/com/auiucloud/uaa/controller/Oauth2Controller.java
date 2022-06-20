@@ -1,6 +1,7 @@
 package com.auiucloud.uaa.controller;
 
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.log.annotation.Log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -56,7 +57,7 @@ public class Oauth2Controller {
             @ApiImplicitParam(name = "scope", value = "使用范围", paramType = "query", dataTypeClass = String.class)
     })
     @PostMapping("/token")
-    public ApiResult<?> postAccessToken(@ApiIgnore Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public ApiResult<?> postAccessToken(@ApiIgnore Principal principal, @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());
     }
 
@@ -69,6 +70,8 @@ public class Oauth2Controller {
     private ApiResult<?> custom(OAuth2AccessToken oAuth2AccessToken) {
         Map<String, Object> data = new LinkedHashMap<>(oAuth2AccessToken.getAdditionalInformation());
         data.put("accessToken", oAuth2AccessToken.getValue());
+        data.put("bearerType", Oauth2Constant.JWT_TOKEN_PREFIX);
+        data.put("expiresIn", oAuth2AccessToken.getExpiresIn());
         if (oAuth2AccessToken.getRefreshToken() != null) {
             data.put("refreshToken", oAuth2AccessToken.getRefreshToken().getValue());
         }
