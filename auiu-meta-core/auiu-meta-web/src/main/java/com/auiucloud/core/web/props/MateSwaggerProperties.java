@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @RefreshScope
-@ConfigurationProperties(prefix = "auiu-cloud.swagger")
+@ConfigurationProperties(prefix = "meta.swagger")
 public class MateSwaggerProperties {
 
     /*** 是否开启swagger */

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2021/12/27
  */
 @Data
-@ConfigurationProperties(prefix = "auiu-cloud.kafka")
+@ConfigurationProperties(prefix = "meta.kafka")
 public class LogProperties {
 
     /**

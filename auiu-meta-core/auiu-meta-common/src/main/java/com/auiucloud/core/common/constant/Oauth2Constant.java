@@ -109,4 +109,19 @@ public class Oauth2Constant {
             "refresh_token_validity, additional_information, auto_approve as autoapprove from " + META_CLIENT_TABLE;
     public static final String FIND_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " order by client_id";
     public static final String SELECT_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where client_id = ?";
+
+    /**
+     * 标志
+     */
+    public static final String FROM = "from";
+
+    /**
+     * 内部
+     */
+    public static final String FROM_IN = "Y";
+
+    /**
+     * 权限标识前缀
+     */
+    public static final String META_PERMISSION_PREFIX = "meta.permission.";
 }

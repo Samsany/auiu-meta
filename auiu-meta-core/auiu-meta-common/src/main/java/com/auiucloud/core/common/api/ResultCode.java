@@ -18,7 +18,7 @@ public enum ResultCode implements IResultCode {
     /**
      * 操作成功
      */
-    SUCCESS(200, "操作成功"),
+    SUCCESS(20000, "操作成功"),
     /**
      * 业务异常
      */
@@ -34,7 +34,7 @@ public enum ResultCode implements IResultCode {
     /**
      * 服务异常
      */
-    ERROR(500, "服务异常"),
+    ERROR(500, "请求服务异常"),
 
     /*** 一级宏观错误码 */
     USER_ERROR_0001(10001, "用户端错误"),
@@ -134,7 +134,7 @@ public enum ResultCode implements IResultCode {
     /**
      * 二级宏观错误码
      */
-    USER_ERROR_A0500(10500, "用户请求服务异常"),
+    USER_ERROR_A0500(10500, "请求服务异常"),
     USER_ERROR_A0501(10501, "请求次数超出限制"),
     USER_ERROR_A0502(10502, "请求并发数超出限制"),
     USER_ERROR_A0503(10503, "用户操作请等待"),

@@ -21,4 +21,12 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     List<SysRole> getRoleListByIds(Set<Long> roleIds);
 
+    /**
+     * 根据角色编码列表查询角色信息
+     *
+     * @param roles 角色编码
+     * @return List<SysRole>
+     */
+    List<SysRole> getRoleIdsByRoles(List<String> roles);
+
 }

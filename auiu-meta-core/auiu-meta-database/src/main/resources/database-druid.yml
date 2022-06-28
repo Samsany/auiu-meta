@@ -2,10 +2,10 @@ spring:
   datasource:
     druid:
       enable: true
-      username: ${auiu-cloud.datasource.username}
-      password: ${auiu-cloud.datasource.password}
+      username: ${meta.datasource.username}
+      password: ${meta.datasource.password}
       driver-class-name: ${spring.datasource.driver-class-name}
-      url: ${auiu-cloud.datasource.url}
+      url: ${meta.datasource.url}
       db-type: mysql
       initialSize: 10
       minIdle: 10

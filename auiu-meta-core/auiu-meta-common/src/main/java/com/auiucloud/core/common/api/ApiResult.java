@@ -3,8 +3,7 @@ package com.auiucloud.core.common.api;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -12,8 +11,7 @@ import java.io.Serializable;
  * @author dries
  * @date 2021/12/21
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "统一响应报文")
 public class ApiResult<T> implements Serializable {
     private static final long serialVersionUID = -3018546779590723199L;
@@ -58,11 +56,13 @@ public class ApiResult<T> implements Serializable {
         this.time = System.currentTimeMillis();
     }
 
-    /*** 成功返回结果, 无参 */
+    /*** 成功返回结果, 默认无参 */
     public static <T> ApiResult<T> success() {
-        return new ApiResult<>(ResultCode.SUCCESS.getCode(),
-                ResultCode.SUCCESS.getMessage(),
-                null);
+        return success(ResultCode.SUCCESS);
+    }
+
+    public static <T> ApiResult<T> success(IResultCode resultCode) {
+        return new ApiResult<>(resultCode);
     }
 
     /**
@@ -133,7 +133,7 @@ public class ApiResult<T> implements Serializable {
      * @param message 提示信息
      */
     public static <T> ApiResult<T> fail(String message) {
-        return new ApiResult<>(ResultCode.ERROR, message);
+        return new ApiResult<>(ResultCode.USER_ERROR_A0500, message);
     }
 
     /**
@@ -145,8 +145,13 @@ public class ApiResult<T> implements Serializable {
         return new ApiResult<>(resultCode, data);
     }
 
+    public static <T> ApiResult<T> condition(boolean flag) {
+        return flag ? success(ResultCode.SUCCESS.getMessage()) : fail(ResultCode.USER_ERROR_A0500.getMessage());
+    }
+
     public boolean successful() {
         return code == ResultCode.SUCCESS.getCode();
     }
+
 
 }

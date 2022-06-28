@@ -15,7 +15,7 @@ import java.util.List;
  * @author dries
  * @createDate 2022-05-31 16-43
  */
-@FeignClient(value = FeignConstant.AUIU_META_CLOUD_ADMIN)
+@FeignClient(value = FeignConstant.META_CLOUD_ADMIN)
 public interface ISysUserRoleProvider {
 
     /**

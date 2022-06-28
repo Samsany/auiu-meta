@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties(prefix = "auiu-cloud.security")
+@ConfigurationProperties(prefix = "meta.security")
 public class AuthPropsConfig {
 
     /**

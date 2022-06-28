@@ -26,6 +26,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return this.list(queryWrapper);
     }
 
+    @Override
+    public List<SysRole> getRoleIdsByRoles(List<String> roles) {
+        LambdaQueryWrapper<SysRole> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.in(SysRole::getRoleCode, roles);
+        return this.list(queryWrapper);
+    }
+
 }
 
 

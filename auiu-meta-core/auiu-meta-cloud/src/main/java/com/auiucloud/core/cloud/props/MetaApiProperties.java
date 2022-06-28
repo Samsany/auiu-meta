@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @Component
 @RefreshScope
-@ConfigurationProperties(prefix = "auiu-cloud.uaa")
+@ConfigurationProperties(prefix = "meta.uaa")
 public class MetaApiProperties {
 
     /**

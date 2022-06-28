@@ -12,7 +12,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  */
 @Data
 @RefreshScope
-@ConfigurationProperties("auiu-cloud.request")
+@ConfigurationProperties("meta.request")
 public class MetaRequestProperties {
     /**
      * 是否开启日志链路追踪

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2021/12/22
  */
 @Data
-@ConfigurationProperties(prefix = "auiu-cloud.seata")
+@ConfigurationProperties(prefix = "meta.seata")
 public class SeataProperties {
 
     private String applicationId;

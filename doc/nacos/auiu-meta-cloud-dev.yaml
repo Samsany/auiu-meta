@@ -17,7 +17,7 @@ spring:
       # MySql校验
       validation-query: select 1
 
-auiu-cloud:
+meta:
   datasource:
     url: jdbc:mysql://47.100.74.170:33061/auiu_meta?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
@@ -27,7 +27,7 @@ auiu-cloud:
   preview:
     enable: false
   # 租户开关
-#  tenant:
+  #  tenant:
 #    enable: false
   # 网关认证开关
   uaa:

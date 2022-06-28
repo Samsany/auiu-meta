@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author dries
  * @date 2022/2/10
  */
-@FeignClient(value = FeignConstant.AUIU_META_CLOUD_ADMIN)
+@FeignClient(value = FeignConstant.META_CLOUD_ADMIN)
 public interface ISysUserProvider {
 
     /**

@@ -23,7 +23,7 @@ spring:
       retry:
         enabled: true
 
-auiu-cloud:
+meta:
   # MetaRequestProperties配置
   request:
     #traceId跟踪

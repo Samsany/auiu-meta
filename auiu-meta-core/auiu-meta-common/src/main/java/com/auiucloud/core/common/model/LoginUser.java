@@ -1,16 +1,18 @@
 package com.auiucloud.core.common.model;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author dries
  * @date 2021/12/20
  */
 @Data
+@Builder
 public class LoginUser implements Serializable {
     private static final long serialVersionUID = -4757030181716930100L;
 
@@ -28,12 +30,12 @@ public class LoginUser implements Serializable {
      * 用户名
      */
     @ApiModelProperty(hidden = true)
-    private String userName;
+    private String name;
     /**
      * 昵称
      */
     @ApiModelProperty(hidden = true)
-    private String nickName;
+    private String nickname;
 //    /**
 //     * 租户ID
 //     */
@@ -54,7 +56,7 @@ public class LoginUser implements Serializable {
      * 角色id集合
      */
     @ApiModelProperty(hidden = true)
-    private Set<String> roles;
+    private List<String> roles;
 
     /**
      * 登录类型

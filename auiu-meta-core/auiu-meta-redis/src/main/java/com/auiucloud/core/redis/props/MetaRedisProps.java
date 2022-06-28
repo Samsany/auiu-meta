@@ -8,8 +8,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2021/12/22
  */
 @Data
-@ConfigurationProperties(prefix = "auiu-cloud.redis")
+@ConfigurationProperties(MetaRedisProps.PREFIX)
 public class MetaRedisProps {
+
+    /**
+     * 前缀
+     */
+    public static final String PREFIX = "mate.lettuce.redis";
 
     /**
      * 是否开启

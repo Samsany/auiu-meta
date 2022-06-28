@@ -13,7 +13,7 @@ public class RuleConstant {
     public static final String BLACKLIST_OPEN = "0";
     public static final String BLACKLIST_CLOSE = "1";
 
-    private static final String BLACKLIST_CACHE_KEY_PREFIX = "auiu-cloud:rule:blacklist:";
+    private static final String BLACKLIST_CACHE_KEY_PREFIX = "meta:rule:blacklist:";
 
     public static String getBlackListCacheKey(String ip) {
         if (LOCALHOST.equalsIgnoreCase(ip)) {

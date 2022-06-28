@@ -5,9 +5,9 @@ spring:
     name: ${artifactId}
   #数据源配置
   datasource:
-    url: ${auiu-cloud.datasource.url}
-    username: ${auiu-cloud.datasource.username}
-    password: ${auiu-cloud.datasource.password}
+    url: ${meta.datasource.url}
+    username: ${meta.datasource.username}
+    password: ${meta.datasource.password}
 
 ## 配置日志显示在spring boot admin
 #logging:

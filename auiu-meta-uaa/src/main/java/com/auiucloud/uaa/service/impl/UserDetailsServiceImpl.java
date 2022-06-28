@@ -78,7 +78,7 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
         Collection<? extends GrantedAuthority> authorities
                 = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getRoles()));
         log.info("authorities: {}", authorities);
-        return new MetaUser(user.getId(), user.getAccount(), user.getNickname(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
+        return new MetaUser(user.getId(), user.getAccount(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
                 user.isStatus(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),
                 authorities);
     }

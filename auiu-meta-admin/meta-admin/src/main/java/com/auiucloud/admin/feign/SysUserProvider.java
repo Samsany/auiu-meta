@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ public class SysUserProvider implements ISysUserProvider {
 
     private final ISysUserService sysUserService;
 
-    // private final ISysRolePermissionProvider sysRolePermissionProvider;
+    private final ISysRolePermissionProvider sysRolePermissionProvider;
 
     private final ISysUserRoleService sysUserRoleService;
 
@@ -54,18 +53,20 @@ public class SysUserProvider implements ISysUserProvider {
         if (ObjectUtil.isNull(sysUser)) {
             return null;
         }
-
-        // 用户信息组装
-        // sysRolePermissionProvider.getRolesByUserId();
+        // 根据用户ID获取角色信息
         List<String> roles = sysUserRoleService.getRoleCodeListByUserId(sysUser.getId());
+        // 根据用户角色信息获取用户权限
+        List<String> permissions = sysRolePermissionProvider.getPermissionListByRoles(roles);
+        // 构建用户信息
         SysUserInfo userInfo = SysUserInfo.builder()
                 .sysUser(sysUser)
                 .username(sysUser.getAccount())
                 .roles(roles)
-                .permissions(Collections.emptyList())
+                .permissions(permissions)
                 .tenantId("")
                 .build();
         log.debug("feign调用：userInfo:{}", userInfo);
+
         return userInfo;
     }
 

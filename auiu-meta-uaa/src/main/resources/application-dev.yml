@@ -6,12 +6,12 @@ spring:
 
   # 数据源配置
   datasource:
-    url: ${auiu-cloud.datasource.url}
-    username: ${auiu-cloud.datasource.username}
-    password: ${auiu-cloud.datasource.password}
+    url: ${meta.datasource.url}
+    username: ${meta.datasource.username}
+    password: ${meta.datasource.password}
 
 # spring security安全验证配置白名单
-auiu-cloud:
+meta:
   security:
     ignoreUrls:
       - "/auth/**"

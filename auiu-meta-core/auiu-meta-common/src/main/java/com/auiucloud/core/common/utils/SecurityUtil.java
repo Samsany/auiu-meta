@@ -11,7 +11,7 @@ import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Security工具类
@@ -75,11 +75,17 @@ public class SecurityUtil {
     public static LoginUser getUser() {
         // 然后根据token获取用户登录信息，这里省略获取用户信息的过程
         JSONObject jwtPayload = getJwtPayload();
-        LoginUser loginUser = new LoginUser();
-        loginUser.setUserId(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
-        loginUser.setAccount(jwtPayload.getStr(Oauth2Constant.META_USER_NAME));
-        loginUser.setRoles((Set<String>) jwtPayload.get(Oauth2Constant.META_ROLES));
-        loginUser.setType(jwtPayload.getInt(Oauth2Constant.META_TYPE));
+
+        // 获取角色信息
+        String rolesStr = jwtPayload.getStr(Oauth2Constant.META_ROLES);
+        List<String> roles = JSONUtil.toList(rolesStr, String.class);
+
+        LoginUser loginUser = LoginUser.builder()
+                .userId(jwtPayload.getStr(Oauth2Constant.META_USER_ID))
+                .account(jwtPayload.getStr(Oauth2Constant.META_USER_NAME))
+                .roles(roles)
+                .type(jwtPayload.getInt(Oauth2Constant.META_TYPE))
+                .build();
         UserContext.setUser(loginUser);
         return loginUser;
     }
