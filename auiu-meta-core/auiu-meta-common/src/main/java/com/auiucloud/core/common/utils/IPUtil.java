@@ -3,6 +3,7 @@ package com.auiucloud.core.common.utils;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.model.IpAddress;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
  * @author dries
  * @date 2021/12/20
  */
+@Slf4j
 public class IPUtil {
 
     public static final String UNKNOWN = "unknown";
@@ -68,6 +70,7 @@ public class IPUtil {
             }
             //System.out.println(inputLine.toString());
         } catch (IOException e) {
+            log.error("获取IP地址异常");
             e.printStackTrace();
         } finally {
             if (in != null) {
@@ -75,6 +78,7 @@ public class IPUtil {
                     in.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
+                    log.error("获取IP地址异常");
                     e.printStackTrace();
                 }
             }

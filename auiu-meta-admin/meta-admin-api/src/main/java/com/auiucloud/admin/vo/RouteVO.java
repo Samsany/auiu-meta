@@ -46,6 +46,7 @@ public class RouteVO implements INode {
     /**
      * 重定向地址，设置为noRedirect时，面包屑不可点击
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String redirect;
 
     /**
@@ -56,11 +57,13 @@ public class RouteVO implements INode {
     /**
      * 永久显示根菜单
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean alwaysShow;
 
     /**
      * 前端隐藏(0-否 1-是)
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean hidden;
 
     private Meta meta;
@@ -95,22 +98,27 @@ public class RouteVO implements INode {
         /**
          * 图标
          */
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
         private String icon;
         /**
          * 开启缓存
          */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean noCache;
         /**
          * 固定在tags-view中
          */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean affix;
         /**
          * 隐藏面包屑
          */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean breadcrumb;
         /**
          * 开启验证(0-否 1-是)
          */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean requireAuth;
     }
 }

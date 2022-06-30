@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
  * @date 2021/12/22
  */
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public enum MethodType {
+@AllArgsConstructor
+public enum MethodTypeEnum {
 
     /**
      * 方法类型

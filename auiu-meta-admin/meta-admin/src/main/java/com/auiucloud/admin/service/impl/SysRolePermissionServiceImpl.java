@@ -37,12 +37,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     @Override
     public List<String> getPermissionListByRoles(List<String> roles) {
         if (roles.contains(MetaConstant.SUPER_ADMIN_CODE)) {
-            List<SysPermission> permissions = sysPermissionService.list();
-            return Optional.ofNullable(permissions).orElse(Collections.emptyList())
-                    .stream().map(SysPermission::getBtnPerm)
-                    .filter(StrUtil::isNotBlank)
-                    .distinct()
-                    .collect(Collectors.toList());
+            return List.of(MetaConstant.ALL_PERMISSION);
         }
 
         if (CollUtil.isNotEmpty(roles)) {

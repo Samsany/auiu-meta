@@ -77,7 +77,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                     .flatMapIterable(Authentication::getAuthorities)
                     .map(GrantedAuthority::getAuthority)
                     // 角色中只要有一个满足则通过权限校验
-                    .any(authority -> authority.equals(MetaConstant.SUPER_ADMIN) || authorities.contains(authority))
+                    .any(authority -> authority.equals(MetaConstant.SUPER_ADMIN_CODE) || authorities.contains(authority))
                     .map(AuthorizationDecision::new)
                     .defaultIfEmpty(new AuthorizationDecision(false));
         } else {

@@ -5,7 +5,7 @@ import com.auiucloud.admin.domain.SysLog;
 import com.auiucloud.admin.mapper.SysLogMapper;
 import com.auiucloud.admin.service.ISysLogService;
 import com.auiucloud.core.database.model.Search;
-import com.auiucloud.core.database.utils.PageUtil;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -31,7 +31,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         }
         //　字段排序
         queryWrapper.orderByDesc(SysLog::getCreateTime);
-        return this.baseMapper.selectPage(PageUtil.getPage(search), queryWrapper);
+        return this.baseMapper.selectPage(PageUtils.getPage(search), queryWrapper);
     }
 }
 

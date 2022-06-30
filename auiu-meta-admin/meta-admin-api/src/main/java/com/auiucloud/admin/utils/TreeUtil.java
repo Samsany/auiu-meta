@@ -1,5 +1,6 @@
 package com.auiucloud.admin.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysMenu;
 import com.auiucloud.admin.enums.MenuTypeEnum;
 import com.auiucloud.admin.vo.RouteVO;
@@ -22,13 +23,38 @@ public class TreeUtil {
         sysMenus.forEach(sysMenu -> {
             RouteVO routeVo = new RouteVO();
             BeanUtils.copyProperties(sysMenu, routeVo);
+            if (!sysMenu.isAlwaysShow()) {
+                routeVo.setAlwaysShow(null);
+            }
+
+            if (!sysMenu.isHidden()) {
+                routeVo.setHidden(null);
+            }
+
             RouteVO.Meta meta = new RouteVO.Meta();
             meta.setTitle(sysMenu.getTitle());
-            meta.setIcon(sysMenu.getIcon());
-            meta.setNoCache(sysMenu.isKeepAlive());
-            meta.setAffix(sysMenu.isAffix());
-            meta.setBreadcrumb(sysMenu.isHideHeader());
-            meta.setRequireAuth(sysMenu.isRequireAuth());
+            if (StrUtil.isNotBlank(sysMenu.getIcon())) {
+                meta.setIcon(sysMenu.getIcon());
+            }
+
+            if (sysMenu.isAffix()) {
+                meta.setAffix(sysMenu.isAffix());
+            }
+
+            if (sysMenu.isKeepAlive()) {
+                meta.setNoCache(sysMenu.isKeepAlive());
+            }
+
+            if (sysMenu.isHideHeader()) {
+                meta.setBreadcrumb(!sysMenu.isHideHeader());
+            }
+
+            if (sysMenu.isRequireAuth()) {
+                meta.setRequireAuth(sysMenu.isRequireAuth());
+            }
+
+            routeVo.setMeta(meta);
+
             // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
             if (sysMenu.getParentId().equals(CommonConstant.ROOT_NODE_ID) && MenuTypeEnum.DIR.getCode().equals(sysMenu.getType())) {
                 routeVo.setComponent("Layout");

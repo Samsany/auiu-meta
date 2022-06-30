@@ -1,6 +1,8 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysMenu;
+import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -19,4 +21,11 @@ public interface ISysMenuService extends IService<SysMenu> {
      */
     List<SysMenu> routes();
 
+    /**
+     * 菜单列表
+     *
+     * @param search 查询条件
+     * @return PageUtils 分页对象
+     */
+    PageUtils listPage(Search search);
 }
