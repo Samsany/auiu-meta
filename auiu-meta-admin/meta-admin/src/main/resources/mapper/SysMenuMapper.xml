@@ -14,6 +14,7 @@
         <result property="path" column="path" jdbcType="VARCHAR"/>
         <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="alwaysShow" column="is_always_show" jdbcType="TINYINT"/>
         <result property="affix" column="is_affix" jdbcType="TINYINT"/>
         <result property="hidden" column="is_hidden" jdbcType="TINYINT"/>
@@ -30,7 +31,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        select id,
+        SELECT id,
                parent_id,
                name,
                title,
@@ -39,6 +40,7 @@
                path,
                redirect,
                type,
+               status,
                is_always_show,
                is_affix,
                is_hidden,
@@ -56,11 +58,12 @@
     </sql>
     <select id="routes" resultMap="BaseResultMap">
         <include refid="Base_Column_List"/>
-        WHERE id in (
-        SELECT menu_id from sys_role_menu where role_id in
+        WHERE is_deleted = 0 AND status = 1 AND id IN (
+        SELECT menu_id FROM sys_role_menu WHERE role_id IN
         <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
             #{id}
         </foreach>
         )
+        order by sort asc
     </select>
 </mapper>

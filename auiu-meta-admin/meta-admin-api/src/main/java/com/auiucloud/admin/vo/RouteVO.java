@@ -58,13 +58,13 @@ public class RouteVO implements INode {
      * 永久显示根菜单
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean alwaysShow;
+    private Boolean alwaysShow = true;
 
     /**
      * 前端隐藏(0-否 1-是)
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean hidden;
+    private Boolean hidden = true;
 
     private Meta meta;
 
@@ -104,21 +104,21 @@ public class RouteVO implements INode {
          * 开启缓存
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Boolean noCache;
+        private Boolean noCache = true;
         /**
          * 固定在tags-view中
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Boolean affix;
+        private Boolean affix = true;
         /**
          * 隐藏面包屑
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Boolean breadcrumb;
+        private Boolean breadcrumb = true;
         /**
          * 开启验证(0-否 1-是)
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Boolean requireAuth;
+        private Boolean requireAuth = true;
     }
 }

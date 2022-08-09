@@ -1,4 +1,8 @@
 spring:
+#  jackson:
+  #    time-zone: GMT+8
+  #    date-format: yyyy-MM-dd HH:mm:ss
+  #    property-inclusion: non_null
   profiles:
     active: @spring.active@
 

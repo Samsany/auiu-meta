@@ -1,0 +1,150 @@
+2022-08-08 00:17:26,760 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=21}, 192.168.31.49:20002#true
+
+2022-08-08 00:17:58,134 INFO Client connection 192.168.31.49:63392#true disconnect, remove instances and subscribers
+
+2022-08-08 00:17:58,134 INFO Client connection 192.168.31.49:20002#true disconnect, remove instances and subscribers
+
+2022-08-08 00:18:42,489 INFO Client connection 192.168.31.49:20002#true connect
+
+2022-08-08 00:18:42,491 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=22}, 192.168.31.49:20002#true
+
+2022-08-08 00:19:08,174 INFO Client connection 192.168.31.49:52036#true disconnect, remove instances and subscribers
+
+2022-08-08 00:19:38,084 INFO Client connection 192.168.31.49:52036#true connect
+
+2022-08-08 00:20:48,143 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=23}, 192.168.31.49:20002#true
+
+2022-08-08 00:21:09,546 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=24}, 192.168.31.49:20002#true
+
+2022-08-08 00:24:51,379 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=25}, 192.168.31.49:20002#true
+
+2022-08-08 00:25:16,519 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=26}, 192.168.31.49:20002#true
+
+2022-08-08 00:26:40,681 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=27}, 192.168.31.49:20002#true
+
+2022-08-08 00:27:01,470 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=28}, 192.168.31.49:20002#true
+
+2022-08-08 00:30:50,887 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 01:47:05,582 INFO [AUTO-DELETE-IP] service: Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=29}, ip: {"ip":"192.168.31.49","port":20002,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.31.49#20002#DEFAULT#DEFAULT_GROUP@@meta-admin"},"lastHeartBeatTime":1659890435734,"metadataId":"192.168.31.49:20002:DEFAULT"}
+
+2022-08-08 01:47:05,583 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=29}, 192.168.31.49:20002#true
+
+2022-08-08 01:47:06,155 INFO Client connection 192.168.31.49:20002#true disconnect, remove instances and subscribers
+
+2022-08-08 01:47:06,155 INFO Client connection 192.168.31.49:60667#true disconnect, remove instances and subscribers
+
+2022-08-08 01:47:06,155 INFO Client connection 192.168.31.49:54613#true disconnect, remove instances and subscribers
+
+2022-08-08 01:47:06,155 INFO Client connection 192.168.31.49:52036#true disconnect, remove instances and subscribers
+
+2022-08-08 01:47:07,786 INFO Client connection 192.168.31.49:54613#true connect
+
+2022-08-08 01:47:08,185 INFO Client connection 192.168.31.49:20002#true connect
+
+2022-08-08 01:47:08,185 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=30}, 192.168.31.49:20002#true
+
+2022-08-08 01:47:11,185 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 01:47:13,113 INFO Client connection 192.168.31.49:52036#true connect
+
+2022-08-08 03:10:18,020 INFO Client connection 192.168.31.49:20002#true disconnect, remove instances and subscribers
+
+2022-08-08 03:10:18,020 INFO Client connection 192.168.31.49:60667#true disconnect, remove instances and subscribers
+
+2022-08-08 03:10:20,172 INFO Client connection 192.168.31.49:20002#true connect
+
+2022-08-08 03:10:20,173 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=32}, 192.168.31.49:20002#true
+
+2022-08-08 03:10:25,106 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 03:32:51,636 INFO Client connection 192.168.31.49:20002#true disconnect, remove instances and subscribers
+
+2022-08-08 03:32:51,636 INFO Client connection 192.168.31.49:60667#true disconnect, remove instances and subscribers
+
+2022-08-08 03:32:54,036 INFO Client connection 192.168.31.49:20002#true connect
+
+2022-08-08 03:32:54,036 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=34}, 192.168.31.49:20002#true
+
+2022-08-08 03:32:58,984 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 04:25:40,233 INFO Client connection 192.168.31.49:20002#true disconnect, remove instances and subscribers
+
+2022-08-08 04:25:40,234 INFO Client connection 192.168.31.49:60667#true disconnect, remove instances and subscribers
+
+2022-08-08 04:25:43,062 INFO Client connection 192.168.31.49:20002#true connect
+
+2022-08-08 04:25:43,063 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=36}, 192.168.31.49:20002#true
+
+2022-08-08 04:25:47,655 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 06:01:54,431 INFO [AUTO-DELETE-IP] service: Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=37}, ip: {"ip":"192.168.31.49","port":20002,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.31.49#20002#DEFAULT#DEFAULT_GROUP@@meta-admin"},"lastHeartBeatTime":1659903963206,"metadataId":"192.168.31.49:20002:DEFAULT"}
+
+2022-08-08 06:01:54,432 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=37}, 192.168.31.49:20002#true
+
+2022-08-08 06:01:54,597 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=38}, 192.168.31.49:20002#true
+
+2022-08-08 06:01:56,599 INFO Client connection 192.168.31.49:60667#true disconnect, remove instances and subscribers
+
+2022-08-08 06:02:04,146 INFO Client connection 192.168.31.49:60667#true connect
+
+2022-08-08 07:45:23,954 INFO [AUTO-DELETE-IP] service: Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, ip: {"ip":"192.168.31.49","port":20002,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.31.49#20002#DEFAULT#DEFAULT_GROUP@@meta-admin"},"lastHeartBeatTime":1659909739720,"metadataId":"192.168.31.49:20002:DEFAULT"}
+
+2022-08-08 07:45:23,954 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, 192.168.31.49:20002#true
+
+2022-08-08 07:45:24,259 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=40}, 192.168.31.49:20002#true
+
+2022-08-08 08:06:27,884 INFO [AUTO-DELETE-IP] service: Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}, ip: {"ip":"192.168.31.49","port":20002,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.31.49#20002#DEFAULT#DEFAULT_GROUP@@meta-admin"},"lastHeartBeatTime":1659915949417,"metadataId":"192.168.31.49:20002:DEFAULT"}
+
+2022-08-08 08:06:27,885 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}, 192.168.31.49:20002#true
+
+2022-08-08 08:06:28,315 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=42}, 192.168.31.49:20002#true
+
+2022-08-08 08:46:49,649 INFO [AUTO-DELETE-IP] service: Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}, ip: {"ip":"192.168.31.49","port":20002,"healthy":false,"cluster":"DEFAULT","extendDatum":{"preserved.register.source":"SPRING_CLOUD","customInstanceId":"192.168.31.49#20002#DEFAULT#DEFAULT_GROUP@@meta-admin"},"lastHeartBeatTime":1659917243709,"metadataId":"192.168.31.49:20002:DEFAULT"}
+
+2022-08-08 08:46:49,649 INFO Client remove for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}, 192.168.31.49:20002#true
+
+2022-08-08 08:46:50,477 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=44}, 192.168.31.49:20002#true
+
+2022-08-08 08:46:51,706 INFO Client connection 192.168.31.49:20001#true disconnect, remove instances and subscribers
+
+2022-08-08 08:46:51,707 INFO Client connection 192.168.31.49:88#true disconnect, remove instances and subscribers
+
+2022-08-08 08:46:51,870 INFO Client connection 192.168.31.49:20001#true connect
+
+2022-08-08 08:46:51,871 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-uaa', ephemeral=true, revision=28}, 192.168.31.49:20001#true
+
+2022-08-08 08:46:51,982 INFO Client connection 192.168.31.49:88#true connect
+
+2022-08-08 08:46:51,983 INFO Client change for service Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-gateway', ephemeral=true, revision=16}, 192.168.31.49:88#true
+
+2022-08-08 08:47:58,762 WARN [NamingServerHttpClientManager] Start destroying HTTP-Client
+
+2022-08-08 08:47:58,770 WARN [NamingServerHttpClientManager] Destruction of the end
+
+2022-08-08 08:47:59,100 ERROR [HEALTH-CHECK] error while processing NIO task
+
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)
+	at java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+	at com.alibaba.nacos.naming.healthcheck.TcpSuperSenseProcessor.processTask(TcpSuperSenseProcessor.java:137)
+	at com.alibaba.nacos.naming.healthcheck.TcpSuperSenseProcessor.run(TcpSuperSenseProcessor.java:154)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+2022-08-08 08:47:59,106 ERROR [HEALTH-CHECK-V2] error while processing NIO task
+
+java.lang.InterruptedException: null
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)
+	at java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+	at com.alibaba.nacos.naming.healthcheck.v2.processor.TcpHealthCheckProcessor.processTask(TcpHealthCheckProcessor.java:122)
+	at com.alibaba.nacos.naming.healthcheck.v2.processor.TcpHealthCheckProcessor.run(TcpHealthCheckProcessor.java:139)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

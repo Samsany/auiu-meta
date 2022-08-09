@@ -2,16 +2,16 @@ package com.auiucloud.core.web.config;
 
 import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
+import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.web.props.MateSwaggerProperties;
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.util.ReflectionUtils;
@@ -31,7 +31,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.spring.web.plugins.WebFluxRequestHandlerProvider;
 import springfox.documentation.spring.web.plugins.WebMvcRequestHandlerProvider;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -49,7 +48,7 @@ import java.util.stream.Collectors;
  * @author dries
  * @date 2021/12/22
  */
-@Configuration
+@AutoConfiguration
 @EnableSwagger2
 @RequiredArgsConstructor
 @Import(BeanValidatorPluginsConfiguration.class)
@@ -70,7 +69,8 @@ public class SwaggerConfiguration {
             HttpSession.class,
             ApiIgnore.class,
             Principal.class,
-            Map.class
+            Map.class,
+            Search.class
     };
 
     @Bean
@@ -130,7 +130,6 @@ public class SwaggerConfiguration {
         // 设置请求头信息
         List<SecurityScheme> result = new ArrayList<>();
         ApiKey apiKey = new ApiKey("Authorization", "Authorization", "header");
-        // apiKeyList.add(new ApiKey("Mate-Auth", "Mate-Auth", "header"));
         result.add(apiKey);
         return result;
     }

@@ -1,11 +1,11 @@
 package com.auiucloud.core.web.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.TokenException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -89,9 +89,9 @@ public class BaseExceptionHandler {
     public ApiResult<?> handleException(Exception ex) {
         log.error("程序异常：" + ex.toString());
         String message = ex.getMessage();
-        if (StringUtils.contains(message, "Bad credentials")) {
+        if (StrUtil.contains(message, "Bad credentials")) {
             message = "您输入的密码不正确";
-        } else if (StringUtils.contains(ex.toString(), "InternalAuthenticationServiceException")) {
+        } else if (StrUtil.contains(ex.toString(), "InternalAuthenticationServiceException")) {
             message = "内部认证服务异常";
         }
         return ApiResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), message);

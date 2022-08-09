@@ -25,6 +25,12 @@ public class Search implements Serializable {
     private String keyword;
 
     /**
+     * 状态
+     */
+    @ApiModelProperty(hidden = true)
+    private Integer status;
+
+    /**
      * 开始日期
      */
     @ApiModelProperty(hidden = true)

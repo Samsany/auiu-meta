@@ -69,40 +69,45 @@ public class SysMenu extends BaseEntity {
     private Integer type;
 
     /**
+     * 菜单状态(0-禁用 1-启用)
+     */
+    private Integer status;
+
+    /**
      * 永久显示根菜单(0-否 1-是)
      */
     @TableField(value = "is_always_show")
-    private boolean alwaysShow;
+    private Integer alwaysShow;
 
     /**
      * 固定在tags-view中(0-否 1-是)
      */
     @TableField(value = "is_affix")
-    private boolean affix;
+    private Integer affix;
 
     /**
      * 前端隐藏(0-否 1-是)
      */
-    @TableField(value = "is_hide_header")
-    private boolean hidden;
+    @TableField(value = "is_hidden")
+    private Integer hidden;
 
     /**
      * 隐藏面包屑(0-否 1-是)
      */
     @TableField(value = "is_hide_header")
-    private boolean hideHeader;
+    private Integer hideHeader;
 
     /**
      * 开启缓存(0-否 1-是)
      */
     @TableField(value = "is_keep_alive")
-    private boolean keepAlive;
+    private Integer keepAlive;
 
     /**
      * 开启验证(0-否 1-是)
      */
     @TableField(value = "is_require_auth")
-    private boolean requireAuth;
+    private Integer requireAuth;
 
     /**
      * 排序

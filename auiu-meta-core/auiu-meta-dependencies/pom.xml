@@ -65,13 +65,15 @@
 
         <swagger.version>3.0.0</swagger.version>
         <swagger.models.version>1.6.3</swagger.models.version>
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>2.0.9</knife4j.version>
 
         <easypoi.version>4.4.0</easypoi.version>
         <lombok.version>1.18.24</lombok.version>
         <hutool.version>5.7.22</hutool.version>
-        <commons-io>2.11.0</commons-io>
-        <commons-collections>3.2.2</commons-collections>
+        <easyexcel.version>3.1.1</easyexcel.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-lan3.version>3.12.0</commons-lan3.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
         <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
         <jakarta.validation.version>2.0.2</jakarta.validation.version>
         <jackson.version>2.13.0</jackson.version>
@@ -349,14 +351,24 @@
                 <version>${jackson.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang3</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
-                <version>${commons-collections}</version>
+                <version>${commons-collections.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>${commons-io}</version>
+                <version>${commons-io.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.afterturn</groupId>

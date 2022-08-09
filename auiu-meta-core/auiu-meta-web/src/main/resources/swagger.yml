@@ -1,7 +1,7 @@
 # Swagger属性配置
 meta:
   swagger:
-    enable: false
+    enabled: false
     title: AUIUCLOUD文档管理中心
     description: AUIUCLOUD文档管理
     license: Powered by AUIUCLOUD
@@ -26,8 +26,9 @@ knife4j:
     enableFooterCustom: true
     # 自定义Footer内容,支持Markdown语法
     footerCustomContent: Apache License 2.0 | Copyright  2020-[DRIES](https://github.com/Samsany/auiu-meta)
-    enableHomeCustom: true
-    homeCustomLocation: classpath:swagger.md
+    # 自定义Home内容
+    # enableHomeCustom: true
+    # homeCustomLocation: classpath:swagger.md
 
 # 默认路径匹配策略切换回ant_path_matcher
 spring:

@@ -1,0 +1,546 @@
+2022-08-08 00:17:27,310 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:17:27,342 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:63392, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,63392,46050966139792
+
+2022-08-08 00:17:27,347 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:17:27,348 INFO send udp packet: 192.168.31.49,63392,46050966139792
+
+2022-08-08 00:17:27,350 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46050974502167
+
+2022-08-08 00:17:27,358 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:17:27,359 INFO send udp packet: 192.168.31.49,54613,46050974502167
+
+2022-08-08 00:17:27,363 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46050987366417
+
+2022-08-08 00:17:27,366 INFO send udp packet: 192.168.31.49,52036,46050987366417
+
+2022-08-08 00:17:27,369 INFO [PUSH-SUCC] 59ms, all delay time 607ms, SLA 607ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=22}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:17:27,370 INFO [PUSH-SUCC] 23ms, all delay time 608ms, SLA 608ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=22}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:17:27,373 INFO [PUSH-SUCC] 15ms, all delay time 611ms, SLA 611ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=22}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:18:43,009 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:18:43,024 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46126653679409
+
+2022-08-08 00:18:43,034 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:18:43,034 INFO send udp packet: 192.168.31.49,54613,46126653679409
+
+2022-08-08 00:18:43,036 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46126665969868
+
+2022-08-08 00:18:43,039 INFO send udp packet: 192.168.31.49,52036,46126665969868
+
+2022-08-08 00:18:43,041 INFO [PUSH-SUCC] 33ms, all delay time 549ms, SLA 550ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=23}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:18:43,047 INFO [PUSH-SUCC] 13ms, all delay time 555ms, SLA 556ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=23}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:19:38,641 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:19:38,652 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46182289292810
+
+2022-08-08 00:19:38,670 INFO send udp packet: 192.168.31.49,52036,46182289292810
+
+2022-08-08 00:19:38,678 INFO [PUSH-SUCC] 37ms, all delay time 593ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=23}, DataSize=1
+
+2022-08-08 00:20:48,752 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:20:48,764 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46252400561718
+
+2022-08-08 00:20:48,771 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:20:48,771 INFO send udp packet: 192.168.31.49,54613,46252400561718
+
+2022-08-08 00:20:48,774 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46252411345468
+
+2022-08-08 00:20:48,781 INFO send udp packet: 192.168.31.49,52036,46252411345468
+
+2022-08-08 00:20:48,783 INFO [PUSH-SUCC] 32ms, all delay time 627ms, SLA 627ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=24}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:20:48,790 INFO [PUSH-SUCC] 19ms, all delay time 634ms, SLA 634ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=24}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:21:10,060 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:21:10,063 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46273701095977
+
+2022-08-08 00:21:10,065 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:21:10,067 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46273705279394
+
+2022-08-08 00:21:10,066 INFO send udp packet: 192.168.31.49,54613,46273701095977
+
+2022-08-08 00:21:10,070 INFO send udp packet: 192.168.31.49,52036,46273705279394
+
+2022-08-08 00:21:10,072 INFO [PUSH-SUCC] 12ms, all delay time 524ms, SLA 524ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=25}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:21:10,075 INFO [PUSH-SUCC] 10ms, all delay time 527ms, SLA 527ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=25}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:24:51,963 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:24:51,973 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46495610238495
+
+2022-08-08 00:24:51,982 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:24:51,982 INFO send udp packet: 192.168.31.49,54613,46495610238495
+
+2022-08-08 00:24:51,987 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46495624440953
+
+2022-08-08 00:24:51,994 INFO send udp packet: 192.168.31.49,52036,46495624440953
+
+2022-08-08 00:24:52,000 INFO [PUSH-SUCC] 37ms, all delay time 620ms, SLA 621ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=26}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:24:52,004 INFO [PUSH-SUCC] 22ms, all delay time 624ms, SLA 625ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=26}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:25:17,117 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:25:17,124 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46520761433048
+
+2022-08-08 00:25:17,135 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:25:17,135 INFO send udp packet: 192.168.31.49,54613,46520761433048
+
+2022-08-08 00:25:17,137 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46520775254798
+
+2022-08-08 00:25:17,141 INFO send udp packet: 192.168.31.49,52036,46520775254798
+
+2022-08-08 00:25:17,142 INFO [PUSH-SUCC] 25ms, all delay time 623ms, SLA 623ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=27}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:25:17,149 INFO [PUSH-SUCC] 14ms, all delay time 630ms, SLA 630ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=27}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:26:41,275 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:26:41,290 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46604927456920
+
+2022-08-08 00:26:41,302 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:26:41,302 INFO send udp packet: 192.168.31.49,54613,46604927456920
+
+2022-08-08 00:26:41,305 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46604942802795
+
+2022-08-08 00:26:41,311 INFO send udp packet: 192.168.31.49,52036,46604942802795
+
+2022-08-08 00:26:41,319 INFO [PUSH-SUCC] 17ms, all delay time 637ms, SLA 638ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=28}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:26:41,321 INFO [PUSH-SUCC] 46ms, all delay time 639ms, SLA 640ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=28}, DataSize=0, target=192.168.31.49
+
+2022-08-08 00:27:02,063 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:27:02,074 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,46625711772805
+
+2022-08-08 00:27:02,086 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:27:02,088 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,46625725735680
+
+2022-08-08 00:27:02,086 INFO send udp packet: 192.168.31.49,54613,46625711772805
+
+2022-08-08 00:27:02,092 INFO send udp packet: 192.168.31.49,52036,46625725735680
+
+2022-08-08 00:27:02,094 INFO [PUSH-SUCC] 31ms, all delay time 613ms, SLA 613ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=29}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:27:02,097 INFO [PUSH-SUCC] 11ms, all delay time 616ms, SLA 616ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=29}, DataSize=1, target=192.168.31.49
+
+2022-08-08 00:30:51,451 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 00:30:51,462 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,46855099312617
+
+2022-08-08 00:30:51,471 INFO send udp packet: 192.168.31.49,60667,46855099312617
+
+2022-08-08 00:30:51,481 INFO [PUSH-SUCC] 30ms, all delay time 589ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=29}, DataSize=1
+
+2022-08-08 01:47:05,583 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=30}
+
+2022-08-08 01:47:06,083 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:06,100 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47442349361133
+
+2022-08-08 01:47:06,109 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:06,109 INFO send udp packet: 192.168.31.49,60667,47442349361133
+
+2022-08-08 01:47:06,115 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47442364429800
+
+2022-08-08 01:47:06,122 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:06,122 INFO send udp packet: 192.168.31.49,54613,47442364429800
+
+2022-08-08 01:47:06,123 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47442373217300
+
+2022-08-08 01:47:06,127 INFO send udp packet: 192.168.31.49,52036,47442373217300
+
+2022-08-08 01:47:06,138 INFO [PUSH-SUCC] 16ms, all delay time 557ms, SLA 555ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=30}, DataSize=0, target=192.168.31.49
+
+2022-08-08 01:47:06,139 INFO [PUSH-SUCC] 57ms, all delay time 558ms, SLA 556ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=30}, DataSize=0, target=192.168.31.49
+
+2022-08-08 01:47:06,141 INFO [PUSH-SUCC] 32ms, all delay time 560ms, SLA 558ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=30}, DataSize=0, target=192.168.31.49
+
+2022-08-08 01:47:08,389 INFO DEFAULT_GROUP@@meta-gateway is changed, add it to push queue.
+
+2022-08-08 01:47:08,389 INFO DEFAULT_GROUP@@meta-uaa is changed, add it to push queue.
+
+2022-08-08 01:47:08,408 INFO serviceName: DEFAULT_GROUP@@meta-uaa changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47444658524176
+
+2022-08-08 01:47:08,406 INFO serviceName: DEFAULT_GROUP@@meta-gateway changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47444656327676
+
+2022-08-08 01:47:08,411 INFO send udp packet: 192.168.31.49,54613,47444658524176
+
+2022-08-08 01:47:08,417 INFO send udp packet: 192.168.31.49,54613,47444656327676
+
+2022-08-08 01:47:08,420 INFO [PUSH-SUCC] 31ms, all delay time 632ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-uaa', ephemeral=true, revision=27}, DataSize=1
+
+2022-08-08 01:47:08,422 INFO [PUSH-SUCC] 33ms, all delay time 634ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-gateway', ephemeral=true, revision=15}, DataSize=1
+
+2022-08-08 01:47:11,705 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:11,710 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47447960304386
+
+2022-08-08 01:47:11,712 INFO send udp packet: 192.168.31.49,60667,47447960304386
+
+2022-08-08 01:47:11,727 INFO [PUSH-SUCC] 22ms, all delay time 541ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=31}, DataSize=1
+
+2022-08-08 01:47:13,159 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=31}
+
+2022-08-08 01:47:13,652 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:13,661 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47449909857262
+
+2022-08-08 01:47:13,664 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 01:47:13,664 INFO send udp packet: 192.168.31.49,52036,47449909857262
+
+2022-08-08 01:47:13,668 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47449917539637
+
+2022-08-08 01:47:13,677 INFO send udp packet: 192.168.31.49,54613,47449917539637
+
+2022-08-08 01:47:13,688 INFO [PUSH-SUCC] 36ms, all delay time 575ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=31}, DataSize=1
+
+2022-08-08 01:47:13,697 INFO [PUSH-SUCC] 33ms, all delay time 584ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=31}, DataSize=1
+
+2022-08-08 03:10:18,591 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:10:18,599 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47473068591605
+
+2022-08-08 03:10:18,603 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:10:18,604 INFO send udp packet: 192.168.31.49,54613,47473068591605
+
+2022-08-08 03:10:18,606 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47473075784397
+
+2022-08-08 03:10:18,611 INFO send udp packet: 192.168.31.49,52036,47473075784397
+
+2022-08-08 03:10:18,615 INFO [PUSH-SUCC] 24ms, all delay time 594ms, SLA 594ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=32}, DataSize=0, target=192.168.31.49
+
+2022-08-08 03:10:18,617 INFO [PUSH-SUCC] 14ms, all delay time 596ms, SLA 596ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=32}, DataSize=0, target=192.168.31.49
+
+2022-08-08 03:10:20,746 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:10:20,756 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47475223895148
+
+2022-08-08 03:10:20,759 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:10:20,759 INFO send udp packet: 192.168.31.49,54613,47475223895148
+
+2022-08-08 03:10:20,762 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47475231593981
+
+2022-08-08 03:10:20,770 INFO [PUSH-SUCC] 24ms, all delay time 597ms, SLA 597ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=33}, DataSize=1, target=192.168.31.49
+
+2022-08-08 03:10:20,770 INFO send udp packet: 192.168.31.49,52036,47475231593981
+
+2022-08-08 03:10:20,779 INFO [PUSH-SUCC] 20ms, all delay time 606ms, SLA 606ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=33}, DataSize=1, target=192.168.31.49
+
+2022-08-08 03:10:25,707 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:10:25,723 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47480192258442
+
+2022-08-08 03:10:25,727 INFO send udp packet: 192.168.31.49,60667,47480192258442
+
+2022-08-08 03:10:25,736 INFO [PUSH-SUCC] 29ms, all delay time 630ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=33}, DataSize=1
+
+2022-08-08 03:32:52,144 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:32:52,148 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47503037441243
+
+2022-08-08 03:32:52,152 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:32:52,152 INFO send udp packet: 192.168.31.49,54613,47503037441243
+
+2022-08-08 03:32:52,154 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47503043664452
+
+2022-08-08 03:32:52,157 INFO send udp packet: 192.168.31.49,52036,47503043664452
+
+2022-08-08 03:32:52,161 INFO [PUSH-SUCC] 17ms, all delay time 524ms, SLA 524ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=34}, DataSize=0, target=192.168.31.49
+
+2022-08-08 03:32:52,163 INFO [PUSH-SUCC] 11ms, all delay time 526ms, SLA 526ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=34}, DataSize=0, target=192.168.31.49
+
+2022-08-08 03:32:54,635 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:32:54,645 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47505533838870
+
+2022-08-08 03:32:54,653 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:32:54,653 INFO send udp packet: 192.168.31.49,54613,47505533838870
+
+2022-08-08 03:32:54,657 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47505546406953
+
+2022-08-08 03:32:54,662 INFO send udp packet: 192.168.31.49,52036,47505546406953
+
+2022-08-08 03:32:54,664 INFO [PUSH-SUCC] 29ms, all delay time 627ms, SLA 627ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=35}, DataSize=1, target=192.168.31.49
+
+2022-08-08 03:32:54,669 INFO [PUSH-SUCC] 16ms, all delay time 632ms, SLA 632ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=35}, DataSize=1, target=192.168.31.49
+
+2022-08-08 03:32:59,519 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 03:32:59,531 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47510420595997
+
+2022-08-08 03:32:59,536 INFO send udp packet: 192.168.31.49,60667,47510420595997
+
+2022-08-08 03:32:59,543 INFO [PUSH-SUCC] 24ms, all delay time 557ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=35}, DataSize=1
+
+2022-08-08 04:25:40,772 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 04:25:40,794 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47533110867924
+
+2022-08-08 04:25:40,799 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 04:25:40,799 INFO send udp packet: 192.168.31.49,54613,47533110867924
+
+2022-08-08 04:25:40,802 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47533119692716
+
+2022-08-08 04:25:40,809 INFO send udp packet: 192.168.31.49,52036,47533119692716
+
+2022-08-08 04:25:40,818 INFO [PUSH-SUCC] 46ms, all delay time 584ms, SLA 585ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=36}, DataSize=0, target=192.168.31.49
+
+2022-08-08 04:25:40,820 INFO [PUSH-SUCC] 21ms, all delay time 586ms, SLA 587ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=36}, DataSize=0, target=192.168.31.49
+
+2022-08-08 04:25:43,774 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 04:25:43,781 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47536097611301
+
+2022-08-08 04:25:43,784 INFO send udp packet: 192.168.31.49,54613,47536097611301
+
+2022-08-08 04:25:43,784 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 04:25:43,787 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47536104408926
+
+2022-08-08 04:25:43,790 INFO send udp packet: 192.168.31.49,52036,47536104408926
+
+2022-08-08 04:25:43,948 INFO [PUSH-SUCC] 174ms, all delay time 883ms, SLA 884ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=37}, DataSize=1, target=192.168.31.49
+
+2022-08-08 04:25:43,952 INFO [PUSH-SUCC] 168ms, all delay time 887ms, SLA 888ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=37}, DataSize=1, target=192.168.31.49
+
+2022-08-08 04:25:48,223 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 04:25:48,234 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47540550862344
+
+2022-08-08 04:25:48,240 INFO send udp packet: 192.168.31.49,60667,47540550862344
+
+2022-08-08 04:25:48,248 INFO [PUSH-SUCC] 26ms, all delay time 592ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=37}, DataSize=1
+
+2022-08-08 06:01:54,432 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=38}
+
+2022-08-08 06:01:54,598 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}
+
+2022-08-08 06:01:55,009 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 06:01:55,016 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47561002944270
+
+2022-08-08 06:01:55,024 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 06:01:55,024 INFO send udp packet: 192.168.31.49,60667,47561002944270
+
+2022-08-08 06:01:55,027 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47561015212145
+
+2022-08-08 06:01:55,033 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 06:01:55,033 INFO send udp packet: 192.168.31.49,54613,47561015212145
+
+2022-08-08 06:01:55,036 INFO [PUSH-SUCC] 27ms, all delay time 605ms, SLA 438ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, DataSize=1, target=192.168.31.49
+
+2022-08-08 06:01:55,037 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47561025179770
+
+2022-08-08 06:01:55,043 INFO send udp packet: 192.168.31.49,52036,47561025179770
+
+2022-08-08 06:01:55,045 INFO [PUSH-SUCC] 21ms, all delay time 614ms, SLA 447ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, DataSize=1, target=192.168.31.49
+
+2022-08-08 06:01:55,052 INFO [PUSH-SUCC] 19ms, all delay time 621ms, SLA 454ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, DataSize=1, target=192.168.31.49
+
+2022-08-08 06:02:04,679 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 06:02:04,691 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47570679428566
+
+2022-08-08 06:02:04,700 INFO send udp packet: 192.168.31.49,60667,47570679428566
+
+2022-08-08 06:02:04,708 INFO [PUSH-SUCC] 29ms, all delay time 561ms for subscriber 192.168.31.49, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=39}, DataSize=1
+
+2022-08-08 07:45:23,955 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=40}
+
+2022-08-08 07:45:24,259 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}
+
+2022-08-08 07:45:24,494 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 07:45:24,500 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47591004474700
+
+2022-08-08 07:45:24,508 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 07:45:24,508 INFO send udp packet: 192.168.31.49,60667,47591004474700
+
+2022-08-08 07:45:24,513 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47591017399200
+
+2022-08-08 07:45:24,517 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 07:45:24,517 INFO send udp packet: 192.168.31.49,54613,47591017399200
+
+2022-08-08 07:45:24,518 INFO [PUSH-SUCC] 24ms, all delay time 564ms, SLA 259ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}, DataSize=1, target=192.168.31.49
+
+2022-08-08 07:45:24,519 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47591023522242
+
+2022-08-08 07:45:24,522 INFO send udp packet: 192.168.31.49,52036,47591023522242
+
+2022-08-08 07:45:24,524 INFO [PUSH-SUCC] 16ms, all delay time 570ms, SLA 265ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}, DataSize=1, target=192.168.31.49
+
+2022-08-08 07:45:24,527 INFO [PUSH-SUCC] 10ms, all delay time 573ms, SLA 268ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=41}, DataSize=1, target=192.168.31.49
+
+2022-08-08 08:06:27,885 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=42}
+
+2022-08-08 08:06:28,315 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}
+
+2022-08-08 08:06:28,437 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:06:28,450 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47621127916923
+
+2022-08-08 08:06:28,466 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:06:28,466 INFO send udp packet: 192.168.31.49,60667,47621127916923
+
+2022-08-08 08:06:28,469 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47621149416089
+
+2022-08-08 08:06:28,476 INFO send udp packet: 192.168.31.49,54613,47621149416089
+
+2022-08-08 08:06:28,476 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:06:28,483 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47621163244673
+
+2022-08-08 08:06:28,485 INFO send udp packet: 192.168.31.49,52036,47621163244673
+
+2022-08-08 08:06:38,482 INFO retry to push data, key: 192.168.31.49,60667,47621127916923
+
+2022-08-08 08:06:38,505 INFO retry to push data, key: 192.168.31.49,54613,47621149416089
+
+2022-08-08 08:06:38,507 INFO retry to push data, key: 192.168.31.49,52036,47621163244673
+
+2022-08-08 08:06:48,513 WARN max re-push times reached, retry times 2, key: 192.168.31.49,60667,47621127916923
+
+2022-08-08 08:06:48,528 ERROR [PUSH-FAIL] 20091ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}, reason=null, target=192.168.31.49
+
+2022-08-08 08:06:48,543 WARN max re-push times reached, retry times 2, key: 192.168.31.49,54613,47621149416089
+
+2022-08-08 08:06:48,545 ERROR [PUSH-FAIL] 20079ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}, reason=null, target=192.168.31.49
+
+2022-08-08 08:06:48,547 WARN max re-push times reached, retry times 2, key: 192.168.31.49,52036,47621163244673
+
+2022-08-08 08:06:48,550 ERROR [PUSH-FAIL] 20074ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=43}, reason=null, target=192.168.31.49
+
+2022-08-08 08:46:49,650 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=44}
+
+2022-08-08 08:46:50,176 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:50,185 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47681181222824
+
+2022-08-08 08:46:50,194 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:50,211 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47681206449241
+
+2022-08-08 08:46:50,194 INFO send udp packet: 192.168.31.49,60667,47681181222824
+
+2022-08-08 08:46:50,218 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:50,268 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47681263871491
+
+2022-08-08 08:46:50,225 INFO send udp packet: 192.168.31.49,54613,47681206449241
+
+2022-08-08 08:46:50,281 INFO send udp packet: 192.168.31.49,52036,47681263871491
+
+2022-08-08 08:46:50,997 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:51,010 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:60667, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,60667,47682005486950
+
+2022-08-08 08:46:51,015 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:51,015 INFO send udp packet: 192.168.31.49,60667,47682005486950
+
+2022-08-08 08:46:51,018 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47682013863033
+
+2022-08-08 08:46:51,028 INFO DEFAULT_GROUP@@meta-admin is changed, add it to push queue.
+
+2022-08-08 08:46:51,028 INFO send udp packet: 192.168.31.49,54613,47682013863033
+
+2022-08-08 08:46:51,045 INFO serviceName: DEFAULT_GROUP@@meta-admin changed, schedule push for: 192.168.31.49:52036, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,52036,47682040702241
+
+2022-08-08 08:46:51,053 INFO send udp packet: 192.168.31.49,52036,47682040702241
+
+2022-08-08 08:46:51,878 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-uaa', ephemeral=true, revision=29}
+
+2022-08-08 08:46:51,984 INFO [PUSH] Task merge for Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-gateway', ephemeral=true, revision=17}
+
+2022-08-08 08:46:52,217 INFO DEFAULT_GROUP@@meta-uaa is changed, add it to push queue.
+
+2022-08-08 08:46:52,217 INFO DEFAULT_GROUP@@meta-gateway is changed, add it to push queue.
+
+2022-08-08 08:46:52,224 INFO serviceName: DEFAULT_GROUP@@meta-gateway changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47683220184533
+
+2022-08-08 08:46:52,221 INFO serviceName: DEFAULT_GROUP@@meta-uaa changed, schedule push for: 192.168.31.49:54613, agent: Nacos-Java-Client:v1.4.2, key: 192.168.31.49,54613,47683217286617
+
+2022-08-08 08:46:52,226 INFO send udp packet: 192.168.31.49,54613,47683220184533
+
+2022-08-08 08:46:52,233 INFO send udp packet: 192.168.31.49,54613,47683217286617
+
+2022-08-08 08:47:00,227 INFO retry to push data, key: 192.168.31.49,60667,47681181222824
+
+2022-08-08 08:47:00,284 INFO retry to push data, key: 192.168.31.49,54613,47681206449241
+
+2022-08-08 08:47:00,288 INFO retry to push data, key: 192.168.31.49,52036,47681263871491
+
+2022-08-08 08:47:01,028 INFO retry to push data, key: 192.168.31.49,60667,47682005486950
+
+2022-08-08 08:47:01,057 INFO retry to push data, key: 192.168.31.49,54613,47682013863033
+
+2022-08-08 08:47:01,065 INFO retry to push data, key: 192.168.31.49,52036,47682040702241
+
+2022-08-08 08:47:02,233 INFO retry to push data, key: 192.168.31.49,54613,47683220184533
+
+2022-08-08 08:47:02,249 INFO retry to push data, key: 192.168.31.49,54613,47683217286617
+
+2022-08-08 08:47:10,247 WARN max re-push times reached, retry times 2, key: 192.168.31.49,60667,47681181222824
+
+2022-08-08 08:47:10,265 ERROR [PUSH-FAIL] 20089ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:10,291 WARN max re-push times reached, retry times 2, key: 192.168.31.49,54613,47681206449241
+
+2022-08-08 08:47:10,296 ERROR [PUSH-FAIL] 20102ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:10,299 WARN max re-push times reached, retry times 2, key: 192.168.31.49,52036,47681263871491
+
+2022-08-08 08:47:10,305 ERROR [PUSH-FAIL] 20087ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:11,039 WARN max re-push times reached, retry times 2, key: 192.168.31.49,60667,47682005486950
+
+2022-08-08 08:47:11,041 ERROR [PUSH-FAIL] 20044ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:11,068 WARN max re-push times reached, retry times 2, key: 192.168.31.49,54613,47682013863033
+
+2022-08-08 08:47:11,070 ERROR [PUSH-FAIL] 20055ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:11,071 WARN max re-push times reached, retry times 2, key: 192.168.31.49,52036,47682040702241
+
+2022-08-08 08:47:11,073 ERROR [PUSH-FAIL] 20045ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-admin', ephemeral=true, revision=45}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:12,250 WARN max re-push times reached, retry times 2, key: 192.168.31.49,54613,47683220184533
+
+2022-08-08 08:47:12,264 ERROR [PUSH-FAIL] 20047ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-gateway', ephemeral=true, revision=17}, reason=null, target=192.168.31.49
+
+2022-08-08 08:47:12,270 WARN max re-push times reached, retry times 2, key: 192.168.31.49,54613,47683217286617
+
+2022-08-08 08:47:12,274 ERROR [PUSH-FAIL] 20057ms, Service{namespace='4af1f54f-5abf-4ec8-a8b0-20d50885d42b', group='DEFAULT_GROUP', name='meta-uaa', ephemeral=true, revision=29}, reason=null, target=192.168.31.49
+

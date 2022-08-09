@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.auiucloud.core.web.config.ExceptionConfiguration,\
-  com.auiucloud.core.web.config.SwaggerConfiguration,\
-  com.auiucloud.core.web.config.WebConfiguration

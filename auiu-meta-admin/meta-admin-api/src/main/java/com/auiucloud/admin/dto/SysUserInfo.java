@@ -3,8 +3,10 @@ package com.auiucloud.admin.dto;
 import com.auiucloud.admin.domain.SysUser;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ApiModel(value = "用户信息封装")
 public class SysUserInfo implements Serializable {
     private static final long serialVersionUID = 7580381700832675512L;

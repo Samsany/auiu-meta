@@ -10,6 +10,7 @@ import com.auiucloud.admin.service.ISysPermissionService;
 import com.auiucloud.admin.service.ISysRolePermissionService;
 import com.auiucloud.admin.service.ISysRoleService;
 import com.auiucloud.core.common.constant.MetaConstant;
+import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     @Override
     public List<String> getPermissionListByRoles(List<String> roles) {
         if (roles.contains(MetaConstant.SUPER_ADMIN_CODE)) {
-            return List.of(MetaConstant.ALL_PERMISSION);
+            return List.of(RedisKeyConstant.ALL_PERMISSION);
         }
 
         if (CollUtil.isNotEmpty(roles)) {

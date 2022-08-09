@@ -1,7 +1,7 @@
 package com.auiucloud.core.web.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2021/12/22
  */
 @Slf4j
-@Configuration
+@AutoConfiguration
 public class WebConfiguration implements WebMvcConfigurer {
 
     @Override

@@ -23,10 +23,7 @@ public class MetaConstant {
      * 超级管理员编码
      */
     public static final String SUPER_ADMIN_CODE = "SUPER_ADMIN";
-    /**
-     * 全部权限
-     */
-    public static final String ALL_PERMISSION = "*:*:*";
+
     /**
      * 日志链路追踪id日志标志
      */
@@ -63,4 +60,12 @@ public class MetaConstant {
      * 排序方式
      */
     public static final String ORDER = "order";
+    /**
+     * 禁用状态
+     */
+    public static final int STATUS_DISABLE_VALUE = 0;
+    /**
+     * 启用状态
+     */
+    public static final int STATUS_NORMAL_VALUE = 1;
 }
