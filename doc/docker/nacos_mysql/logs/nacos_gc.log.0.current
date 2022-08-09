@@ -1,5 +1,0 @@
-OpenJDK 64-Bit Server VM (25.292-b10) for linux-amd64 JRE (1.8.0_292-b10), built on Apr 21 2021 14:24:48 by "mockbuild" with gcc 4.8.5 20150623 (Red Hat 4.8.5-44)
-Memory: 4k page, physical 2036288k(331228k free), swap 1048572k(1045988k free)
-CommandLine flags: -XX:GCLogFileSize=104857600 -XX:InitialHeapSize=134217728 -XX:MaxHeapSize=134217728 -XX:MaxNewSize=33554432 -XX:NewSize=33554432 -XX:NumberOfGCLogFiles=10 -XX:+PrintGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseGCLogFileRotation -XX:+UseParallelGC 
-2021-12-29T10:19:34.398+0800: 2.157: [GC (Allocation Failure) [PSYoungGen: 24576K->2803K(28672K)] 24576K->2811K(126976K), 0.0313351 secs] [Times: user=0.07 sys=0.02, real=0.03 secs] 
-2021-12-29T10:19:35.133+0800: 2.892: [GC (Allocation Failure) [PSYoungGen: 27379K->3361K(28672K)] 27387K->3377K(126976K), 0.0240770 secs] [Times: user=0.09 sys=0.00, real=0.03 secs] 
