@@ -1,7 +1,7 @@
 version: '3'
 services:
   mysql:
-    image: mysql:latest  # 原镜像`mysql:5.7`
+    image: mysql:8.0.30  # 原镜像`mysql:5.7`
     container_name: mysql                                        # 容器名为'mysql'
     restart: always                                              # 指定容器退出后的重启策略为始终重启
     volumes: # 数据卷挂载路径设置,将本机目录映射到容器目录

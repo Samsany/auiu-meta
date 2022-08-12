@@ -1,0 +1,86 @@
+server:
+  port: 88
+spring:
+  application:
+    name: @artifactId@
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  # 配置RSA的公钥访问地址
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:${server.port}/meta-uaa/rsa/publicKey'
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+    loadbalancer:
+      retry:
+        enabled: true
+
+meta:
+  # MetaRequestProperties配置
+  request:
+    #traceId跟踪
+    trace: true
+    #获取IP
+    ip: true
+    #黑名单增强模式启动
+    enhance: true
+
+# 自定义路径配置
+#  route:
+#    config:
+#      data-id: mate-gateway-router
+#      group: DEFAULT_GROUP
+
+
+#      # meta-uaa
+#      - id: auiu-meta-uaa
+#        predicates:
+#          - name: Path
+#            args:
+#              _genkey_0: /auiu-meta-uaa/**
+#        filters: [ ]
+#        uri: lb://auiu-meta-uaa
+#        order: 0
+#      # auiu-meta-admin
+#      - id: auiu-meta-admin
+#        predicates:
+#          - name: Path
+#            args:
+#              _genkey_0: /auiu-meta-admin/**
+#        filters:
+#          - name: RequestRateLimiter
+#            args:
+#              # 限流策略
+#              key-resolver: '#{@remoteAddressKeyResolver}'
+#              # 令牌桶每秒填充率
+#              redis-rate-limiter.burstCapacity: 20
+#              # 令牌桶容量
+#              redis-rate-limiter.replenishRate: 20
+#        uri: lb://meta-admin
+#        order: 0
+#      # auiu-meta-component
+#      - id: auiu-meta-component
+#        predicates:
+#          - name: Path
+#            args:
+#              _genkey_0: /auiu-meta-component/**
+#        filters: [ ]
+#        uri: lb://auiu-meta-component
+#        order: 0
+#      # auiu-meta-code
+#      - id: auiu-meta-code
+#        predicates:
+#          - name: Path
+#            args:
+#              _genkey_0: /auiu-meta-code/**
+#        filters: [ ]
+#        uri: lb://auiu-meta-code
+#        order: 0
