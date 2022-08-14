@@ -2,10 +2,10 @@ spring:
   datasource:
     druid:
       enable: true
+      url: ${meta.datasource.url}
       username: ${meta.datasource.username}
       password: ${meta.datasource.password}
-      driver-class-name: ${spring.datasource.driver-class-name}
-      url: ${meta.datasource.url}
+      driver-class-name: ${meta.datasource.driver-class-name}
       db-type: mysql
       initialSize: 10
       minIdle: 10

@@ -9,6 +9,7 @@ spring:
     url: ${meta.datasource.url}
     username: ${meta.datasource.username}
     password: ${meta.datasource.password}
+    driver-class-name: ${meta.datasource.driver-class-name}
 
 # spring security安全验证配置白名单
 meta:

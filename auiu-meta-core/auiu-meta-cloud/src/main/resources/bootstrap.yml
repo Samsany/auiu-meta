@@ -21,11 +21,11 @@ spring:
         # prefix: @config.prefix@
         # 用于共享的配置文件
         shared-configs:
-          - data-id: @artifactId@-@spring.active@.${spring.cloud.nacos.config.file-extension}
+          - data-id: @config.prefix@-@spring.active@.${spring.cloud.nacos.config.file-extension}
             group: DEFAULT_GROUP # 默认为DEFAULT_GROUP
             refresh: true
 
-          - data-id: @artifactId@.${spring.cloud.nacos.config.file-extension}
+          - data-id: @config.prefix@.${spring.cloud.nacos.config.file-extension}
             refresh: true
 
          # 常规配置文件

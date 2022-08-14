@@ -227,11 +227,11 @@
             <id>dev</id>
             <properties>
                 <spring.active>dev</spring.active>
-                <config.server-addr>nacos.myxiaxiang.cn:80</config.server-addr>
+                <config.server-addr>127.0.0.1:8848</config.server-addr>
                 <config.namespace>c735cb7d-e833-4de7-b9ef-ce71a20406b5</config.namespace>
                 <config.group>DEFAULT_GROUP</config.group>
                 <config.prefix>auiu-meta-cloud</config.prefix>
-                <discovery.server-addr>nacos.myxiaxiang.cn:80</discovery.server-addr>
+                <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
                 <sentinel.dashboard>127.0.0.1:8858</sentinel.dashboard>
             </properties>
