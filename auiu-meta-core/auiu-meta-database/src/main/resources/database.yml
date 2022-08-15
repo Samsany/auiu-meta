@@ -26,7 +26,7 @@ mybatis-plus:
     cache-enabled: false
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
     # mybatis-plus配置控制台打印完整带参数SQL语句
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
     # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 pagehelper:

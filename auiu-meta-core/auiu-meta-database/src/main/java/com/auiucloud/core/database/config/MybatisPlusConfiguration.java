@@ -2,13 +2,18 @@ package com.auiucloud.core.database.config;
 
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
 import com.auiucloud.core.database.handler.MybatisPlusMetaObjectHandler;
+import com.auiucloud.core.database.handler.SqlLogInterceptor;
+import com.auiucloud.core.database.props.MetaMybatisProperties;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -27,6 +32,7 @@ import java.util.List;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfiguration
 @EnableTransactionManagement
+@EnableConfigurationProperties(MetaMybatisProperties.class)
 @PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:database.yml")
 @MapperScan("com.auiucloud.**.mapper.**")
 public class MybatisPlusConfiguration implements WebMvcConfigurer {
@@ -62,6 +68,16 @@ public class MybatisPlusConfiguration implements WebMvcConfigurer {
         BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
         interceptor.addInnerInterceptor(blockAttackInnerInterceptor);
         return interceptor;
+    }
+
+    /**
+     * sql 日志
+     */
+    @Bean
+    @Profile({"local", "dev", "test"})
+    @ConditionalOnProperty(value = "mybatis-plus.sql-log.enable", matchIfMissing = true)
+    public SqlLogInterceptor sqlLogInterceptor() {
+        return new SqlLogInterceptor();
     }
 
     /**
