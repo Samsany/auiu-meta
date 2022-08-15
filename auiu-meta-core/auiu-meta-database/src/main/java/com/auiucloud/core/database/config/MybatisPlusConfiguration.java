@@ -3,6 +3,7 @@ package com.auiucloud.core.database.config;
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
 import com.auiucloud.core.database.handler.MybatisPlusMetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
@@ -58,8 +59,8 @@ public class MybatisPlusConfiguration implements WebMvcConfigurer {
         paginationInnerInterceptor.setMaxLimit(MAX_LIMIT);
         interceptor.addInnerInterceptor(paginationInnerInterceptor);
         // 防止全表更新与删除插件: BlockAttackInnerInterceptor
-        // BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
-        // interceptor.addInnerInterceptor(blockAttackInnerInterceptor);
+        BlockAttackInnerInterceptor blockAttackInnerInterceptor = new BlockAttackInnerInterceptor();
+        interceptor.addInnerInterceptor(blockAttackInnerInterceptor);
         return interceptor;
     }
 

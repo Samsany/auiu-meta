@@ -5,6 +5,7 @@ import com.auiucloud.core.common.utils.SecurityUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 
 import java.nio.charset.Charset;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @date 2021/12/21
  */
 @Slf4j
+@Component
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {

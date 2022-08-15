@@ -26,8 +26,8 @@ mybatis-plus:
     cache-enabled: false
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
     # mybatis-plus配置控制台打印完整带参数SQL语句
-    # log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    # log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 pagehelper:
   # 分页合理化参数,默认值为 false。当该参数设置为true时,pageNum<=0时会查询第一页,pageNum>pages(超过总数时),会查询最后一页。
