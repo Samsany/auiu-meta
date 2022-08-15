@@ -177,6 +177,16 @@
                 <artifactId>meta-admin-api</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-support</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>meta-gen-api</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
 
             <!-- 微服务基础包 -->
             <dependency>

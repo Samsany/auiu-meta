@@ -1,4 +1,4 @@
-package com.auiucloud.uaa;
+package com.auiucloud.admin;
 
 import com.auiucloud.core.feign.annotation.EnableMetaFeign;
 import org.springframework.boot.SpringApplication;
@@ -11,10 +11,14 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableMetaFeign
 @EnableDiscoveryClient
 @SpringBootApplication
-public class AuiuMetaUaaApplication {
+public class MetaAdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuiuMetaUaaApplication.class, args);
+        try {
+            SpringApplication.run(MetaAdminApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

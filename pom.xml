@@ -16,6 +16,7 @@
         <module>auiu-meta-gateway</module>
         <module>auiu-meta-uaa</module>
         <module>auiu-meta-admin</module>
+        <module>auiu-meta-support</module>
     </modules>
 
     <properties>
