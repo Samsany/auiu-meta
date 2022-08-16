@@ -2,7 +2,7 @@ package com.auiucloud.gen.service.impl;
 
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.auiucloud.gen.mapper.GenTableColumnMapper;
-import com.auiucloud.gen.service.GenTableColumnService;
+import com.auiucloud.gen.service.IGenTableColumnService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn>
-        implements GenTableColumnService {
+        implements IGenTableColumnService {
 
 }
 

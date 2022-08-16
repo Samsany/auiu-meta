@@ -3,11 +3,18 @@ package com.auiucloud.core.common.constant;
 import lombok.experimental.UtilityClass;
 
 /**
+ * 远程调用常量
+ *
  * @author dries
  * @date 2021/12/30
  */
 @UtilityClass
 public class ProviderConstant {
+
+    /**
+     * 请求超时时长
+     */
+    public static final long CONFIG_TIMEOUT_MS = 5000;
 
     /**
      * 远程调用公共前缀

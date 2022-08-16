@@ -34,7 +34,7 @@ public class SysLogProvider implements ISysLogProvider {
         SysLog sysLog = new SysLog();
         BeanUtils.copyProperties(commonLog, sysLog);
 
-        return ApiResult.data(sysLogService.save(sysLog));
+        return ApiResult.condition(sysLogService.save(sysLog));
     }
 
 }

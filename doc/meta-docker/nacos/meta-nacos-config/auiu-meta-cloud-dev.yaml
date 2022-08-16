@@ -22,6 +22,7 @@ meta:
     url: jdbc:mysql://47.100.74.170:33061/auiu_meta?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
     password: Zxx131013@
+    driver-class-name: ${meta.datasource.driver-class-name}
   # public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJLLURUH8XNPkX9MME3mQrog3mpkOVYwnYrUqLbSN+Wi6IcmWg1YywHi/kKGUU1MTLjv3C406f1IYu+XWJ3XmX8CAwEAAQ==
   # 预览模式开关
   preview:

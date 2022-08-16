@@ -6,7 +6,6 @@ import com.auiucloud.admin.enums.MenuTypeEnum;
 import com.auiucloud.admin.vo.RouteVO;
 import com.auiucloud.admin.vo.SysMenuVO;
 import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.constant.MetaConstant;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class TreeUtil {
             RouteVO routeVo = new RouteVO();
             BeanUtils.copyProperties(sysMenu, routeVo);
 
-            if (sysMenu.getHidden() == MetaConstant.STATUS_DISABLE_VALUE) {
+            if (sysMenu.getHidden() == CommonConstant.STATUS_DISABLE_VALUE) {
                 routeVo.setHidden(null);
             }
             routeVo.setAlwaysShow(null);
@@ -34,7 +33,7 @@ public class TreeUtil {
             if (sysMenu.getParentId().equals(CommonConstant.ROOT_NODE_ID) && MenuTypeEnum.DIR.getCode().equals(sysMenu.getType())) {
                 routeVo.setComponent("Layout");
                 routeVo.setRedirect("noRedirect");
-                if (sysMenu.getAlwaysShow() == MetaConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
                     routeVo.setAlwaysShow(null);
                 }
             }
@@ -44,16 +43,16 @@ public class TreeUtil {
             if (StrUtil.isNotBlank(sysMenu.getIcon())) {
                 meta.setIcon(sysMenu.getIcon());
             }
-            if (sysMenu.getAffix() == MetaConstant.STATUS_DISABLE_VALUE) {
+            if (sysMenu.getAffix() == CommonConstant.STATUS_DISABLE_VALUE) {
                 meta.setAffix(null);
             }
-            if (sysMenu.getKeepAlive() == MetaConstant.STATUS_DISABLE_VALUE) {
+            if (sysMenu.getKeepAlive() == CommonConstant.STATUS_DISABLE_VALUE) {
                 meta.setNoCache(null);
             }
-            if (sysMenu.getHideHeader() == MetaConstant.STATUS_DISABLE_VALUE) {
+            if (sysMenu.getHideHeader() == CommonConstant.STATUS_DISABLE_VALUE) {
                 meta.setBreadcrumb(null);
             }
-            if (sysMenu.getRequireAuth() == MetaConstant.STATUS_DISABLE_VALUE) {
+            if (sysMenu.getRequireAuth() == CommonConstant.STATUS_DISABLE_VALUE) {
                 meta.setRequireAuth(null);
             }
             routeVo.setMeta(meta);

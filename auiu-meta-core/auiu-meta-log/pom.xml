@@ -14,14 +14,17 @@
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-common</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-database</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-feign</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -59,8 +59,9 @@
         <mysql.version>8.0.25</mysql.version>
         <druid.version>1.2.9</druid.version>
         <pagehelper.version>1.4.2</pagehelper.version>
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <mybatis.plus.generator.version>3.4.1</mybatis.plus.generator.version>
+        <velocity.version>2.3</velocity.version>
+        <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
 
         <swagger.version>3.0.0</swagger.version>
@@ -276,6 +277,11 @@
                 <version>${mybatis.plus.generator.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
@@ -366,7 +372,7 @@
                 <version>${easyexcel.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-lang3</groupId>
+                <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
             </dependency>

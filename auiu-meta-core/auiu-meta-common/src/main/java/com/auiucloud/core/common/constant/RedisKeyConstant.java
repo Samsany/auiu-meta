@@ -18,7 +18,6 @@ public class RedisKeyConstant {
     public static final String PERMISSION_ROLES_KEY = "auth:permission:roles";
     public static final String URL_PERM_ROLES_KEY = "system:permission:url_perm_roles";
     public static final String BTN_PERM_ROLES_KEY = "system:permission:btn_perm_roles";
-
     public static final String TOKEN_BLACKLIST_PREFIX = "auth:token:blacklist:";
 
 }

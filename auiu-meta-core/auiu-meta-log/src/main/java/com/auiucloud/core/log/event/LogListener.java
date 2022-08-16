@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
+ * 注解形式，异步监听事件
+ *
  * @author dries
  * @date 2021/12/24
  */
@@ -24,7 +26,6 @@ public class LogListener {
     private LogProperties logProperties;
 
     public LogListener() {
-
     }
 
     public LogListener(ISysLogProvider sysLogService, LogProperties logProperties) {
@@ -46,7 +47,7 @@ public class LogListener {
         log.info("发送日志:{}", commonLog);
         if (logProperties.getLogType().equals(LogType.KAFKA)) {
             // TODO 发送日志到kafka
-            // commonLogService.sendCommonLog(commonLog);
+            commonLogService.sendCommonLog(commonLog);
         } else {
             sysLogService.set(commonLog);
         }

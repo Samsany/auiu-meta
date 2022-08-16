@@ -8,6 +8,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @description 针对表【gen_table_column(代码生成业务表字段)】的数据库操作Service
  * @createDate 2022-08-15 23:44:26
  */
-public interface GenTableColumnService extends IService<GenTableColumn> {
+public interface IGenTableColumnService extends IService<GenTableColumn> {
 
 }

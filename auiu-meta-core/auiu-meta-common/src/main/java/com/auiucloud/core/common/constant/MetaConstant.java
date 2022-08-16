@@ -28,44 +28,16 @@ public class MetaConstant {
      * 日志链路追踪id日志标志
      */
     public final String LOG_TRACE_ID = "traceId";
-    /**
-     * 默认的路由yml配置
-     */
-    public static final String CONFIG_DATA_ID_DYNAMIC_ROUTES = "auiu-meta-dynamic-routes.yaml";
+
     /**
      * 默认分组
      */
     public static final String CONFIG_GROUP = "DEFAULT_GROUP";
+
     /**
-     * 请求超时时长
+     * 默认的路由yml配置
      */
-    public static final long CONFIG_TIMEOUT_MS = 5000;
-    /**
-     * json类型报文，UTF-8字符集
-     */
-    public static final String JSON_UTF8 = "application/json;charset=UTF-8";
-    /**
-     * 当前页码
-     */
-    public static final String PAGE_NUM = "pageNum";
-    /**
-     * 每页显示记录数
-     */
-    public static final String PAGE_SIZE = "pageSize";
-    /**
-     * 排序字段
-     */
-    public static final String ORDER_FIELD = "sidx";
-    /**
-     * 排序方式
-     */
-    public static final String ORDER = "order";
-    /**
-     * 禁用状态
-     */
-    public static final int STATUS_DISABLE_VALUE = 0;
-    /**
-     * 启用状态
-     */
-    public static final int STATUS_NORMAL_VALUE = 1;
+    public static final String CONFIG_DATA_ID_DYNAMIC_ROUTES = "auiu-meta-dynamic-routes.yaml";
+
+
 }

@@ -9,7 +9,6 @@ import com.auiucloud.admin.mapper.SysMenuMapper;
 import com.auiucloud.admin.service.ISysMenuService;
 import com.auiucloud.admin.service.ISysUserRoleService;
 import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -42,7 +41,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         Long userId = SecurityUtil.getUserId();
         if (userId.equals(CommonConstant.NODE_ONE_ID)) {
             LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.eq(SysMenu::getStatus, MetaConstant.STATUS_NORMAL_VALUE);
+            queryWrapper.eq(SysMenu::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
             queryWrapper.orderByAsc(SysMenu::getSort);
             return this.list(queryWrapper);
         }

@@ -3,6 +3,7 @@ package com.auiucloud.admin.controller;
 import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.service.ISysDictTypeService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
 import io.swagger.annotations.Api;
@@ -29,7 +30,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/dict/type")
-public class SysDictTypeController {
+public class SysDictTypeController extends BaseController {
 
     private final ISysDictTypeService dictTypeService;
 

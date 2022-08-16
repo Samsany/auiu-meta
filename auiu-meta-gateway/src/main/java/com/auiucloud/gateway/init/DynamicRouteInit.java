@@ -7,6 +7,7 @@ import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.listener.Listener;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.auiucloud.core.common.constant.MetaConstant;
+import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.gateway.model.GatewayRoute;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,7 @@ public class DynamicRouteInit {
             properties.put(PropertyKeyConst.NAMESPACE, nacosProperties.getNamespace());
             ConfigService configService = NacosFactory.createConfigService(properties);
 
-            String content = configService.getConfig(MetaConstant.CONFIG_DATA_ID_DYNAMIC_ROUTES, nacosProperties.getGroup(), MetaConstant.CONFIG_TIMEOUT_MS);
+            String content = configService.getConfig(MetaConstant.CONFIG_DATA_ID_DYNAMIC_ROUTES, nacosProperties.getGroup(), ProviderConstant.CONFIG_TIMEOUT_MS);
             log.info("初始化网关路由开始");
             updateRoute(content);
             log.info("初始化网关路由完成");

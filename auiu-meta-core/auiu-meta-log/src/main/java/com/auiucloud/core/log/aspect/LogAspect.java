@@ -6,14 +6,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.model.CommonLog;
 import com.auiucloud.core.common.model.IpAddress;
-import com.auiucloud.core.common.utils.IPUtil;
-import com.auiucloud.core.common.utils.RequestHolder;
-import com.auiucloud.core.common.utils.SecurityUtil;
-import com.auiucloud.core.common.utils.StringPool;
-import com.auiucloud.core.log.event.LogEvent;
+import com.auiucloud.core.common.utils.*;
 import com.auiucloud.core.log.annotation.Log;
+import com.auiucloud.core.log.event.LogEvent;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -26,7 +26,6 @@ import org.springframework.core.annotation.SynthesizingMethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -41,14 +40,15 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class LogAspect {
 
     private static final ParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
-    @Resource
+
     private final ApplicationContext applicationContext;
 
-    public LogAspect(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+    @Pointcut("@annotation(com.auiucloud.core.log.annotation.Log)")
+    public void logPointCut() {
     }
 
     /**
@@ -64,10 +64,6 @@ public class LogAspect {
         return methodParameter;
     }
 
-    @Pointcut("@annotation(com.auiucloud.core.log.annotation.Log)")
-    public void logPointCut() {
-    }
-
     /**
      * 配置环绕通知,使用在方法logPointcut()上注册的切入点
      *
@@ -78,7 +74,7 @@ public class LogAspect {
     @Around("logPointCut()")
     public Object recordLog(ProceedingJoinPoint point) throws Throwable {
 
-        Object result;
+        Object result = new Object();
         //　获取request
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         // 判断为空则直接跳过执行
@@ -121,10 +117,11 @@ public class LogAspect {
         }
         //　组装CommonLog
         CommonLog commonLog = CommonLog.builder()
+                .ip(ip)
                 .createBy(username)
                 .method(method)
                 .url(url)
-                .operation((String) result)
+                .operation(String.valueOf(result))
                 .location(region)
                 .traceId(request.getHeader(MetaConstant.LOG_TRACE_ID))
                 .executeTime(tookTime)
@@ -183,6 +180,53 @@ public class LogAspect {
             }
         }
         return strArgs;
+    }
+
+    /**
+     * 配置异常通知
+     *
+     * @param point join point for advice
+     * @param e     exception
+     */
+    @AfterThrowing(pointcut = "logPointCut()", throwing = "e")
+    public void logAfterThrowing(JoinPoint point, Throwable e) {
+        // 打印执行时间
+        long startTime = System.nanoTime();
+
+        // 获取IP和地区
+        String ip = IPUtil.getHttpServletRequestIpAddress();
+        IpAddress ipAddress = IPUtil.getHttpServletRequestAddress(ip);
+        String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
+
+
+        //　获取request
+        HttpServletRequest request = RequestHolder.getHttpServletRequest();
+
+        // 请求方法
+        String method = request.getMethod();
+        String url = request.getRequestURI();
+
+        //　获取注解里的value值
+        Method targetMethod = resolveMethod((ProceedingJoinPoint) point);
+        Log logAnn = targetMethod.getAnnotation(Log.class);
+
+        //　组装CommonLog
+        CommonLog commonLog = CommonLog.builder()
+                .ip(ip)
+                .method(method)
+                .url(url)
+                .location(region)
+                .traceId(TraceUtil.getTraceId(request))
+                .executeTime(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime))
+                .title(logAnn.value())
+                .type("2")
+                .exception(ThrowableUtil.getStackTrace(e))
+                .build();
+        // 设置MDC
+        TraceUtil.mdcTraceId(TraceUtil.getTraceId(request));
+        // 发布事件
+        applicationContext.publishEvent(new LogEvent(commonLog));
+        log.info("Error Result: {}", commonLog);
     }
 
 }

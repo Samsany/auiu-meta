@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import com.auiucloud.core.cloud.props.MetaApiProperties;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
-import com.auiucloud.core.common.constant.MetaConstant;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.utils.ResponseUtil;
@@ -67,7 +67,7 @@ public class PreUaaFilter implements GlobalFilter, Ordered {
             // 黑名单校验
             Boolean isBlack = redisService.hasKey(RedisKeyConstant.TOKEN_BLACKLIST_PREFIX + jti);
             if (isBlack) {
-                return ResponseUtil.webFluxResponseWriter(exchange.getResponse(), MetaConstant.JSON_UTF8, HttpStatus.OK, ApiResult.fail(ResultCode.USER_ERROR_A0230));
+                return ResponseUtil.webFluxResponseWriter(exchange.getResponse(), CommonConstant.JSON_UTF8, HttpStatus.OK, ApiResult.fail(ResultCode.USER_ERROR_A0230));
             }
             request = exchange.getRequest().mutate()
                     .header(Oauth2Constant.META_USER, String.valueOf(jwtPayload))

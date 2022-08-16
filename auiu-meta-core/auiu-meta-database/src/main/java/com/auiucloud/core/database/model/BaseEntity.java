@@ -26,7 +26,7 @@ public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 595630788503119633L;
 
     /**
-     * 主键标识
+     * 编号主键标识
      */
     @TableId
     private Long id;

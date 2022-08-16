@@ -6,6 +6,7 @@ import com.auiucloud.admin.service.ISysMenuService;
 import com.auiucloud.admin.utils.TreeUtil;
 import com.auiucloud.admin.vo.SysMenuVO;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/menu")
-public class SysMenuController {
+public class SysMenuController extends BaseController {
 
     private final ISysMenuService sysMenuService;
 
