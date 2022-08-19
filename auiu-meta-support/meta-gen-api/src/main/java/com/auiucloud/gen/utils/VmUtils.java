@@ -2,7 +2,7 @@ package com.auiucloud.gen.utils;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.auiucloud.gen.dto.GenTableDTO;
@@ -44,7 +44,7 @@ public class VmUtils {
             // 加载classpath目录下的vm文件
             p.setProperty("resource.loader.file.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
             // 定义字符集
-            p.setProperty(Velocity.INPUT_ENCODING, CommonConstant.UTF8);
+            p.setProperty(Velocity.INPUT_ENCODING, StringPool.UTF_8);
             // 初始化Velocity引擎，指定配置Properties
             Velocity.init(p);
         } catch (Exception e) {

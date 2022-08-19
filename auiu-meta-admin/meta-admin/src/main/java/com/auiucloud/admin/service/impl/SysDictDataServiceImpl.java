@@ -37,6 +37,7 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
             queryWrapper.eq(SysDictData::getStatus, search.getStatus());
         }
 
+        queryWrapper.orderByDesc(SysDictData::getSort);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 

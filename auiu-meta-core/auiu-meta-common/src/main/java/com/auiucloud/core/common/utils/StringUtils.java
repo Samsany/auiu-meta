@@ -1,6 +1,8 @@
 package com.auiucloud.core.common.utils;
 
 import cn.hutool.core.text.StrFormatter;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.constant.CommonConstant;
 import org.springframework.util.AntPathMatcher;
 
@@ -450,6 +452,31 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
     }
+
+    /**
+     * json字符串转换成Url参数
+     *
+     * @param json
+     * @return String
+     */
+    public static String parseJsonToUrlParams(String json) {
+        try {
+            if (StringUtils.isNotEmpty(json)) {
+                List<String> arrayList = new ArrayList<>();
+                JSONObject obj = JSONUtil.parseObj(json);
+                for (Map.Entry<String, Object> entry : obj.entrySet()) {
+                    String param = entry.getKey() + StringPool.EQUALS + entry.getValue();
+                    arrayList.add(param);
+                }
+                String paramStr = String.join(StringPool.AMPERSAND, arrayList);
+                return StringPool.QUESTION_MARK + paramStr;
+            }
+            return StringPool.EMPTY;
+        } catch (Exception e) {
+            return StringPool.EMPTY;
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object obj) {

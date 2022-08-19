@@ -2,12 +2,15 @@ package com.auiucloud.gen.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 系统数据源表
@@ -27,11 +30,13 @@ public class SysDataSource extends BaseEntity {
     /**
      * 名称
      */
+    @NotBlank(message = "数据源名称不能为空")
     private String name;
 
     /**
      * 数据库类型
      */
+    @NotBlank(message = "数据库类型不能为空")
     private String dbType;
 
     /**
@@ -42,17 +47,36 @@ public class SysDataSource extends BaseEntity {
     /**
      * 连接地址
      */
+    @NotBlank(message = "连接地址不能为空")
     private String url;
+    /**
+     * 端口号
+     */
+    @NotBlank(message = "端口号不能为空")
+    private String port;
 
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
+
+    /**
+     * 数据库名
+     */
+    @NotBlank(message = "数据库名不能为空")
+    private String databaseName;
+
+    /**
+     * Jdbc连接参数
+     */
+    private String jdbcParams;
 
     /**
      * 状态

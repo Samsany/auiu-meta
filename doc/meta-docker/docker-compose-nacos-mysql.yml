@@ -3,7 +3,8 @@ services:
   nacos:
     # 默认使用nacos/nacos-server:v2.1.0
     # m1环境下docker启动失败 使用zhusaidong/nacos-server-m1镜像解决
-    image: zhusaidong/nacos-server-m1:2.0.3
+    # image: zhusaidong/nacos-server-m1:2.0.3
+    image: nacos/nacos-server:v2.1.0
     container_name: nacos-standalone-mysql
     env_file:
       - ./env/nacos-standlone-mysql.env

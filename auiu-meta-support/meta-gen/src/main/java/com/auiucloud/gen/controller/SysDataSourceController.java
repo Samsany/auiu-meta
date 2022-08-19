@@ -44,6 +44,16 @@ public class SysDataSourceController {
     }
 
     /**
+     * 数据源连接测试
+     */
+    @ApiOperation("数据源连接测试")
+    @Log(value = "数据源管理", exception = "数据源连接测试请求异常")
+    @PostMapping("/connect")
+    public ApiResult<?> connectTest(@Validated @RequestBody SysDataSource dataSource) {
+        return ApiResult.data(dataSourceService.connectTest(dataSource));
+    }
+
+    /**
      * 查询数据源详情
      */
     @ApiOperation("数据源详情")
@@ -61,10 +71,7 @@ public class SysDataSourceController {
     @Log(value = "数据源管理", exception = "新增数据源请求异常")
     @PostMapping
     public ApiResult<?> add(@Validated @RequestBody SysDataSource dataSource) {
-        if (dataSourceService.checkDataSourceNameUnique(dataSource)) {
-            return ApiResult.fail("新增数据源'" + dataSource.getName() + "'失败，数据源已存在");
-        }
-        return ApiResult.condition(dataSourceService.save(dataSource));
+        return ApiResult.condition(dataSourceService.addDataSource(dataSource));
     }
 
     /**
@@ -74,10 +81,7 @@ public class SysDataSourceController {
     @Log(value = "数据源管理", exception = "修改数据源请求异常")
     @PutMapping
     public ApiResult<?> edit(@Validated @RequestBody SysDataSource dataSource) {
-        if (dataSourceService.checkDataSourceNameUnique(dataSource)) {
-            return ApiResult.fail("修改数据源'" + dataSource.getName() + "'失败，数据源已存在");
-        }
-        return ApiResult.condition(dataSourceService.updateById(dataSource));
+        return ApiResult.condition(dataSourceService.updateDataSourceById(dataSource));
     }
 
     /**
@@ -85,12 +89,9 @@ public class SysDataSourceController {
      */
     @ApiOperation("删除数据源")
     @Log(value = "数据源管理", exception = "删除数据源请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", required = true, value = "多个用,号隔开", paramType = "query")
-    })
     @DeleteMapping
-    public ApiResult<?> remove(@RequestParam Long[] ids) {
-        return ApiResult.condition(dataSourceService.removeByIds(Arrays.asList(ids)));
+    public ApiResult<?> remove(@RequestBody Long[] ids) {
+        return ApiResult.condition(dataSourceService.removeDataSourceByIds(Arrays.asList(ids)));
     }
 
 }

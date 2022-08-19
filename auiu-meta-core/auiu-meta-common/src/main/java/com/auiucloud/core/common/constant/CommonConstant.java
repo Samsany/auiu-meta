@@ -42,6 +42,7 @@ public class CommonConstant {
      * LDAP 远程方法调用
      */
     public static final String LDAP_LOGIN_TYPE = "ldap";
+    public static final String JDBC = "jdbc";
 
     /**
      * GBK 字符集
@@ -57,11 +58,6 @@ public class CommonConstant {
      * https请求
      */
     public static final String HTTPS = "https://";
-
-    /**
-     * UTF-8 字符集
-     */
-    public static final String UTF8 = "UTF-8";
 
     /**
      * json类型报文，UTF-8字符集

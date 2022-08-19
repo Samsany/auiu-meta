@@ -1,7 +1,7 @@
 package com.auiucloud.core.web.config;
 
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
-import com.auiucloud.core.web.handler.BaseExceptionHandler;
+import com.auiucloud.core.web.handler.GlobalExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.PropertySource;
 public class ExceptionConfiguration {
 
     @Bean
-    public BaseExceptionHandler baseExceptionHandler() {
-        return new BaseExceptionHandler();
+    public GlobalExceptionHandler baseExceptionHandler() {
+        return new GlobalExceptionHandler();
     }
 
 }

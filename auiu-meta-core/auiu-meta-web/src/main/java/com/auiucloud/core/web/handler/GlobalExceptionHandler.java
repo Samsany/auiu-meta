@@ -8,7 +8,7 @@ import com.auiucloud.core.common.exception.TokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -21,8 +21,9 @@ import java.io.FileNotFoundException;
  * @date 2021/12/22
  */
 @Slf4j
+@ResponseBody
 @RestControllerAdvice
-public class BaseExceptionHandler {
+public class GlobalExceptionHandler {
 
     /**
      * BaseException 异常捕获处理
@@ -31,7 +32,7 @@ public class BaseExceptionHandler {
      * @return Result
      */
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResult<?> handleException(ApiException ex) {
         log.error("程序异常：" + ex.toString());
         if (ex.getResultCode() != null) {
@@ -47,7 +48,7 @@ public class BaseExceptionHandler {
      * @return Result
      */
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    // @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiResult<?> handleException(TokenException ex) {
         log.error("程序异常==>errorCode:{}, exception:{}", HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
         return ApiResult.fail(ResultCode.USER_ERROR_A0230);
@@ -72,7 +73,7 @@ public class BaseExceptionHandler {
      * @return Result
      */
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResult<?> handleException(NullPointerException ex) {
         log.error("程序异常：{}" + ex.toString());
         return ApiResult.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
@@ -85,7 +86,7 @@ public class BaseExceptionHandler {
      * @return Result
      */
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResult<?> handleException(Exception ex) {
         log.error("程序异常：" + ex.toString());
         String message = ex.getMessage();
