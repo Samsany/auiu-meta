@@ -3,10 +3,12 @@ package com.auiucloud.gen.controller;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.gen.domain.GenTable;
 import com.auiucloud.gen.service.IGenTableColumnService;
 import com.auiucloud.gen.service.IGenTableService;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -14,10 +16,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -43,10 +46,10 @@ public class GenController extends BaseController {
             @ApiImplicitParam(name = "tableName", value = "表名称", paramType = "query"),
             @ApiImplicitParam(name = "tableComment", value = "表描述", paramType = "query"),
     })
-    @GetMapping("/db/list/{dsName}")
-    public ApiResult<?> dataList(@PathVariable String dsName, Search search, @ApiIgnore GenTable genTable) {
-        // List<GenTable> list = genTableService.selectDbTableListByDsName(dsName, search, genTable);
-        return ApiResult.data(null);
+    @GetMapping("/db/list")
+    public ApiResult<?> dataList(Search search, @ApiIgnore GenTable genTable) {
+        List<TableInfo> list = genTableService.selectDbTableListById(genTable.getId());
+        return ApiResult.data(new PageUtils(search, list));
     }
 
 

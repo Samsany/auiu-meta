@@ -21,23 +21,23 @@ public class PageUtils {
     /**
      * 总记录数
      */
-    private final int totalCount;
+    private int totalCount;
     /**
      * 总页数
      */
-    private final int totalPage;
+    private int totalPage;
     /**
      * 当前页数
      */
-    private final int pageNum;
+    private int pageNum;
     /**
      * 每页记录数
      */
-    private final int pageSize;
+    private int pageSize;
     /**
      * 列表数据
      */
-    private final List<?> list;
+    private List<?> list;
     /**
      * 是否有下一页
      */
@@ -69,6 +69,44 @@ public class PageUtils {
 //        this.totalPage = pageInfo.getPages();
 //        this.hasNextPage = pageInfo.isHasNextPage();
 //    }
+    public PageUtils(Search search, List<?> list) {
+        int pageNum = 1;
+        int pageSize = 10;
+        if (search.getPageNum() != null) {
+            pageNum = search.getPageNum();
+        }
+        if (search.getPageSize() != null) {
+            pageSize = search.getPageSize();
+        }
+
+        if (CollUtil.isNotEmpty(list)) {
+            this.totalCount = list.size();
+            this.pageSize = pageSize;
+            this.pageNum = Math.max(pageNum, 1);
+            this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
+            this.hasNextPage = pageNum < this.totalPage;
+
+            int size = list.size();
+            int pageCount = size / pageSize;
+            int fromIndex = (this.pageNum - 1) * pageSize;
+            int toIndex = fromIndex + pageSize;
+            if (toIndex >= size) {
+                toIndex = size;
+            }
+            if (this.pageNum > pageCount + 1) {
+                fromIndex = 0;
+                toIndex = 0;
+            }
+            this.list = list.subList(fromIndex, toIndex);
+        } else {
+            this.totalCount = 0;
+            this.pageSize = pageSize;
+            this.pageNum = pageNum;
+            this.totalPage = 0;
+            this.list = Collections.emptyList();
+            this.hasNextPage = false;
+        }
+    }
 
     /**
      * 手工分页
@@ -99,8 +137,8 @@ public class PageUtils {
             this.list = list.subList(fromIndex, toIndex);
         } else {
             this.totalCount = 0;
-            this.pageSize = 0;
-            this.pageNum = 0;
+            this.pageSize = pageSize;
+            this.pageNum = pageNum;
             this.totalPage = 0;
             this.list = Collections.emptyList();
             this.hasNextPage = false;

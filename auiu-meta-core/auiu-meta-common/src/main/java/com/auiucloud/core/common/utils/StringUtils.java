@@ -473,6 +473,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             }
             return StringPool.EMPTY;
         } catch (Exception e) {
+
             return StringPool.EMPTY;
         }
     }

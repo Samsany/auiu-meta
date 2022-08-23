@@ -2,6 +2,9 @@ package com.auiucloud.gen.service;
 
 import com.auiucloud.gen.domain.GenTable;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -10,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGenTableService extends IService<GenTable> {
 
-    // List<GenTable> selectDbTableListByDsName(String dsName, Search search, GenTable genTable);
+    List<TableInfo> selectDbTableListById(Long dataSourceId);
 
 }

@@ -36,7 +36,6 @@ public class DynamicDataSourceInit implements InitializingBean {
                 dynamicDataSourceUtil.addDynamicDataSource(dataSourceProperty);
                 log.info("数据源动态加载完成：{}", dataSource.getName());
             }
-
         }
     }
 }

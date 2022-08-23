@@ -1,13 +1,10 @@
 package com.auiucloud.gen.datasource;
 
-import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.utils.StringPool;
-import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.gen.domain.SysDataSource;
+import com.auiucloud.gen.utils.DataSourceUtil;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
-import com.baomidou.mybatisplus.annotation.DbType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -16,9 +13,6 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
-
-import static com.auiucloud.core.common.utils.StringPool.COLON;
-import static com.auiucloud.core.common.utils.StringPool.SLASH;
 
 /**
  * 数据源工具类
@@ -54,17 +48,8 @@ public class DynamicDataSourceUtil {
         String password = dataSource.getPassword();
         String params = dataSource.getJdbcParams();
         String dbType = dataSource.getDbType();
-        String url = StringPool.EMPTY;
         // 组装连接的url
-        // TODO 兼容不同数据库连接配置, 暂时只支持mysql
-        // 判断数据库类型
-        if (dbType.equals(DbType.MYSQL.getDb())) {
-            url = CommonConstant.JDBC + COLON +
-                    dataSource.getDbType() + COLON + SLASH + SLASH + dataSource.getUrl() +
-                    COLON + dataSource.getPort() + SLASH +
-                    dataSource.getDatabaseName() +
-                    StringUtils.parseJsonToUrlParams(params);
-        }
+        String url = DataSourceUtil.DATA_SOURCE_URL(dbType, dataSource.getUrl(), dataSource.getPort(), dataSource.getDatabaseName(), params);
 
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
         dataSourceProperty.setPoolName(dsName);
