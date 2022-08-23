@@ -62,4 +62,12 @@ public interface ISysDataSourceService extends IService<SysDataSource> {
      * @return boolean
      */
     boolean checkDataSourceNameUnique(SysDataSource dataSource);
+
+    /**
+     * 启用的数据源列表
+     *
+     * @return
+     */
+    List<SysDataSource> availableDataSourceList();
+
 }

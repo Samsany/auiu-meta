@@ -26,7 +26,8 @@ public class DynamicDataSourceInit implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
-        List<SysDataSource> list = sysDataSourceService.list();
+        // 查询已启用的数据源列表
+        List<SysDataSource> list = sysDataSourceService.availableDataSourceList();
 
         for (SysDataSource dataSource : list) {
             DataSourceProperty dataSourceProperty = dynamicDataSourceUtil.setDataSourceProperty(dataSource);

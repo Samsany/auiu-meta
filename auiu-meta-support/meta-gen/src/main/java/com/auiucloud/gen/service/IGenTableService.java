@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGenTableService extends IService<GenTable> {
 
+    // List<GenTable> selectDbTableListByDsName(String dsName, Search search, GenTable genTable);
+
 }

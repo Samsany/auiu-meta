@@ -2,6 +2,7 @@ package com.auiucloud.gen.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -40,6 +41,13 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
         }
 
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    @Override
+    public List<SysDataSource> availableDataSourceList() {
+        LambdaQueryWrapper<SysDataSource> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDataSource::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
+        return this.list(queryWrapper);
     }
 
     @Override
