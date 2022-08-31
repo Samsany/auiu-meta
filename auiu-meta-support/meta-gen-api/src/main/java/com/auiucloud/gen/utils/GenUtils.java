@@ -3,9 +3,9 @@ package com.auiucloud.gen.utils;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.gen.config.GenConfig;
+import com.auiucloud.gen.constant.GenConstants;
 import com.auiucloud.gen.domain.GenTable;
 import com.auiucloud.gen.domain.GenTableColumn;
-import com.auiucloud.gen.props.GenConstants;
 import org.apache.commons.lang3.RegExUtils;
 
 import java.util.Arrays;
@@ -21,14 +21,13 @@ public class GenUtils {
     /**
      * 初始化表信息
      */
-    public static void initTable(GenTable genTable, String operName) {
+    public static void initTable(GenTable genTable) {
         genTable.setClassName(convertClassName(genTable.getTableName()));
         genTable.setPackageName(GenConfig.getPackageName());
         genTable.setModuleName(getModuleName(GenConfig.getPackageName()));
         genTable.setBusinessName(getBusinessName(genTable.getTableName()));
         genTable.setFunctionName(replaceText(genTable.getTableComment()));
         genTable.setFunctionAuthor(GenConfig.getAuthor());
-        genTable.setCreateBy(operName);
     }
 
     /**
@@ -38,7 +37,6 @@ public class GenUtils {
         String dataType = getDbType(column.getColumnType());
         String columnName = column.getColumnName();
         column.setTableId(table.getId());
-        column.setCreateBy(table.getCreateBy());
         // 设置java字段名
         column.setJavaField(StrUtil.toCamelCase(columnName));
         // 设置默认类型
@@ -62,7 +60,7 @@ public class GenUtils {
                 column.setJavaType(GenConstants.TYPE_BIGDECIMAL);
             }
             // 如果是整形
-            else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10) {
+            else if ((str != null && str.length == 1 && Integer.parseInt(str[0]) <= 10) || column.getColumnType().equals("int")) {
                 column.setJavaType(GenConstants.TYPE_INTEGER);
             }
             // 长整形
@@ -190,7 +188,7 @@ public class GenUtils {
      * @return 替换后的名字
      */
     public static String replaceText(String text) {
-        return RegExUtils.replaceAll(text, "(?:表|若依)", "");
+        return RegExUtils.replaceAll(text, "(?:表)", "");
     }
 
     /**

@@ -43,22 +43,14 @@ public class CommonConstant {
      */
     public static final String LDAP_LOGIN_TYPE = "ldap";
     public static final String JDBC = "jdbc";
-
-    /**
-     * GBK 字符集
-     */
-    public static final String GBK = "GBK";
-
     /**
      * http请求
      */
     public static final String HTTP = "http://";
-
     /**
      * https请求
      */
     public static final String HTTPS = "https://";
-
     /**
      * json类型报文，UTF-8字符集
      */

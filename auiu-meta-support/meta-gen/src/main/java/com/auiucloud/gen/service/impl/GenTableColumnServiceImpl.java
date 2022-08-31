@@ -3,8 +3,12 @@ package com.auiucloud.gen.service.impl;
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.auiucloud.gen.mapper.GenTableColumnMapper;
 import com.auiucloud.gen.service.IGenTableColumnService;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -15,6 +19,25 @@ import org.springframework.stereotype.Service;
 public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn>
         implements IGenTableColumnService {
 
+    @DS("#dsName")
+    @Override
+    public List<GenTableColumn> selectDbTableColumnsByTableName(String dsName, String tableName) {
+        return baseMapper.selectDbTableColumnsByTableName(tableName);
+    }
+
+    @Override
+    public void removeBatchByTableIds(List<Long> tableIds) {
+        LambdaQueryWrapper<GenTableColumn> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(GenTableColumn::getTableId, tableIds);
+        this.remove(queryWrapper);
+    }
+
+    @Override
+    public List<GenTableColumn> selectTableColumnsByTableId(Long tableId) {
+        LambdaQueryWrapper<GenTableColumn> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(GenTableColumn::getTableId, tableId);
+        return this.list(queryWrapper);
+    }
 }
 
 

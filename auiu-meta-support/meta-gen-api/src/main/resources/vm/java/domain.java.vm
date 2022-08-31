@@ -1,0 +1,64 @@
+package ${packageName}.domain;
+
+#if(${superEntityClass})
+import com.auiucloud.core.database.model.BaseEntity;
+#end
+#foreach ($import in $importList)
+import ${import};
+#end
+#if($!{entityLombokModel})
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+#end
+#if(${enableSwagger})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+
+/**
+ * ${functionName}对象 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@TableName("${table.tableName}")
+#if(${superEntityClass})
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
+#else
+@Builder(toBuilder = true)
+#end
+#if($!{enableSwagger})
+@ApiModel(value = "${ClassName}对象", description = #if (
+    "${table.tableComment}"=="")"${ClassName}对象"#else"${table.tableComment}"#end)
+#end
+#if(${superEntityClass})
+public class ${ClassName} extends BaseEntity{
+#else
+public class ${ClassName} implements Serializable{
+#end
+private static final long serialVersionUID=1L;
+
+## ----------  START 字段循环遍历  ----------
+#foreach ($column in $columns)
+    #if(!$table.isSuperColumn($column.javaField))
+        #if("$column.columnComment" != "")
+        /**
+         * ${column.columnComment}
+         */
+            #if(${enableSwagger})
+            @ApiModelProperty(value = "$!{column.columnComment}")
+            #end
+        #end
+    private $column.javaType $column.javaField;
+
+    #end
+#end
+
+}

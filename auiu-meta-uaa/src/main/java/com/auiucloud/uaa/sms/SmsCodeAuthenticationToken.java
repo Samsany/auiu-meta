@@ -9,7 +9,7 @@ import java.util.Collection;
 /**
  * 手机号＋验证码登录令牌获取
  *
- * @author pangu
+ * @author dries
  * @since 2020-7-21
  */
 public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {

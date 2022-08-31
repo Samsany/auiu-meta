@@ -3,6 +3,7 @@ package com.auiucloud.gen.service;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.gen.domain.SysDataSource;
+import com.auiucloud.gen.dto.DataSourceConnectDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface ISysDataSourceService extends IService<SysDataSource> {
      * @param dataSource 数据源
      * @return boolean
      */
-    boolean connectTest(SysDataSource dataSource);
+    boolean connectTest(DataSourceConnectDTO dataSource);
 
     /**
      * 新增数据源
@@ -70,4 +71,10 @@ public interface ISysDataSourceService extends IService<SysDataSource> {
      */
     List<SysDataSource> availableDataSourceList();
 
+    /**
+     * 根据数据源名称查询数据源
+     *
+     * @return SysDataSource
+     */
+    SysDataSource getDataSourceByDsName(String dsName);
 }

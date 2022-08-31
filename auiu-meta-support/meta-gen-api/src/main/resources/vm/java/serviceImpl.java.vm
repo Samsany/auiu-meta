@@ -1,0 +1,39 @@
+package ${packageName}.service.impl;
+
+import java.util.List;
+    #foreach ($column in $columns)
+        #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
+        import com.ruoyi.common.utils.DateUtils;
+            #break
+        #end
+    #end
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ${packageName}.mapper.${ClassName}Mapper;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
+
+/**
+ * ${functionName}Service业务层处理
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+@RequiredArgsConstructor
+public class ${ClassName}ServiceImpl implements I${ClassName}Service {
+
+    @Override
+    public PageUtils listPage(Search search, ${ClassName} ${className}) {
+        LambdaQueryWrapper<${ClassName}> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(search.getStartDate())) {
+            queryWrapper.between(${ClassName}::getCreateTime, search.getStartDate(), search.getEndDate());
+        }
+        if (StringUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.like(${ClassName}::getId, search.getKeyword());
+        }
+        queryWrapper.orderByDesc(${ClassName}::getCreateTime);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+}

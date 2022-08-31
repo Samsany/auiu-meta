@@ -6,13 +6,18 @@ import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.TokenException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 全局异常处理
@@ -39,6 +44,17 @@ public class GlobalExceptionHandler {
             return ApiResult.fail(ex.getResultCode());
         }
         return ApiResult.fail(ex.getMessage());
+    }
+
+    /**
+     * 方法参数校验
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ApiResult<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException:", e);
+        List<FieldError> allErrors = e.getBindingResult().getFieldErrors();
+        String message = allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(";"));
+        return ApiResult.fail(ResultCode.USER_ERROR_A0421.getCode(), message);
     }
 
     /**

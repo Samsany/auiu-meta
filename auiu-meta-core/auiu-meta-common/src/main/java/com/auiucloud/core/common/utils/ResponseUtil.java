@@ -1,7 +1,6 @@
 package com.auiucloud.core.common.utils;
 
 import cn.hutool.json.JSONUtil;
-import com.auiucloud.core.common.api.ApiResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -53,8 +52,7 @@ public class ResponseUtil {
                                                    HttpStatus status, Object value) {
         response.setStatusCode(status);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
-        ApiResult<?> result = ApiResult.fail(status.value(), value.toString());
-        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(result).getBytes());
+        DataBuffer dataBuffer = response.bufferFactory().wrap(JSONUtil.toJsonStr(value).getBytes());
         return response.writeWith(Mono.just(dataBuffer));
     }
 

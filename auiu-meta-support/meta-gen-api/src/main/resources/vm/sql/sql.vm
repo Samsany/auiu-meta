@@ -1,0 +1,27 @@
+-- 菜单 SQL
+insert into sys_menu (menu_name, parent_id, order_num, path, component, is_frame, is_cache, menu_type, visible, status, perms, icon, create_by, create_time, update_by, update_time, remark)
+values('${functionName}', '${parentMenuId}', '1', '${businessName}', '${moduleName}/${businessName}/index', 1, 0, 'C', '0', '0', '${permissionPrefix}:list', '#', 'admin', sysdate(), '', null, '${functionName}菜单');
+insert into sys_menu(name, parent_id, title, component, icon, path, query, redirect, type, status, is_always_show,is_affix, is_hidden, is_hide_header, is_keep_alive, is_require_auth, sort, create_by, create_time, remark)
+values ('${className}', '${parentMenuId}', '${functionName}', '${moduleName}/${businessName}/index', '#', '${businessName}', null, null, 1, 1, 0, 0, 0, 0, 0, 0, 0, 'admin', sysdate(), '${functionName}菜单')
+
+-- 按钮父菜单ID
+SELECT @parentId := LAST_INSERT_ID();
+
+-- 按钮 SQL
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}查询列表', 'GET', '/${moduleName}/${businessName}/list', '${permissionPrefix}:list', 'admin', sysdate(), '');
+
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}查询详情', 'GET', '/${moduleName}/${businessName}/info/*', '${permissionPrefix}:query', 'admin', sysdate(), '');
+
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}新增', 'POST', '/${moduleName}/${businessName}', '${permissionPrefix}:add', 'admin', sysdate(), '');
+
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}修改', 'PUT', '/${moduleName}/${businessName}', '${permissionPrefix}:edit', 'admin', sysdate(), '');
+
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}删除', 'DELETE', '/${moduleName}/${businessName}', '${permissionPrefix}:remove', 'admin', sysdate(), '');
+
+insert into sys_permission(menu_id, name, method, url_perm, btn_perm, create_by, create_time, remark)
+values (@parentId, '${functionName}导出', 'POST', '/${moduleName}/${businessName}/export', '${permissionPrefix}:export', 'admin', sysdate(), '');

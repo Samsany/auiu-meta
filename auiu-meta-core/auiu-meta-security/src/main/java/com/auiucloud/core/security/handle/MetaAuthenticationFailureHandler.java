@@ -5,6 +5,7 @@ import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -59,6 +60,7 @@ public class MetaAuthenticationFailureHandler implements AuthenticationFailureHa
             log.error(String.format("[登录失败] - [%s]其他错误", username), exception);
             apiResult = ApiResult.fail(ResultCode.USER_ERROR_A0200);
         }
-        ResponseUtil.responseWriter(response, "UTF-8", HttpStatus.UNAUTHORIZED.value(), apiResult);
+
+        ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), apiResult);
     }
 }

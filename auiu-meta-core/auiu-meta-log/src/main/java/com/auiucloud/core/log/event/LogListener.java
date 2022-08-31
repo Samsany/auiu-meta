@@ -44,7 +44,7 @@ public class LogListener {
     public void saveSysLog(LogEvent event) {
         CommonLog commonLog = (CommonLog) event.getSource();
         // 发送日志到kafka
-        log.info("发送日志:{}", commonLog);
+        log.info("发送日志模块:{}, 请求URL: {}", commonLog.getTitle(), commonLog.getUrl());
         if (logProperties.getLogType().equals(LogType.KAFKA)) {
             // TODO 发送日志到kafka
             commonLogService.sendCommonLog(commonLog);

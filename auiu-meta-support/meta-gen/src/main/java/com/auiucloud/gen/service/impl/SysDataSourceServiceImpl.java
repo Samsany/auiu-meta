@@ -8,15 +8,23 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.gen.datasource.DynamicDataSourceUtil;
 import com.auiucloud.gen.domain.SysDataSource;
+import com.auiucloud.gen.dto.DataSourceConnectDTO;
 import com.auiucloud.gen.mapper.SysDataSourceMapper;
 import com.auiucloud.gen.service.ISysDataSourceService;
+import com.auiucloud.gen.utils.DataSourceUtil;
+import com.auiucloud.gen.vo.DataSourceVO;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -39,8 +47,21 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
         if (ObjectUtil.isNotNull(search.getStatus())) {
             queryWrapper.eq(SysDataSource::getStatus, search.getStatus());
         }
+        queryWrapper.orderByDesc(SysDataSource::getCreateTime);
+        IPage<SysDataSource> page = this.page(PageUtils.getPage(search), queryWrapper);
+        PageUtils pageUtils = new PageUtils(page);
+        List<DataSourceVO> dataSourceVOList = Optional.ofNullable(page.getRecords()).orElse(Collections.emptyList()).stream()
+                .map(sysDataSource -> DataSourceVO.convertDataSource.apply(sysDataSource))
+                .collect(Collectors.toList());
+        pageUtils.setList(dataSourceVOList);
+        return pageUtils;
+    }
 
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    @Override
+    public SysDataSource getDataSourceByDsName(String dsName) {
+        LambdaQueryWrapper<SysDataSource> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDataSource::getName, dsName);
+        return this.getOne(queryWrapper);
     }
 
     @Override
@@ -60,8 +81,18 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
     }
 
     @Override
-    public boolean connectTest(SysDataSource dataSource) {
-        DataSourceProperty dataSourceProperty = dynamicDataSourceUtil.setDataSourceProperty(dataSource);
+    public boolean connectTest(DataSourceConnectDTO dataSource) {
+        DataSourceProperty dataSourceProperty = dynamicDataSourceUtil.setDataSourceProperty(
+                dataSource.getName(),
+                DataSourceUtil.DATA_SOURCE_URL(
+                        dataSource.getDbType(),
+                        dataSource.getUrl(),
+                        dataSource.getPort(),
+                        dataSource.getDatabaseName(),
+                        dataSource.getJdbcParams()),
+                dataSource.getUsername(),
+                dataSource.getPassword()
+        );
         return dynamicDataSourceUtil.isAvailableDataSourceProperty(dataSourceProperty);
     }
 
@@ -70,7 +101,7 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
         if (this.checkDataSourceNameUnique(dataSource)) {
             throw new ApiException("新增数据源'" + dataSource.getName() + "'失败，数据源已存在");
         }
-        if (!this.connectTest(dataSource)) {
+        if (this.connectTest(dataSource)) {
             throw new ApiException("数据源'" + dataSource.getName() + "'连接失败，请检查配置");
         }
         boolean result = this.save(dataSource);
@@ -86,7 +117,7 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
         if (this.checkDataSourceNameUnique(dataSource)) {
             throw new ApiException("修改数据源'" + dataSource.getName() + "'失败，数据源已存在");
         }
-        if (!this.connectTest(dataSource)) {
+        if (this.connectTest(dataSource)) {
             throw new ApiException("数据源'" + dataSource.getName() + "'连接失败，请检查配置");
         }
         boolean result = this.updateById(dataSource);
@@ -110,6 +141,12 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
             }
         }
         return result;
+    }
+
+    private boolean connectTest(SysDataSource sysDataSource) {
+        DataSourceConnectDTO connectDTO = new DataSourceConnectDTO();
+        BeanUtils.copyProperties(sysDataSource, connectDTO);
+        return !this.connectTest(connectDTO);
     }
 }
 

@@ -1,5 +1,7 @@
 package com.auiucloud.gateway.handler;
 
+import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.utils.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +46,8 @@ public class ExceptionHandler implements ErrorWebExceptionHandler {
         }
         log.error("[网关异常处理]请求路径:{},异常信息:{}", exchange.getRequest().getPath(), ex.getMessage());
 
-        return ResponseUtil.webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.SERVICE_UNAVAILABLE, msg);
+        ApiResult<?> result = ApiResult.fail(ResultCode.USER_ERROR_A0500.getCode(), msg);
+        return ResponseUtil.webFluxResponseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK, result);
     }
 
 }

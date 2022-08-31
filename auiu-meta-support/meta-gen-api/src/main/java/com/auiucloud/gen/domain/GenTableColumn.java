@@ -1,7 +1,7 @@
 package com.auiucloud.gen.domain;
 
 import com.auiucloud.core.common.utils.StringUtils;
-import com.auiucloud.gen.props.GenConstants;
+import com.auiucloud.gen.constant.GenConstants;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

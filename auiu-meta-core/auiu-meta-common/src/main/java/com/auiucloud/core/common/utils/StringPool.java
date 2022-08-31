@@ -24,7 +24,7 @@ package com.auiucloud.core.common.utils;
  * they will be inlined by java compiler and
  * reference to this class will be dropped.
  * There is <b>no</b> performance gain of using this pool.
- * Read: https://java.sun.com/docs/books/jls/third_edition/html/lexical.html#3.10.5
+ * Read: <a href="https://java.sun.com/docs/books/jls/third_edition/html/lexical.html#3.10.5">...</a>
  * <ul>
  * <li>Literal strings within the same class in the same package represent references to the same <code>String</code> object.</li>
  * <li>Literal strings within different classes in the same package represent references to the same <code>String</code> object.</li>
@@ -87,6 +87,7 @@ public interface StringPool {
     String TRUE = "true";
     String UNDERSCORE = "_";
     String UTF_8 = "UTF-8";
+    String GBK = "GBK";
     String US_ASCII = "US-ASCII";
     String ISO_8859_1 = "ISO-8859-1";
     String Y = "y";

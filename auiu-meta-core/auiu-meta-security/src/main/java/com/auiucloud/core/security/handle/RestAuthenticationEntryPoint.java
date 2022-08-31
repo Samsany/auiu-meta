@@ -26,7 +26,6 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
         log.error("处理未认证: {}", request.getRequestURL());
         log.error(ex.getMessage());
-
         ResponseUtil.responseWriter(response, MediaType.APPLICATION_JSON_VALUE, HttpStatus.OK.value(), ApiResult.fail(ResultCode.USER_ERROR_A0230));
     }
 }

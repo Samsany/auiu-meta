@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.common.utils.StringUtils;
+import com.auiucloud.gen.constant.GenConstants;
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.auiucloud.gen.dto.GenTableDTO;
 import org.apache.velocity.VelocityContext;
@@ -76,6 +77,8 @@ public class VmUtils {
         velocityContext.put("basePackage", getPackagePrefix(packageName));
         velocityContext.put("packageName", packageName);
         velocityContext.put("author", genTable.getFunctionAuthor());
+        velocityContext.put("superEntityClass", true);
+        velocityContext.put("enableSwagger", true);
         velocityContext.put("datetime", DateUtil.now());
         velocityContext.put("pkColumn", genTable.getPkColumn());
         velocityContext.put("importList", getImportList(genTable));
@@ -84,10 +87,10 @@ public class VmUtils {
         velocityContext.put("table", genTable);
         velocityContext.put("dicts", getDicts(genTable));
         setMenuVelocityContext(velocityContext, genTable);
-        if (com.auiucloud.gen.props.GenConstants.TPL_TREE.equals(tplCategory)) {
+        if (GenConstants.TPL_TREE.equals(tplCategory)) {
             setTreeVelocityContext(velocityContext, genTable);
         }
-        if (com.auiucloud.gen.props.GenConstants.TPL_SUB.equals(tplCategory)) {
+        if (GenConstants.TPL_SUB.equals(tplCategory)) {
             setSubVelocityContext(velocityContext, genTable);
         }
         return velocityContext;
@@ -111,11 +114,11 @@ public class VmUtils {
         context.put("treeParentCode", treeParentCode);
         context.put("treeName", treeName);
         context.put("expandColumn", getExpandColumn(genTable));
-        if (paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.TREE_PARENT_CODE)) {
-            context.put("tree_parent_code", paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_PARENT_CODE));
+        if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE)) {
+            context.put("tree_parent_code", paramsObj.getString(GenConstants.TREE_PARENT_CODE));
         }
-        if (paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.TREE_NAME)) {
-            context.put("tree_name", paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_NAME));
+        if (paramsObj.containsKey(GenConstants.TREE_NAME)) {
+            context.put("tree_name", paramsObj.getString(GenConstants.TREE_NAME));
         }
     }
 
@@ -151,11 +154,11 @@ public class VmUtils {
         templates.add("vm/xml/mapper.xml.vm");
         templates.add("vm/sql/sql.vm");
         templates.add("vm/js/api.js.vm");
-        if (com.auiucloud.gen.props.GenConstants.TPL_CRUD.equals(tplCategory)) {
+        if (GenConstants.TPL_CRUD.equals(tplCategory)) {
             templates.add("vm/vue/index.vue.vm");
-        } else if (com.auiucloud.gen.props.GenConstants.TPL_TREE.equals(tplCategory)) {
+        } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
             templates.add("vm/vue/index-tree.vue.vm");
-        } else if (com.auiucloud.gen.props.GenConstants.TPL_SUB.equals(tplCategory)) {
+        } else if (GenConstants.TPL_SUB.equals(tplCategory)) {
             templates.add("vm/vue/index.vue.vm");
             templates.add("vm/java/sub-domain.java.vm");
         }
@@ -184,7 +187,7 @@ public class VmUtils {
         if (template.contains("domain.java.vm")) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, className);
         }
-        if (template.contains("sub-domain.java.vm") && StringUtils.equals(com.auiucloud.gen.props.GenConstants.TPL_SUB, genTable.getTplCategory())) {
+        if (template.contains("sub-domain.java.vm") && StringUtils.equals(GenConstants.TPL_SUB, genTable.getTplCategory())) {
             fileName = StringUtils.format("{}/domain/{}.java", javaPath, genTable.getSubTable().getClassName());
         } else if (template.contains("mapper.java.vm")) {
             fileName = StringUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
@@ -233,10 +236,10 @@ public class VmUtils {
             importList.add("java.util.List");
         }
         for (GenTableColumn column : columns) {
-            if (!column.isSuperColumn() && com.auiucloud.gen.props.GenConstants.TYPE_DATE.equals(column.getJavaType())) {
+            if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
                 importList.add("java.util.Date");
                 importList.add("com.fasterxml.jackson.annotation.JsonFormat");
-            } else if (!column.isSuperColumn() && com.auiucloud.gen.props.GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType())) {
+            } else if (!column.isSuperColumn() && GenConstants.TYPE_BIGDECIMAL.equals(column.getJavaType())) {
                 importList.add("java.math.BigDecimal");
             }
         }
@@ -270,7 +273,7 @@ public class VmUtils {
         for (GenTableColumn column : columns) {
             if (!column.isSuperColumn() && StringUtils.isNotEmpty(column.getDictType()) && StringUtils.equalsAny(
                     column.getHtmlType(),
-                    new String[]{com.auiucloud.gen.props.GenConstants.HTML_SELECT, com.auiucloud.gen.props.GenConstants.HTML_RADIO, com.auiucloud.gen.props.GenConstants.HTML_CHECKBOX})) {
+                    new String[]{GenConstants.HTML_SELECT, GenConstants.HTML_RADIO, GenConstants.HTML_CHECKBOX})) {
                 dicts.add("'" + column.getDictType() + "'");
             }
         }
@@ -294,9 +297,9 @@ public class VmUtils {
      * @return 上级菜单ID字段
      */
     public static String getParentMenuId(JSONObject paramsObj) {
-        if (StringUtils.isNotEmpty(paramsObj) && paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.PARENT_MENU_ID)
-                && StringUtils.isNotEmpty(paramsObj.getString(com.auiucloud.gen.props.GenConstants.PARENT_MENU_ID))) {
-            return paramsObj.getString(com.auiucloud.gen.props.GenConstants.PARENT_MENU_ID);
+        if (StringUtils.isNotEmpty(paramsObj) && paramsObj.containsKey(GenConstants.PARENT_MENU_ID)
+                && StringUtils.isNotEmpty(paramsObj.getString(GenConstants.PARENT_MENU_ID))) {
+            return paramsObj.getString(GenConstants.PARENT_MENU_ID);
         }
         return DEFAULT_PARENT_MENU_ID;
     }
@@ -308,8 +311,8 @@ public class VmUtils {
      * @return 树编码
      */
     public static String getTreecode(JSONObject paramsObj) {
-        if (paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.TREE_CODE)) {
-            return StringUtils.toCamelCase(paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_CODE));
+        if (paramsObj.containsKey(GenConstants.TREE_CODE)) {
+            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_CODE));
         }
         return StringUtils.EMPTY;
     }
@@ -321,8 +324,8 @@ public class VmUtils {
      * @return 树父编码
      */
     public static String getTreeParentCode(JSONObject paramsObj) {
-        if (paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.TREE_PARENT_CODE)) {
-            return StringUtils.toCamelCase(paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_PARENT_CODE));
+        if (paramsObj.containsKey(GenConstants.TREE_PARENT_CODE)) {
+            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_PARENT_CODE));
         }
         return StringUtils.EMPTY;
     }
@@ -334,8 +337,8 @@ public class VmUtils {
      * @return 树名称
      */
     public static String getTreeName(JSONObject paramsObj) {
-        if (paramsObj.containsKey(com.auiucloud.gen.props.GenConstants.TREE_NAME)) {
-            return StringUtils.toCamelCase(paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_NAME));
+        if (paramsObj.containsKey(GenConstants.TREE_NAME)) {
+            return StringUtils.toCamelCase(paramsObj.getString(GenConstants.TREE_NAME));
         }
         return StringUtils.EMPTY;
     }
@@ -349,7 +352,7 @@ public class VmUtils {
     public static int getExpandColumn(GenTableDTO genTable) {
         String options = genTable.getOptions();
         JSONObject paramsObj = JSONObject.parseObject(options);
-        String treeName = paramsObj.getString(com.auiucloud.gen.props.GenConstants.TREE_NAME);
+        String treeName = paramsObj.getString(GenConstants.TREE_NAME);
         int num = 0;
         for (GenTableColumn column : genTable.getColumns()) {
             if (column.isList()) {

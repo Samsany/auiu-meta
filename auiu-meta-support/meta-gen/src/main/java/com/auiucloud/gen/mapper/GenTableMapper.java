@@ -1,7 +1,11 @@
 package com.auiucloud.gen.mapper;
 
 import com.auiucloud.gen.domain.GenTable;
+import com.auiucloud.gen.dto.GenTableDTO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -11,6 +15,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface GenTableMapper extends BaseMapper<GenTable> {
 
+    List<GenTable> selectDbTableListByNames(String[] tableNames);
+
+    GenTableDTO selectGenTableByName(@Param("subTableName") String subTableName);
 }
 
 

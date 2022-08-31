@@ -128,7 +128,7 @@ public class LogAspect {
                 .title(annotation.value())
                 .params(JSONUtil.toJsonStr(requestParam))
                 .build();
-        log.info("Http Request: {}", JSONObject.toJSONString(commonLog));
+        // log.info("Http Request: {}", JSONObject.toJSONString(commonLog));
         // 发布事件
         applicationContext.publishEvent(new LogEvent(commonLog));
         return result;

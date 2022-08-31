@@ -1,5 +1,7 @@
 package com.auiucloud.gen.dto;
 
+import com.auiucloud.core.common.utils.StringUtils;
+import com.auiucloud.gen.constant.GenConstants;
 import com.auiucloud.gen.domain.GenTableColumn;
 import lombok.Data;
 
@@ -135,5 +137,9 @@ public class GenTableDTO implements Serializable {
      * 上级菜单名称字段
      */
     private String parentMenuName;
+
+    public boolean isSuperColumn(String javaField) {
+        return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);
+    }
 
 }

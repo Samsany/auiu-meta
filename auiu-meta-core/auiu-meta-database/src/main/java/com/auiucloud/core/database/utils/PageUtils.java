@@ -60,15 +60,22 @@ public class PageUtils {
     /**
      * pageHelper分页
      */
-//    public PageUtils(List<?> list) {
-//        PageInfo<?> pageInfo = new PageInfo<>(list);
-//        this.list = pageInfo.getList();
-//        this.totalCount = Math.toIntExact(pageInfo.getTotal());
-//        this.pageSize = pageInfo.getPageSize();
-//        this.pageNum = pageInfo.getPageNum();
-//        this.totalPage = pageInfo.getPages();
-//        this.hasNextPage = pageInfo.isHasNextPage();
-//    }
+    // public PageUtils(List<?> list) {
+    //     PageInfo<?> pageInfo = new PageInfo<>(list);
+    //     this.list = pageInfo.getList();
+    //     this.totalCount = Math.toIntExact(pageInfo.getTotal());
+    //     this.pageSize = pageInfo.getPageSize();
+    //     this.pageNum = pageInfo.getPageNum();
+    //     this.totalPage = pageInfo.getPages();
+    //     this.hasNextPage = pageInfo.isHasNextPage();
+    // }
+
+    /**
+     * 手工分页
+     *
+     * @param list   列表数据
+     * @param search 查询参数
+     */
     public PageUtils(Search search, List<?> list) {
         int pageNum = 1;
         int pageSize = 10;

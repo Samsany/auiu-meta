@@ -4,7 +4,9 @@ import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.gen.domain.SysDataSource;
+import com.auiucloud.gen.dto.DataSourceConnectDTO;
 import com.auiucloud.gen.service.ISysDataSourceService;
+import com.auiucloud.gen.vo.DataSourceVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,7 +51,7 @@ public class SysDataSourceController {
     @ApiOperation("数据源连接测试")
     @Log(value = "数据源管理", exception = "数据源连接测试请求异常")
     @PostMapping("/connect")
-    public ApiResult<?> connectTest(@Validated @RequestBody SysDataSource dataSource) {
+    public ApiResult<?> connectTest(@Validated @RequestBody DataSourceConnectDTO dataSource) {
         return ApiResult.data(dataSourceService.connectTest(dataSource));
     }
 
@@ -61,7 +63,8 @@ public class SysDataSourceController {
     @ApiImplicitParam(name = "id", value = "数据源ID", paramType = "path")
     @GetMapping("/{id}")
     public ApiResult<?> getInfo(@PathVariable Long id) {
-        return ApiResult.data(dataSourceService.getById(id));
+        SysDataSource sysDataSource = dataSourceService.getById(id);
+        return ApiResult.data(DataSourceVO.convertDataSource.apply(sysDataSource));
     }
 
     /**
@@ -89,6 +92,9 @@ public class SysDataSourceController {
      */
     @ApiOperation("删除数据源")
     @Log(value = "数据源管理", exception = "删除数据源请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids", value = "数据源编号", paramType = "body"),
+    })
     @DeleteMapping
     public ApiResult<?> remove(@RequestBody Long[] ids) {
         return ApiResult.condition(dataSourceService.removeDataSourceByIds(Arrays.asList(ids)));

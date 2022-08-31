@@ -2,6 +2,9 @@ package com.auiucloud.gen.mapper;
 
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -10,6 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Entity com.auiucloud.gen.domain.GenTableColumn
  */
 public interface GenTableColumnMapper extends BaseMapper<GenTableColumn> {
+
+    List<GenTableColumn> selectDbTableColumnsByTableName(@Param("tableName") String tableName);
 
 }
 
