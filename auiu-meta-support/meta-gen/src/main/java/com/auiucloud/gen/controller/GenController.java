@@ -6,6 +6,8 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.gen.domain.GenTable;
+import com.auiucloud.gen.domain.GenTableColumn;
+import com.auiucloud.gen.dto.GenTableDTO;
 import com.auiucloud.gen.service.IGenTableColumnService;
 import com.auiucloud.gen.service.IGenTableService;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
@@ -15,9 +17,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +67,34 @@ public class GenController extends BaseController {
     public ApiResult<?> dataListByDsName(Search search, @ApiIgnore GenTable genTable) {
         List<TableInfo> list = genTableService.selectDbTableListByDsName(search.getKeyword(), genTable);
         return ApiResult.data(new PageUtils(search, list));
+    }
+
+    /**
+     * 代码生成详情
+     */
+    @Log(value = "代码管理", exception = "代码生成详情请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tableId", value = "数据库ID", paramType = "path", required = true),
+    })
+    @GetMapping(value = "/{tableId}")
+    public ApiResult<?> getInfo(@PathVariable Long tableId) {
+        GenTableDTO table = genTableService.getGenTableDTOById(tableId);
+        List<GenTable> tables = genTableService.list();
+        List<GenTableColumn> list = genTableColumnService.selectTableColumnsByTableId(tableId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("info", table);
+        map.put("tableColumns", list);
+        map.put("tables", tables);
+        return ApiResult.data(map);
+    }
+
+    /**
+     * 修改代码生成信息
+     */
+    @Log(value = "代码管理", exception = "修改代码生成信息请求异常")
+    @PutMapping
+    public ApiResult<?> edit(@Validated @RequestBody GenTableDTO genTableDTO) {
+        return ApiResult.condition(genTableService.editGenTableById(genTableDTO));
     }
 
     @ApiOperation("导入表结构（保存）")

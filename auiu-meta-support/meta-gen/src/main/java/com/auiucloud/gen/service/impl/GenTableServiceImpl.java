@@ -1,6 +1,9 @@
 package com.auiucloud.gen.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -30,6 +33,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -141,6 +145,26 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     }
 
     @Override
+    public GenTableDTO getGenTableDTOById(Long tableId) {
+        GenTable genTable = getById(tableId);
+        GenTableDTO genTableDTO = new GenTableDTO();
+        BeanUtils.copyProperties(genTable, genTableDTO);
+        // 扩展字段填充
+        String options = genTable.getOptions();
+        if (StrUtil.isNotBlank(options)) {
+            JSONObject obj = JSONUtil.parseObj(options);
+            String parentMenuId = String.valueOf(obj.get(GenConstants.PARENT_MENU_ID));
+            genTableDTO.setParentMenuId(parentMenuId);
+            Integer superEntityClass = (Integer) obj.get(GenConstants.SUPER_ENTITY_CLASS);
+            genTableDTO.setSuperEntityClass(superEntityClass != null ? superEntityClass : CommonConstant.STATUS_NORMAL_VALUE);
+            Integer enableSwagger = (Integer) obj.get(GenConstants.ENABLE_SWAGGER);
+            genTableDTO.setEnableSwagger(enableSwagger != null ? enableSwagger : CommonConstant.STATUS_NORMAL_VALUE);
+        }
+
+        return genTableDTO;
+    }
+
+    @Override
     public void importGenTable(String dsName, List<GenTable> tableList) {
         for (GenTable genTable : tableList) {
             GenUtils.initTable(genTable);
@@ -157,6 +181,18 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     }
 
     @Override
+    @Transactional
+    public boolean editGenTableById(GenTableDTO genTableDTO) {
+        GenTable genTable = new GenTable();
+        BeanUtils.copyProperties(genTableDTO, genTable);
+        boolean result = this.updateById(genTable);
+        if (result) {
+            genTableColumnService.updateBatchById(genTableDTO.getColumns());
+        }
+        return result;
+    }
+
+    @Override
     public Map<String, Object> previewCode(String tableId) {
 
         Map<String, Object> dataMap = new LinkedHashMap<>();
@@ -167,7 +203,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         BeanUtils.copyProperties(genTable, genTableDTO);
         genTableDTO.setColumns(genTableColumnList);
         // 设置主子表信息
-        this.setSubTable(genTableDTO);
+        // this.setSubTable(genTableDTO);
         // 设置主键列信息
         this.setPkColumn(genTableDTO);
         VmUtils.initVelocity();
@@ -194,7 +230,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
      */
     private void setPkColumn(GenTableDTO table) {
         for (GenTableColumn column : table.getColumns()) {
-            if (column.isPk()) {
+            if (GenUtils.isChecked(column.getIsPk())) {
                 table.setPkColumn(column);
                 break;
             }
@@ -204,7 +240,7 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
         if (GenConstants.TPL_SUB.equals(table.getTplCategory())) {
             for (GenTableColumn column : table.getSubTable().getColumns()) {
-                if (column.isPk()) {
+                if (GenUtils.isChecked(column.getIsPk())) {
                     table.getSubTable().setPkColumn(column);
                     break;
                 }
@@ -215,12 +251,12 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         }
     }
 
-    private void setSubTable(GenTableDTO table) {
-        String subTableName = table.getSubTableName();
-        if (StrUtil.isNotEmpty(subTableName)) {
-            // genTableDTO.setSubTable(baseMapper.selectGenTableByName(subTableName));
-        }
-    }
+    // private void setSubTable(GenTableDTO table) {
+    //     String subTableName = table.getSubTableName();
+    //     if (StrUtil.isNotEmpty(subTableName)) {
+    //         // genTableDTO.setSubTable(baseMapper.selectGenTableByName(subTableName));
+    //     }
+    // }
 }
 
 

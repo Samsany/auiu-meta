@@ -2,6 +2,7 @@ package com.auiucloud.gen.utils;
 
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.gen.constant.GenConstants;
@@ -77,8 +78,6 @@ public class VmUtils {
         velocityContext.put("basePackage", getPackagePrefix(packageName));
         velocityContext.put("packageName", packageName);
         velocityContext.put("author", genTable.getFunctionAuthor());
-        velocityContext.put("superEntityClass", true);
-        velocityContext.put("enableSwagger", true);
         velocityContext.put("datetime", DateUtil.now());
         velocityContext.put("pkColumn", genTable.getPkColumn());
         velocityContext.put("importList", getImportList(genTable));
@@ -86,7 +85,7 @@ public class VmUtils {
         velocityContext.put("columns", genTable.getColumns());
         velocityContext.put("table", genTable);
         velocityContext.put("dicts", getDicts(genTable));
-        setMenuVelocityContext(velocityContext, genTable);
+        setOptionsVelocityContext(velocityContext, genTable);
         if (GenConstants.TPL_TREE.equals(tplCategory)) {
             setTreeVelocityContext(velocityContext, genTable);
         }
@@ -96,11 +95,15 @@ public class VmUtils {
         return velocityContext;
     }
 
-    public static void setMenuVelocityContext(VelocityContext context, GenTableDTO genTable) {
+    public static void setOptionsVelocityContext(VelocityContext context, GenTableDTO genTable) {
         String options = genTable.getOptions();
         JSONObject paramsObj = JSONObject.parseObject(options);
         String parentMenuId = getParentMenuId(paramsObj);
+        boolean superEntityClass = getSuperEntityClass(paramsObj);
+        boolean enableSwagger = getEnableSwagger(paramsObj);
         context.put("parentMenuId", parentMenuId);
+        context.put("superEntityClass", superEntityClass);
+        context.put("enableSwagger", enableSwagger);
     }
 
     public static void setTreeVelocityContext(VelocityContext context, GenTableDTO genTable) {
@@ -305,6 +308,40 @@ public class VmUtils {
     }
 
     /**
+     * 获取superEntityClass字段
+     *
+     * @param paramsObj 生成其他选项
+     * @return boolean
+     */
+    public static boolean getSuperEntityClass(JSONObject paramsObj) {
+        boolean flag = true;
+        if (StringUtils.isNotEmpty(paramsObj) && paramsObj.containsKey(GenConstants.SUPER_ENTITY_CLASS)) {
+            Integer superEntityClass = paramsObj.getInteger(GenConstants.SUPER_ENTITY_CLASS);
+            if (superEntityClass != null && superEntityClass == CommonConstant.STATUS_DISABLE_VALUE) {
+                flag = false;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * 获取enableSwagger字段
+     *
+     * @param paramsObj 生成其他选项
+     * @return boolean
+     */
+    public static boolean getEnableSwagger(JSONObject paramsObj) {
+        boolean flag = true;
+        if (StringUtils.isNotEmpty(paramsObj) && paramsObj.containsKey(GenConstants.ENABLE_SWAGGER)) {
+            Integer enableSwagger = paramsObj.getInteger(GenConstants.ENABLE_SWAGGER);
+            if (enableSwagger != null && enableSwagger == CommonConstant.STATUS_DISABLE_VALUE) {
+                flag = false;
+            }
+        }
+        return flag;
+    }
+
+    /**
      * 获取树编码
      *
      * @param paramsObj 生成其他选项
@@ -355,7 +392,7 @@ public class VmUtils {
         String treeName = paramsObj.getString(GenConstants.TREE_NAME);
         int num = 0;
         for (GenTableColumn column : genTable.getColumns()) {
-            if (column.isList()) {
+            if (GenUtils.isChecked(column.getIsList())) {
                 num++;
                 String columnName = column.getColumnName();
                 if (columnName.equals(treeName)) {

@@ -73,15 +73,15 @@ public class GenUtils {
         column.setIsInsert(GenConstants.REQUIRE);
 
         // 编辑字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && !column.isPk()) {
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_EDIT, columnName) && !isChecked(column.getIsPk())) {
             column.setIsEdit(GenConstants.REQUIRE);
         }
         // 列表字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName) && !column.isPk()) {
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_LIST, columnName) && !isChecked(column.getIsPk())) {
             column.setIsList(GenConstants.REQUIRE);
         }
         // 查询字段
-        if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && !column.isPk()) {
+        if (!arraysContains(GenConstants.COLUMNNAME_NOT_QUERY, columnName) && !isChecked(column.getIsPk())) {
             column.setIsQuery(GenConstants.REQUIRE);
         }
 
@@ -218,6 +218,23 @@ public class GenUtils {
         } else {
             return 0;
         }
+    }
+
+    public static boolean isChecked(Integer value) {
+        return value != null && value.equals(GenConstants.REQUIRE);
+    }
+
+    public static boolean isSuperColumn(String javaField) {
+        return StringUtils.equalsAnyIgnoreCase(javaField,
+                // BaseEntity
+                "createBy", "createTime", "updateBy", "updateTime", "remark",
+                // TreeEntity
+                "parentName", "parentId", "sort", "ancestors");
+    }
+
+    public static boolean isUsableColumn(String javaField) {
+        // isSuperColumn()中的名单用于避免生成多余Domain属性，若某些属性在生成页面时需要用到不能忽略，则放在此处白名单
+        return StringUtils.equalsAnyIgnoreCase(javaField, "parentId", "sort", "remark");
     }
 
 }

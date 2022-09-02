@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 #else
 @Builder(toBuilder = true)
 #end
-#if($!{enableSwagger})
+#if(${enableSwagger})
 @ApiModel(value = "${ClassName}对象", description = #if (
     "${table.tableComment}"=="")"${ClassName}对象"#else"${table.tableComment}"#end)
 #end
@@ -47,13 +47,24 @@ private static final long serialVersionUID=1L;
 
 ## ----------  START 字段循环遍历  ----------
 #foreach ($column in $columns)
-    #if(!$table.isSuperColumn($column.javaField))
+    #if(${superEntityClass} && !$table.isSuperColumn($column.javaField))
         #if("$column.columnComment" != "")
         /**
          * ${column.columnComment}
          */
             #if(${enableSwagger})
-            @ApiModelProperty(value = "$!{column.columnComment}")
+            @ApiModelProperty(value = "${column.columnComment}")
+            #end
+        #end
+    private $column.javaType $column.javaField;
+
+    #else
+        #if("$column.columnComment" != "")
+        /**
+         * ${column.columnComment}
+         */
+            #if(${enableSwagger})
+            @ApiModelProperty(value = "${column.columnComment}")
             #end
         #end
     private $column.javaType $column.javaField;

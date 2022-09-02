@@ -29,4 +29,5 @@ public interface IGenTableColumnService extends IService<GenTableColumn> {
     void removeBatchByTableIds(List<Long> tableIds);
 
     List<GenTableColumn> selectTableColumnsByTableId(Long tableId);
+
 }

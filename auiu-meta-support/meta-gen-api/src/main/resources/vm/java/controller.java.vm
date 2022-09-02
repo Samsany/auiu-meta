@@ -12,6 +12,7 @@ import com.auiucloud.core.common.controller.BaseController;
     #elseif($table.tree)
     #end
 
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
@@ -99,7 +100,7 @@ public class ${ClassName}Controller extends BaseController {
     @DeleteMapping
     @ApiOperation(value = "删除${functionName}")
     public ApiResult<?> remove(@RequestBody ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
-        return ApiResult.condition(${className}Service.removeByIds(${pkColumn.javaField}s));
+        return ApiResult.condition(${className}Service.removeByIds(Arrays.asList(${pkColumn.javaField}s)));
     }
 
     /**

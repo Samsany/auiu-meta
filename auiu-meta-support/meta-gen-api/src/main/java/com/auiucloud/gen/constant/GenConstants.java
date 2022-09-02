@@ -41,6 +41,8 @@ public class GenConstants {
      * 上级菜单ID字段
      */
     public static final String PARENT_MENU_ID = "parentMenuId";
+    public static final String ENABLE_SWAGGER = "enableSwagger";
+    public static final String SUPER_ENTITY_CLASS = "superEntityClass";
 
     /**
      * 上级菜单名称字段

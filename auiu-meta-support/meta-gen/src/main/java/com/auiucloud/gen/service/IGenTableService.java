@@ -3,6 +3,7 @@ package com.auiucloud.gen.service;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.gen.domain.GenTable;
+import com.auiucloud.gen.dto.GenTableDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 
@@ -44,6 +45,12 @@ public interface IGenTableService extends IService<GenTable> {
     List<GenTable> selectDbTableListByNames(String dsName, String[] tableNames);
 
     /**
+     * @param tableId 根据表ID查询表信息
+     * @return GenTableDTO
+     */
+    GenTableDTO getGenTableDTOById(Long tableId);
+
+    /**
      * 导入表数据
      *
      * @param dsName    数据源名称
@@ -60,4 +67,6 @@ public interface IGenTableService extends IService<GenTable> {
      * @return Map<String, Object>
      */
     Map<String, Object> previewCode(String tableId);
+
+    boolean editGenTableById(GenTableDTO genTableDTO);
 }

@@ -36,10 +36,11 @@ export function update${BusinessName}(data) {
 }
 
 // 删除${functionName}
-export function del${BusinessName}(${pkColumn.javaField}) {
+export function del${BusinessName}(data) {
   return request({
-    url: '/${moduleName}/${businessName}/' + ${pkColumn.javaField},
-    method: 'delete'
+    url: '/${moduleName}/${businessName}',
+    method: 'delete',
+    data
   })
 }
 
