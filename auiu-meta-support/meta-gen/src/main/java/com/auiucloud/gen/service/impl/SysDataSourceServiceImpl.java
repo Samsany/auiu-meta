@@ -82,6 +82,12 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
 
     @Override
     public boolean connectTest(DataSourceConnectDTO dataSource) {
+
+        if (dataSource.getId() != null && StrUtil.isEmpty(dataSource.getPassword())) {
+            SysDataSource sysDataSource = this.getById(dataSource.getId());
+            dataSource.setPassword(sysDataSource.getPassword());
+        }
+
         DataSourceProperty dataSourceProperty = dynamicDataSourceUtil.setDataSourceProperty(
                 dataSource.getName(),
                 DataSourceUtil.DATA_SOURCE_URL(

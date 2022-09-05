@@ -15,6 +15,12 @@ import javax.validation.constraints.NotBlank;
 public class DataSourceConnectDTO {
 
     /**
+     * 编号
+     */
+    @ApiModelProperty(value = "编号")
+    private Long id;
+
+    /**
      * 名称
      */
     @NotBlank(message = "数据源名称不能为空")

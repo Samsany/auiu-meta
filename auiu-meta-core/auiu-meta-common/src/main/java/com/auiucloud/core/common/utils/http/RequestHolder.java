@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.utils;
+package com.auiucloud.core.common.utils.http;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

@@ -104,13 +104,13 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
     public static String getSize(long size) {
         String resultSize;
         if (size / GB >= 1) {
-            //如果当前Byte的值大于等于1GB
+            // 如果当前Byte的值大于等于1GB
             resultSize = DF.format(size / (float) GB) + "GB   ";
         } else if (size / MB >= 1) {
-            //如果当前Byte的值大于等于1MB
+            // 如果当前Byte的值大于等于1MB
             resultSize = DF.format(size / (float) MB) + "MB   ";
         } else if (size / KB >= 1) {
-            //如果当前Byte的值大于等于1KB
+            // 如果当前Byte的值大于等于1KB
             resultSize = DF.format(size / (float) KB) + "KB   ";
         } else {
             resultSize = size + "B   ";
@@ -290,6 +290,15 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         }
     }
 
+    public static void downloadFile(HttpServletResponse response, byte[] data, String filename) throws IOException {
+        response.setCharacterEncoding(StringPool.UTF_8);
+        response.setContentType("application/octet-stream");
+        response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+        response.addHeader("Content-Length", "" + data.length);
+        org.apache.commons.io.IOUtils.write(data, response.getOutputStream());
+    }
+
     /**
      * 导出excel
      */
@@ -299,15 +308,15 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         BigExcelWriter writer = ExcelUtil.getBigWriter(file);
         // 一次性写出内容，使用默认样式，强制输出标题
         writer.write(list, true);
-        //response为HttpServletResponse对象
+        // response为HttpServletResponse对象
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-        //test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
+        // test.xls是弹出下载对话框的文件名，不能为中文，中文请自行编码
         response.setHeader("Content-Disposition", "attachment;filename=file.xlsx");
         ServletOutputStream out = response.getOutputStream();
         // 终止后删除临时文件
         file.deleteOnExit();
         writer.flush(out, true);
-        //此处记得关闭输出Servlet流
+        // 此处记得关闭输出Servlet流
         IoUtil.close(out);
     }
 
@@ -386,7 +395,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         String time = sdf.format(new Date());
         StringBuffer buf = new StringBuffer(time);
         Random r = new Random();
-        //循环取得三个不大于10的随机整数
+        // 循环取得三个不大于10的随机整数
         for (int x = 0; x < 3; x++) {
             buf.append(r.nextInt(10));
         }
@@ -462,12 +471,7 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         headers.add("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
         headers.add("Pragma", "no-cache");
         headers.add("Expires", "0");
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .contentLength(file.length())
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new FileSystemResource(file));
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.parseMediaType("application/octet-stream")).body(new FileSystemResource(file));
     }
 
 }

@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.utils;
+package com.auiucloud.core.common.utils.http;
 
 import com.auiucloud.core.common.api.IResultCode;
 import com.auiucloud.core.common.exception.ApiException;

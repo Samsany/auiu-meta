@@ -66,7 +66,31 @@ public interface IGenTableService extends IService<GenTable> {
      * @param tableId 表ID
      * @return Map<String, Object>
      */
-    Map<String, Object> previewCode(String tableId);
+    Map<String, Object> previewCode(Long tableId);
 
     boolean editGenTableById(GenTableDTO genTableDTO);
+
+    /**
+     * 生成代码（自定义路径）
+     *
+     * @param tableId 表ID
+     */
+    void generatorCode(Long tableId);
+
+    /**
+     * 生成代码（下载方式）
+     *
+     * @param tableId 表ID
+     * @return byte[]
+     */
+    byte[] downloadGenCode(Long tableId);
+
+    /**
+     * 批量生成代码（下载方式）
+     *
+     * @param tableIds 表数组
+     * @return 数据
+     */
+    byte[] downloadGenCode(Long[] tableIds);
+
 }

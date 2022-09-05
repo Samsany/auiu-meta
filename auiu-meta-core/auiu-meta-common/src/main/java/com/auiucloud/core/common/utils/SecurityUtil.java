@@ -7,6 +7,7 @@ import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.context.UserContext;
 import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.common.model.LoginUser;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 

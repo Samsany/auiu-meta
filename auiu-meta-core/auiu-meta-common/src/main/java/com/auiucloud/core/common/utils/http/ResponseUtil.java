@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.utils;
+package com.auiucloud.core.common.utils.http;
 
 import cn.hutool.json.JSONUtil;
 import org.springframework.core.io.buffer.DataBuffer;

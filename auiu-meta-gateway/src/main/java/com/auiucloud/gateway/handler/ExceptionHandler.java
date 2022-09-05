@@ -2,7 +2,7 @@ package com.auiucloud.gateway.handler;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
-import com.auiucloud.core.common.utils.ResponseUtil;
+import com.auiucloud.core.common.utils.http.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

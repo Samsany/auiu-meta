@@ -2,6 +2,7 @@ package com.auiucloud.gen.controller;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.common.utils.FileUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
@@ -21,6 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +79,7 @@ public class GenController extends BaseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tableId", value = "数据库ID", paramType = "path", required = true),
     })
-    @GetMapping(value = "/{tableId}")
+    @GetMapping("/info/{tableId}")
     public ApiResult<?> getInfo(@PathVariable Long tableId) {
         GenTableDTO table = genTableService.getGenTableDTOById(tableId);
         List<GenTable> tables = genTableService.list();
@@ -117,9 +120,44 @@ public class GenController extends BaseController {
             @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
     })
     @GetMapping("/preview/{tableId}")
-    public ApiResult<?> preview(@PathVariable String tableId) {
+    public ApiResult<?> preview(@PathVariable Long tableId) {
         Map<String, Object> map = genTableService.previewCode(tableId);
         return ApiResult.data(map);
+    }
+
+    @ApiOperation("代码生成（下载方式）")
+    @Log(value = "代码管理", exception = "代码生成（下载方式）请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
+    })
+    @GetMapping("/download/{tableId}")
+    public void downloadGenCode(@PathVariable Long tableId,
+                                HttpServletResponse response) throws IOException {
+        byte[] bytes = genTableService.downloadGenCode(tableId);
+        FileUtil.downloadFile(response, bytes, "code_" + System.currentTimeMillis() + ".zip");
+    }
+
+    @ApiOperation("代码生成（自定义路径）")
+    @Log(value = "代码管理", exception = "代码生成请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
+    })
+    @GetMapping("/{tableId}")
+    public ApiResult<?> genCode(@PathVariable Long tableId) {
+        genTableService.generatorCode(tableId);
+        return ApiResult.success();
+    }
+
+    @ApiOperation("代码批量生成")
+    @Log(value = "代码管理", exception = "代码生成请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tableIds", value = "数据表ID", paramType = "query", required = true)
+    })
+    @PostMapping("/codeBatch")
+    public void genCodeBatch(@RequestBody Long[] tableIds,
+                             HttpServletResponse response) throws IOException {
+        byte[] data = genTableService.downloadGenCode(tableIds);
+        FileUtil.downloadFile(response, data, "code_" + System.currentTimeMillis() + ".zip");
     }
 
 }

@@ -2,8 +2,8 @@ package com.auiucloud.core.feign.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.constant.MetaConstant;
-import com.auiucloud.core.common.utils.RequestHolder;
 import com.auiucloud.core.common.utils.TraceUtil;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import feign.RequestInterceptor;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Bean;

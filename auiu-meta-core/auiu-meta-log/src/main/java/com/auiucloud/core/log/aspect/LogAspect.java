@@ -7,6 +7,7 @@ import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.model.CommonLog;
 import com.auiucloud.core.common.model.IpAddress;
 import com.auiucloud.core.common.utils.*;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.log.event.LogEvent;
 import lombok.RequiredArgsConstructor;

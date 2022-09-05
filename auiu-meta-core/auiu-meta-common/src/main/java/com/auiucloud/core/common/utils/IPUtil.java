@@ -3,6 +3,7 @@ package com.auiucloud.core.common.utils;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.model.IpAddress;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;

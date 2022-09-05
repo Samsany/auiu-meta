@@ -2,7 +2,7 @@ package com.auiucloud.core.security.handle;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
-import com.auiucloud.core.common.utils.ResponseUtil;
+import com.auiucloud.core.common.utils.http.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -6,7 +6,7 @@ import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.utils.IPUtil;
-import com.auiucloud.core.common.utils.ResponseUtil;
+import com.auiucloud.core.common.utils.http.ResponseUtil;
 import com.auiucloud.core.rule.constant.RuleConstant;
 import com.auiucloud.core.rule.model.BlackList;
 import com.auiucloud.core.rule.service.IRuleCacheService;

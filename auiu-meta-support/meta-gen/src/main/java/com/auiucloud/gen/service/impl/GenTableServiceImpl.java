@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.StringUtils;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -28,6 +29,8 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -35,12 +38,17 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author dries
@@ -149,6 +157,11 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         GenTable genTable = getById(tableId);
         GenTableDTO genTableDTO = new GenTableDTO();
         BeanUtils.copyProperties(genTable, genTableDTO);
+
+        // 查询字段
+        List<GenTableColumn> genTableColumnList = genTableColumnService.selectTableColumnsByTableId(genTable.getId());
+        genTableDTO.setColumns(genTableColumnList);
+
         // 扩展字段填充
         String options = genTable.getOptions();
         if (StrUtil.isNotBlank(options)) {
@@ -193,23 +206,16 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
     }
 
     @Override
-    public Map<String, Object> previewCode(String tableId) {
-
+    public Map<String, Object> previewCode(Long tableId) {
         Map<String, Object> dataMap = new LinkedHashMap<>();
-        GenTable genTable = this.getById(tableId);
-        // 查询字段
-        List<GenTableColumn> genTableColumnList = genTableColumnService.selectTableColumnsByTableId(genTable.getId());
-        GenTableDTO genTableDTO = new GenTableDTO();
-        BeanUtils.copyProperties(genTable, genTableDTO);
-        genTableDTO.setColumns(genTableColumnList);
+        GenTableDTO genTable = this.getGenTableDTOById(tableId);
         // 设置主子表信息
         // this.setSubTable(genTableDTO);
         // 设置主键列信息
-        this.setPkColumn(genTableDTO);
+        this.setPkColumn(genTable);
         VmUtils.initVelocity();
 
-
-        VelocityContext context = VmUtils.prepareContext(genTableDTO);
+        VelocityContext context = VmUtils.prepareContext(genTable);
 
         // 获取模板列表
         List<String> templates = VmUtils.getTemplateList(genTable.getTplCategory());
@@ -247,6 +253,106 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
             }
             if (StringUtils.isNull(table.getSubTable().getPkColumn())) {
                 table.getSubTable().setPkColumn(table.getSubTable().getColumns().get(0));
+            }
+        }
+    }
+
+    @Override
+    public void generatorCode(Long tableId) {
+        // 查询表信息
+        GenTableDTO genTable = this.getGenTableDTOById(tableId);
+        // 设置主子表信息
+        // setSubTable(table);
+        // 设置主键列信息
+        setPkColumn(genTable);
+
+        VmUtils.initVelocity();
+        VelocityContext context = VmUtils.prepareContext(genTable);
+
+        // 获取模板列表
+        List<String> templates = VmUtils.getTemplateList(genTable.getTplCategory());
+        for (String template : templates) {
+            if (!StringUtils.containsAny(template, "sql.vm", "api.js.vm", "index.vue.vm", "index-tree.vue.vm")) {
+                // 渲染模板
+                StringWriter sw = new StringWriter();
+                Template tpl = Velocity.getTemplate(template, StringPool.UTF_8);
+                tpl.merge(context, sw);
+                try {
+                    String path = getGenPath(genTable, template);
+                    FileUtils.writeStringToFile(new File(path), sw.toString(), StringPool.UTF_8);
+                } catch (IOException e) {
+                    throw new ApiException("渲染模板失败，表名：" + genTable.getTableName());
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取代码生成地址
+     *
+     * @param genTable 业务表信息
+     * @param template 模板文件路径
+     * @return 生成地址
+     */
+    private String getGenPath(GenTableDTO genTable, String template) {
+        String genPath = genTable.getGenPath();
+        if (StringUtils.equals(genPath, "/")) {
+            return System.getProperty("user.dir") + File.separator + "src" + File.separator + VmUtils.getFileName(template, genTable);
+        }
+        return genPath + File.separator + VmUtils.getFileName(template, genTable);
+    }
+
+    @Override
+    public byte[] downloadGenCode(Long tableId) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(outputStream);
+        generatorCode(tableId, zip);
+        IOUtils.closeQuietly(zip);
+        return outputStream.toByteArray();
+    }
+
+    @Override
+    public byte[] downloadGenCode(Long[] tableIds) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ZipOutputStream zip = new ZipOutputStream(outputStream);
+        for (Long tableId : tableIds) {
+            generatorCode(tableId, zip);
+        }
+        IOUtils.closeQuietly(zip);
+        return outputStream.toByteArray();
+    }
+
+    /**
+     * 查询表信息并生成代码
+     */
+    private void generatorCode(Long tableId, ZipOutputStream zip) {
+        // 查询表信息
+        GenTableDTO genTable = this.getGenTableDTOById(tableId);
+        // 设置主子表信息
+        // setSubTable(table);
+        // 设置主键列信息
+        setPkColumn(genTable);
+
+        VmUtils.initVelocity();
+
+        VelocityContext context = VmUtils.prepareContext(genTable);
+
+        // 获取模板列表
+        List<String> templates = VmUtils.getTemplateList(genTable.getTplCategory());
+        for (String template : templates) {
+            // 渲染模板
+            StringWriter sw = new StringWriter();
+            Template tpl = Velocity.getTemplate(template, StringPool.UTF_8);
+            tpl.merge(context, sw);
+            try {
+                // 添加到zip
+                zip.putNextEntry(new ZipEntry(VmUtils.getFileName(template, genTable)));
+                IOUtils.write(sw.toString(), zip, StringPool.UTF_8);
+                IOUtils.closeQuietly(sw);
+                zip.flush();
+                zip.closeEntry();
+            } catch (IOException e) {
+                log.error("渲染模板失败，表名：" + genTable.getTableName(), e);
             }
         }
     }
