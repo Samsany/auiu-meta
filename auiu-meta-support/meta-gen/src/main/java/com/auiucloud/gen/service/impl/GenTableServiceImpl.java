@@ -147,7 +147,9 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         List<GenTable> genTableList = this.list(queryWrapper);
 
         // 批量删除
-        List<Long> tableIds = genTableList.stream().map(GenTable::getId).collect(Collectors.toList());
+        List<Long> tableIds = genTableList.stream()
+                .map(GenTable::getId)
+                .collect(Collectors.toList());
         this.removeBatchByIds(tableIds);
         genTableColumnService.removeBatchByTableIds(tableIds);
     }

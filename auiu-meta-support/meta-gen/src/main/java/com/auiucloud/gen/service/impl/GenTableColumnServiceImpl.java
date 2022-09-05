@@ -1,5 +1,6 @@
 package com.auiucloud.gen.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.gen.domain.GenTableColumn;
 import com.auiucloud.gen.mapper.GenTableColumnMapper;
 import com.auiucloud.gen.service.IGenTableColumnService;
@@ -27,9 +28,11 @@ public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper,
 
     @Override
     public void removeBatchByTableIds(List<Long> tableIds) {
-        LambdaQueryWrapper<GenTableColumn> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.in(GenTableColumn::getTableId, tableIds);
-        this.remove(queryWrapper);
+        if (CollUtil.isNotEmpty(tableIds)) {
+            LambdaQueryWrapper<GenTableColumn> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(GenTableColumn::getTableId, tableIds);
+            this.remove(queryWrapper);
+        }
     }
 
     @Override

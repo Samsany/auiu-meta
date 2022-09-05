@@ -24,6 +24,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,13 +152,26 @@ public class GenController extends BaseController {
     @ApiOperation("代码批量生成")
     @Log(value = "代码管理", exception = "代码生成请求异常")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableIds", value = "数据表ID", paramType = "query", required = true)
+            @ApiImplicitParam(name = "tableIds", value = "数据表ID", paramType = "body", required = true)
     })
     @PostMapping("/codeBatch")
     public void genCodeBatch(@RequestBody Long[] tableIds,
                              HttpServletResponse response) throws IOException {
         byte[] data = genTableService.downloadGenCode(tableIds);
         FileUtil.downloadFile(response, data, "code_" + System.currentTimeMillis() + ".zip");
+    }
+
+    /**
+     * 删除代码生成
+     */
+    @ApiOperation("删除代码生成")
+    @Log(value = "代码管理", exception = "删除代码生成请求异常")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids", value = "数据表ID", paramType = "body"),
+    })
+    @DeleteMapping
+    public ApiResult<?> remove(@RequestBody Long[] ids) {
+        return ApiResult.condition(genTableService.removeByIds(Arrays.asList(ids)));
     }
 
 }
