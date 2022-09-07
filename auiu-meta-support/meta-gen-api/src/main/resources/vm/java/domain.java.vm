@@ -6,13 +6,13 @@ import com.auiucloud.core.database.model.BaseEntity;
 #foreach ($import in $importList)
 import ${import};
 #end
-#if($!{entityLombokModel})
+###if($!{entityLombokModel})
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-#end
+###end
 #if(${enableSwagger})
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -43,30 +43,32 @@ public class ${ClassName} extends BaseEntity{
 #else
 public class ${ClassName} implements Serializable{
 #end
-private static final long serialVersionUID=1L;
+    private static final long serialVersionUID=1L;
 
 ## ----------  START 字段循环遍历  ----------
 #foreach ($column in $columns)
-    #if(${superEntityClass} && !$table.isSuperColumn($column.javaField))
-        #if("$column.columnComment" != "")
-        /**
-         * ${column.columnComment}
-         */
-            #if(${enableSwagger})
-            @ApiModelProperty(value = "${column.columnComment}")
-            #end
-        #end
+    #if(${superEntityClass})
+    #if(!${column.superColumn})
+    #if("$column.columnComment" != "")
+    /**
+     * ${column.columnComment}
+     */
+    #if(${enableSwagger})
+    @ApiModelProperty(value = "${column.columnComment}")
+    #end
+    #end
     private $column.javaType $column.javaField;
+    #end
 
     #else
-        #if("$column.columnComment" != "")
-        /**
-         * ${column.columnComment}
-         */
-            #if(${enableSwagger})
-            @ApiModelProperty(value = "${column.columnComment}")
-            #end
-        #end
+    #if("$column.columnComment" != "")
+    /**
+     * ${column.columnComment}
+     */
+    #if(${enableSwagger})
+    @ApiModelProperty(value = "${column.columnComment}")
+    #end
+    #end
     private $column.javaType $column.javaField;
 
     #end

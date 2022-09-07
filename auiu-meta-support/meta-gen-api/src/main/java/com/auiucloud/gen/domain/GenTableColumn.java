@@ -135,7 +135,7 @@ public class GenTableColumn implements Serializable {
     }
 
     public boolean isUsableColumn() {
-        return GenUtils.isUsableColumn(javaField);
+        return GenUtils.isUsableColumn(this.javaField);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysRole;
+import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -12,6 +14,24 @@ import java.util.Set;
  * @createDate 2022-05-31 14:26:03
  */
 public interface ISysRoleService extends IService<SysRole> {
+
+    /**
+     * 查询系统角色分页列表
+     *
+     * @param search 搜索参数
+     * @param sysRole 系统角色
+     * @return PageUtils
+     */
+    PageUtils listPage(Search search, SysRole sysRole);
+
+    /**
+     * 查询系统角色列表
+     *
+     * @param search 搜索参数
+     * @param sysRole 系统角色
+     * @return List<SysRole>
+     */
+    List<SysRole> selectSysRoleList(Search search, SysRole sysRole);
 
     /**
      * 根据角色ID列表查询角色信息
@@ -28,5 +48,4 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return List<SysRole>
      */
     List<SysRole> getRoleIdsByRoles(List<String> roles);
-
 }

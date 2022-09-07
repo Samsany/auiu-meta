@@ -1,8 +1,12 @@
 package com.auiucloud.admin.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.SysRole;
 import com.auiucloud.admin.mapper.SysRoleMapper;
 import com.auiucloud.admin.service.ISysRoleService;
+import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,6 +22,51 @@ import java.util.Set;
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
+
+    @Override
+    public PageUtils listPage(Search search, SysRole sysRole) {
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(search.getStartDate())) {
+            queryWrapper.between(SysRole::getCreateTime, search.getStartDate(), search.getEndDate());
+        }
+        if (StringUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.like(SysRole::getId, search.getKeyword());
+        }
+        if (StringUtil.isNotBlank(sysRole.getRoleName())) {
+            queryWrapper.like(SysRole::getRoleName, sysRole.getRoleName());
+        }
+        if (StringUtil.isNotBlank(sysRole.getRoleCode())) {
+            queryWrapper.like(SysRole::getRoleCode, sysRole.getRoleCode());
+        }
+        if (ObjectUtil.isNotNull(search.getStatus())) {
+            queryWrapper.eq(SysRole::isStatus, search.getStatus());
+        }
+        queryWrapper.orderByAsc(SysRole::getSort);
+        queryWrapper.orderByDesc(SysRole::getCreateTime);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    @Override
+    public List<SysRole> selectSysRoleList(Search search, SysRole sysRole) {
+        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(search.getStartDate())) {
+            queryWrapper.between(SysRole::getCreateTime, search.getStartDate(), search.getEndDate());
+        }
+        if (StringUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.like(SysRole::getId, search.getKeyword());
+        }
+        if (StringUtil.isNotBlank(sysRole.getRoleName())) {
+            queryWrapper.like(SysRole::getRoleName, sysRole.getRoleName());
+        }
+        if (StringUtil.isNotBlank(sysRole.getRoleCode())) {
+            queryWrapper.like(SysRole::getRoleCode, sysRole.getRoleCode());
+        }
+        if (ObjectUtil.isNotNull(search.getStatus())) {
+            queryWrapper.eq(SysRole::isStatus, search.getStatus());
+        }
+        queryWrapper.orderByDesc(SysRole::getCreateTime);
+        return this.list(queryWrapper);
+    }
 
     @Override
     public List<SysRole> getRoleListByIds(Set<Long> roleIds) {

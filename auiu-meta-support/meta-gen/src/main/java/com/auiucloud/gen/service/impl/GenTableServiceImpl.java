@@ -168,12 +168,12 @@ public class GenTableServiceImpl extends ServiceImpl<GenTableMapper, GenTable> i
         String options = genTable.getOptions();
         if (StrUtil.isNotBlank(options)) {
             JSONObject obj = JSONUtil.parseObj(options);
-            String parentMenuId = String.valueOf(obj.get(GenConstants.PARENT_MENU_ID));
+            String parentMenuId = obj.getStr(GenConstants.PARENT_MENU_ID);
             genTableDTO.setParentMenuId(parentMenuId);
-            Integer superEntityClass = (Integer) obj.get(GenConstants.SUPER_ENTITY_CLASS);
-            genTableDTO.setSuperEntityClass(superEntityClass != null ? superEntityClass : CommonConstant.STATUS_NORMAL_VALUE);
-            Integer enableSwagger = (Integer) obj.get(GenConstants.ENABLE_SWAGGER);
-            genTableDTO.setEnableSwagger(enableSwagger != null ? enableSwagger : CommonConstant.STATUS_NORMAL_VALUE);
+            Integer superEntityClass = obj.getInt(GenConstants.SUPER_ENTITY_CLASS, CommonConstant.STATUS_NORMAL_VALUE);
+            genTableDTO.setSuperEntityClass(superEntityClass);
+            Integer enableSwagger = obj.getInt(GenConstants.ENABLE_SWAGGER, CommonConstant.STATUS_NORMAL_VALUE);
+            genTableDTO.setEnableSwagger(enableSwagger);
         }
 
         return genTableDTO;

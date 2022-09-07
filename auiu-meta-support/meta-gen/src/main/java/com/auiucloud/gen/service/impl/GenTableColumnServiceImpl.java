@@ -17,8 +17,7 @@ import java.util.List;
  * @createDate 2022-08-15 23:44:26
  */
 @Service
-public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn>
-        implements IGenTableColumnService {
+public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper, GenTableColumn> implements IGenTableColumnService {
 
     @DS("#dsName")
     @Override

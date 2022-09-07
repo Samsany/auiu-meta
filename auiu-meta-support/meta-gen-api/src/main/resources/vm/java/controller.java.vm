@@ -45,7 +45,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 查询${functionName}列表
      */
-    @Log(title = "${functionName}", exception = "查询${functionName}列表请求异常")
+    @Log(value = "${functionName}", exception = "查询${functionName}列表请求异常")
     @GetMapping("/list")
     @ApiOperation(value = "查询${functionName}列表")
     @ApiImplicitParams({
@@ -63,7 +63,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 获取${functionName}详情
      */
-    @Log(title = "${functionName}", exception = "获取${functionName}详情请求异常")
+    @Log(value = "${functionName}", exception = "获取${functionName}详情请求异常")
     @GetMapping(value = "/info/{${pkColumn.javaField}}")
     @ApiOperation(value = "获取${functionName}详情", notes = "根据${pkColumn.javaField}获取${functionName}详情")
     @ApiImplicitParams({
@@ -76,7 +76,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 新增${functionName}
      */
-    @Log(title = "${functionName}", exception = "新增${functionName}请求异常")
+    @Log(value = "${functionName}", exception = "新增${functionName}请求异常")
     @PostMapping
     @ApiOperation(value = "新增${functionName}")
     public ApiResult<?> add(@RequestBody ${ClassName} ${className}) {
@@ -86,7 +86,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 修改${functionName}
      */
-    @Log(title = "${functionName}", exception = "修改${functionName}请求异常")
+    @Log(value = "${functionName}", exception = "修改${functionName}请求异常")
     @PutMapping
     @ApiOperation(value = "修改${functionName}")
     public ApiResult<?> edit(@RequestBody ${ClassName} ${className}) {
@@ -96,7 +96,7 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 删除${functionName}
      */
-    @Log(title = "${functionName}", exception = "删除${functionName}请求异常")
+    @Log(value = "${functionName}", exception = "删除${functionName}请求异常")
     @DeleteMapping
     @ApiOperation(value = "删除${functionName}")
     public ApiResult<?> remove(@RequestBody ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
@@ -106,11 +106,11 @@ public class ${ClassName}Controller extends BaseController {
     /**
      * 导出${functionName}
      */
-    @Log(title = "${functionName}", exception = "导出${functionName}请求异常")
-    @PostMapping("/export")
+    @Log(value = "${functionName}", exception = "导出${functionName}请求异常")
+    @GetMapping("/export")
     @ApiOperation(value = "导出${functionName}")
-    public void export(${ClassName} ${className}, HttpServletResponse response) {
-        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+    public void export(Search search, @ApiIgnore ${ClassName} ${className}, HttpServletResponse response) {
+        List<${ClassName}> list = ${className}Service.select${ClassName}List(search, ${className});
         String fileName = "${functionName}" + System.currentTimeMillis();
         ExcelUtil.exportExcel(list, "sheet1", ${ClassName}. class,fileName, response);
     }

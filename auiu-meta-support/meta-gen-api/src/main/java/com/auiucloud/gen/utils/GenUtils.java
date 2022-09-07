@@ -227,7 +227,7 @@ public class GenUtils {
     public static boolean isSuperColumn(String javaField) {
         return StringUtils.equalsAnyIgnoreCase(javaField,
                 // BaseEntity
-                "createBy", "createTime", "updateBy", "updateTime", "remark",
+                "id", "createBy", "createTime", "updateBy", "updateTime", "remark", "isDeleted",
                 // TreeEntity
                 "parentName", "parentId", "sort", "ancestors");
     }

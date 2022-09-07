@@ -23,4 +23,13 @@ public interface I${ClassName}Service {
      */
     PageUtils listPage(Search search, ${ClassName} ${className});
 
+    /**
+     * 查询${functionName}分页列表
+     *
+     * @param search 搜索参数
+     * @param ${className} ${functionName}
+     * @return List<${ClassName}>
+     */
+    List<${ClassName}> select${ClassName}List(Search search, ${className});
+
 }
