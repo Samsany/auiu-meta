@@ -112,6 +112,6 @@ public class ${ClassName}Controller extends BaseController {
     public void export(Search search, @ApiIgnore ${ClassName} ${className}, HttpServletResponse response) {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(search, ${className});
         String fileName = "${functionName}" + System.currentTimeMillis();
-        ExcelUtil.exportExcel(list, "sheet1", ${ClassName}. class,fileName, response);
+        ExcelUtil.exportExcel(list, "sheet1", ${ClassName}. class, fileName, response);
     }
 }

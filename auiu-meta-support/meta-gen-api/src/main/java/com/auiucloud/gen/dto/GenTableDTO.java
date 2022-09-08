@@ -178,13 +178,13 @@ public class GenTableDTO implements Serializable {
      * 继承公共父类(0-禁用,1-启用)
      */
     @ApiModelProperty(value = "继承公共父类(0-禁用,1-启用)")
-    private Integer superEntityClass;
+    private Integer superEntityClass = 1;
 
     /**
      * 启用swagger(0-禁用,1-启用)
      */
     @ApiModelProperty(value = "启用swagger注解(0-禁用,1-启用)")
-    private Integer enableSwagger;
+    private Integer enableSwagger = 1;
 
     public boolean isSuperColumn(String javaField) {
         return StringUtils.equalsAnyIgnoreCase(javaField, GenConstants.BASE_ENTITY);

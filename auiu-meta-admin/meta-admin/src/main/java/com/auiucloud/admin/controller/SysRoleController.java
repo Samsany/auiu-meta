@@ -104,6 +104,6 @@ public class SysRoleController extends BaseController {
     public void export(Search search, @ApiIgnore SysRole sysRole, HttpServletResponse response) {
         List<SysRole> list = sysRoleService.selectSysRoleList(search, sysRole);
         String fileName = "系统角色" + System.currentTimeMillis();
-        ExcelUtil.exportExcel(list, "sheet1", SysRole. class,fileName, response);
+        ExcelUtil.exportExcel(list, "sheet1", SysRole. class, fileName, response);
     }
 }

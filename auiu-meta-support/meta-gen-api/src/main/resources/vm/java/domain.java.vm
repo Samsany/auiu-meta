@@ -58,8 +58,8 @@ public class ${ClassName} implements Serializable{
     #end
     #end
     private $column.javaType $column.javaField;
-    #end
 
+    #end
     #else
     #if("$column.columnComment" != "")
     /**
@@ -73,5 +73,4 @@ public class ${ClassName} implements Serializable{
 
     #end
 #end
-
 }
