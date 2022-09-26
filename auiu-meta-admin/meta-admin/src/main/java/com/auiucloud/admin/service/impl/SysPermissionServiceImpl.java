@@ -22,6 +22,13 @@ import java.util.List;
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
     @Override
+    public List<SysPermission> getPermissionListByMenuId(Long menuId) {
+        LambdaQueryWrapper<SysPermission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysPermission::getMenuId, menuId);
+        return this.list(queryWrapper);
+    }
+
+    @Override
     public PageUtils listPage(Search search, SysPermission sysPermission) {
         return new PageUtils(this.page(PageUtils.getPage(search), buildSysPermissionSearch(search, sysPermission)));
     }

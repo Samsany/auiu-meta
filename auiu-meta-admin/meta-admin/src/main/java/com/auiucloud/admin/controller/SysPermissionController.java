@@ -26,7 +26,7 @@ import java.util.List;
 @Api(value = "系统权限", tags = "系统权限")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/system/permission")
+@RequestMapping("/permission")
 public class SysPermissionController {
 
     private final ISysPermissionService sysPermissionService;
@@ -47,6 +47,19 @@ public class SysPermissionController {
     public ApiResult<?> list(Search search, @ApiIgnore SysPermission sysPermission) {
         PageUtils list = sysPermissionService.listPage(search, sysPermission);
         return ApiResult.data(list);
+    }
+
+    /**
+     * 根据菜单ID获取系统权限列表
+     */
+    @Log(value = "系统权限", exception = "根据菜单ID获取系统权限请求异常")
+    @GetMapping(value = "/{menuId}/list")
+    @ApiOperation(value = "获取系统权限列表", notes = "根据菜单ID获取系统权限列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "menuId", required = true, value = "menuId", paramType = "path"),
+    })
+    public ApiResult<?> getPermissionListByMenuId(@PathVariable("menuId") Long menuId) {
+        return ApiResult.data(sysPermissionService.getPermissionListByMenuId(menuId));
     }
 
     /**

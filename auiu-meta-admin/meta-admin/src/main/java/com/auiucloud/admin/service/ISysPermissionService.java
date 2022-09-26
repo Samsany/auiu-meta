@@ -32,4 +32,5 @@ public interface ISysPermissionService extends IService<SysPermission> {
      */
     List<SysPermission> selectSysPermissionList(Search search, SysPermission sysPermission);
 
+    List<SysPermission> getPermissionListByMenuId(Long menuId);
 }

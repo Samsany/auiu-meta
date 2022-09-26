@@ -2,8 +2,10 @@ package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysLog;
 import com.auiucloud.core.database.model.Search;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -13,11 +15,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface ISysLogService extends IService<SysLog> {
 
     /**
-     * 日志分页列表
+     * 查询系统日志分页列表
      *
-     * @param search 搜索和分页对象
-     * @return 日志分页列表
+     * @param search 搜索参数
+     * @param sysLog 系统日志
+     * @return PageUtils
      */
-    IPage<SysLog> listPage(Search search);
+    PageUtils listPage(Search search, SysLog sysLog);
+
+    /**
+     * 查询系统日志列表
+     *
+     * @param search 搜索参数
+     * @param sysLog 系统日志
+     * @return List<SysLog>
+     */
+    List<SysLog> selectSysLogList(Search search, SysLog sysLog);
 
 }

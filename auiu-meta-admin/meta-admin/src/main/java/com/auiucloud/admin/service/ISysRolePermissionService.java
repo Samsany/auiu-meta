@@ -1,6 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysRolePermission;
+import com.auiucloud.admin.dto.SysRolePermissionDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -28,4 +29,19 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      */
     List<Long> getPermissionIdsByRoleIds(List<Long> roleIds);
 
+    /**
+     * 根据角色ID查询权限列表
+     *
+     * @param roleId 角色ID
+     * @return List<SysRolePermission>
+     */
+    List<SysRolePermission> getRolePermissionsByRoleId(Long roleId);
+
+    /**
+     * 设置角色权限
+     *
+     * @param rolePermissionDTO 角色权限传输对象
+     * @return boolean
+     */
+    boolean setRolePermissionsByRoleId(SysRolePermissionDTO rolePermissionDTO);
 }

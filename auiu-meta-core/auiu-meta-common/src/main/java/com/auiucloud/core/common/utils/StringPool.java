@@ -87,6 +87,7 @@ public interface StringPool {
     String TRUE = "true";
     String UNDERSCORE = "_";
     String UTF_8 = "UTF-8";
+    String JSON_UTF8 = "application/json;charset=UTF-8";
     String GBK = "GBK";
     String US_ASCII = "US-ASCII";
     String ISO_8859_1 = "ISO-8859-1";

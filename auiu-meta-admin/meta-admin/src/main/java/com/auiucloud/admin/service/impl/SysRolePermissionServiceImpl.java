@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysPermission;
 import com.auiucloud.admin.domain.SysRole;
 import com.auiucloud.admin.domain.SysRolePermission;
+import com.auiucloud.admin.dto.SysRolePermissionDTO;
 import com.auiucloud.admin.mapper.SysRolePermissionMapper;
 import com.auiucloud.admin.service.ISysPermissionService;
 import com.auiucloud.admin.service.ISysRolePermissionService;
@@ -16,9 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,8 +27,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission>
-        implements ISysRolePermissionService {
+public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission> implements ISysRolePermissionService {
 
     private final ISysPermissionService sysPermissionService;
 
@@ -44,18 +42,12 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         if (CollUtil.isNotEmpty(roles)) {
             // 获取角色ID列表
             List<SysRole> sysRoles = sysRoleService.getRoleIdsByRoles(roles);
-            List<Long> roleIds = Optional.ofNullable(sysRoles).orElse(Collections.emptyList())
-                    .stream().map(SysRole::getId)
-                    .collect(Collectors.toList());
+            List<Long> roleIds = Optional.ofNullable(sysRoles).orElse(Collections.emptyList()).stream().map(SysRole::getId).collect(Collectors.toList());
             // 获取权限ID列表
             List<Long> permIds = this.getPermissionIdsByRoleIds(roleIds);
             if (CollUtil.isNotEmpty(permIds)) {
                 List<SysPermission> permissions = sysPermissionService.listByIds(permIds);
-                return Optional.ofNullable(permissions).orElse(Collections.emptyList())
-                        .stream().map(SysPermission::getBtnPerm)
-                        .filter(StrUtil::isNotBlank)
-                        .distinct()
-                        .collect(Collectors.toList());
+                return Optional.ofNullable(permissions).orElse(Collections.emptyList()).stream().map(SysPermission::getBtnPerm).filter(StrUtil::isNotBlank).distinct().collect(Collectors.toList());
             }
         }
 
@@ -66,13 +58,43 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     public List<Long> getPermissionIdsByRoleIds(List<Long> roleIds) {
         if (CollUtil.isNotEmpty(roleIds)) {
             List<SysRolePermission> sysRolePermissions = this.list(new LambdaQueryWrapper<SysRolePermission>().in(SysRolePermission::getRoleId, roleIds));
-            return Optional.ofNullable(sysRolePermissions).orElse(Collections.emptyList())
-                    .stream().map(SysRolePermission::getPermId)
-                    .collect(Collectors.toList());
+            return Optional.ofNullable(sysRolePermissions).orElse(Collections.emptyList()).stream().map(SysRolePermission::getPermId).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }
 
+    @Override
+    public List<SysRolePermission> getRolePermissionsByRoleId(Long roleId) {
+        LambdaQueryWrapper<SysRolePermission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRolePermission::getRoleId, roleId);
+        return list(queryWrapper);
+    }
+
+    @Override
+    public boolean setRolePermissionsByRoleId(SysRolePermissionDTO rolePermissionDTO) {
+        Long roleId = rolePermissionDTO.getRoleId();
+        Set<Long> permissionIds = rolePermissionDTO.getPermissionIds();
+
+        // 批量删除
+        LambdaQueryWrapper<SysRolePermission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRolePermission::getRoleId, roleId);
+        this.remove(queryWrapper);
+
+        if (CollUtil.isNotEmpty(permissionIds)) {
+            List<SysRolePermission> sysRolePermissionList = new ArrayList<>(permissionIds.size());
+            for (Long permId : permissionIds) {
+                SysRolePermission sysRolePermission = SysRolePermission.builder()
+                        .roleId(roleId)
+                        .permId(permId)
+                        .build();
+                sysRolePermissionList.add(sysRolePermission);
+            }
+            // 批量插入
+            return this.saveBatch(sysRolePermissionList);
+        }
+
+        return true;
+    }
 }
 
 

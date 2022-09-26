@@ -97,13 +97,11 @@ public class SysMenuController extends BaseController {
         return ApiResult.condition(status);
     }
 
-//    @ApiOperation("删除菜单")
-//    @DeleteMapping("/delete")
-//    public ApiResult<?> delete(@RequestBody Long[] ids) {
-//        var menuIds = Arrays.asList(ids);
-//        var delIds = menuIds.stream().filter(sysMenuService::checkHasSubMenu).collect(Collectors.toSet());
-//        boolean res = sysMenuService.deleteMenuByIds(delIds);
-//        return ApiResult.success(res);
-//    }
+   @ApiOperation("删除菜单")
+   @DeleteMapping("/delete")
+   public ApiResult<?> delete(@RequestBody Long[] ids) {
+       String msg = sysMenuService.deleteMenuByIds(ids);
+       return ApiResult.success(msg);
+   }
 
 }

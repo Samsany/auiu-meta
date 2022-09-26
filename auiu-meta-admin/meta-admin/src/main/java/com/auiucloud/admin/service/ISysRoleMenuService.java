@@ -1,7 +1,10 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysRoleMenu;
+import com.auiucloud.admin.dto.SysRoleMenuDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -10,4 +13,27 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
+    /**
+     * 根据角色ID查询菜单列表
+     *
+     * @param roleId 角色ID
+     * @return List<SysRoleMenu>
+     */
+    List<SysRoleMenu> getRoleMenusByRoleId(Long roleId);
+
+    /**
+     * 设置菜单权限
+     *
+     * @param roleMenuDTO 角色菜单传输对象
+     * @return boolean
+     */
+    boolean setRoleMenus(SysRoleMenuDTO roleMenuDTO);
+
+    /**
+     * 根据菜单ID查询是否分配角色
+     *
+     * @param menuId 菜单ID
+     * @return boolean
+     */
+    boolean checkMenuExistRole(Long menuId);
 }

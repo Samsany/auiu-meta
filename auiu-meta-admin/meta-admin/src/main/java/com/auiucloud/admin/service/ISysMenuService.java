@@ -38,7 +38,35 @@ public interface ISysMenuService extends IService<SysMenu> {
      */
     List<SysMenu> treeList(Search search);
 
+    /**
+     * 创建菜单
+     *
+     * @param menu 菜单DTO
+     * @return boolean
+     */
     boolean createMenu(SysMenuDto menu);
 
+    /**
+     * 根据ID更新菜单
+     *
+     * @param menu 菜单DTO
+     * @return boolean
+     */
     boolean updateMenuById(SysMenuDto menu);
+
+    /**
+     * 批量删除菜单
+     *
+     * @param menuIds 菜单ID数组
+     * @return String
+     */
+    String deleteMenuByIds(Long[] menuIds);
+
+    /**
+     * 根据菜单ID查询是否存在子项
+     *
+     * @param menuId 菜单ID
+     * @return boolean
+     */
+    boolean hasChildByMenuId(Long menuId);
 }

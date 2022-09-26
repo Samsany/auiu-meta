@@ -7,6 +7,7 @@ import com.auiucloud.admin.domain.SysUserRole;
 import com.auiucloud.admin.dto.SysMenuDto;
 import com.auiucloud.admin.mapper.SysMenuMapper;
 import com.auiucloud.admin.service.ISysMenuService;
+import com.auiucloud.admin.service.ISysRoleMenuService;
 import com.auiucloud.admin.service.ISysUserRoleService;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -34,6 +35,7 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
     private final ISysUserRoleService sysUserRoleService;
+    private final ISysRoleMenuService roleMenuService;
 
     @Override
     public List<SysMenu> routes() {
@@ -93,5 +95,62 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         SysMenu sysMenu = new SysMenu();
         BeanUtils.copyProperties(menuDto, sysMenu);
         return this.updateById(sysMenu);
+    }
+
+    @Override
+    public String deleteMenuByIds(Long[] menuIds) {
+
+        int successNum = 0;
+        int failureNum = 0;
+        StringBuilder successMsg = new StringBuilder();
+        StringBuilder failureMsg = new StringBuilder();
+
+        for (Long menuId : menuIds) {
+
+            if (this.hasChildByMenuId(menuId)) {
+                failureNum++;
+                failureMsg.append(CommonConstant.BR)
+                        .append("【")
+                        .append(menuId)
+                        .append("】存在子菜单,不允许删除");
+            } else if (roleMenuService.checkMenuExistRole(menuId)) {
+                failureNum++;
+                failureMsg.append(CommonConstant.BR)
+                        .append("【")
+                        .append(menuId)
+                        .append("】菜单已分配,不允许删除");
+            } else {
+                boolean result = this.removeById(menuId);
+                if (result) {
+                    successNum++;
+                    successMsg.append(CommonConstant.BR)
+                            .append("【")
+                            .append(menuId)
+                            .append("】菜单删除成功");
+                } else {
+                    failureNum++;
+                    failureMsg.append(CommonConstant.BR)
+                            .append("【")
+                            .append(menuId)
+                            .append("】菜单删除失败");
+                }
+            }
+        }
+
+        if (failureNum > 0) {
+            failureMsg.insert(0, "菜单删除处理成功，成功删除" + successNum + " 条数据，删除失败" + failureNum + " 条数据，删除错误内容如下：");
+            return failureMsg.toString();
+        } else {
+            successMsg.insert(0, "恭喜您，选中数据已全部删除成功！共 " + successNum + " 条，数据如下：");
+            return successMsg.toString();
+        }
+    }
+
+    @Override
+    public boolean hasChildByMenuId(Long menuId) {
+        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysMenu::getParentId, menuId);
+        long count = this.count(queryWrapper);
+        return count > 0;
     }
 }

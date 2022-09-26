@@ -1,16 +1,16 @@
 package com.auiucloud.admin.service.impl;
 
-import cn.hutool.core.util.StrUtil;
+import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.SysLog;
 import com.auiucloud.admin.mapper.SysLogMapper;
 import com.auiucloud.admin.service.ISysLogService;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -20,18 +20,43 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements ISysLogService {
 
+
     @Override
-    public IPage<SysLog> listPage(Search search) {
-        LambdaQueryWrapper<SysLog> queryWrapper = Wrappers.lambdaQuery();
-        // 查询开始日期和结束日期
-        queryWrapper.between(StrUtil.isNotBlank(search.getStartDate()), SysLog::getCreateTime, search.getStartDate(), search.getEndDate());
-        // 关键词查询
-        if (StrUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.and(i -> i.or().like(SysLog::getTitle, search.getKeyword()).or().like(SysLog::getTraceId, search.getKeyword()));
+    public PageUtils listPage(Search search, SysLog sysLog) {
+        return new PageUtils(this.page(PageUtils.getPage(search), buildSysLogSearch(search, sysLog)));
+    }
+
+    @Override
+    public List<SysLog> selectSysLogList(Search search, SysLog sysLog) {
+        return this.list(buildSysLogSearch(search, sysLog));
+    }
+
+    /**
+     * 组装查询参数
+     *
+     * @param search        查询参数
+     * @param sysLog 系统日志
+     * @return LambdaQueryWrapper<SysLog>
+     */
+    private LambdaQueryWrapper<SysLog> buildSysLogSearch(Search search, SysLog sysLog) {
+        LambdaQueryWrapper<SysLog> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(search.getStartDate())) {
+            queryWrapper.between(SysLog::getCreateTime, search.getStartDate(), search.getEndDate());
         }
-        //　字段排序
-        queryWrapper.orderByDesc(SysLog::getCreateTime);
-        return this.baseMapper.selectPage(PageUtils.getPage(search), queryWrapper);
+        if (StringUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.like(SysLog::getId, search.getKeyword());
+        }
+        if (StringUtil.isNotBlank(sysLog.getTitle())) {
+            queryWrapper.eq(SysLog::getTitle, sysLog.getTitle());
+        }
+        if (StringUtil.isNotBlank(sysLog.getMethod())) {
+            queryWrapper.eq(SysLog::getMethod, sysLog.getMethod());
+        }
+        if (StringUtil.isNotBlank(sysLog.getUrl())) {
+            queryWrapper.eq(SysLog::getUrl, sysLog.getUrl());
+        }
+        // queryWrapper.orderByDesc(SysLog::getCreateTime);
+        return queryWrapper;
     }
 }
 
