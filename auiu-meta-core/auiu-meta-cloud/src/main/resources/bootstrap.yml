@@ -48,7 +48,7 @@ spring:
       # 取消控制台懒加载，项目启动即连接Sentinel
       eager: true
       transport:
-        #port: @sentinel.port@
+        port: @sentinel.port@
         dashboard: @sentinel.dashboard@
 
 # Feign开启对Sentinel支持

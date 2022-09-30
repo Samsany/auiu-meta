@@ -53,9 +53,24 @@ public class SysMenuDto implements Serializable {
     private String path;
 
     /**
+     * 路由参数
+     */
+    private String queryParams;
+
+    /**
      * 重定向地址，设置为noRedirect时，面包屑不可点击
      */
     private String redirect;
+
+    /**
+     * 是否内嵌(0-否 1-是)
+     */
+    private Integer iframe;
+
+    /**
+     * 内链地址
+     */
+    private String iframeSrc;
 
     /**
      * 菜单类型(0-目录 1-菜单 2-外链)
@@ -90,7 +105,7 @@ public class SysMenuDto implements Serializable {
     /**
      * 开启缓存(0-否 1-是)
      */
-    private Integer keepAlive;
+    private Integer keepalive;
 
     /**
      * 开启验证(0-否 1-是)
@@ -102,6 +117,9 @@ public class SysMenuDto implements Serializable {
      */
     private Integer sort;
 
+    /**
+     * 备注
+     */
     private String remark;
 
 }

@@ -21,22 +21,14 @@ public @interface EnableMetaFeign {
 
     /**
      * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation
-     * declarations e.g.: {@code @ComponentScan("org.my.pkg")} instead of
-     * {@code @ComponentScan(basePackages="org.my.pkg")}.
+     * declarations e.g.: {@code @ComponentScan("com.auiucloud")} instead of
+     * {@code @ComponentScan(basePackages="com.auiucloud")}.
      *
      * @return the array of 'basePackages'.
      */
     String[] value() default {};
 
     /**
-     * Base packages to scan for annotated components.
-     * <p>
-     * {@link #value()} is an alias for (and mutually exclusive with) this attribute.
-     * <p>
-     * Use {@link #basePackageClasses()} for a type-safe alternative to String-based
-     * package names.
-     *
-     * @return the array of 'basePackages'.
      */
     String[] basePackages() default {"com.auiucloud.*"};
 

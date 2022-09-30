@@ -22,10 +22,12 @@ import org.springframework.context.annotation.Import;
 @Import(MetaFeignClientsRegistrar.class)
 @AutoConfigureAfter(EnableFeignClients.class)
 public class MetaFeignAutoConfiguration {
+
     @Bean
     @ConditionalOnMissingBean
     @ConditionalOnAvailableEndpoint
     public FeignClientEndpoint feignClientEndpoint(ApplicationContext context) {
         return new FeignClientEndpoint(context);
     }
+
 }

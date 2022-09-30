@@ -2,10 +2,10 @@ package com.auiucloud.admin.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysMenu;
-import com.auiucloud.admin.enums.MenuTypeEnum;
 import com.auiucloud.admin.vo.RouteVO;
 import com.auiucloud.admin.vo.SysMenuVO;
 import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.exception.ApiException;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -22,43 +22,73 @@ public class TreeUtil {
     public static List<RouteVO> buildRouteTree(List<SysMenu> sysMenus) {
         List<RouteVO> trees = new ArrayList<>();
         sysMenus.forEach(sysMenu -> {
-            RouteVO routeVo = new RouteVO();
-            BeanUtils.copyProperties(sysMenu, routeVo);
+            try {
+                RouteVO routeVo = new RouteVO();
+                BeanUtils.copyProperties(sysMenu, routeVo);
 
-            if (sysMenu.getHidden() == CommonConstant.STATUS_DISABLE_VALUE) {
-                routeVo.setHidden(null);
-            }
-            routeVo.setAlwaysShow(null);
-            // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
-            if (sysMenu.getParentId().equals(CommonConstant.ROOT_NODE_ID) && MenuTypeEnum.DIR.getCode().equals(sysMenu.getType())) {
-                routeVo.setComponent("Layout");
-                routeVo.setRedirect("noRedirect");
-                if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
-                    routeVo.setAlwaysShow(null);
+                RouteVO.Meta meta = new RouteVO.Meta();
+                meta.setTitle(sysMenu.getTitle());
+
+                if (StrUtil.isNotBlank(sysMenu.getIcon())) {
+                    meta.setIcon(sysMenu.getIcon());
                 }
-            }
+                if (sysMenu.getHidden() == CommonConstant.STATUS_DISABLE_VALUE) {
+                    meta.setHidden(null);
+                }
+                if (sysMenu.getAffix() == CommonConstant.STATUS_DISABLE_VALUE) {
+                    meta.setAffix(null);
+                }
+                if (sysMenu.getKeepalive() == CommonConstant.STATUS_DISABLE_VALUE) {
+                    meta.setNoCache(null);
+                }
+                if (sysMenu.getHideHeader() == CommonConstant.STATUS_DISABLE_VALUE) {
+                    meta.setBreadcrumb(null);
+                }
+                if (sysMenu.getRequireAuth() == CommonConstant.STATUS_DISABLE_VALUE) {
+                    meta.setRequireAuth(null);
+                }
 
-            RouteVO.Meta meta = new RouteVO.Meta();
-            meta.setTitle(sysMenu.getTitle());
-            if (StrUtil.isNotBlank(sysMenu.getIcon())) {
-                meta.setIcon(sysMenu.getIcon());
+                meta.setQueryParams(sysMenu.getQueryParams());
+                meta.setSort(sysMenu.getSort());
+
+                // 0-目录 1-菜单 2-外链
+                switch (sysMenu.getType()) {
+                    // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
+                    case 0:
+                        routeVo.setComponent("Layout");
+                        routeVo.setRedirect("noRedirect");
+                        if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
+                            meta.setAlwaysShow(null);
+                        }
+                        break;
+                    case 1:
+                        break;
+                    // 当菜单类型为外链时，则强制修改为IFrame
+                    case 2:
+                        routeVo.setComponent("IFrame");
+                        if (sysMenu.getIframe() == CommonConstant.STATUS_NORMAL_VALUE) {
+                            meta.setFrameSrc(sysMenu.getIframeSrc());
+                        }
+                        break;
+                    default:
+                        throw new ApiException("暂不支持的菜单类型，请检查菜单配置");
+                }
+                // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
+                // if (sysMenu.getParentId().equals(CommonConstant.ROOT_NODE_ID)
+                //         && MenuTypeEnum.DIR.getCode().equals(sysMenu.getType())) {
+                //     routeVo.setComponent("Layout");
+                //     routeVo.setRedirect("noRedirect");
+                //     if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
+                //         routeVo.setAlwaysShow(null);
+                //     }
+                // }
+
+                routeVo.setMeta(meta);
+                trees.add(routeVo);
+            } catch (Exception ignored) {
+                // Exception
             }
-            if (sysMenu.getAffix() == CommonConstant.STATUS_DISABLE_VALUE) {
-                meta.setAffix(null);
-            }
-            if (sysMenu.getKeepAlive() == CommonConstant.STATUS_DISABLE_VALUE) {
-                meta.setNoCache(null);
-            }
-            if (sysMenu.getHideHeader() == CommonConstant.STATUS_DISABLE_VALUE) {
-                meta.setBreadcrumb(null);
-            }
-            if (sysMenu.getRequireAuth() == CommonConstant.STATUS_DISABLE_VALUE) {
-                meta.setRequireAuth(null);
-            }
-            routeVo.setMeta(meta);
-            trees.add(routeVo);
         });
-
         return trees;
     }
 

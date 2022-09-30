@@ -57,7 +57,9 @@ public class MeatResourceServerConfig {
                 .authenticationEntryPoint(authenticationEntryPoint)
         );
 
-        http.authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
+        http.headers().frameOptions().disable()
+                .and()
+                .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
                 // 白名单配置
                 .pathMatchers(ArrayUtil.toArray(metaApiProperties.getIgnoreUrl(), String.class)).permitAll()
                 // 鉴权管理器配置

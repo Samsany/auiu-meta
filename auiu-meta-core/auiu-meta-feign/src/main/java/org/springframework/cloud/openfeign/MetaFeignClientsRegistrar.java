@@ -2,6 +2,7 @@ package org.springframework.cloud.openfeign;
 
 import com.auiucloud.core.feign.config.MetaFeignAutoConfiguration;
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -206,7 +207,7 @@ public class MetaFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
     }
 
     @Override
-    public void setEnvironment(Environment environment) {
+    public void setEnvironment(@NotNull Environment environment) {
         this.environment = environment;
     }
 

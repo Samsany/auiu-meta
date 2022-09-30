@@ -59,9 +59,25 @@ public class SysMenu extends BaseEntity {
     private String path;
 
     /**
+     * 路由参数
+     */
+    private String queryParams;
+
+    /**
      * 重定向地址，设置为noRedirect时，面包屑不可点击
      */
     private String redirect;
+
+    /**
+     * 内链地址
+     */
+    private String iframeSrc;
+
+    /**
+     * 是否内嵌(0-否 1-是)
+     */
+    @TableField(value = "is_iframe")
+    private Integer iframe;
 
     /**
      * 菜单类型(0-目录 1-菜单 2-外链)
@@ -100,8 +116,8 @@ public class SysMenu extends BaseEntity {
     /**
      * 开启缓存(0-否 1-是)
      */
-    @TableField(value = "is_keep_alive")
-    private Integer keepAlive;
+    @TableField(value = "is_keepalive")
+    private Integer keepalive;
 
     /**
      * 开启验证(0-否 1-是)

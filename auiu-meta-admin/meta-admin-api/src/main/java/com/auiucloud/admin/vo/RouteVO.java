@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,18 +55,6 @@ public class RouteVO implements INode {
      */
     private Integer type;
 
-    /**
-     * 永久显示根菜单
-     */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean alwaysShow = true;
-
-    /**
-     * 前端隐藏(0-否 1-是)
-     */
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Boolean hidden = true;
-
     private Meta meta;
 
     /**
@@ -89,8 +78,8 @@ public class RouteVO implements INode {
     }
 
     @Data
-    public static class Meta {
-
+    public static class Meta implements Serializable {
+        private static final long serialVersionUID = 6274249000010676281L;
         /**
          * 标题
          */
@@ -101,10 +90,26 @@ public class RouteVO implements INode {
         @JsonInclude(JsonInclude.Include.NON_EMPTY)
         private String icon;
         /**
+         * 永久显示根菜单
+         */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private Boolean alwaysShow = true;
+
+        /**
+         * 前端隐藏(0-否 1-是)
+         */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private Boolean hidden = true;
+        /**
          * 开启缓存
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean noCache = true;
+        /**
+         * 内链地址
+         */
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        private String frameSrc;
         /**
          * 固定在tags-view中
          */
@@ -116,9 +121,19 @@ public class RouteVO implements INode {
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean breadcrumb = true;
         /**
+         * 携带参数
+         */
+        @JsonInclude(JsonInclude.Include.NON_EMPTY)
+        private String queryParams;
+        /**
          * 开启验证(0-否 1-是)
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
         private Boolean requireAuth = true;
+        /**
+         * 排序
+         */
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        private Integer sort;
     }
 }
