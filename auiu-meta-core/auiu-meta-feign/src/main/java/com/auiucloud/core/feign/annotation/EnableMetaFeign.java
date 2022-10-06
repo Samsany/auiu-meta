@@ -29,6 +29,14 @@ public @interface EnableMetaFeign {
     String[] value() default {};
 
     /**
+     * Base packages to scan for annotated components.
+     * <p>
+     * {@link #value()} is an alias for (and mutually exclusive with) this attribute.
+     * <p>
+     * Use {@link #basePackageClasses()} for a type-safe alternative to String-based
+     * package names.
+     *
+     * @return the array of 'basePackages'.
      */
     String[] basePackages() default {"com.auiucloud.*"};
 
