@@ -60,15 +60,15 @@ public class MeatResourceServerConfig {
         http.headers().frameOptions().disable()
                 .and()
                 .authorizeExchange(authorizeExchangeSpec -> authorizeExchangeSpec
-                // 白名单配置
-                .pathMatchers(ArrayUtil.toArray(metaApiProperties.getIgnoreUrl(), String.class)).permitAll()
-                // 鉴权管理器配置
-                .anyExchange().access(authorizationManager)
-                .and().exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler)
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .and().csrf().disable()
-        );
+                        // 白名单配置
+                        .pathMatchers(ArrayUtil.toArray(metaApiProperties.getIgnoreUrl(), String.class)).permitAll()
+                        // 鉴权管理器配置
+                        .anyExchange().access(authorizationManager)
+                        .and().exceptionHandling()
+                        .accessDeniedHandler(accessDeniedHandler)
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .and().csrf().disable()
+                );
 
         return http.build();
     }

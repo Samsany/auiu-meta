@@ -4,10 +4,12 @@ import com.auiucloud.admin.domain.SysRole;
 import com.auiucloud.admin.service.ISysRoleService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -41,15 +43,25 @@ public class SysRoleController extends BaseController {
     @GetMapping("/list")
     @ApiOperation(value = "查询系统角色列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", required = true, value = "当前页", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", required = true, value = "每页显示数据", paramType = "form"),
-            @ApiImplicitParam(name = "keyword", required = true, value = "模糊查询关键词", paramType = "form"),
-            @ApiImplicitParam(name = "startDate", required = true, value = "创建开始日期", paramType = "form"),
-            @ApiImplicitParam(name = "endDate", required = true, value = "创建结束日期", paramType = "form"),
+            @ApiImplicitParam(name = "queryMode", value = "查询模式", paramType = "query"),
+            @ApiImplicitParam(name = "pageNum", value = "当前页", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", value = "每页显示数据", paramType = "query"),
+            @ApiImplicitParam(name = "keyword",  value = "模糊查询关键词", paramType = "query"),
+            @ApiImplicitParam(name = "startDate", value = "开始日期", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "结束日期", paramType = "query"),
     })
     public ApiResult<?> list(Search search, @ApiIgnore SysRole sysRole) {
-        PageUtils list = sysRoleService.listPage(search, sysRole);
-        return ApiResult.data(list);
+        QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());
+        switch (mode) {
+            case LIST:
+                LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
+                return ApiResult.data(sysRoleService.list(queryWrapper));
+            case PAGE:
+            default:
+                PageUtils list = sysRoleService.listPage(search, sysRole);
+                return ApiResult.data(list);
+        }
+
     }
 
     /**
@@ -104,6 +116,6 @@ public class SysRoleController extends BaseController {
     public void export(Search search, @ApiIgnore SysRole sysRole, HttpServletResponse response) {
         List<SysRole> list = sysRoleService.selectSysRoleList(search, sysRole);
         String fileName = "系统角色" + System.currentTimeMillis();
-        ExcelUtil.exportExcel(list, "sheet1", SysRole. class, fileName, response);
+        ExcelUtil.exportExcel(list, "sheet1", SysRole.class, fileName, response);
     }
 }

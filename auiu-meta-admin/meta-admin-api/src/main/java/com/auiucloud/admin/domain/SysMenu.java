@@ -1,6 +1,7 @@
 package com.auiucloud.admin.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -46,11 +47,13 @@ public class SysMenu extends BaseEntity {
     /**
      * 组件
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String component;
 
     /**
      * 图标
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String icon;
 
     /**
@@ -61,16 +64,19 @@ public class SysMenu extends BaseEntity {
     /**
      * 路由参数
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String queryParams;
 
     /**
      * 重定向地址，设置为noRedirect时，面包屑不可点击
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String redirect;
 
     /**
      * 内链地址
      */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String iframeSrc;
 
     /**

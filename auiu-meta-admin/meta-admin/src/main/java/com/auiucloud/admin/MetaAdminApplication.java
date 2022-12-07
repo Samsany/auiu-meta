@@ -12,11 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MetaAdminApplication {
 
     public static void main(String[] args) {
-        try {
-            SpringApplication.run(MetaAdminApplication.class, args);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SpringApplication.run(MetaAdminApplication.class, args);
     }
 
 }

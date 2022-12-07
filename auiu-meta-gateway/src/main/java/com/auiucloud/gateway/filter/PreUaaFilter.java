@@ -66,7 +66,7 @@ public class PreUaaFilter implements GlobalFilter, Ordered {
             String jti = jwtPayload.getStr(Oauth2Constant.META_USER_JTI);
             // 黑名单校验
             Boolean isBlack = redisService.hasKey(RedisKeyConstant.TOKEN_BLACKLIST_PREFIX + jti);
-            if (isBlack) {
+            if (Boolean.TRUE.equals(isBlack)) {
                 return ResponseUtil.webFluxResponseWriter(exchange.getResponse(), StringPool.JSON_UTF8, HttpStatus.OK, ApiResult.fail(ResultCode.USER_ERROR_A0230));
             }
             request = exchange.getRequest().mutate()

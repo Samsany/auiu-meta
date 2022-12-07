@@ -41,7 +41,7 @@
     </scm>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <auiumeta.core.version>1.0.1</auiumeta.core.version>
 
         <spring.boot.version>2.7.3</spring.boot.version>
@@ -65,6 +65,7 @@
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
 
+        <springdoc.version>1.6.13</springdoc.version>
         <swagger.version>3.0.0</swagger.version>
         <swagger.models.version>1.6.3</swagger.models.version>
         <knife4j.version>2.0.9</knife4j.version>
@@ -84,6 +85,7 @@
         <nimbus.version>9.15.2</nimbus.version>
         <reactor-core.version>3.4.18</reactor-core.version>
         <transmittable-thread-local.version>2.12.3</transmittable-thread-local.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
     </properties>
 
     <dependencyManagement>
@@ -241,6 +243,7 @@
                 <artifactId>justauth-spring-boot-starter</artifactId>
                 <version>${justauth.version}</version>
             </dependency>
+
             <!-- 数据库相关包 -->
             <dependency>
                 <groupId>mysql</groupId>
@@ -303,6 +306,7 @@
                 <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
+
             <!--Swagger-->
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -313,6 +317,17 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-models</artifactId>
                 <version>${swagger.models.version}</version>
+            </dependency>
+            <!-- SpringDoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
@@ -396,6 +411,17 @@
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-spring-boot-starter</artifactId>
                 <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

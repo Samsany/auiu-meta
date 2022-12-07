@@ -1,15 +1,20 @@
 package com.auiucloud.uaa.controller;
 
+import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.dto.SysUserInfo;
 import com.auiucloud.admin.feign.ISysUserProvider;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.model.LoginUser;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.redis.core.RedisService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +31,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
+
+    private final ConsumerTokenServices consumerTokenServices;
 
     private final RedisService redisService;
 
@@ -46,6 +53,7 @@ public class AuthController {
         // 获取当前登录用户信息
         LoginUser loginUser = SecurityUtil.getUser();
 
+        // TODO 判断用户所属客户端
         SysUserInfo userInfo = sysUserProvider.getUserByUsername(loginUser.getAccount()).getData();
         Map<String, Object> data = new HashMap<>(7);
         data.put("username", loginUser.getAccount());
@@ -56,7 +64,23 @@ public class AuthController {
         data.put("tenantId", userInfo.getTenantId());
         data.put("roles", userInfo.getRoles());
         data.put("permissions", userInfo.getPermissions());
+        // 存入redis,以用于查询权限使用
+        redisService.set(Oauth2Constant.META_PERMISSION_PREFIX + loginUser.getAccount(), data);
         return ApiResult.data(data);
+    }
+
+    @Log(value = "退出登录", exception = "退出登录请求异常")
+    @GetMapping("/logout")
+    @ApiOperation(value = "退出登录", notes = "退出登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", required = true, value = "授权类型", paramType = "header")
+    })
+    public ApiResult<?> logout() {
+        String token = SecurityUtil.getHeaderToken();
+        if (StringUtil.isNotBlank(token)) {
+            consumerTokenServices.revokeToken(token);
+        }
+        return ApiResult.success("操作成功");
     }
 
 }

@@ -9,6 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public class AuthException extends Exception {
+
     private static final long serialVersionUID = 6346362155694433702L;
 
     private IResultCode resultCode;

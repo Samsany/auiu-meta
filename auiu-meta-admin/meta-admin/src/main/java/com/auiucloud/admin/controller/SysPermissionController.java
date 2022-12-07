@@ -38,11 +38,11 @@ public class SysPermissionController {
     @GetMapping("/list")
     @ApiOperation(value = "查询系统权限列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", required = true, value = "当前页", paramType = "form"),
-            @ApiImplicitParam(name = "pageSize", required = true, value = "每页显示数据", paramType = "form"),
-            @ApiImplicitParam(name = "keyword", required = true, value = "模糊查询关键词", paramType = "form"),
-            @ApiImplicitParam(name = "startDate", required = true, value = "创建开始日期", paramType = "form"),
-            @ApiImplicitParam(name = "endDate", required = true, value = "创建结束日期", paramType = "form"),
+            @ApiImplicitParam(name = "pageNum", required = true, value = "当前页", paramType = "query"),
+            @ApiImplicitParam(name = "pageSize", required = true, value = "每页显示数据", paramType = "query"),
+            @ApiImplicitParam(name = "keyword", required = true, value = "模糊查询关键词", paramType = "query"),
+            @ApiImplicitParam(name = "startDate", required = true, value = "创建开始日期", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", required = true, value = "创建结束日期", paramType = "query"),
     })
     public ApiResult<?> list(Search search, @ApiIgnore SysPermission sysPermission) {
         PageUtils list = sysPermissionService.listPage(search, sysPermission);

@@ -55,7 +55,7 @@
     </modules>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <auiumeta.core.version>1.0.1</auiumeta.core.version>
     </properties>
 
