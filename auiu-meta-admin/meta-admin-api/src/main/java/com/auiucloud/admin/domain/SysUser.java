@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -27,6 +28,7 @@ import java.util.Date;
 @Schema(name = "SysUser对象", description = "系统用户表")
 public class SysUser extends BaseEntity {
 
+    @Serial
     private static final long serialVersionUID = -4048530401942903801L;
 
     /**

@@ -14,17 +14,16 @@ public class FeignConstant {
     /**
      * 网关
      */
-    public final String META_CLOUD_GATEWAY = "meta-gateway";
+    public final String AUIU_META_CLOUD_GATEWAY = "auiu-meta-gateway";
+    /**
+     * 认证服务
+     */
+    public final String AUIU_META_CLOUD_AUTH = "auiu-meta-auth";
 
     /**
      * 系统服务
      */
     public final String META_CLOUD_ADMIN = "meta-admin";
-
-    /**
-     * 认证服务
-     */
-    public final String META_CLOUD_UAA = "meta-uaa";
 
     /**
      * 消息生产者

@@ -57,11 +57,11 @@
         <sentinel.version>1.8.2</sentinel.version>
         <justauth.version>1.4.0</justauth.version>
 
-        <mysql.version>8.0.25</mysql.version>
+        <mysql.version>8.0.32</mysql.version>
         <druid.version>1.2.9</druid.version>
         <pagehelper.version>1.4.2</pagehelper.version>
         <velocity.version>2.3</velocity.version>
-        <mybatis.plus.version>3.5.2</mybatis.plus.version>
+        <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
 

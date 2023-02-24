@@ -124,4 +124,11 @@ public class Oauth2Constant {
      * 权限标识前缀
      */
     public static final String META_PERMISSION_PREFIX = "meta.permission.";
+
+    /**
+     * 客户端缓存Key
+     */
+    public static String cacheClientKey(String clientId) {
+        return Oauth2Constant.META_CLIENT_TABLE + ":" + clientId;
+    }
 }

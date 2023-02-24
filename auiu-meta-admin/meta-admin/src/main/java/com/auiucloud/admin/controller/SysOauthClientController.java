@@ -3,6 +3,7 @@ package com.auiucloud.admin.controller;
 import com.auiucloud.admin.domain.SysOauthClient;
 import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysOauthClientService;
+import com.auiucloud.admin.dto.SysOauthClientDTO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.database.model.Search;
@@ -68,7 +69,7 @@ public class SysOauthClientController {
             @Parameter(name = "id", required = true, description = "ID", in = ParameterIn.PATH),
     })
     public ApiResult<?> getInfo(@PathVariable("id") Long id) {
-        return ApiResult.data(sysOauthClientService.getById(id));
+        return ApiResult.data(sysOauthClientService.getSysOauthClientInfoById(id));
     }
 
     /**
@@ -77,8 +78,8 @@ public class SysOauthClientController {
     @Log(value = "客户端", exception = "新增客户端请求异常")
     @PostMapping
     @Operation(summary = "新增客户端")
-    public ApiResult<?> add(@RequestBody SysOauthClient oauthClient) {
-        return ApiResult.condition(sysOauthClientService.save(oauthClient));
+    public ApiResult<?> add(@RequestBody SysOauthClientDTO oauthClient) {
+        return ApiResult.condition(sysOauthClientService.saveSysOauthClient(oauthClient));
     }
 
     /**
@@ -87,8 +88,8 @@ public class SysOauthClientController {
     @Log(value = "客户端", exception = "修改客户端请求异常")
     @PutMapping
     @Operation(summary = "修改客户端")
-    public ApiResult<?> edit(@RequestBody SysOauthClient oauthClient) {
-        return ApiResult.condition(sysOauthClientService.updateById(oauthClient));
+    public ApiResult<?> edit(@RequestBody SysOauthClientDTO oauthClient) {
+        return ApiResult.condition(sysOauthClientService.editSysOauthClient(oauthClient));
     }
 
     /**

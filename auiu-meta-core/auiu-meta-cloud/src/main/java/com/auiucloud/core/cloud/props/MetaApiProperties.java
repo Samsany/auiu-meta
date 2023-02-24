@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @Component
 @RefreshScope
-@ConfigurationProperties(prefix = "meta.uaa")
+@ConfigurationProperties(prefix = "meta.auth")
 public class MetaApiProperties {
 
     /**
