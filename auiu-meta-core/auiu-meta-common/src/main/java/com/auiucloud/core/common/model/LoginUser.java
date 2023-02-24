@@ -1,6 +1,6 @@
 package com.auiucloud.core.common.model;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,48 +19,48 @@ public class LoginUser implements Serializable {
     /**
      * 用户id
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String userId;
     /**
      * 账号
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String account;
     /**
      * 用户名
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String name;
     /**
      * 昵称
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String nickname;
 //    /**
 //     * 租户ID
 //     */
-//    @ApiModelProperty(hidden = true)
+//    @Schema(hidden = true)
 //    private String tenantId;
     /**
      * 部门id
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String deptId;
 //    /**
 //     * 岗位id
 //     */
-//    @ApiModelProperty(hidden = true)
+//    @Schema(hidden = true)
 //    private String postId;
 
     /**
      * 角色id集合
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private List<String> roles;
 
     /**
      * 登录类型
      */
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private int type;
 }

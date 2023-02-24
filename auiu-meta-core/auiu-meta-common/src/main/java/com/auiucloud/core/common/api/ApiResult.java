@@ -1,8 +1,7 @@
 package com.auiucloud.core.common.api;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,20 +11,20 @@ import java.io.Serializable;
  * @date 2021/12/21
  */
 @Data
-@ApiModel(value = "统一响应报文")
+@Schema(name = "统一响应报文")
 public class ApiResult<T> implements Serializable {
     private static final long serialVersionUID = -3018546779590723199L;
 
-    @ApiModelProperty(value = "状态码", required = true)
+    @Schema(description = "状态码", required = true)
     private int code;
 
-    @ApiModelProperty(value = "消息内容", required = true)
+    @Schema(description = "消息内容", required = true)
     private String message;
 
-    @ApiModelProperty(value = "时间戳", required = true)
+    @Schema(description = "时间戳", required = true)
     private long time;
 
-    @ApiModelProperty(value = "业务数据")
+    @Schema(description = "业务数据")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
@@ -147,6 +146,10 @@ public class ApiResult<T> implements Serializable {
 
     public static <T> ApiResult<T> condition(boolean flag) {
         return flag ? success(ResultCode.SUCCESS.getMessage()) : fail(ResultCode.USER_ERROR_A0500.getMessage());
+    }
+
+    public static <T> ApiResult<T> condition(String message, boolean flag) {
+        return flag ? success(ResultCode.SUCCESS.getMessage()) : fail(message);
     }
 
     public boolean successful() {

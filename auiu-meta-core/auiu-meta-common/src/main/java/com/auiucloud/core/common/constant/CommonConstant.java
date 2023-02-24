@@ -12,9 +12,9 @@ public class CommonConstant {
 
     public static final Long NODE_ONE_ID = 1L; // 节点一
 
-    public static final int STATUS_DISABLE_VALUE = 0; // 禁用状态
+    public static final int STATUS_DISABLE_VALUE = 1; // 禁用状态
 
-    public static final int STATUS_NORMAL_VALUE = 1; // 启用状态
+    public static final int STATUS_NORMAL_VALUE = 0; // 启用状态
 
     public static final String PAGE_NUM = "pageNum"; // 当前页码
 

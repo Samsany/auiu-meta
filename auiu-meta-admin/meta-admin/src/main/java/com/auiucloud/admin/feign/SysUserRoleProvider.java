@@ -4,8 +4,8 @@ import com.auiucloud.admin.service.ISysUserRoleService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.log.annotation.Log;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Api(tags = "用户角色远程调用")
+@Tag(name = "用户角色远程调用")
 public class SysUserRoleProvider implements ISysUserRoleProvider {
 
     private final ISysUserRoleService sysUserRoleService;
@@ -28,7 +28,7 @@ public class SysUserRoleProvider implements ISysUserRoleProvider {
     @Override
     @GetMapping(ProviderConstant.PROVIDER_USER_ROLE_LIST)
     @Log(value = "用户ID查询用户角色编码", exception = "用户ID查询用户角色编码请求失败")
-    @ApiOperation(value = "根据用户ID查询用户角色编码", notes = "根据用户ID查询用户角色编码")
+    @Operation(summary = "根据用户ID查询用户角色编码", description = "根据用户ID查询用户角色编码")
     public ApiResult<List<String>> getRoleCodeListByUserId(Long userId) {
         List<String> roleCodeList = sysUserRoleService.getRoleCodeListByUserId(userId);
         return ApiResult.data(roleCodeList);

@@ -3,8 +3,7 @@ package com.auiucloud.admin.domain;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,25 +23,25 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @TableName(value = "sys_role_menu")
-@ApiModel(value = "SysRoleMenu对象", description = "角色菜单关联表")
+@Schema(name = "SysRoleMenu对象", description = "角色菜单关联表")
 public class SysRoleMenu implements Serializable {
 
     private static final long serialVersionUID = 5033308769478889046L;
 
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
      * 角色ID
      */
-    @ApiModelProperty(value = "角色ID")
+    @Schema(description = "角色ID")
     private Long roleId;
 
     /**
      * 菜单ID
      */
-    @ApiModelProperty(value = "菜单ID")
+    @Schema(description = "菜单ID")
     private Long menuId;
 
 }

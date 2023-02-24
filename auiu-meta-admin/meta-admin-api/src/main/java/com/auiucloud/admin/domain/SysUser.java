@@ -2,7 +2,7 @@ package com.auiucloud.admin.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ import java.util.Date;
 @TableName(value = "sys_user")
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysUser对象", description = "系统用户表")
+@Schema(name = "SysUser对象", description = "系统用户表")
 public class SysUser extends BaseEntity {
 
     private static final long serialVersionUID = -4048530401942903801L;
@@ -80,9 +80,9 @@ public class SysUser extends BaseEntity {
     private Date birthday;
 
     /**
-     * 是否启用(0-禁用 1-启用)
+     * 是否启用(0-正常 1-禁用)
      */
-    private boolean status;
+    private Integer status;
 
     /**
      * 账户是否过期(0-过期 1-未过期)

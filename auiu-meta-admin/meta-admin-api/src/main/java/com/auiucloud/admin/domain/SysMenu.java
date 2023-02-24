@@ -4,7 +4,7 @@ import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 @TableName(value = "sys_menu")
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysMenu对象", description = "系统菜单表")
+@Schema(name = "SysMenu对象", description = "系统菜单表")
 public class SysMenu extends BaseEntity {
 
     private static final long serialVersionUID = -8662478581249339874L;

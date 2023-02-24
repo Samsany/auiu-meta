@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Builder(toBuilder = true)
 #end
 #if(${enableSwagger})
-@ApiModel(value = "${ClassName}对象", description = #if (
+@Schema(name = "${ClassName}对象", description = #if (
     "${table.tableComment}"=="")"${ClassName}对象"#else"${table.tableComment}"#end)
 #end
 #if(${superEntityClass})
@@ -54,7 +54,7 @@ public class ${ClassName} implements Serializable{
      * ${column.columnComment}
      */
     #if(${enableSwagger})
-    @ApiModelProperty(value = "${column.columnComment}")
+    @Schema(description = "${column.columnComment}")
     #end
     #end
     private $column.javaType $column.javaField;
@@ -66,7 +66,7 @@ public class ${ClassName} implements Serializable{
      * ${column.columnComment}
      */
     #if(${enableSwagger})
-    @ApiModelProperty(value = "${column.columnComment}")
+    @Schema(description = "${column.columnComment}")
     #end
     #end
     private $column.javaType $column.javaField;

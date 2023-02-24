@@ -10,13 +10,13 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import java.util.List;
  * @author Dries
  * @date 2022-09-05 18:30:14
  */
-@Api(value = "系统角色", tags = "系统角色")
+@Tag(name = "系统角色")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/role")
@@ -37,20 +37,30 @@ public class SysRoleController extends BaseController {
     private final ISysRoleService sysRoleService;
 
     /**
+     * 查询系统全部角色列表
+     */
+    @Log(value = "系统角色", exception = "查询系统全部角色列表请求异常")
+    @GetMapping("/allList")
+    @Operation(summary = "查询系统全部角色列表")
+    public ApiResult<?> allList() {
+        return ApiResult.data(sysRoleService.list());
+    }
+
+    /**
      * 查询系统角色列表
      */
     @Log(value = "系统角色", exception = "查询系统角色列表请求异常")
     @GetMapping("/list")
-    @ApiOperation(value = "查询系统角色列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "queryMode", value = "查询模式", paramType = "query"),
-            @ApiImplicitParam(name = "pageNum", value = "当前页", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "每页显示数据", paramType = "query"),
-            @ApiImplicitParam(name = "keyword",  value = "模糊查询关键词", paramType = "query"),
-            @ApiImplicitParam(name = "startDate", value = "开始日期", paramType = "query"),
-            @ApiImplicitParam(name = "endDate", value = "结束日期", paramType = "query"),
+    @Operation(summary = "查询系统角色列表")
+    @Parameters({
+            @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "keyword",  description = "模糊查询关键词", in = ParameterIn.QUERY),
+            @Parameter(name = "startDate", description = "开始日期", in = ParameterIn.QUERY),
+            @Parameter(name = "endDate", description = "结束日期", in = ParameterIn.QUERY),
     })
-    public ApiResult<?> list(Search search, @ApiIgnore SysRole sysRole) {
+    public ApiResult<?> list(Search search, SysRole sysRole) {
         QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());
         switch (mode) {
             case LIST:
@@ -69,9 +79,9 @@ public class SysRoleController extends BaseController {
      */
     @Log(value = "系统角色", exception = "获取系统角色详情请求异常")
     @GetMapping(value = "/info/{id}")
-    @ApiOperation(value = "获取系统角色详情", notes = "根据id获取系统角色详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", required = true, value = "ID", paramType = "path"),
+    @Operation(summary = "获取系统角色详情", description = "根据id获取系统角色详情")
+    @Parameters({
+            @Parameter(name = "id", required = true, description = "ID", in = ParameterIn.PATH),
     })
     public ApiResult<?> getInfo(@PathVariable("id") Long id) {
         return ApiResult.data(sysRoleService.getById(id));
@@ -82,7 +92,7 @@ public class SysRoleController extends BaseController {
      */
     @Log(value = "系统角色", exception = "新增系统角色请求异常")
     @PostMapping
-    @ApiOperation(value = "新增系统角色")
+    @Operation(summary = "新增系统角色")
     public ApiResult<?> add(@RequestBody SysRole sysRole) {
         return ApiResult.condition(sysRoleService.save(sysRole));
     }
@@ -92,9 +102,19 @@ public class SysRoleController extends BaseController {
      */
     @Log(value = "系统角色", exception = "修改系统角色请求异常")
     @PutMapping
-    @ApiOperation(value = "修改系统角色")
+    @Operation(summary = "修改系统角色")
     public ApiResult<?> edit(@RequestBody SysRole sysRole) {
         return ApiResult.condition(sysRoleService.updateById(sysRole));
+    }
+
+    /**
+     * 设置系统角色状态
+     */
+    @Log(value = "系统角色", exception = "修改系统角色请求异常")
+    @GetMapping("/setStatus/{id}")
+    @Operation(summary = "修改系统角色状态")
+    public ApiResult<?> setRoleStatus(@PathVariable Long id, @RequestParam Integer status) {
+        return ApiResult.condition(sysRoleService.setRoleStatus(id, status));
     }
 
     /**
@@ -102,7 +122,7 @@ public class SysRoleController extends BaseController {
      */
     @Log(value = "系统角色", exception = "删除系统角色请求异常")
     @DeleteMapping
-    @ApiOperation(value = "删除系统角色")
+    @Operation(summary = "删除系统角色")
     public ApiResult<?> remove(@RequestBody Long[] ids) {
         return ApiResult.condition(sysRoleService.removeByIds(Arrays.asList(ids)));
     }
@@ -112,8 +132,8 @@ public class SysRoleController extends BaseController {
      */
     @Log(value = "系统角色", exception = "导出系统角色请求异常")
     @GetMapping("/export")
-    @ApiOperation(value = "导出系统角色")
-    public void export(Search search, @ApiIgnore SysRole sysRole, HttpServletResponse response) {
+    @Operation(summary = "导出系统角色")
+    public void export(Search search, SysRole sysRole, HttpServletResponse response) {
         List<SysRole> list = sysRoleService.selectSysRoleList(search, sysRole);
         String fileName = "系统角色" + System.currentTimeMillis();
         ExcelUtil.exportExcel(list, "sheet1", SysRole.class, fileName, response);

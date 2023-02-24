@@ -59,8 +59,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (StringUtil.isNotBlank(search.getStartDate())) {
             queryWrapper.between(SysUser::getCreateTime, search.getStartDate(), search.getEndDate());
         }
-        if (StringUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.like(SysUser::getId, search.getKeyword());
+        if (StringUtil.isNotBlank(sysUser.getAccount())) {
+            queryWrapper.like(SysUser::getAccount, sysUser.getAccount());
         }
         if (StringUtil.isNotBlank(sysUser.getRealName())) {
             queryWrapper.like(SysUser::getRealName, sysUser.getRealName());
@@ -68,15 +68,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (StringUtil.isNotBlank(sysUser.getNickname())) {
             queryWrapper.like(SysUser::getNickname, sysUser.getNickname());
         }
+        if (ObjectUtil.isNotNull(sysUser.getDeptId())) {
+            queryWrapper.eq(SysUser::getDeptId, sysUser.getDeptId());
+        }
         if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysUser::isStatus, search.getStatus());
+            queryWrapper.eq(SysUser::getStatus, search.getStatus());
         }
         queryWrapper.orderByDesc(SysUser::getCreateTime);
 
         return queryWrapper;
     }
 
-
+    /**
+     * 根据部门ID查找用户
+     *
+     * @param deptId 用户名
+     * @return SysUser
+     */
+    @Override
+    public List<SysUser> selectSysUserByDeptIdList(Long deptId) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getDeptId, deptId);
+        return this.list(queryWrapper);
+    }
 }
 
 

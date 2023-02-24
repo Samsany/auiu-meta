@@ -1,7 +1,12 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysOauthClient;
+import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -9,5 +14,24 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2022-05-31 14:25:50
  */
 public interface ISysOauthClientService extends IService<SysOauthClient> {
+
+    /**
+     * 分页查询客户端
+     *
+     * @param search 查询参数
+     * @param oauthClient 查询参数
+     * @return PageUtils
+     */
+    PageUtils listPage(Search search, SysOauthClient oauthClient);
+
+    /**
+     * 查询客户端列表
+     *
+     * @param oauthClient 查询参数
+     * @return List<SysOauthClient>
+     */
+    List<SysOauthClient> selectOauthClientList(SysOauthClient oauthClient);
+
+    boolean setOauthClientStatus(UpdateStatusDTO statusDTO);
 
 }

@@ -16,14 +16,19 @@ import java.util.Set;
 public interface RedisService {
 
     /**
-     * 保存属性
+     * 保存属性并设置时间
+     *
+     * @param key   键
+     * @param value 值
+     * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     * @return true成功 false 失败
      */
-    void set(String key, Object value, long time);
+    Boolean set(String key, Object value, long time);
 
     /**
      * 保存属性
      */
-    void set(String key, Object value);
+    Boolean set(String key, Object value);
 
     /**
      * 获取属性
@@ -42,6 +47,10 @@ public interface RedisService {
 
     /**
      * 设置过期时间
+     *
+     * @param key  键
+     * @param time 时间(秒)
+     * @return Boolean
      */
     Boolean expire(String key, long time);
 
@@ -57,11 +66,19 @@ public interface RedisService {
 
     /**
      * 按delta递增
+     *
+     * @param key   键
+     * @param delta 要增加几(大于0)
+     * @return Long
      */
     Long incr(String key, long delta);
 
     /**
      * 按delta递减
+     *
+     * @param key   键
+     * @param delta 要减少几(小于0)
+     * @return Long
      */
     Long decr(String key, long delta);
 
@@ -189,5 +206,8 @@ public interface RedisService {
 
     Long execute(DefaultRedisScript<Long> longDefaultRedisScript, List<String> singletonList, String token);
 
-    BoundHashOperations<String, Object, Object> boundHashOps(String cacheKey);
+    /**
+     * 批处理hash结构
+     */
+    BoundHashOperations<String, Object, Object> boundHashOps(String key);
 }

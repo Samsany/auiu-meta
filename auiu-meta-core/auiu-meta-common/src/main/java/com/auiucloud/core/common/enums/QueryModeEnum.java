@@ -2,11 +2,9 @@ package com.auiucloud.core.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public enum QueryModeEnum {
 
     PAGE("page", "分页查询"),
@@ -18,8 +16,8 @@ public enum QueryModeEnum {
     CASCADE("cascade", "级联列表"),
     ;
 
-    private String code;
-    private String description;
+    private final String code;
+    private final String description;
 
     public static QueryModeEnum getQueryModeByCode(String code) {
         for (QueryModeEnum value : values()) {

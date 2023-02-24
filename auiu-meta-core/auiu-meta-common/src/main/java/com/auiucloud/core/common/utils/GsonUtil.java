@@ -1,6 +1,5 @@
 package com.auiucloud.core.common.utils;
 
-import cn.hutool.core.util.ObjectUtil;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,13 +13,11 @@ import java.util.Map;
  */
 public class GsonUtil {
 
-    private static Gson gson = null;
+    private static final Gson gson;
 
     static {
         // 当使用GsonBuilder方式时属性为空的时候输出来的json字符串是有键值key的,显示形式是"key":null，而直接new出来的就没有"key":null的
-        if (ObjectUtil.isNull(gson)) {
-            gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        }
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
     }
 
     /**
@@ -44,7 +41,7 @@ public class GsonUtil {
     }
 
     /**
-     * 将json转成特定的cls的对象
+     * 将json转成特定的class的对象
      *
      * @param gsonString gson串
      * @param cls        　类名
@@ -122,5 +119,9 @@ public class GsonUtil {
             }.getType());
         }
         return map;
+    }
+
+    public static JsonElement toJsonElement(String content) {
+        return JsonParser.parseString(content);
     }
 }

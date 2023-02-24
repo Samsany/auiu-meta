@@ -2,7 +2,7 @@ package com.auiucloud.admin.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @TableName(value = "sys_role")
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysRole对象", description = "系统角色表")
+@Schema(name = "SysRole对象", description = "系统角色表")
 public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = -8102632721053269028L;
@@ -43,14 +43,14 @@ public class SysRole extends BaseEntity {
     private Integer adminCount;
 
     /**
-     * 启用状态(0-禁用 1-启用)
+     * 启用状态(0-正常 1-禁用)
      */
-    private boolean status;
+    private Integer status;
 
     /**
      * 内置角色(0-否 1-是)
      */
-    private boolean builtIn;
+    private Integer builtIn;
 
     /**
      * 排序

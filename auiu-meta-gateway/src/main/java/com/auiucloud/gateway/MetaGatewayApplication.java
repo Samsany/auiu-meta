@@ -9,11 +9,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-public class AuiuMetaGatewayApplication {
+public class MetaGatewayApplication {
 
     public static void main(String[] args) {
         try {
-            SpringApplication.run(AuiuMetaGatewayApplication.class, args);
+            SpringApplication.run(MetaGatewayApplication.class, args);
         } catch (Exception e) {
             e.printStackTrace();
         }

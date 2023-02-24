@@ -9,10 +9,11 @@ import com.auiucloud.core.common.model.LoginUser;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.redis.core.RedisService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,7 @@ import java.util.Map;
  * @createDate 2022-5-31 16:16
  */
 @RestController
-@Api(tags = "认证管理")
+@Tag(name = "认证管理")
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
@@ -46,7 +47,7 @@ public class AuthController {
     }
 
     @Log(value = "用户信息", exception = "用户信息请求异常")
-    @ApiOperation(value = "用户信息", notes = "用户信息")
+    @Operation(summary = "用户信息", description = "用户信息")
     @GetMapping("/user/info")
     public ApiResult<?> getUser() {
 
@@ -71,9 +72,9 @@ public class AuthController {
 
     @Log(value = "退出登录", exception = "退出登录请求异常")
     @GetMapping("/logout")
-    @ApiOperation(value = "退出登录", notes = "退出登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", required = true, value = "授权类型", paramType = "header")
+    @Operation(summary = "退出登录", description = "退出登录")
+    @Parameters({
+            @Parameter(name = "Authorization", required = true, description = "授权类型", in = ParameterIn.HEADER)
     })
     public ApiResult<?> logout() {
         String token = SecurityUtil.getHeaderToken();

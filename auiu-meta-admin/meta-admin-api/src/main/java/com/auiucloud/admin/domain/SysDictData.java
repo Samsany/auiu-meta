@@ -2,7 +2,7 @@ package com.auiucloud.admin.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @TableName(value = "sys_dict_data")
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysDictData对象", description = "字典数据表")
+@Schema(name = "SysDictData对象", description = "字典数据表")
 public class SysDictData extends BaseEntity {
     private static final long serialVersionUID = -8663485080847494960L;
 

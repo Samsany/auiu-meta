@@ -1,8 +1,7 @@
 package com.auiucloud.gen.vo;
 
 import com.auiucloud.gen.domain.SysDataSource;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ import java.util.function.Function;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@ApiModel(value = "DataSourceVO对象", description = "系统数据源视图")
+@Schema(name = "DataSourceVO对象", description = "系统数据源视图")
 public class DataSourceVO implements Serializable {
 
     private static final long serialVersionUID = 6166228667793805370L;
@@ -45,81 +44,81 @@ public class DataSourceVO implements Serializable {
     /**
      * 编号主键标识
      */
-    @ApiModelProperty("编号")
+    @Schema(description = "编号")
     private Long id;
     /**
      * 名称
      */
-    @ApiModelProperty("名称")
+    @Schema(description = "名称")
     private String name;
     /**
      * 数据库类型
      */
-    @ApiModelProperty("数据库类型")
+    @Schema(description = "数据库类型")
     private String dbType;
     /**
      * 驱动类型
      */
-    @ApiModelProperty("驱动类型")
+    @Schema(description = "驱动类型")
     private String driverClass;
     /**
      * 连接地址
      */
-    @ApiModelProperty("连接地址")
+    @Schema(description = "连接地址")
     private String url;
     /**
      * 端口号
      */
-    @ApiModelProperty("端口号")
+    @Schema(description = "端口号")
     private String port;
     /**
      * 用户名
      */
-    @ApiModelProperty("用户名")
+    @Schema(description = "用户名")
     private String username;
     /**
      * 数据库名
      */
-    @ApiModelProperty("数据库名")
+    @Schema(description = "数据库名")
     private String databaseName;
     /**
      * Jdbc连接参数
      */
-    @ApiModelProperty("Jdbc连接参数")
+    @Schema(description = "Jdbc连接参数")
     private String jdbcParams;
     /**
      * 状态
      */
-    @ApiModelProperty("状态")
+    @Schema(description = "状态")
     private Integer status;
     /**
      * 排序
      */
-    @ApiModelProperty("排序")
+    @Schema(description = "排序")
     private Integer sort;
     /**
      * 创建人
      */
-    @ApiModelProperty("创建人")
+    @Schema(description = "创建人")
     private String createBy;
     /**
      * 更新人
      */
-    @ApiModelProperty("更新人")
+    @Schema(description = "更新人")
     private String updateBy;
     /**
      * 创建时间
      */
-    @ApiModelProperty("创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
     /**
      * 更新时间
      */
-    @ApiModelProperty("更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
     /**
      * 备注
      */
-    @ApiModelProperty("备注")
+    @Schema(description = "备注")
     private String remark;
 }

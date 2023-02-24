@@ -40,6 +40,11 @@ public interface ISysUserService extends IService<SysUser> {
      */
     SysUser getUserByUsername(String username);
 
-
-
+    /**
+     * 根据部门ID查找用户
+     *
+     * @param deptId 部门ID
+     * @return List<SysUser>
+     */
+    List<SysUser> selectSysUserByDeptIdList(Long deptId);
 }

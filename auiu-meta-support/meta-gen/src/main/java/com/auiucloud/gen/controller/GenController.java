@@ -12,15 +12,15 @@ import com.auiucloud.gen.dto.GenTableDTO;
 import com.auiucloud.gen.service.IGenTableColumnService;
 import com.auiucloud.gen.service.IGenTableService;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @createDate 2022-08-16 13-29
  */
 @Slf4j
-@Api(tags = "代码管理")
+@Tag(name = "代码管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/tools/gen")
@@ -43,32 +43,32 @@ public class GenController extends BaseController {
     private final IGenTableService genTableService;
     private final IGenTableColumnService genTableColumnService;
 
-    @ApiOperation("代码生成列表")
+    @Operation(summary ="代码生成列表")
     @Log(value = "代码管理", exception = "数据源库表信息请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "keyword", value = "数据源名称", paramType = "path"),
-            @ApiImplicitParam(name = "pageNum", value = "当前页码", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "显示条数", paramType = "query"),
-            @ApiImplicitParam(name = "tableName", value = "表名称", paramType = "query"),
-            @ApiImplicitParam(name = "tableComment", value = "表描述", paramType = "query"),
+    @Parameters({
+            @Parameter(name = "keyword", value = "数据源名称", in = ParameterIn.PATH),
+            @Parameter(name = "pageNum", value = "当前页码", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", value = "显示条数", in = ParameterIn.QUERY),
+            @Parameter(name = "tableName", value = "表名称", in = ParameterIn.QUERY),
+            @Parameter(name = "tableComment", value = "表描述", in = ParameterIn.QUERY),
     })
     @GetMapping("/list")
-    public ApiResult<?> list(Search search, @ApiIgnore GenTable genTable) {
+    public ApiResult<?> list(Search search, GenTable genTable) {
         return ApiResult.data(genTableService.listPage(search, genTable));
     }
 
 
-    @ApiOperation("数据库列表")
+    @Operation(summary ="数据库列表")
     @Log(value = "代码管理", exception = "数据源库表信息请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "keyword", value = "数据源名称", paramType = "path", required = true),
-            @ApiImplicitParam(name = "pageNum", value = "当前页码", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "显示条数", paramType = "query"),
-            @ApiImplicitParam(name = "tableName", value = "表名称", paramType = "query"),
-            @ApiImplicitParam(name = "tableComment", value = "表描述", paramType = "query"),
+    @Parameters({
+            @Parameter(name = "keyword", value = "数据源名称", in = ParameterIn.PATH, required = true),
+            @Parameter(name = "pageNum", value = "当前页码", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", value = "显示条数", in = ParameterIn.QUERY),
+            @Parameter(name = "tableName", value = "表名称", in = ParameterIn.QUERY),
+            @Parameter(name = "tableComment", value = "表描述", in = ParameterIn.QUERY),
     })
     @GetMapping("/db/list")
-    public ApiResult<?> dataListByDsName(Search search, @ApiIgnore GenTable genTable) {
+    public ApiResult<?> dataListByDsName(Search search, GenTable genTable) {
         List<TableInfo> list = genTableService.selectDbTableListByDsName(search.getKeyword(), genTable);
         return ApiResult.data(new PageUtils(search, list));
     }
@@ -77,8 +77,8 @@ public class GenController extends BaseController {
      * 代码生成详情
      */
     @Log(value = "代码管理", exception = "代码生成详情请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableId", value = "数据库ID", paramType = "path", required = true),
+    @Parameters({
+            @Parameter(name = "tableId", value = "数据库ID", in = ParameterIn.PATH, required = true),
     })
     @GetMapping("/info/{tableId}")
     public ApiResult<?> getInfo(@PathVariable Long tableId) {
@@ -101,11 +101,11 @@ public class GenController extends BaseController {
         return ApiResult.condition(genTableService.editGenTableById(genTableDTO));
     }
 
-    @ApiOperation("导入表结构（保存）")
+    @Operation(summary ="导入表结构（保存）")
     @Log(value = "代码管理", exception = "导入表结构（保存）请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "dsName", value = "数据源名称", paramType = "path", required = true),
-            @ApiImplicitParam(name = "tables", value = "表名称", paramType = "body"),
+    @Parameters({
+            @Parameter(name = "dsName", value = "数据源名称", in = ParameterIn.PATH, required = true),
+            @Parameter(name = "tables", value = "表名称", paramType = "body"),
     })
     @PostMapping("/importTable/{dsName}")
     public ApiResult<?> importTable(@PathVariable String dsName, @RequestBody String[] tables) {
@@ -115,10 +115,10 @@ public class GenController extends BaseController {
         return ApiResult.success();
     }
 
-    @ApiOperation("预览代码")
+    @Operation(summary ="预览代码")
     @Log(value = "代码管理", exception = "预览代码请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
+    @Parameters({
+            @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
     })
     @GetMapping("/preview/{tableId}")
     public ApiResult<?> preview(@PathVariable Long tableId) {
@@ -126,10 +126,10 @@ public class GenController extends BaseController {
         return ApiResult.data(map);
     }
 
-    @ApiOperation("代码生成（下载方式）")
+    @Operation(summary ="代码生成（下载方式）")
     @Log(value = "代码管理", exception = "代码生成（下载方式）请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
+    @Parameters({
+            @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
     })
     @GetMapping("/download/{tableId}")
     public void downloadGenCode(@PathVariable Long tableId,
@@ -138,10 +138,10 @@ public class GenController extends BaseController {
         FileUtil.downloadFile(response, bytes, "code_" + System.currentTimeMillis() + ".zip");
     }
 
-    @ApiOperation("代码生成（自定义路径）")
+    @Operation(summary ="代码生成（自定义路径）")
     @Log(value = "代码管理", exception = "代码生成请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableId", value = "数据表ID", paramType = "path", required = true)
+    @Parameters({
+            @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
     })
     @GetMapping("/{tableId}")
     public ApiResult<?> genCode(@PathVariable Long tableId) {
@@ -149,10 +149,10 @@ public class GenController extends BaseController {
         return ApiResult.success();
     }
 
-    @ApiOperation("代码批量生成")
+    @Operation(summary ="代码批量生成")
     @Log(value = "代码管理", exception = "代码生成请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tableIds", value = "数据表ID", paramType = "body", required = true)
+    @Parameters({
+            @Parameter(name = "tableIds", value = "数据表ID", paramType = "body", required = true)
     })
     @PostMapping("/codeBatch")
     public void genCodeBatch(@RequestBody Long[] tableIds,
@@ -164,10 +164,10 @@ public class GenController extends BaseController {
     /**
      * 删除代码生成
      */
-    @ApiOperation("删除代码生成")
+    @Operation(summary ="删除代码生成")
     @Log(value = "代码管理", exception = "删除代码生成请求异常")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", value = "数据表ID", paramType = "body"),
+    @Parameters({
+            @Parameter(name = "ids", value = "数据表ID", paramType = "body"),
     })
     @DeleteMapping
     public ApiResult<?> remove(@RequestBody Long[] ids) {

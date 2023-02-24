@@ -1,4 +1,4 @@
-package com.auiucloud.core.common.utils;
+package com.auiucloud.core.common.utils.sql;
 
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.exception.ApiException;

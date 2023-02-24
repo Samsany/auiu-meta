@@ -2,14 +2,12 @@ package com.auiucloud.core.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @author dries
  * @createDate 2022-07-01 00-07
  */
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public enum OrderTypeEnum {
 
@@ -21,7 +19,7 @@ public enum OrderTypeEnum {
     ASC("asc", "升序"),
     DESC("desc", "倒序");
 
-    private String value;
-    private String description;
+    private final String value;
+    private final String description;
 
 }

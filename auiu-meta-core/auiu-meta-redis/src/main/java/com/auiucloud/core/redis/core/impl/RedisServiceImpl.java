@@ -1,6 +1,7 @@
 package com.auiucloud.core.redis.core.impl;
 
 import com.auiucloud.core.redis.core.RedisService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @author dries
  * @date 2021/12/22
  */
+@Slf4j
 @Service
 public class RedisServiceImpl implements RedisService {
 
@@ -25,18 +27,41 @@ public class RedisServiceImpl implements RedisService {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public void set(String key, Object value, long time) {
-        redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+    public Boolean set(String key, Object value) {
+        try {
+            redisTemplate.opsForValue().set(key, value);
+            return true;
+        } catch (Exception e) {
+            log.error("Exception: {}", e.getMessage());
+            return false;
+        }
     }
 
+    /**
+     * 缓存并设置时间
+     *
+     * @param key   键
+     * @param value 值
+     * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     */
     @Override
-    public void set(String key, Object value) {
-        redisTemplate.opsForValue().set(key, value);
+    public Boolean set(String key, Object value, long time) {
+        try {
+            if (time > 0) {
+                redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+            } else {
+                set(key, value);
+            }
+            return true;
+        } catch (Exception e) {
+            log.error("Exception: {}", e.getMessage());
+            return false;
+        }
     }
 
     @Override
     public Object get(String key) {
-        return redisTemplate.opsForValue().get(key);
+        return key == null ? null : redisTemplate.opsForValue().get(key);
     }
 
     @Override
@@ -49,6 +74,11 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.delete(keys);
     }
 
+    /**
+     * @param key  键
+     * @param time 时间(秒)
+     * @return Boolean
+     */
     @Override
     public Boolean expire(String key, long time) {
         return redisTemplate.expire(key, time, TimeUnit.SECONDS);
@@ -66,11 +96,17 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public Long incr(String key, long delta) {
+        if (delta < 0) {
+            throw new RuntimeException("递增因子必须大于0");
+        }
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
     @Override
     public Long decr(String key, long delta) {
+        if (delta < 0) {
+            throw new RuntimeException("递减因子必须大于0");
+        }
         return redisTemplate.opsForValue().increment(key, -delta);
     }
 
@@ -203,13 +239,13 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Long execute(DefaultRedisScript<Long> longDefaultRedisScript, List<String> singletonList, String orderToken) {
-        return redisTemplate.execute(longDefaultRedisScript, singletonList, orderToken);
+    public Long execute(DefaultRedisScript<Long> longDefaultRedisScript, List<String> singletonList, String token) {
+        return redisTemplate.execute(longDefaultRedisScript, singletonList, token);
     }
 
     @Override
-    public BoundHashOperations<String, Object, Object> boundHashOps(String cartKey) {
-        return redisTemplate.boundHashOps(cartKey);
+    public BoundHashOperations<String, Object, Object> boundHashOps(String key) {
+        return redisTemplate.boundHashOps(key);
     }
 
 }

@@ -2,7 +2,7 @@ package com.auiucloud.admin.vo;
 
 import com.auiucloud.core.common.tree.INode;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,7 +21,7 @@ public class RouteVO implements INode {
 
     private static final long serialVersionUID = -8662478581249339874L;
 
-    @ApiModelProperty(value = "主键")
+    @Schema(description = "主键")
     private Long id;
 
     /**

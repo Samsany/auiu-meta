@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ${author}
  * @date ${datetime}
  */
-@Api(value = "${functionName}", tags = "${functionName}")
+@Tag(name = "${functionName}")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/${businessName}")
@@ -47,15 +47,15 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "查询${functionName}列表请求异常")
     @GetMapping("/list")
-    @ApiOperation(value = "查询${functionName}列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", required = true, value = "当前页", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", required = true, value = "每页显示数据", paramType = "query"),
-            @ApiImplicitParam(name = "keyword", required = true, value = "模糊查询关键词", paramType = "query"),
-            @ApiImplicitParam(name = "startDate", required = true, value = "创建开始日期", paramType = "query"),
-            @ApiImplicitParam(name = "endDate", required = true, value = "创建结束日期", paramType = "query"),
+    @Operation(summary = "查询${functionName}列表")
+    @Parameters({
+            @Parameter(name = "pageNum", required = true, description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", required = true, description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "keyword", required = true, description = "模糊查询关键词", in = ParameterIn.QUERY),
+            @Parameter(name = "startDate", required = true, description = "创建开始日期", in = ParameterIn.QUERY),
+            @Parameter(name = "endDate", required = true, description = "创建结束日期", in = ParameterIn.QUERY),
     })
-    public ApiResult<?> list(Search search, @ApiIgnore ${ClassName} ${className}) {
+    public ApiResult<?> list(Search search, ${ClassName} ${className}) {
         PageUtils list = ${className}Service.listPage(search, ${className});
         return ApiResult.data(list);
     }
@@ -65,9 +65,9 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "获取${functionName}详情请求异常")
     @GetMapping(value = "/info/{${pkColumn.javaField}}")
-    @ApiOperation(value = "获取${functionName}详情", notes = "根据${pkColumn.javaField}获取${functionName}详情")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "${pkColumn.javaField}", required = true, value = "ID", paramType = "path"),
+    @Operation(summary = "获取${functionName}详情", description = "根据${pkColumn.javaField}获取${functionName}详情")
+    @Parameters({
+            @Parameter(name = "${pkColumn.javaField}", required = true, description = "ID", in = ParameterIn.PATH),
     })
     public ApiResult<?> getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}) {
         return ApiResult.data(${className}Service.getById(${pkColumn.javaField}));
@@ -78,7 +78,7 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "新增${functionName}请求异常")
     @PostMapping
-    @ApiOperation(value = "新增${functionName}")
+    @Operation(summary = "新增${functionName}")
     public ApiResult<?> add(@RequestBody ${ClassName} ${className}) {
         return ApiResult.condition(${className}Service.save(${className}));
     }
@@ -88,7 +88,7 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "修改${functionName}请求异常")
     @PutMapping
-    @ApiOperation(value = "修改${functionName}")
+    @Operation(summary = "修改${functionName}")
     public ApiResult<?> edit(@RequestBody ${ClassName} ${className}) {
         return ApiResult.condition(${className}Service.updateById(${className}));
     }
@@ -98,7 +98,7 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "删除${functionName}请求异常")
     @DeleteMapping
-    @ApiOperation(value = "删除${functionName}")
+    @Operation(summary = "删除${functionName}")
     public ApiResult<?> remove(@RequestBody ${pkColumn.javaType}[] ${pkColumn.javaField}s) {
         return ApiResult.condition(${className}Service.removeByIds(Arrays.asList(${pkColumn.javaField}s)));
     }
@@ -108,8 +108,8 @@ public class ${ClassName}Controller extends BaseController {
      */
     @Log(value = "${functionName}", exception = "导出${functionName}请求异常")
     @GetMapping("/export")
-    @ApiOperation(value = "导出${functionName}")
-    public void export(Search search, @ApiIgnore ${ClassName} ${className}, HttpServletResponse response) {
+    @Operation(summary = "导出${functionName}")
+    public void export(Search search, ${ClassName} ${className}, HttpServletResponse response) {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(search, ${className});
         String fileName = "${functionName}" + System.currentTimeMillis();
         ExcelUtil.exportExcel(list, "sheet1", ${ClassName}. class, fileName, response);

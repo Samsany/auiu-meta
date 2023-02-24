@@ -1,37 +1,37 @@
 # Swagger属性配置
-meta:
-  swagger:
-    enabled: false
-    title: AUIUCLOUD文档管理中心
-    description: AUIUCLOUD文档管理
-    license: Powered by AUIUCLOUD
-    service-url: https://www.auiucloud.com
-    contact-name: dries
-    contact-url: https://auiucloud.com/#/docs
-    contact-email: samphsanie@gmail.com
+#meta:
+#  swagger:
+#    enabled: false
+#    title: AUIUCLOUD文档管理中心
+#    description: AUIUCLOUD文档管理
+#    license: Powered by AUIUCLOUD
+#    service-url: https://www.auiucloud.com
+#    contact-name: dries
+#    contact-url: https://auiucloud.com/#/docs
+#    contact-email: samphsanie@gmail.com
 # knife4j配置
-knife4j:
-  enable: ${meta.swagger.enabled}
-  # 开启生产环境屏蔽
-  production: false
-  # 开启认证
-  #  basic:
-  #    enable: true
-  #    username: admin
-  #    password: 123456
-  setting:
-    # 是否不显示Knife4j默认的footer，默认为true(显示)
-    enableFooter: false
-    # 是否自定义Footer，默认为false(非自定义)
-    enableFooterCustom: true
-    # 自定义Footer内容,支持Markdown语法
-    footerCustomContent: Apache License 2.0 | Copyright  2020-[DRIES](https://github.com/Samsany/auiu-meta)
-    # 自定义Home内容
-    # enableHomeCustom: true
-    # homeCustomLocation: classpath:swagger.md
+#knife4j:
+#  enable: ${meta.swagger.enabled}
+#  # 开启生产环境屏蔽
+#  production: false
+#  # 开启认证
+#  #  basic:
+#  #    enable: true
+#  #    username: admin
+#  #    password: 123456
+#  setting:
+#    # 是否不显示Knife4j默认的footer，默认为true(显示)
+#    enableFooter: false
+#    # 是否自定义Footer，默认为false(非自定义)
+#    enableFooterCustom: true
+#    # 自定义Footer内容,支持Markdown语法
+#    footerCustomContent: Apache License 2.0 | Copyright  2020-[DRIES](https://github.com/Samsany/auiu-meta)
+#    # 自定义Home内容
+#    # enableHomeCustom: true
+#    # homeCustomLocation: classpath:swagger.md
 
 # 默认路径匹配策略切换回ant_path_matcher
-spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+#spring:
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher

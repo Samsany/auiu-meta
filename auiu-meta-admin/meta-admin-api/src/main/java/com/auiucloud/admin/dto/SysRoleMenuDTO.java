@@ -1,7 +1,6 @@
 package com.auiucloud.admin.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,14 +14,14 @@ import java.util.Set;
  * @createDate 2022-09-09 09-45
  */
 @Data
-@ApiModel(value = "角色菜单传输对象")
+@Schema(name = "角色菜单传输对象")
 public class SysRoleMenuDTO {
 
     @NotNull(message = "请选择角色")
-    @ApiModelProperty(value = "角色ID", required = true)
+    @Schema(description = "角色ID", required = true)
     private Long roleId;
 
-    @ApiModelProperty(value = "菜单ID列表")
+    @Schema(description = "菜单ID列表")
     private Set<Long> menuIds = new HashSet<>();
 
 }

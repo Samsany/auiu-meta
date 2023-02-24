@@ -18,6 +18,7 @@
         <result property="refreshTokenValidity" column="refresh_token_validity" jdbcType="INTEGER"/>
         <result property="additionalInformation" column="additional_information" jdbcType="VARCHAR"/>
         <result property="autoApprove" column="auto_approve" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
         <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
@@ -40,6 +41,7 @@
                refresh_token_validity,
                additional_information,
                auto_approve,
+               status,
                create_time,
                update_time,
                create_by,

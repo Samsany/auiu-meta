@@ -32,19 +32,19 @@ public class TreeUtil {
                 if (StrUtil.isNotBlank(sysMenu.getIcon())) {
                     meta.setIcon(sysMenu.getIcon());
                 }
-                if (sysMenu.getHidden() == CommonConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getHidden() == CommonConstant.STATUS_NORMAL_VALUE) {
                     meta.setHidden(null);
                 }
-                if (sysMenu.getAffix() == CommonConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getAffix() == CommonConstant.STATUS_NORMAL_VALUE) {
                     meta.setAffix(null);
                 }
-                if (sysMenu.getKeepalive() == CommonConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getKeepalive() == CommonConstant.STATUS_NORMAL_VALUE) {
                     meta.setNoCache(null);
                 }
-                if (sysMenu.getHideHeader() == CommonConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getHideHeader() == CommonConstant.STATUS_NORMAL_VALUE) {
                     meta.setBreadcrumb(null);
                 }
-                if (sysMenu.getRequireAuth() == CommonConstant.STATUS_DISABLE_VALUE) {
+                if (sysMenu.getRequireAuth() == CommonConstant.STATUS_NORMAL_VALUE) {
                     meta.setRequireAuth(null);
                 }
 
@@ -66,7 +66,7 @@ public class TreeUtil {
                     // 当菜单类型为外链时，则强制修改为IFrame
                     case 2:
                         routeVo.setComponent("IFrame");
-                        if (sysMenu.getIframe() == CommonConstant.STATUS_NORMAL_VALUE) {
+                        if (sysMenu.getIframe() == CommonConstant.STATUS_DISABLE_VALUE) {
                             meta.setFrameSrc(sysMenu.getIframeSrc());
                         }
                         break;

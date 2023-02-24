@@ -48,4 +48,13 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return List<SysRole>
      */
     List<SysRole> getRoleIdsByRoles(List<String> roles);
+
+    /**
+     * 根据角色ID设置角色状态
+     *
+     * @param id 角色ID
+     * @param status 角色状态
+     * @return boolean
+     */
+    boolean setRoleStatus(Long id, Integer status);
 }

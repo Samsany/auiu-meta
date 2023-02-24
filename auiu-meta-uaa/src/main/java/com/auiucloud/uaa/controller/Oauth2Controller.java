@@ -3,16 +3,16 @@ package com.auiucloud.uaa.controller;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.log.annotation.Log;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
 import java.util.LinkedHashMap;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @date 2022/4/8
  */
 @RestController
-@Api(tags = "Oauth2管理")
+@Tag(name = "Oauth2管理")
 @RequiredArgsConstructor
 @RequestMapping("/oauth")
 public class Oauth2Controller {
@@ -34,30 +34,30 @@ public class Oauth2Controller {
     // private final RedisService redisService;
 
     @Log(value = "用户登录", exception = "用户登录请求异常")
-    @ApiOperation("用户登录Get")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "grant_type", value = "授权模式", paramType = "query", dataTypeClass = String.class, required = true),
-            @ApiImplicitParam(name = "refresh_token", value = "刷新token", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "username", value = "用户名", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "scope", value = "使用范围", paramType = "query", dataTypeClass = String.class)
+    @Operation(summary ="用户登录Get")
+    @Parameters({
+            @Parameter(name = "grant_type", description = "授权模式", in = ParameterIn.QUERY, required = true),
+            @Parameter(name = "refresh_token", description = "刷新token", in = ParameterIn.QUERY),
+            @Parameter(name = "username", description = "用户名", in = ParameterIn.QUERY),
+            @Parameter(name = "password", description = "密码", in = ParameterIn.QUERY),
+            @Parameter(name = "scope", description = "使用范围", in = ParameterIn.QUERY)
     })
     @GetMapping("/token")
-    public ApiResult<?> getAccessToken(@ApiIgnore Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public ApiResult<?> getAccessToken(Principal principal, @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.getAccessToken(principal, parameters).getBody());
     }
 
     @Log(value = "用户登录", exception = "用户登录请求异常")
-    @ApiOperation("用户登录Post")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "grant_type", value = "授权模式", paramType = "query", dataTypeClass = String.class, required = true),
-            @ApiImplicitParam(name = "refresh_token", value = "刷新token", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "username", value = "用户名", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "password", value = "密码", paramType = "query", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "scope", value = "使用范围", paramType = "query", dataTypeClass = String.class)
+    @Operation(summary ="用户登录Post")
+    @Parameters({
+            @Parameter(name = "grant_type", description = "授权模式", in = ParameterIn.QUERY, required = true),
+            @Parameter(name = "refresh_token", description = "刷新token", in = ParameterIn.QUERY),
+            @Parameter(name = "username", description = "用户名", in = ParameterIn.QUERY),
+            @Parameter(name = "password", description = "密码", in = ParameterIn.QUERY),
+            @Parameter(name = "scope", description = "使用范围", in = ParameterIn.QUERY)
     })
     @PostMapping("/token")
-    public ApiResult<?> postAccessToken(@ApiIgnore Principal principal, @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
+    public ApiResult<?> postAccessToken(Principal principal, @RequestBody Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
         return custom(tokenEndpoint.postAccessToken(principal, parameters).getBody());
     }
 

@@ -2,14 +2,12 @@ package com.auiucloud.core.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @author dries
  * @date 2021/12/22
  */
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public enum MethodTypeEnum {
 
@@ -28,6 +26,6 @@ public enum MethodTypeEnum {
     HEAD(false),
     OPTIONS(false);
 
-    private boolean hasContent;
+    private final boolean hasContent;
 
 }

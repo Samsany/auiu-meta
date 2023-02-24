@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -55,21 +56,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public PageUtils listPage(Search search) {
-        LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
-        if (StrUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.and(i -> i
-                    .or().like(SysMenu::getTitle, search.getKeyword())
-                    .or().like(SysMenu::getName, search.getKeyword()));
-        }
-        if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysMenu::getStatus, search.getStatus());
-        }
-        queryWrapper.orderByAsc(SysMenu::getSort);
+        LambdaQueryWrapper<SysMenu> queryWrapper = buildSearchParams(search);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 
     @Override
     public List<SysMenu> treeList(Search search) {
+        LambdaQueryWrapper<SysMenu> queryWrapper = buildSearchParams(search);
+        return this.list(queryWrapper);
+    }
+
+    @NotNull
+    private static LambdaQueryWrapper<SysMenu> buildSearchParams(Search search) {
         LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
         if (StrUtil.isNotBlank(search.getKeyword())) {
             queryWrapper.and(i -> i
@@ -80,7 +78,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             queryWrapper.eq(SysMenu::getStatus, search.getStatus());
         }
         queryWrapper.orderByAsc(SysMenu::getSort).orderByDesc(SysMenu::getCreateTime);
-        return this.list(queryWrapper);
+        return queryWrapper;
     }
 
     @Override

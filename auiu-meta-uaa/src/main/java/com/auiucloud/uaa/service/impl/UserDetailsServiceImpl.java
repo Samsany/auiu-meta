@@ -7,6 +7,7 @@ import com.auiucloud.admin.dto.SysUserInfo;
 import com.auiucloud.admin.feign.ISysUserProvider;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.security.model.MetaUser;
@@ -78,8 +79,18 @@ public class UserDetailsServiceImpl implements MetaUserDetailService {
         Collection<? extends GrantedAuthority> authorities
                 = AuthorityUtils.createAuthorityList(Convert.toStrArray(userInfo.getRoles()));
         log.info("authorities: {}", authorities);
-        return new MetaUser(user.getId(), user.getAccount(), user.getDeptId(), userInfo.getRoles(), user.getMobile(), user.getAvatar(), user.getPassword(), userInfo.getType(),
-                user.isStatus(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(),
+        return new MetaUser(user.getId(),
+                user.getAccount(),
+                user.getDeptId(),
+                userInfo.getRoles(),
+                user.getMobile(),
+                user.getAvatar(),
+                user.getPassword(),
+                userInfo.getType(),
+                user.getStatus() == CommonConstant.STATUS_NORMAL_VALUE,
+                user.isAccountNonExpired(),
+                user.isCredentialsNonExpired(),
+                user.isAccountNonLocked(),
                 authorities);
     }
 

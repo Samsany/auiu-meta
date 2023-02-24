@@ -2,10 +2,11 @@ package com.auiucloud.admin.controller;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2022/1/9
  */
 @Slf4j
-@Api(tags = "demo")
+@Tag(name = "demo")
 @RestController
 public class DemoController {
 
     @Value("spring.cloud.nacos.config.server-addr")
     private String nacosServerAddr;
 
-    @ApiOperation(value = "获取测试数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "queryMode", value = "查询模式", paramType = "query"),
-            @ApiImplicitParam(name = "pageNum", value = "当前页", paramType = "query"),
-            @ApiImplicitParam(name = "pageSize", value = "每页显示数据", paramType = "query"),
-            @ApiImplicitParam(name = "keyword",  value = "模糊查询关键词", paramType = "query"),
-            @ApiImplicitParam(name = "startDate", value = "创建开始日期", paramType = "query"),
-            @ApiImplicitParam(name = "endDate", value = "创建结束日期", paramType = "query"),
+    @Operation(summary = "获取测试数据")
+    @Parameters({
+            @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "keyword",  description = "模糊查询关键词", in = ParameterIn.QUERY),
+            @Parameter(name = "startDate", description = "创建开始日期", in = ParameterIn.QUERY),
+            @Parameter(name = "endDate", description = "创建结束日期", in = ParameterIn.QUERY),
     })
     @GetMapping("/csData")
     public ApiResult<String> csData(Search search) {

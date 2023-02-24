@@ -1,6 +1,6 @@
 package com.auiucloud.admin.dto;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ApiModel(value = "SysMenuDto", description = "系统菜单DTO")
+@Schema(name = "SysMenuDto", description = "系统菜单DTO")
 public class SysMenuDto implements Serializable {
     private static final long serialVersionUID = 2559369572203501365L;
 

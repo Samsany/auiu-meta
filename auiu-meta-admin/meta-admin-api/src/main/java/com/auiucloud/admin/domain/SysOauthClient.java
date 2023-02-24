@@ -2,7 +2,7 @@ package com.auiucloud.admin.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName(value = "sys_oauth_client")
-@ApiModel(value = "SysOauthClient对象", description = "系统客户端表")
+@Schema(name = "SysOauthClient对象", description = "系统客户端表")
 public class SysOauthClient extends BaseEntity {
 
     private static final long serialVersionUID = 3028179941291254164L;
@@ -54,6 +54,7 @@ public class SysOauthClient extends BaseEntity {
 
     /**
      * 授权类型
+     * authorization_code,password,refresh_token,client_credentials,sms,captcha,social
      */
     private String authorizedGrantTypes;
 
@@ -90,5 +91,9 @@ public class SysOauthClient extends BaseEntity {
      * 该字段适用于grant_type="authorization_code"的情况下，用户是否自动approve操作
      */
     private String autoApprove;
+    /**
+     * 客户端状态(0-正常 1-禁用)
+     */
+    private Integer status;
 
 }

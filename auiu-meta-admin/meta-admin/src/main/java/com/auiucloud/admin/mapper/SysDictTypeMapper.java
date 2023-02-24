@@ -1,7 +1,10 @@
 package com.auiucloud.admin.mapper;
 
 import com.auiucloud.admin.domain.SysDictType;
+import com.auiucloud.admin.vo.SysDictVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -10,6 +13,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Entity com.auiucloud.admin.domain.SysDictType
  */
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
+
+    List<SysDictVO> selectDictTypeList(SysDictType dictType);
+    SysDictVO selectDictInfoByType(String dictType);
 
 }
 

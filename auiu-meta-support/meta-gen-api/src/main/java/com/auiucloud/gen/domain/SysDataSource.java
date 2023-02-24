@@ -2,7 +2,7 @@ package com.auiucloud.gen.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +22,7 @@ import javax.validation.constraints.NotBlank;
 @TableName(value = "sys_data_source")
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "SysDataSource对象", description = "系统数据源表")
+@Schema(name = "SysDataSource对象", description = "系统数据源表")
 public class SysDataSource extends BaseEntity {
     private static final long serialVersionUID = 6166228667793805370L;
 

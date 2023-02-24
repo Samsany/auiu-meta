@@ -2,14 +2,12 @@ package com.auiucloud.core.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @author dries
  * @date 2021/12/22
  */
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public enum StatusEnum {
 
@@ -23,9 +21,9 @@ public enum StatusEnum {
      */
     DISABLE("disable", "禁用");
 
-    private String code;
+    private final String code;
 
-    private String message;
+    private final String message;
 
     /**
      * 根据code获取枚举

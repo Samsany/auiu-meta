@@ -8,8 +8,10 @@ import com.auiucloud.admin.service.ISysRoleService;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public PageUtils listPage(Search search, SysRole sysRole) {
+        LambdaQueryWrapper<SysRole> queryWrapper = buildSearchParams(search, sysRole);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    @NotNull
+    private static LambdaQueryWrapper<SysRole> buildSearchParams(Search search, SysRole sysRole) {
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtil.isNotBlank(search.getStartDate())) {
             queryWrapper.between(SysRole::getCreateTime, search.getStartDate(), search.getEndDate());
@@ -39,32 +47,16 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             queryWrapper.like(SysRole::getRoleCode, sysRole.getRoleCode());
         }
         if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysRole::isStatus, search.getStatus());
+            queryWrapper.eq(SysRole::getStatus, search.getStatus());
         }
         queryWrapper.orderByAsc(SysRole::getSort);
         queryWrapper.orderByDesc(SysRole::getCreateTime);
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+        return queryWrapper;
     }
 
     @Override
     public List<SysRole> selectSysRoleList(Search search, SysRole sysRole) {
-        LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
-            queryWrapper.between(SysRole::getCreateTime, search.getStartDate(), search.getEndDate());
-        }
-        if (StringUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.like(SysRole::getId, search.getKeyword());
-        }
-        if (StringUtil.isNotBlank(sysRole.getRoleName())) {
-            queryWrapper.like(SysRole::getRoleName, sysRole.getRoleName());
-        }
-        if (StringUtil.isNotBlank(sysRole.getRoleCode())) {
-            queryWrapper.like(SysRole::getRoleCode, sysRole.getRoleCode());
-        }
-        if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysRole::isStatus, search.getStatus());
-        }
-        queryWrapper.orderByDesc(SysRole::getCreateTime);
+        LambdaQueryWrapper<SysRole> queryWrapper = buildSearchParams(search, sysRole);
         return this.list(queryWrapper);
     }
 
@@ -82,6 +74,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         return this.list(queryWrapper);
     }
 
+    @Override
+    public boolean setRoleStatus(Long id, Integer status) {
+        LambdaUpdateWrapper<SysRole> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(SysRole::getStatus, status);
+        wrapper.eq(SysRole::getId, id);
+        return this.update(wrapper);
+    }
 }
 
 

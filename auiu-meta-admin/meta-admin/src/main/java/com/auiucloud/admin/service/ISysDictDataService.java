@@ -5,8 +5,6 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.List;
-
 /**
  * @author dries
  * @description 针对表【sys_dict_data(字典数据表)】的数据库操作Service
@@ -24,14 +22,6 @@ public interface ISysDictDataService extends IService<SysDictData> {
     PageUtils listPage(Search search, SysDictData dictData);
 
     /**
-     * 根据字典类型查询字典数据
-     *
-     * @param dictType 字典类型
-     * @return 字典数据
-     */
-    List<SysDictData> selectDictDataByType(String dictType);
-
-    /**
      * 根据字典类型查询统计字典数据条数
      *
      * @param dictType 字典类型
@@ -39,4 +29,19 @@ public interface ISysDictDataService extends IService<SysDictData> {
      */
     long countDictDataByType(String dictType);
 
+    /**
+     * 新增字典项
+     *
+     * @param dictData 字典项
+     * @return boolean
+     */
+    boolean addSysDictData(SysDictData dictData);
+
+    /**
+     * 编辑字典项
+     *
+     * @param dictData 字典项
+     * @return boolean
+     */
+    boolean editSysDictData(SysDictData dictData);
 }

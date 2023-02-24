@@ -6,6 +6,7 @@ import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.mapper.SysDictTypeMapper;
 import com.auiucloud.admin.service.ISysDictDataService;
 import com.auiucloud.admin.service.ISysDictTypeService;
+import com.auiucloud.admin.vo.SysDictVO;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -13,6 +14,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author dries
@@ -25,26 +28,55 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
 
     private final ISysDictDataService dictDataService;
 
+    /**
+     * 查询字典类型列表
+     *
+     * @param dictType 查询参数
+     * @return List<SysDictType>
+     */
+    @Override
+    public List<SysDictVO> selectDictTypeList(SysDictType dictType) {
+        return baseMapper.selectDictTypeList(dictType);
+    }
+
     @Override
     public PageUtils listPage(Search search, SysDictType dictType) {
+        LambdaQueryWrapper<SysDictType> queryWrapper = buildSearchParams(dictType);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    /**
+     * 根据字典类型查询字典详情
+     *
+     * @param dictType 字典类型
+     * @return SysDictVO
+     */
+    @Override
+    public SysDictVO selectDictInfoByType(String dictType) {
+        return baseMapper.selectDictInfoByType(dictType);
+    }
+
+    private static LambdaQueryWrapper<SysDictType> buildSearchParams(SysDictType dictType) {
         LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
-        if (StrUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.like(SysDictType::getDictName, search.getKeyword());
+        if (StrUtil.isNotBlank(dictType.getDictName())) {
+            queryWrapper.like(SysDictType::getDictName, dictType.getDictName());
         }
         if (StrUtil.isNotBlank(dictType.getDictType())) {
             queryWrapper.eq(SysDictType::getDictType, dictType.getDictType());
         }
-        if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysDictType::getStatus, search.getStatus());
+        if (ObjectUtil.isNotNull(dictType.getStatus())) {
+            queryWrapper.eq(SysDictType::getStatus, dictType.getStatus());
         }
 
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+        queryWrapper.orderByDesc(SysDictType::getCreateTime);
+        return queryWrapper;
     }
 
     @Override
     public boolean checkDictTypeUnique(SysDictType dict) {
         LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDictType::getDictType, dict.getDictType());
+        queryWrapper.ne(dict.getId() != null, SysDictType::getId, dict.getId());
         queryWrapper.last("limit 1");
         return this.count(queryWrapper) > 0;
     }
@@ -53,6 +85,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
     public boolean checkDictNameUnique(SysDictType dict) {
         LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDictType::getDictName, dict.getDictName());
+        queryWrapper.ne(dict.getId() != null, SysDictType::getId, dict.getId());
         queryWrapper.last("limit 1");
         return this.count(queryWrapper) > 0;
     }
