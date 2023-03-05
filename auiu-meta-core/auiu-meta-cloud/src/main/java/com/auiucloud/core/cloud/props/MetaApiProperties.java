@@ -25,8 +25,10 @@ public class MetaApiProperties {
      */
     private static final String[] ENDPOINTS = {
             "/error/**",
-            "/auth/**",
             "/oauth/token",
+            "/oauth/captcha/**",
+            "/oauth/social/**",
+            "/oauth/login/**",
             "/login/*",
             "/actuator/**",
             "/druid/**",
@@ -41,9 +43,13 @@ public class MetaApiProperties {
     };
 
     /**
+     * 单机登录，默认false
+     */
+    private boolean singleLogin;
+    /**
      * 忽略URL，List列表形式
      */
-    private List<String> ignoreUrl = new ArrayList<>();
+    private List<String> ignoreUrls = new ArrayList<>();
 
     /**
      * 是否启用网关鉴权模式
@@ -55,7 +61,7 @@ public class MetaApiProperties {
      */
     @PostConstruct
     public void initIgnoreUrl() {
-        Collections.addAll(ignoreUrl, ENDPOINTS);
+        Collections.addAll(ignoreUrls, ENDPOINTS);
     }
 
 }

@@ -110,7 +110,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
      * @return boolean
      */
     private boolean ignoreUrl(String path) {
-        return metaApiProperties.getIgnoreUrl().stream()
+        return metaApiProperties.getIgnoreUrls().stream()
                 .anyMatch(url -> pathMatcher.match(url, path));
     }
 

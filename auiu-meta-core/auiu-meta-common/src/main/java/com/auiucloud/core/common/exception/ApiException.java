@@ -3,6 +3,8 @@ package com.auiucloud.core.common.exception;
 import com.auiucloud.core.common.api.IResultCode;
 import lombok.Getter;
 
+import java.io.Serial;
+
 /**
  * 自定义异常
  *
@@ -12,6 +14,7 @@ import lombok.Getter;
 @Getter
 public class ApiException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = -2606114516331613442L;
 
     private IResultCode resultCode;
@@ -25,15 +28,16 @@ public class ApiException extends RuntimeException {
         super(message);
     }
 
-    public ApiException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public ApiException(Throwable cause) {
         super(cause);
+    }
+
+    public ApiException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     protected ApiException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
 }

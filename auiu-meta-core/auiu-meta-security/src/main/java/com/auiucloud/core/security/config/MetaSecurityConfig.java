@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecur
  */
 @Order(99)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ConditionalOnProperty(prefix = "meta.security", value = "enable", havingValue = "true", matchIfMissing = true)
 public class MetaSecurityConfig extends GlobalMethodSecurityConfiguration {
 
     @Override

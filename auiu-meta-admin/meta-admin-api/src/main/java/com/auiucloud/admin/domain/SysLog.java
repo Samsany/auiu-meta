@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,11 +17,10 @@ import java.util.Date;
  * @TableName sys_menu
  * @createDate 2022-05-31 14:59:09
  */
-@TableName(value = "sys_log")
 @Data
+@TableName(value = "sys_log")
 public class SysLog implements Serializable {
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+
     /**
      * 主键id
      */

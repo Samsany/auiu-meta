@@ -45,7 +45,7 @@ public class PreUaaFilter implements GlobalFilter, Ordered {
         URI uri = request.getURI();
         var pathMatcher = new AntPathMatcher();
         // 白名单路径移除JWT请求头
-        List<String> ignoreUrls = metaApiProperties.getIgnoreUrl();
+        List<String> ignoreUrls = metaApiProperties.getIgnoreUrls();
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 request = exchange.getRequest().mutate().header(Oauth2Constant.JWT_TOKEN_HEADER, "").build();

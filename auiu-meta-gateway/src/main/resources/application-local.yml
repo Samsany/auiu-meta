@@ -12,9 +12,12 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:${server.port}/auiu-meta-auth/rsa/publicKey'
+          jwk-set-uri: 'http://localhost:${server.port}/meta-auth/rsa/publicKey'
   cloud:
     gateway:
+      httpclient:
+        connect-timeout: 5000
+#        response-timeout: 20s
       discovery:
         locator:
           enabled: true

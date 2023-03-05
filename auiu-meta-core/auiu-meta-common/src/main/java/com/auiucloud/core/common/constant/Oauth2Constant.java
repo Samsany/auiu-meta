@@ -7,9 +7,19 @@ package com.auiucloud.core.common.constant;
 public class Oauth2Constant {
 
     public static final String META_CLIENT_ADMIN_ID = "meta-admin-client";
+    public static final String APP_CLIENT_ID = "app";
+
+    public static final String GRANT_TYPE_CAPTCHA = "captcha";
+    public static final String GRANT_TYPE_SMS = "sms";
+    public static final String GRANT_TYPE_SOCIAL = "social";
 
     public static final String JWT_TOKEN_PREFIX = "Bearer ";
     public static final String JWT_TOKEN_HEADER = "Authorization";
+    /**
+     * 认证身份标识
+     */
+    public static final String AUTHENTICATION_IDENTITY_KEY = "authenticationIdentity";
+
     /**
      * JWT存储权限属性
      */
@@ -28,6 +38,7 @@ public class Oauth2Constant {
     public static final String OAUTH_TOKEN_KEY = "/oauth/token_key";
     public static final String OAUTH_ERROR = "/oauth/error";
     public static final String OAUTH_MOBILE = "/oauth/mobile";
+    public static final String OAUTH_SOCIAL = "/oauth/social/**";
 
     /**
      * 刷新模式
@@ -50,10 +61,20 @@ public class Oauth2Constant {
      */
     public static final String IMPLICIT = "implicit";
 
+
+    /**
+     * 验证图片验证码时，http请求中默认的携带图片验证码信息的参数的名称
+     */
+    public static final String DEFAULT_PARAMETER_NAME_CODE_IMAGE = "imageCode";
+    /**
+     * 验证短信验证码时，http请求中默认的携带短信验证码信息的参数的名称
+     */
+    public static final String DEFAULT_PARAMETER_NAME_CODE_SMS = "smsCode";
     /**
      * 发送短信验证码 或 验证短信验证码时，传递手机号的参数的名称
      */
     public static final String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
+    public static final String CAPTCHA_PROCESSOR_SEPARATOR = "CodeProcessor";
 
     /**
      * 社交登录，传递的参数名称
@@ -120,15 +141,4 @@ public class Oauth2Constant {
      */
     public static final String FROM_IN = "Y";
 
-    /**
-     * 权限标识前缀
-     */
-    public static final String META_PERMISSION_PREFIX = "meta.permission.";
-
-    /**
-     * 客户端缓存Key
-     */
-    public static String cacheClientKey(String clientId) {
-        return Oauth2Constant.META_CLIENT_TABLE + ":" + clientId;
-    }
 }

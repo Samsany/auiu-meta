@@ -6,6 +6,7 @@ import com.auiucloud.admin.dto.SysOauthClientDTO;
 import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.mapper.SysOauthClientMapper;
 import com.auiucloud.admin.service.ISysOauthClientService;
+import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -26,8 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.auiucloud.core.common.constant.Oauth2Constant.cacheClientKey;
 
 /**
  * @author dries
@@ -140,7 +139,7 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
             try {
                 SysOauthClient oauthClient = getById(statusDTO.getId());
                 // 清除redis记录
-                redisService.del(cacheClientKey(oauthClient.getClientId()));
+                redisService.del(RedisKeyConstant.cacheClientKey(oauthClient.getClientId()));
             } catch (Exception e) {
                 log.error("更新客户端状态清除缓存异常: {}", e.getMessage());
             }
