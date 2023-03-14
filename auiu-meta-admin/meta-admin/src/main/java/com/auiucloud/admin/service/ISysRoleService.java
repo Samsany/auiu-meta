@@ -1,6 +1,9 @@
 package com.auiucloud.admin.service;
 
+import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.domain.SysRole;
+import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.admin.vo.SysRoleVO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -39,22 +42,51 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param roleIds 角色Ids
      * @return List<SysRole>
      */
-    List<SysRole> getRoleListByIds(Set<Long> roleIds);
+    List<SysRole> getRoleListByIds(List<Long> roleIds);
+    List<SysRoleVO> getSysRoleVOListByIds(List<Long> roleIds);
 
     /**
      * 根据角色编码列表查询角色信息
      *
-     * @param roles 角色编码
+     * @param roleCodeList 角色编码
      * @return List<SysRole>
      */
-    List<SysRole> getRoleIdsByRoles(List<String> roles);
+    List<SysRole> getRoleIdsByRoles(List<String> roleCodeList);
+
+    /**
+     * 根据角色ID获取角色详情
+     *
+     * @param id 角色ID
+     * @return SysRoleVO
+     */
+    SysRoleVO getRoleInfoById(Long id);
 
     /**
      * 根据角色ID设置角色状态
      *
-     * @param id 角色ID
-     * @param status 角色状态
+     * @param updateStatusDTO 参数
      * @return boolean
      */
-    boolean setRoleStatus(Long id, Integer status);
+    boolean setRoleStatus(UpdateStatusDTO updateStatusDTO);
+
+    boolean saveRole(SysRoleVO sysRole);
+
+    boolean updateRoleById(SysRoleVO sysRole);
+
+    /**
+     * 校验角色名称是否唯一
+     *
+     * @param role 角色信息
+     * @return boolean
+     */
+    boolean checkRoleNameUnique(SysRoleVO role);
+
+    /**
+     * 校验角色编码是否唯一
+     *
+     * @param role 角色信息
+     * @return boolean
+     */
+    boolean checkRoleCodeUnique(SysRoleVO role);
+
 }

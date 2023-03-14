@@ -9,6 +9,7 @@ import com.auiucloud.admin.domain.SysUser;
 import com.auiucloud.admin.mapper.SysDeptMapper;
 import com.auiucloud.admin.service.ISysDeptService;
 import com.auiucloud.admin.service.ISysUserService;
+import com.auiucloud.admin.vo.SysDeptTreeVO;
 import com.auiucloud.admin.vo.SysDeptVO;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.exception.ApiException;
@@ -24,8 +25,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,8 +41,6 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
         implements ISysDeptService {
 
-    private final ISysUserService sysUserService;
-
     @Override
     public PageUtils listPage(Search search) {
         LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
@@ -49,7 +50,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
     @Override
     public List<SysDept> selectSysDeptList(Search search) {
         LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @NotNull
@@ -70,14 +71,31 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
     }
 
     @Override
-    public List<SysDeptVO> treeList(Search search) {
+    public List<SysDeptTreeVO> treeList(Search search) {
         List<SysDept> list = this.selectSysDeptList(search);
         return ForestNodeMerger.merge(
                 list.stream().map(dept -> {
-                    SysDeptVO sysDeptVO = new SysDeptVO();
+                    SysDeptTreeVO sysDeptVO = new SysDeptTreeVO();
                     BeanUtils.copyProperties(dept, sysDeptVO);
                     return sysDeptVO;
                 }).collect(Collectors.toList()));
+    }
+
+    /**
+     * 根据部门ID查询部门详情
+     *
+     * @param id 部门ID
+     * @return 结果
+     */
+    @Override
+    public SysDeptVO getSysDeptVOInfoById(Long id) {
+        SysDept sysDept = this.getById(id);
+        if (ObjectUtil.isNotNull(sysDept)) {
+            SysDeptVO sysDeptVO = new SysDeptVO();
+            BeanUtils.copyProperties(sysDept, sysDeptVO);
+            return sysDeptVO;
+        }
+        return null;
     }
 
     @Override
@@ -148,7 +166,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
     public List<SysDept> selectChildrenDeptById(Long deptId) {
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.apply("find_in_set({0}, ancestors)", deptId);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @Override
@@ -185,12 +203,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
     public boolean hasChildByDeptId(Long deptId) {
         List<SysDept> deptList = this.selectChildrenDeptById(deptId);
         return CollUtil.isNotEmpty(deptList);
-    }
-
-    @Override
-    public boolean checkDeptExistUser(Long deptId) {
-       List<SysUser> userList = sysUserService.selectSysUserByDeptIdList(deptId);
-        return CollUtil.isNotEmpty(userList);
     }
 }
 

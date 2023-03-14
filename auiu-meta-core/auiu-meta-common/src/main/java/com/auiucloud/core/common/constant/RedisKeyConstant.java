@@ -29,7 +29,6 @@ public class RedisKeyConstant {
     /**
      * ---- Redis缓存权限规则key 缓存相关 ----
      */
-    public static final String ALL_PERMISSION = "*:*:*";
     public static final String PERMISSION_ROLES_KEY = "auth:permission:roles";
     public static final String URL_PERM_ROLES_KEY = "system:permission:url_perm_roles";
     public static final String BTN_PERM_ROLES_KEY = "system:permission:btn_perm_roles";
@@ -44,7 +43,7 @@ public class RedisKeyConstant {
      * 客户端缓存Key
      */
     public static String cacheClientKey(String clientId) {
-        return Oauth2Constant.META_CLIENT_TABLE + ":" + clientId;
+        return "meta.oauth_client." + clientId;
     }
 
 }

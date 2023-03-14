@@ -1,95 +1,54 @@
 package com.auiucloud.admin.vo;
 
-import com.auiucloud.core.common.tree.INode;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 部门表
- */
+ * @author dries
+ **/
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysDeptVO implements INode {
-
+@AllArgsConstructor
+@Schema(name = "系统部门VO")
+public class SysDeptVO implements Serializable {
     @Serial
-    private static final long serialVersionUID = -7337227905171219956L;
+    private static final long serialVersionUID = 2142700806319724358L;
 
-    /**
-     * ID
-     */
+    @Schema(description = "序号")
     private Long id;
-
-    /**
-     * 上级ID
-     */
+    @Schema(description = "上级ID")
     private Long parentId;
-
-    /**
-     * 祖级列表
-     */
+    @Schema(description = "祖级列表")
     private String ancestors;
-
-    /**
-     * 部门名称
-     */
+    @Schema(description = "部门名称")
     private String deptName;
-
-    /**
-     * 排序
-     */
+    @Schema(description = "状态")
     private Integer status;
-
-    /**
-     * 排序
-     */
+    @Schema(description = "排序")
     private Integer sort;
-
-    /**
-     * 负责人
-     */
+    @Schema(description = "负责人")
     private String leader;
-
-    /**
-     * 联系电话
-     */
+    @Schema(description = "联系电话")
     private String phone;
-
-    /**
-     * 邮箱
-     */
+    @Schema(description = "邮箱")
     private String email;
+    @Schema(description = "创建人")
+    private String createBy;
+    @Schema(description = "更新人")
+    private String updateBy;
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
+    @Schema(description = "更新时间")
+    private LocalDateTime updateTime;
+    @Schema(description = "备注")
     private String remark;
-
-    /**
-     * 子孙节点
-     */
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<INode> children;
-
-    /**
-     * 是否有子孙节点
-     */
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Boolean hasChildren;
-
-    @Override
-    public List<INode> getChildren() {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
-        return this.children;
-    }
 
 }

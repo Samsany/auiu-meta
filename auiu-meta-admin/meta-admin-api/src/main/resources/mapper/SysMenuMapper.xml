@@ -10,16 +10,20 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="queryParams" column="query_params" jdbcType="VARCHAR"/>
+        <result property="permission" column="permission" jdbcType="VARCHAR"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="path" column="path" jdbcType="VARCHAR"/>
         <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="openType" column="open_type" jdbcType="TINYINT"/>
+        <result property="target" column="target" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="alwaysShow" column="is_always_show" jdbcType="TINYINT"/>
         <result property="affix" column="is_affix" jdbcType="TINYINT"/>
         <result property="hidden" column="is_hidden" jdbcType="TINYINT"/>
         <result property="hideHeader" column="is_hide_header" jdbcType="TINYINT"/>
-        <result property="keepAlive" column="is_keep_alive" jdbcType="TINYINT"/>
+        <result property="keepalive" column="is_keepalive" jdbcType="TINYINT"/>
         <result property="requireAuth" column="is_require_auth" jdbcType="TINYINT"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -33,19 +37,25 @@
     <sql id="Base_Column_List">
         SELECT id,
                parent_id,
-               name,
-               title,
-               component,
                icon,
-               path,
+               title,
+               `name`,
+               `path`,
+               query_params,
+               permission,
+               component,
                redirect,
-               type,
+               is_iframe,
+               iframe_src,
+               `type`,
+               open_type,
+               target,
                status,
                is_always_show,
                is_affix,
                is_hidden,
                is_hide_header,
-               is_keep_alive,
+               is_keepalive,
                is_require_auth,
                sort,
                create_time,
@@ -58,7 +68,9 @@
     </sql>
     <select id="routes" resultMap="BaseResultMap">
         <include refid="Base_Column_List"/>
-        WHERE is_deleted = 0 AND status = 1 AND id IN (
+        WHERE is_deleted = 0 AND status = 1
+            AND `type` != 2
+            AND id IN (
         SELECT menu_id FROM sys_role_menu WHERE role_id IN
         <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
             #{id}

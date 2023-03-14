@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>2.7.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -44,8 +44,8 @@
         <java.version>17</java.version>
         <auiumeta.core.version>1.0.1</auiumeta.core.version>
 
-        <spring.boot.version>2.7.3</spring.boot.version>
-        <spring.cloud.version>2021.0.4</spring.cloud.version>
+        <spring.boot.version>2.7.9</spring.boot.version>
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
         <alibaba.cloud.version>2021.0.4.0</alibaba.cloud.version>
         <nacos-client.version>2.1.1</nacos-client.version>
 
@@ -65,14 +65,14 @@
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
 
-        <springdoc.version>1.6.13</springdoc.version>
+        <springdoc.version>1.6.14</springdoc.version>
         <swagger.version>3.0.0</swagger.version>
         <swagger.models.version>1.6.3</swagger.models.version>
         <knife4j.version>3.0.5</knife4j.version>
 
         <easypoi.version>4.4.0</easypoi.version>
         <lombok.version>1.18.24</lombok.version>
-        <hutool.version>5.7.22</hutool.version>
+        <hutool.version>5.8.13</hutool.version>
         <easyexcel.version>3.1.1</easyexcel.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lan3.version>3.12.0</commons-lan3.version>
@@ -88,6 +88,7 @@
         <snakeyaml.version>1.33</snakeyaml.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <nashorn-core.version>15.4</nashorn-core.version>
+        <aws-java-sdk-s3.version>1.12.423</aws-java-sdk-s3.version>
     </properties>
 
     <dependencyManagement>
@@ -196,6 +197,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-support</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>meta-component-api</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
@@ -424,6 +430,12 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-s3</artifactId>
+                <version>${aws-java-sdk-s3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

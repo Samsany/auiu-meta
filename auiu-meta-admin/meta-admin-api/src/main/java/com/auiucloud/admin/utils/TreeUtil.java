@@ -2,14 +2,15 @@ package com.auiucloud.admin.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysMenu;
+import com.auiucloud.admin.enums.MenuOpenTypeEnum;
 import com.auiucloud.admin.vo.RouteVO;
-import com.auiucloud.admin.vo.SysMenuVO;
+import com.auiucloud.admin.vo.SysMenuTreeVO;
 import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.exception.ApiException;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 树型工具类
@@ -51,37 +52,19 @@ public class TreeUtil {
                 meta.setQueryParams(sysMenu.getQueryParams());
                 meta.setSort(sysMenu.getSort());
 
-                // 0-目录 1-菜单 2-外链
-                switch (sysMenu.getType()) {
-                    // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
-                    case 0:
-                        routeVo.setComponent("Layout");
-                        routeVo.setRedirect("noRedirect");
-                        if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
-                            meta.setAlwaysShow(null);
-                        }
-                        break;
-                    case 1:
-                        break;
-                    // 当菜单类型为外链时，则强制修改为IFrame
-                    case 2:
-                        routeVo.setComponent("IFrame");
-                        if (sysMenu.getIframe() == CommonConstant.STATUS_DISABLE_VALUE) {
-                            meta.setFrameSrc(sysMenu.getIframeSrc());
-                        }
-                        break;
-                    default:
-                        throw new ApiException("暂不支持的菜单类型，请检查菜单配置");
+                // 0-目录 1-菜单 2-按钮
+                if (sysMenu.getType() == CommonConstant.ROOT_NODE_ID.intValue()) {
+                    routeVo.setComponent(StrUtil.isBlank(sysMenu.getComponent()) ? "Layout" : sysMenu.getComponent());
+                    routeVo.setRedirect("noRedirect");
+                    if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
+                        meta.setAlwaysShow(null);
+                    }
                 }
-                // 当菜单类型为目录 && 顶级菜单时，则强制修改为Layout
-                // if (sysMenu.getParentId().equals(CommonConstant.ROOT_NODE_ID)
-                //         && MenuTypeEnum.DIR.getCode().equals(sysMenu.getType())) {
-                //     routeVo.setComponent("Layout");
-                //     routeVo.setRedirect("noRedirect");
-                //     if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
-                //         routeVo.setAlwaysShow(null);
-                //     }
-                // }
+                if (Objects.equals(sysMenu.getOpenType(), MenuOpenTypeEnum.IFRAME.getValue())) { // 当打开方式为内链时
+                    meta.setFrameSrc(sysMenu.getTarget());
+                } else if (Objects.equals(sysMenu.getOpenType(), MenuOpenTypeEnum.LINK.getValue())) { // 当打开方式为内链时
+                    routeVo.setPath(sysMenu.getTarget());
+                }
 
                 routeVo.setMeta(meta);
                 trees.add(routeVo);
@@ -92,10 +75,10 @@ public class TreeUtil {
         return trees;
     }
 
-    private static List<SysMenuVO> buildMenuTree(List<SysMenu> sysMenus) {
-        List<SysMenuVO> list = new ArrayList<>();
+    private static List<SysMenuTreeVO> buildMenuTree(List<SysMenu> sysMenus) {
+        List<SysMenuTreeVO> list = new ArrayList<>();
         sysMenus.forEach(sysMenu -> {
-            SysMenuVO sysMenuVO = new SysMenuVO();
+            SysMenuTreeVO sysMenuVO = new SysMenuTreeVO();
             BeanUtils.copyProperties(sysMenu, sysMenuVO);
         });
         return list;

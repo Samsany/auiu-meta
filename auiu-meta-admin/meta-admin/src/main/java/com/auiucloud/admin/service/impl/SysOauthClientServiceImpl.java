@@ -1,5 +1,6 @@
 package com.auiucloud.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.SysOauthClient;
 import com.auiucloud.admin.dto.SysOauthClientDTO;
@@ -105,6 +106,10 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
         List<String> authorizedGrantTypes = oauthClient.getAuthorizedGrantTypes();
         String authorizedGrantTypesStr = String.join(StringPool.COMMA, authorizedGrantTypes);
         sysOauthClient.setAuthorizedGrantTypes(authorizedGrantTypesStr);
+        boolean result = this.updateById(sysOauthClient);
+        if (result) {
+            redisService.del(RedisKeyConstant.cacheClientKey(oauthClient.getClientId()));
+        }
         return this.updateById(sysOauthClient);
     }
 
@@ -137,8 +142,8 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
         boolean result = update(updateWrapper);
         if (result) {
             try {
-                SysOauthClient oauthClient = getById(statusDTO.getId());
-                // 清除redis记录
+                SysOauthClient oauthClient = this.getById(statusDTO.getId());
+                // 清除缓存记录
                 redisService.del(RedisKeyConstant.cacheClientKey(oauthClient.getClientId()));
             } catch (Exception e) {
                 log.error("更新客户端状态清除缓存异常: {}", e.getMessage());
@@ -146,6 +151,22 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
         }
 
         return result;
+    }
+
+    @Override
+    public boolean removeOauthClientByIds(List<Long> ids) {
+        if (CollUtil.isNotEmpty(ids)) {
+            LambdaQueryWrapper<SysOauthClient> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(SysOauthClient::getId, ids);
+            List<SysOauthClient> list = this.list(queryWrapper);
+            list.parallelStream().forEach(it -> {
+                // 清除缓存记录
+                redisService.del(RedisKeyConstant.cacheClientKey(it.getClientId()));
+            });
+            return this.removeByIds(ids);
+        }
+
+        return true;
     }
 
     @NotNull

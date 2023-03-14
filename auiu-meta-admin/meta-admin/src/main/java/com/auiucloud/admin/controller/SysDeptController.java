@@ -2,6 +2,7 @@ package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysDept;
 import com.auiucloud.admin.service.ISysDeptService;
+import com.auiucloud.admin.service.ISysUserService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.QueryModeEnum;
@@ -32,6 +33,7 @@ import java.util.List;
 public class SysDeptController {
 
     private final ISysDeptService sysDeptService;
+    private final ISysUserService sysUserService;
 
     /**
      * 查询系统部门列表
@@ -136,7 +138,7 @@ public class SysDeptController {
         if (sysDeptService.hasChildByDeptId(deptId)) {
             return ApiResult.fail("存在下级部门,不允许删除");
         }
-        if (sysDeptService.checkDeptExistUser(deptId)) {
+        if (sysUserService.checkDeptExistUser(deptId)) {
             return ApiResult.fail("部门存在用户,不允许删除");
         }
 

@@ -1,4 +1,4 @@
-package com.auiucloud.admin.dto;
+package com.auiucloud.admin.vo;
 
 import com.auiucloud.admin.domain.SysUser;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,8 +19,9 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "用户信息封装")
-public class SysUserInfo implements Serializable {
+@Schema(name = "用户登录信息VO")
+public class UserInfoVO implements Serializable {
+    @Serial
     private static final long serialVersionUID = 7580381700832675512L;
 
     /**

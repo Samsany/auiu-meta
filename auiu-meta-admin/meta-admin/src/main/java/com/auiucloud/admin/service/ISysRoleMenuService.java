@@ -20,6 +20,13 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @return List<SysRoleMenu>
      */
     List<SysRoleMenu> getRoleMenusByRoleId(Long roleId);
+    /**
+     * 根据角色ID查询菜单列表
+     *
+     * @param roleIds 角色ID
+     * @return List<SysRoleMenu>
+     */
+    List<SysRoleMenu> getRoleMenusByRoleIds(List<Long> roleIds);
 
     /**
      * 设置菜单权限
@@ -36,4 +43,12 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @return boolean
      */
     boolean checkMenuExistRole(Long menuId);
+
+    /**
+     * 移除角色权限
+     *
+     * @param roleId 角色ID
+     * @return boolean
+     */
+    boolean removeRoleMenusByRoleId(Long roleId);
 }

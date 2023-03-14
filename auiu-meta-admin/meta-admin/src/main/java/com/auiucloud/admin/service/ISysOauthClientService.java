@@ -61,4 +61,5 @@ public interface ISysOauthClientService extends IService<SysOauthClient> {
      */
     boolean setOauthClientStatus(UpdateStatusDTO statusDTO);
 
+    boolean removeOauthClientByIds(List<Long> asList);
 }

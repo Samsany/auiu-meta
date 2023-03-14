@@ -17,6 +17,9 @@
     </properties>
 
     <modules>
+        <module>meta-component</module>
+        <module>meta-component-api</module>
+
         <module>meta-gen</module>
         <module>meta-gen-api</module>
     </modules>

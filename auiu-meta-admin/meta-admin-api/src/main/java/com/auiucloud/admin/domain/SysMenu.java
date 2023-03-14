@@ -35,25 +35,28 @@ public class SysMenu extends BaseEntity {
     private Long parentId;
 
     /**
-     * 路由名称
-     */
-    private String name;
-
-    /**
      * 菜单名称
      */
     private String title;
 
     /**
+     * 路由名称
+     */
+    private String name;
+
+    /**
+     * 菜单权限
+     */
+    private String permission;
+
+    /**
      * 组件
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String component;
 
     /**
      * 图标
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String icon;
 
     /**
@@ -64,29 +67,23 @@ public class SysMenu extends BaseEntity {
     /**
      * 路由参数
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String queryParams;
 
     /**
      * 重定向地址，设置为noRedirect时，面包屑不可点击
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String redirect;
-
     /**
-     * 内链地址
+     * 打开方式 0-无 1-组件 2-内链 3-外链
      */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
-    private String iframeSrc;
-
+    private Integer openType;
     /**
-     * 是否内嵌(0-否 1-是)
+     * 内外链地址
      */
-    @TableField(value = "is_iframe")
-    private Integer iframe;
+    private String target;
 
     /**
-     * 菜单类型(0-目录 1-菜单 2-外链)
+     * 菜单类型(0-目录 1-菜单 2-按钮)
      */
     private Integer type;
 

@@ -1,6 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysDictData;
+import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -44,4 +45,22 @@ public interface ISysDictDataService extends IService<SysDictData> {
      * @return boolean
      */
     boolean editSysDictData(SysDictData dictData);
+
+    /**
+     * 校验字典标签是否唯一
+     *
+     * @param dict 字典信息
+     * @return boolean
+     */
+    boolean checkDictDataLabelUnique(SysDictData dict);
+
+    /**
+     * 校验字典键值是否唯一
+     *
+     * @param dict 字典信息
+     * @return boolean
+     */
+    boolean checkDictDataValueUnique(SysDictData dict);
+
+
 }

@@ -17,6 +17,11 @@ public class ProviderConstant {
     public static final long CONFIG_TIMEOUT_MS = 5000;
 
     /**
+     * 模块公共前缀
+     */
+    public final String MODULE_PATH_PREFIX = "/meta";
+
+    /**
      * 远程调用公共前缀
      */
     public final String PROVIDER = "/provider";
@@ -30,16 +35,6 @@ public class ProviderConstant {
      * 根据手机号查询用户信息
      */
     public final String PROVIDER_USER_MOBILE = PROVIDER + "/user/mobile";
-
-    /**
-     * 根据userId查询用户角色信息
-     */
-    public final String PROVIDER_USER_ROLE_LIST = PROVIDER + "/role/list";
-
-    /**
-     * 根据roles查询用户权限信息
-     */
-    public final String PROVIDER_ROLE_PERMISSION_LIST = PROVIDER + "/role-permission/list";
 
     /**
      * 日志配置

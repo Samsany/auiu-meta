@@ -2,7 +2,9 @@ package com.auiucloud.admin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.admin.domain.SysRole;
+import com.auiucloud.admin.domain.SysRoleMenu;
 import com.auiucloud.admin.domain.SysUserRole;
+import com.auiucloud.admin.dto.SysUserRoleDTO;
 import com.auiucloud.admin.mapper.SysUserRoleMapper;
 import com.auiucloud.admin.service.ISysRoleService;
 import com.auiucloud.admin.service.ISysUserRoleService;
@@ -24,31 +26,39 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole> implements ISysUserRoleService {
 
-    private final ISysRoleService sysRoleService;
-
     @Override
     public List<SysUserRole> getSysUserRoleListByUserId(Long userId) {
-        LambdaQueryWrapper<SysUserRole> queryWrapper = Wrappers.lambdaQuery();
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserRole::getUserId, userId);
         // 查询用户关联的所有角色ID
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+    }
+
+
+    @Override
+    public boolean batchAddSysUserRole(SysUserRoleDTO userRoleDTO) {
+        Long userId = userRoleDTO.getUserId();
+        List<Long> roleIds = userRoleDTO.getRoleIds();
+
+        if (CollUtil.isNotEmpty(roleIds)) {
+            List<SysUserRole> sysUserRoles = roleIds.parallelStream()
+                    .map(it -> SysUserRole.builder()
+                            .userId(userId)
+                            .roleId(it)
+                            .build())
+                    .toList();
+            return this.saveBatch(sysUserRoles);
+        }
+
+        return true;
     }
 
     @Override
-    public List<String> getRoleCodeListByUserId(Long userId) {
-        List<SysUserRole> roleListByUserId = this.getSysUserRoleListByUserId(userId);
-        Set<Long> roleIds = Optional.ofNullable(roleListByUserId).orElse(Collections.emptyList())
-                .stream().map(SysUserRole::getRoleId).collect(Collectors.toSet());
-        List<SysRole> sysRoles = new ArrayList<>();
-        if (CollUtil.isNotEmpty(roleIds)) {
-            sysRoles = sysRoleService.getRoleListByIds(roleIds);
-        }
-        return sysRoles.stream()
-                .map(SysRole::getRoleCode)
-                .collect(Collectors.toList());
+    public boolean removeSysUserRoleByUserId(Long userId) {
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        return this.remove(queryWrapper);
     }
-
-
 }
 
 

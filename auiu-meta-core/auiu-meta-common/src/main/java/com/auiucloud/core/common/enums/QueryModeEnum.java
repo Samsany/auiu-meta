@@ -3,9 +3,11 @@ package com.auiucloud.core.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @Getter
 @AllArgsConstructor
-public enum QueryModeEnum {
+public enum QueryModeEnum implements IBaseEnum<String> {
 
     PAGE("page", "分页查询"),
 
@@ -16,12 +18,12 @@ public enum QueryModeEnum {
     CASCADE("cascade", "级联列表"),
     ;
 
-    private final String code;
-    private final String description;
+    private final String value;
+    private final String label;
 
     public static QueryModeEnum getQueryModeByCode(String code) {
         for (QueryModeEnum value : values()) {
-            if (value.getCode().equals(code)) {
+            if (value.getValue().equals(code)) {
                 return value;
             }
         }

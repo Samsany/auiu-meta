@@ -1,6 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysDept;
+import com.auiucloud.admin.vo.SysDeptTreeVO;
 import com.auiucloud.admin.vo.SysDeptVO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -19,7 +20,15 @@ public interface ISysDeptService extends IService<SysDept> {
 
     List<SysDept> selectSysDeptList(Search search);
 
-    List<SysDeptVO> treeList(Search search);
+    List<SysDeptTreeVO> treeList(Search search);
+
+    /**
+     * 根据部门ID查询部门详情
+     *
+     * @param id 部门ID
+     * @return 结果
+     */
+    SysDeptVO getSysDeptVOInfoById(Long id);
 
     /**
      * 校验部门名称是否唯一
@@ -58,13 +67,5 @@ public interface ISysDeptService extends IService<SysDept> {
      * @return 结果
      */
     boolean hasChildByDeptId(Long deptId);
-
-    /**
-     * 查询部门是否存在用户
-     *
-     * @param deptId 部门ID
-     * @return 结果 true 存在 false 不存在
-     */
-    boolean checkDeptExistUser(Long deptId);
 
 }

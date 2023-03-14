@@ -1,8 +1,12 @@
 package com.auiucloud.core.common.utils;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.jwt.Claims;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.context.UserContext;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
@@ -18,8 +22,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Security工具类
@@ -67,12 +71,50 @@ public class SecurityUtil {
         return JSONUtil.parseObj(payload);
     }
 
+    /**
+     * 获取用户ID
+     *
+     * @return 用户ID
+     */
     public static Long getUserId() {
         return getJwtPayload().getLong(Oauth2Constant.META_USER_ID);
     }
 
+    /**
+     * 获取用户账户
+     *
+     * @return 用户账户
+     */
     public static String getUsername() {
         return getJwtPayload().getStr(Oauth2Constant.META_USER_NAME);
+    }
+
+
+    /**
+     * 获取部门ID
+     *
+     * @return deptId
+     */
+    public static Long getDeptId() {
+        // 然后根据token获取用户登录信息，这里省略获取用户信息的过程
+        JSONObject jwtPayload = getJwtPayload();
+
+        // 获取部门ID
+        return jwtPayload.getLong(Oauth2Constant.META_DEPT_ID);
+    }
+
+    /**
+     * 获取用户角色
+     *
+     * @return 角色Code集合
+     */
+    public static List<String> getRoles() {
+        // 然后根据token获取用户登录信息，这里省略获取用户信息的过程
+        JSONObject jwtPayload = getJwtPayload();
+
+        // 获取角色信息
+        String rolesStr = jwtPayload.getStr(Oauth2Constant.META_ROLES);
+        return JSONUtil.toList(rolesStr, String.class);
     }
 
     /**

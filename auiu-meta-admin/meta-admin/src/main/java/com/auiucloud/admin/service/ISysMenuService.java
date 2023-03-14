@@ -1,7 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysMenu;
-import com.auiucloud.admin.dto.SysMenuDto;
+import com.auiucloud.admin.vo.SysMenuVO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -44,7 +44,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param menu 菜单DTO
      * @return boolean
      */
-    boolean createMenu(SysMenuDto menu);
+    boolean createMenu(SysMenuVO menu);
 
     /**
      * 根据ID更新菜单
@@ -52,7 +52,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param menu 菜单DTO
      * @return boolean
      */
-    boolean updateMenuById(SysMenuDto menu);
+    boolean updateMenuById(SysMenuVO menu);
 
     /**
      * 批量删除菜单
@@ -69,4 +69,12 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @return boolean
      */
     boolean hasChildByMenuId(Long menuId);
+
+    /**
+     * 根据menuId查询所有的满足条件的菜单列表,其中type=2为按钮
+     *
+     * @param menuIds 菜单ID
+     * @return List<String> 菜单权限列表
+     */
+    List<String> getSysMenuPermissionById(List<Long> menuIds);
 }

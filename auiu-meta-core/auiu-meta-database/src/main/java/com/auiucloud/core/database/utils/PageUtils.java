@@ -157,7 +157,15 @@ public class PageUtils {
      * @return T
      */
     public static <T> IPage<T> getPage(Search search) {
-        return new Page<T>(search.getPageNum(), search.getPageSize());
+        int pageNum = 1;
+        int pageSize = 10;
+        if (search.getPageNum() != null) {
+            pageNum = search.getPageNum();
+        }
+        if (search.getPageSize() != null) {
+            pageSize = search.getPageSize();
+        }
+        return new Page<T>(pageNum, pageSize);
     }
 
 //    public static void startPage(Search search) {

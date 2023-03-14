@@ -1,7 +1,9 @@
 package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysRole;
+import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysRoleService;
+import com.auiucloud.admin.vo.SysRoleVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.enums.QueryModeEnum;
@@ -16,6 +18,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -78,13 +81,13 @@ public class SysRoleController extends BaseController {
      * 获取系统角色详情
      */
     @Log(value = "系统角色", exception = "获取系统角色详情请求异常")
-    @GetMapping(value = "/info/{id}")
+    @GetMapping(value = "/{id}")
     @Operation(summary = "获取系统角色详情", description = "根据id获取系统角色详情")
     @Parameters({
             @Parameter(name = "id", required = true, description = "ID", in = ParameterIn.PATH),
     })
     public ApiResult<?> getInfo(@PathVariable("id") Long id) {
-        return ApiResult.data(sysRoleService.getById(id));
+        return ApiResult.data(sysRoleService.getRoleInfoById(id));
     }
 
     /**
@@ -93,8 +96,14 @@ public class SysRoleController extends BaseController {
     @Log(value = "系统角色", exception = "新增系统角色请求异常")
     @PostMapping
     @Operation(summary = "新增系统角色")
-    public ApiResult<?> add(@RequestBody SysRole sysRole) {
-        return ApiResult.condition(sysRoleService.save(sysRole));
+    public ApiResult<?> add(@RequestBody SysRoleVO sysRole) {
+        if (sysRoleService.checkRoleNameUnique(sysRole)) {
+            return ApiResult.fail("新增角色'" + sysRole.getRoleName() + "'失败，角色名称已存在");
+        }
+        if (sysRoleService.checkRoleCodeUnique(sysRole)) {
+            return ApiResult.fail("新增角色'" + sysRole.getRoleCode() + "'失败，角色编码已存在");
+        }
+        return ApiResult.condition(sysRoleService.saveRole(sysRole));
     }
 
     /**
@@ -103,18 +112,24 @@ public class SysRoleController extends BaseController {
     @Log(value = "系统角色", exception = "修改系统角色请求异常")
     @PutMapping
     @Operation(summary = "修改系统角色")
-    public ApiResult<?> edit(@RequestBody SysRole sysRole) {
-        return ApiResult.condition(sysRoleService.updateById(sysRole));
+    public ApiResult<?> edit(@RequestBody SysRoleVO sysRole) {
+        if (sysRoleService.checkRoleNameUnique(sysRole)) {
+            return ApiResult.fail("修改角色'" + sysRole.getRoleName() + "'失败，角色名称已存在");
+        }
+        if (sysRoleService.checkRoleCodeUnique(sysRole)) {
+            return ApiResult.fail("修改角色'" + sysRole.getRoleCode() + "'失败，角色编码已存在");
+        }
+        return ApiResult.condition(sysRoleService.updateRoleById(sysRole));
     }
 
     /**
      * 设置系统角色状态
      */
     @Log(value = "系统角色", exception = "修改系统角色请求异常")
-    @GetMapping("/setStatus/{id}")
+    @GetMapping("/setStatus")
     @Operation(summary = "修改系统角色状态")
-    public ApiResult<?> setRoleStatus(@PathVariable Long id, @RequestParam Integer status) {
-        return ApiResult.condition(sysRoleService.setRoleStatus(id, status));
+    public ApiResult<?> setRoleStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
+        return ApiResult.condition(sysRoleService.setRoleStatus(updateStatusDTO));
     }
 
     /**

@@ -38,7 +38,7 @@ public class GenTableColumnServiceImpl extends ServiceImpl<GenTableColumnMapper,
     public List<GenTableColumn> selectTableColumnsByTableId(Long tableId) {
         LambdaQueryWrapper<GenTableColumn> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GenTableColumn::getTableId, tableId);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 }
 

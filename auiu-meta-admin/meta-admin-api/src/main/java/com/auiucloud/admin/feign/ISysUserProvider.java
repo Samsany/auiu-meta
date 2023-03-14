@@ -1,6 +1,6 @@
 package com.auiucloud.admin.feign;
 
-import com.auiucloud.admin.dto.SysUserInfo;
+import com.auiucloud.admin.vo.UserInfoVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
@@ -24,6 +24,6 @@ public interface ISysUserProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
-    ApiResult<SysUserInfo> getUserByUsername(@RequestParam String username);
+    ApiResult<UserInfoVO> getUserByUsername(@RequestParam String username);
 
 }

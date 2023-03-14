@@ -1,10 +1,10 @@
 package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysMenu;
-import com.auiucloud.admin.dto.SysMenuDto;
+import com.auiucloud.admin.vo.SysMenuVO;
 import com.auiucloud.admin.service.ISysMenuService;
 import com.auiucloud.admin.utils.TreeUtil;
-import com.auiucloud.admin.vo.SysMenuVO;
+import com.auiucloud.admin.vo.SysMenuTreeVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
@@ -68,7 +68,7 @@ public class SysMenuController extends BaseController {
         List<SysMenu> list = sysMenuService.treeList(search);
         return ApiResult.data(ForestNodeMerger.merge(
                 list.stream().map(menu -> {
-                    SysMenuVO sysMenuVO = new SysMenuVO();
+                    SysMenuTreeVO sysMenuVO = new SysMenuTreeVO();
                     BeanUtils.copyProperties(menu, sysMenuVO);
                     return sysMenuVO;
                 }).collect(Collectors.toList())
@@ -85,14 +85,14 @@ public class SysMenuController extends BaseController {
 
     @Operation(summary ="新增菜单")
     @PostMapping
-    public ApiResult<?> add(@RequestBody SysMenuDto menu) {
+    public ApiResult<?> add(@RequestBody SysMenuVO menu) {
         boolean status = sysMenuService.createMenu(menu);
         return ApiResult.condition(status);
     }
 
     @Operation(summary ="修改菜单")
     @PutMapping
-    public ApiResult<?> update(@RequestBody SysMenuDto menu) {
+    public ApiResult<?> update(@RequestBody SysMenuVO menu) {
         boolean status = sysMenuService.updateMenuById(menu);
         return ApiResult.condition(status);
     }

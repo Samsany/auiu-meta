@@ -4,6 +4,7 @@ import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.service.ISysDictTypeService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -78,14 +79,15 @@ public class SysDictTypeController extends BaseController {
     /**
      * 新增字典类型
      */
-    @Log("字典类型")
+    @Log(value = "字典类型", exception = "获取系统部门详情请求异常")
+    @Operation(summary = "新增字典类型")
     @PostMapping
     public ApiResult<?> add(@Validated @RequestBody SysDictType dict) {
         if (dictTypeService.checkDictTypeUnique(dict)) {
             return ApiResult.fail("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         if (dictTypeService.checkDictNameUnique(dict)) {
-            return ApiResult.fail("修改字典'" + dict.getDictName() + "'失败，字典名称已存在");
+            return ApiResult.fail("新增字典'" + dict.getDictName() + "'失败，字典名称已存在");
         }
         return ApiResult.condition(dictTypeService.save(dict));
     }
@@ -94,10 +96,11 @@ public class SysDictTypeController extends BaseController {
      * 修改字典类型
      */
     @Log("字典类型")
+    @Operation(summary = "修改字典类型")
     @PutMapping
     public ApiResult<?> edit(@Validated @RequestBody SysDictType dict) {
         if (dictTypeService.checkDictTypeUnique(dict)) {
-            return ApiResult.fail("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
+            return ApiResult.fail("修改字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
         if (dictTypeService.checkDictNameUnique(dict)) {
             return ApiResult.fail("修改字典'" + dict.getDictName() + "'失败，字典名称已存在");
@@ -109,6 +112,7 @@ public class SysDictTypeController extends BaseController {
      * 删除字典类型
      */
     @Log("字典类型")
+    @Operation(summary = "删除字典类型")
     @DeleteMapping("/{dictIds}")
     public ApiResult<?> remove(@PathVariable Long[] dictIds) {
         return ApiResult.success(dictTypeService.removeDictTypeByIds(dictIds));
@@ -117,6 +121,7 @@ public class SysDictTypeController extends BaseController {
     /**
      * 获取字典选择框列表
      */
+    @Operation(summary = "获取字典选择框列表")
     @GetMapping("/option-select")
     public ApiResult<?> optionSelect() {
         List<SysDictType> dictTypes = dictTypeService.list();

@@ -1,6 +1,10 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysUser;
+import com.auiucloud.admin.dto.UpdatePasswordDTO;
+import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.admin.vo.SysUserVO;
+import com.auiucloud.admin.vo.UserInfoVO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -32,6 +36,8 @@ public interface ISysUserService extends IService<SysUser> {
      */
     PageUtils listPage(Search search, SysUser sysUser);
 
+    SysUserVO getSysUserInfoById(Long id);
+
     /**
      * 根据用户名查找用户
      *
@@ -39,6 +45,13 @@ public interface ISysUserService extends IService<SysUser> {
      * @return SysUser
      */
     SysUser getUserByUsername(String username);
+    /**
+     * 根据用户名查找用户
+     *
+     * @param account 用户账户
+     * @return SysUserInfo
+     */
+    UserInfoVO getUserInfoByUsername(String account);
 
     /**
      * 根据部门ID查找用户
@@ -47,4 +60,74 @@ public interface ISysUserService extends IService<SysUser> {
      * @return List<SysUser>
      */
     List<SysUser> selectSysUserByDeptIdList(Long deptId);
+
+    /**
+     * 根据用户ID查找用户角色编码
+     *
+     * @param userId 用户ID
+     * @return List<String>
+     */
+    List<String> getRoleCodeListByUserId(Long userId);
+
+    /**
+     * 新增用户
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    boolean saveSysUserVO(SysUserVO sysUser);
+
+    /**
+     * 修改用户
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    boolean updateSysUserVOById(SysUserVO sysUser);
+
+    /**
+     * 根据用户ID修改用户状态
+     *
+     * @param updateStatusDTO 参数
+     * @return boolean
+     */
+    boolean setUserStatus(UpdateStatusDTO updateStatusDTO);
+    /**
+     * 根据用户ID修改用户密码
+     *
+     * @param updatePasswordDTO 参数
+     * @return boolean
+     */
+    boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
+
+    /**
+     * 批量删除系统用户
+     *
+     * @param ids 用户ID
+     * @return String
+     */
+    String deleteSysUserByIds(List<Long> ids);
+
+    /**
+     * 校验部门是否分配用户
+     *
+     * @param deptId 部门ID
+     * @return boolean
+     */
+    boolean checkDeptExistUser(Long deptId);
+
+    /**
+     * 校验用户账户是否重复
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    boolean checkUsernameExist(SysUser sysUser);
+    /**
+     * 校验用户手机号是否重复
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    boolean checkUserMobileExist(SysUser sysUser);
 }

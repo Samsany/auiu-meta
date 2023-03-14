@@ -1,173 +1,79 @@
 package com.auiucloud.admin.vo;
 
-import com.auiucloud.core.common.tree.INode;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * 菜单视图对象
- *
  * @author dries
- * @createDate 2022-06-08 16-01
+ * @createDate 2022-08-08 00-11
  */
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysMenuVO implements INode {
-    private static final long serialVersionUID = -8662478581249339874L;
+@AllArgsConstructor
+@Schema(name = "系统菜单VO", description = "系统菜单")
+public class SysMenuVO implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2559369572203501365L;
 
-    /**
-     * ID
-     */
+    @Schema(description = "序号")
     private Long id;
-
-    /**
-     * 父级ID
-     */
+    @Schema(description = "上级ID")
     private Long parentId;
-
-    /**
-     * 路由名称
-     */
+    @Schema(description = "组件名称")
     private String name;
-
-    /**
-     * 菜单名称
-     */
+    @Schema(description = "菜单名称")
     private String title;
-
-    /**
-     * 组件
-     */
+    @Schema(description = "菜单权限")
+    private String permission;
+    @Schema(description = "组件路径")
     private String component;
-
-    /**
-     * 图标
-     */
+    @Schema(description = "菜单图标")
     private String icon;
-
-    /**
-     * 路由路径
-     */
+    @Schema(description = "路由路径")
     private String path;
-
-    /**
-     * 路由参数
-     */
+    @Schema(description = "路由参数")
     private String queryParams;
-
-    /**
-     * 重定向地址，设置为noRedirect时，面包屑不可点击
-     */
+    @Schema(description = "重定向地址，设置为noRedirect时，面包屑不可点击")
     private String redirect;
-
-    /**
-     * 是否内嵌(0-否 1-是)
-     */
-    private Integer iframe;
-
-    /**
-     * 内链地址
-     */
-    private String iframeSrc;
-
-    /**
-     * 菜单类型(0-目录 1-菜单 2-外链)
-     */
+    @Schema(description = "打开方式 0-无 1-组件 2-内链 3-外链")
+    private Integer openType;
+    @Schema(description = "内外链地址")
+    private String target;
+    @Schema(description = "菜单类型(0-目录 1-菜单 2-外链)")
     private Integer type;
-
-    /**
-     * 菜单状态(0-禁用 1-启用)
-     */
+    @Schema(description = "菜单状态")
     private Integer status;
-
-    /**
-     * 永久显示根菜单(0-否 1-是)
-     */
+    @Schema(description = "永久显示根菜单")
     private Integer alwaysShow;
-
-    /**
-     * 固定在tags-view中(0-否 1-是)
-     */
+    @Schema(description = "固定在tags-view中")
     private Integer affix;
-
-    /**
-     * 前端隐藏(0-否 1-是)
-     */
+    @Schema(description = "前端隐藏")
     private Integer hidden;
-
-    /**
-     * 隐藏面包屑(0-否 1-是)
-     */
+    @Schema(description = "隐藏面包屑")
     private Integer hideHeader;
-
-    /**
-     * 开启缓存(0-否 1-是)
-     */
+    @Schema(description = "开启缓存")
     private Integer keepalive;
-
-    /**
-     * 开启验证(0-否 1-是)
-     */
+    @Schema(description = "开启验证")
     private Integer requireAuth;
-
-    /**
-     * 排序
-     */
+    @Schema(description = "排序")
     private Integer sort;
-
-    /**
-     * 创建人
-     */
+    @Schema(description = "创建人")
     private String createBy;
-
-    /**
-     * 更新人
-     */
+    @Schema(description = "更新人")
     private String updateBy;
-
-    /**
-     * 创建时间
-     */
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
-
-    /**
-     * 更新时间
-     */
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
-
-    /**
-     * 备注
-     */
+    @Schema(description = "备注")
     private String remark;
-
-    /**
-     * 子孙节点
-     */
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private List<INode> children;
-
-    /**
-     * 是否有子孙节点
-     */
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private Boolean hasChildren;
-
-    @Override
-    public List<INode> getChildren() {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
-        return this.children;
-    }
 
 }

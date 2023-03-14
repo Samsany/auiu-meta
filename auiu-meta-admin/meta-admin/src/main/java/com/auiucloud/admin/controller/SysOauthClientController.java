@@ -22,12 +22,12 @@ import java.util.Arrays;
 
 
 /**
- * 系统用户控制器
+ * 系统客户端控制器
  *
  * @author Dries
  * @date 2023-02-17 15:08:14
  */
-@Tag(name = "系统用户")
+@Tag(name = "系统客户端")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/oauth-client")
@@ -109,7 +109,7 @@ public class SysOauthClientController {
     @DeleteMapping
     @Operation(summary = "删除客户端")
     public ApiResult<?> remove(@RequestBody Long[] ids) {
-        return ApiResult.condition(sysOauthClientService.removeByIds(Arrays.asList(ids)));
+        return ApiResult.condition(sysOauthClientService.removeOauthClientByIds(Arrays.asList(ids)));
     }
 
 }

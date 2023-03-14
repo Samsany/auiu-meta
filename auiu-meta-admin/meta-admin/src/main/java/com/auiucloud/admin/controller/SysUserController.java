@@ -1,7 +1,11 @@
 package com.auiucloud.admin.controller;
 
+import com.auiucloud.admin.domain.SysDept;
 import com.auiucloud.admin.domain.SysUser;
+import com.auiucloud.admin.dto.UpdatePasswordDTO;
+import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysUserService;
+import com.auiucloud.admin.vo.SysUserVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
@@ -14,6 +18,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -56,13 +61,13 @@ public class SysUserController extends BaseController {
      * 获取系统用户详情
      */
     @Log(value = "系统用户", exception = "获取系统用户详情请求异常")
-    @GetMapping(value = "/info/{id}")
+    @GetMapping(value = "/{id}")
     @Operation(summary = "获取系统用户详情", description = "根据id获取系统用户详情")
     @Parameters({
             @Parameter(name = "id", required = true, description = "ID", in = ParameterIn.PATH),
     })
     public ApiResult<?> getInfo(@PathVariable("id") Long id) {
-        return ApiResult.data(sysUserService.getById(id));
+        return ApiResult.data(sysUserService.getSysUserInfoById(id));
     }
 
     /**
@@ -71,8 +76,8 @@ public class SysUserController extends BaseController {
     @Log(value = "系统用户", exception = "新增系统用户请求异常")
     @PostMapping
     @Operation(summary = "新增系统用户")
-    public ApiResult<?> add(@RequestBody SysUser sysUser) {
-        return ApiResult.condition(sysUserService.save(sysUser));
+    public ApiResult<?> add(@Validated @RequestBody SysUserVO sysUser) {
+        return ApiResult.condition(sysUserService.saveSysUserVO(sysUser));
     }
 
     /**
@@ -81,8 +86,47 @@ public class SysUserController extends BaseController {
     @Log(value = "系统用户", exception = "修改系统用户请求异常")
     @PutMapping
     @Operation(summary = "修改系统用户")
-    public ApiResult<?> edit(@RequestBody SysUser sysUser) {
-        return ApiResult.condition(sysUserService.updateById(sysUser));
+    public ApiResult<?> edit(@Validated @RequestBody SysUserVO sysUser) {
+        return ApiResult.condition(sysUserService.updateSysUserVOById(sysUser));
+    }
+
+    /**
+     * 校验部门名称重复
+     */
+    @Log(value = "系统用户", exception = "校验用户账户重复请求异常")
+    @PostMapping(value = "/checkUsernameExist")
+    @Operation(summary = "校验用户账户重复")
+    @Parameters({
+            @Parameter(name = "account", required = true, description = "用户账户", in = ParameterIn.QUERY),
+            @Parameter(name = "id", description = "用户ID", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> checkUsernameExist(@RequestBody SysUser sysUser) {
+        boolean b = sysUserService.checkUsernameExist(sysUser);
+        if (b) {
+            return ApiResult.fail("用户账户已存在");
+        }
+        return ApiResult.success();
+    }
+
+
+    /**
+     * 修改系统用户状态
+     */
+    @Log(value = "系统用户", exception = "修改系统用户请求异常")
+    @PutMapping("/setStatus")
+    @Operation(summary = "修改系统用户状态")
+    public ApiResult<?> setUserStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
+        return ApiResult.condition(sysUserService.setUserStatus(updateStatusDTO));
+    }
+
+    /**
+     * 修改系统用户密码
+     */
+    @Log(value = "系统用户", exception = "修改系统用户请求异常")
+    @PutMapping("/setNewPassword")
+    @Operation(summary = "修改系统用户密码")
+    public ApiResult<?> setNewPassword(@Validated({UpdatePasswordDTO.SetPasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        return ApiResult.condition(sysUserService.setNewPassword(updatePasswordDTO));
     }
 
     /**
@@ -92,7 +136,8 @@ public class SysUserController extends BaseController {
     @DeleteMapping
     @Operation(summary = "删除系统用户")
     public ApiResult<?> remove(@RequestBody Long[] ids) {
-        return ApiResult.condition(sysUserService.removeByIds(Arrays.asList(ids)));
+        String msg = sysUserService.deleteSysUserByIds(Arrays.asList(ids));
+        return ApiResult.success(msg);
     }
 
     /**

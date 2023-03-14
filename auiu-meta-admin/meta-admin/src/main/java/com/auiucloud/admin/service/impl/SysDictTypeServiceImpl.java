@@ -6,6 +6,7 @@ import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.mapper.SysDictTypeMapper;
 import com.auiucloud.admin.service.ISysDictDataService;
 import com.auiucloud.admin.service.ISysDictTypeService;
+import com.auiucloud.admin.vo.SysDictDataVO;
 import com.auiucloud.admin.vo.SysDictVO;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.database.model.Search;
@@ -15,7 +16,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -36,7 +41,16 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
      */
     @Override
     public List<SysDictVO> selectDictTypeList(SysDictType dictType) {
-        return baseMapper.selectDictTypeList(dictType);
+        List<SysDictVO> dictVOS = baseMapper.selectDictTypeList(dictType);
+        Optional.ofNullable(dictVOS).orElse(Collections.emptyList())
+                .parallelStream()
+                .forEach(dictVO -> {
+                    List<SysDictDataVO> dictDataVOS = Optional.ofNullable(dictVO.getDictDataList()).orElse(Collections.emptyList()).stream()
+                            .sorted(Comparator.comparing(SysDictDataVO::getSort))
+                            .collect(Collectors.toList());
+                    dictVO.setDictDataList(dictDataVOS);
+                });
+        return dictVOS;
     }
 
     @Override
@@ -53,7 +67,12 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
      */
     @Override
     public SysDictVO selectDictInfoByType(String dictType) {
-        return baseMapper.selectDictInfoByType(dictType);
+        SysDictVO sysDictVO = baseMapper.selectDictInfoByType(dictType);
+        List<SysDictDataVO> dictDataVOS = Optional.ofNullable(sysDictVO.getDictDataList()).orElse(Collections.emptyList()).stream()
+                .sorted(Comparator.comparing(SysDictDataVO::getSort))
+                .collect(Collectors.toList());
+        sysDictVO.setDictDataList(dictDataVOS);
+        return sysDictVO;
     }
 
     private static LambdaQueryWrapper<SysDictType> buildSearchParams(SysDictType dictType) {

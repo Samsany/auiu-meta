@@ -59,20 +59,20 @@ public class Search implements Serializable {
     /**
      * 当前页
      */
-    @Schema(description = "当前页", hidden = true)
-    private Integer pageNum = 1;
+    @Schema(description = "当前页", hidden = true, defaultValue = "1")
+    private Integer pageNum;
 
     /**
      * 每页显示数据
      */
-    @Schema(description = "每页显示数据", hidden = true)
-    private Integer pageSize = 10;
+    @Schema(description = "每页显示数据", hidden = true, defaultValue = "10")
+    private Integer pageSize;
 
     /**
      * 查询模式 page、list、cascade、tree
      * 默认：page
      */
-    @Schema(description = "查询模式", hidden = true)
+    @Schema(description = "查询模式", hidden = true, defaultValue = "page", example = "page | list | tree | cascade")
     private String queryMode;
 
 }

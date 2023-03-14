@@ -1,6 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysUserRole;
+import com.auiucloud.admin.dto.SysUserRoleDTO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -21,12 +22,7 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      */
     List<SysUserRole> getSysUserRoleListByUserId(Long userId);
 
-    /**
-     * 根据用户ID查询用户角色编码
-     *
-     * @param userId 用户ID
-     * @return List<String>
-     */
-    List<String> getRoleCodeListByUserId(Long userId);
+    boolean batchAddSysUserRole(SysUserRoleDTO userRoleDTO);
 
+    boolean removeSysUserRoleByUserId(Long userId);
 }

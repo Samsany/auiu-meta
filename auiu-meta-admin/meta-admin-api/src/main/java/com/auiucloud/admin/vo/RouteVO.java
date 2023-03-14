@@ -3,7 +3,10 @@ package com.auiucloud.admin.vo;
 import com.auiucloud.core.common.tree.INode;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,12 +19,16 @@ import java.util.List;
  * @createDate 2022-06-08 16-48
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(name = "系统路由VO")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RouteVO implements INode {
 
     private static final long serialVersionUID = -8662478581249339874L;
 
-    @Schema(description = "主键")
+    @Schema(description = "序号")
     private Long id;
 
     /**
@@ -33,6 +40,11 @@ public class RouteVO implements INode {
      * 路由名称
      */
     private String name;
+
+    /**
+     * 菜单权限
+     */
+    private String permission;
 
     /**
      * 组件
@@ -51,7 +63,7 @@ public class RouteVO implements INode {
     private String redirect;
 
     /**
-     * 菜单类型(0-目录 1-菜单 2-外链)
+     * 菜单类型(0-目录 1-菜单 2-按钮)
      */
     private Integer type;
 
@@ -93,7 +105,7 @@ public class RouteVO implements INode {
          * 永久显示根菜单
          */
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        private Boolean alwaysShow = true;
+        private Boolean alwaysShow = false;
 
         /**
          * 前端隐藏(0-否 1-是)

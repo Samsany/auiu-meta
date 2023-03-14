@@ -14,23 +14,5 @@ import java.util.List;
  */
 public interface ISysPermissionService extends IService<SysPermission> {
 
-    /**
-     * 查询系统权限分页列表
-     *
-     * @param search 搜索参数
-     * @param sysPermission 系统权限
-     * @return PageUtils
-     */
-    PageUtils listPage(Search search, SysPermission sysPermission);
 
-    /**
-     * 查询系统权限分页列表
-     *
-     * @param search 搜索参数
-     * @param sysPermission 系统权限
-     * @return List<SysPermission>
-     */
-    List<SysPermission> selectSysPermissionList(Search search, SysPermission sysPermission);
-
-    List<SysPermission> getPermissionListByMenuId(Long menuId);
 }

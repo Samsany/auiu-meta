@@ -10,8 +10,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author dries
@@ -25,7 +27,24 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     public List<SysRoleMenu> getRoleMenusByRoleId(Long roleId) {
         LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysRoleMenu::getRoleId, roleId);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+    }
+
+    /**
+     * 根据角色ID查询菜单列表
+     *
+     * @param roleIds 角色ID
+     * @return List<SysRoleMenu>
+     */
+    @Override
+    public List<SysRoleMenu> getRoleMenusByRoleIds(List<Long> roleIds) {
+        if (CollUtil.isNotEmpty(roleIds)) {
+            LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(SysRoleMenu::getRoleId, roleIds);
+            return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+        }
+
+        return Collections.emptyList();
     }
 
     @Override
@@ -34,32 +53,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         Long roleId = roleMenuDTO.getRoleId();
         Set<Long> menuIds = roleMenuDTO.getMenuIds();
 
-        // 批量删除角色菜单关联关系
-        // LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
-        // queryWrapper.eq(SysRoleMenu::getRoleId, roleId);
-        // this.remove(queryWrapper);
-        // 批量删除角色权限关联关系
-        // 1.查询菜单角色列表
-        List<SysRoleMenu> sysRoleMenus = this.getRoleMenusByRoleId(roleId);
-        // 2.筛选出要删除的菜单ID数组
-        Set<Long> delMenuIds = Optional.ofNullable(sysRoleMenus).orElse(Collections.emptyList())
-                .stream()
-                .filter(sysRoleMenu -> menuIds.contains(sysRoleMenu.getMenuId()))
-                .map(SysRoleMenu::getMenuId)
-                .collect(Collectors.toSet());
-        // 3.筛选出重复的数据
-
         if (CollUtil.isNotEmpty(menuIds)) {
-            List<SysRoleMenu> sysRoleMenuList = new ArrayList<>(menuIds.size());
-            for (Long menuId : menuIds) {
-                SysRoleMenu sysRoleMenu = SysRoleMenu.builder()
-                        .roleId(roleId)
-                        .menuId(menuId)
-                        .build();
-                sysRoleMenuList.add(sysRoleMenu);
-            }
-            // 批量插入
-            return this.saveBatch(sysRoleMenuList);
+            List<SysRoleMenu> sysRoleMenus = menuIds.parallelStream()
+                    .map(it -> SysRoleMenu.builder()
+                            .roleId(roleId)
+                            .menuId(it)
+                            .build())
+                    .toList();
+            return this.saveBatch(sysRoleMenus);
         }
 
         return true;
@@ -71,6 +72,19 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         queryWrapper.eq(SysRoleMenu::getMenuId, menuId);
         long count = this.count(queryWrapper);
         return count > 0;
+    }
+
+    /**
+     * 移除角色权限
+     *
+     * @param roleId 角色ID
+     * @return boolean
+     */
+    @Override
+    public boolean removeRoleMenusByRoleId(Long roleId) {
+        LambdaQueryWrapper<SysRoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysRoleMenu::getRoleId, roleId);
+        return this.remove(queryWrapper);
     }
 }
 

@@ -22,7 +22,7 @@ public enum MenuTypeEnum {
     /**
      * 按钮
      */
-    LINK(2, "外链");
+    BUTTON(2, "按钮");
 
     private final Integer code;
 

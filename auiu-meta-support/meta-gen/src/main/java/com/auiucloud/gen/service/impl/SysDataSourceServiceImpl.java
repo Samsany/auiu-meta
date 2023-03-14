@@ -68,7 +68,7 @@ public class SysDataSourceServiceImpl extends ServiceImpl<SysDataSourceMapper, S
     public List<SysDataSource> availableDataSourceList() {
         LambdaQueryWrapper<SysDataSource> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDataSource::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @Override

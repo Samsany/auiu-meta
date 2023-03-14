@@ -35,10 +35,6 @@
             <artifactId>auiu-meta-log</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.auiucloud</groupId>
-            <artifactId>auiu-meta-rule</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
         </dependency>

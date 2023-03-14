@@ -58,4 +58,9 @@
                is_deleted
         from sys_user
     </sql>
+
+    <select id="selectSysUserInfoDTOByAccount" resultMap="BaseResultMap">
+
+    </select>
+
 </mapper>

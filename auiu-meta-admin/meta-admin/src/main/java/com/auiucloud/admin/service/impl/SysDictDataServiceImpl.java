@@ -3,6 +3,7 @@ package com.auiucloud.admin.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysDictData;
+import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.mapper.SysDictDataMapper;
 import com.auiucloud.admin.service.ISysDictDataService;
 import com.auiucloud.core.common.constant.CommonConstant;
@@ -79,6 +80,38 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
         updateWrapper.eq(SysDictData::getDictType, dictData.getDictType());
         updateWrapper.ne(SysDictData::getId, dictData.getId());
         this.update(updateWrapper);
+    }
+
+    /**
+     * 校验字典标签是否唯一
+     *
+     * @param dict 字典信息
+     * @return boolean
+     */
+    @Override
+    public boolean checkDictDataLabelUnique(SysDictData dict) {
+        LambdaQueryWrapper<SysDictData> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDictData::getDictType, dict.getDictType());
+        queryWrapper.eq(SysDictData::getDictLabel, dict.getDictLabel());
+        queryWrapper.ne(dict.getId() != null, SysDictData::getId, dict.getId());
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    /**
+     * 校验字典键值是否唯一
+     *
+     * @param dict 字典信息
+     * @return boolean
+     */
+    @Override
+    public boolean checkDictDataValueUnique(SysDictData dict) {
+        LambdaQueryWrapper<SysDictData> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDictData::getDictType, dict.getDictType());
+        queryWrapper.eq(SysDictData::getDictValue, dict.getDictValue());
+        queryWrapper.ne(dict.getId() != null, SysDictData::getId, dict.getId());
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
     }
 }
 

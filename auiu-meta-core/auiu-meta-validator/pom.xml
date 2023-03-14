@@ -14,6 +14,7 @@
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-common</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

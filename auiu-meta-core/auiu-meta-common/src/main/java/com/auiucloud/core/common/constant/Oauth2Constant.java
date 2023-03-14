@@ -15,11 +15,15 @@ public class Oauth2Constant {
 
     public static final String JWT_TOKEN_PREFIX = "Bearer ";
     public static final String JWT_TOKEN_HEADER = "Authorization";
+
+    /**
+     * 超级权限
+     */
+    public static final String ALL_PERMISSION = "*:*:*";
     /**
      * 认证身份标识
      */
     public static final String AUTHENTICATION_IDENTITY_KEY = "authenticationIdentity";
-
     /**
      * JWT存储权限属性
      */
@@ -106,6 +110,11 @@ public class Oauth2Constant {
     public static final String META_AVATAR = "avatar";
 
     /**
+     * 用户部门ID
+     */
+    public static final String META_DEPT_ID = "deptId";
+
+    /**
      * 用户角色编码
      */
     public static final String META_ROLES = "roles";
@@ -128,8 +137,8 @@ public class Oauth2Constant {
     public static final String META_CLIENT_BASE = "select client_id, client_secret, resource_ids, scope, " +
             "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity," +
             "refresh_token_validity, additional_information, auto_approve as autoapprove from " + META_CLIENT_TABLE;
-    public static final String FIND_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " order by client_id";
-    public static final String SELECT_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where client_id = ?";
+    public static final String FIND_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where status = 0 order by client_id";
+    public static final String SELECT_CLIENT_DETAIL_SQL = META_CLIENT_BASE + " where status = 0 and client_id = ?";
 
     /**
      * 标志

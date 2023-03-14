@@ -1,10 +1,12 @@
 package com.auiucloud.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.domain.SysMenu;
 import com.auiucloud.admin.domain.SysUserRole;
-import com.auiucloud.admin.dto.SysMenuDto;
+import com.auiucloud.admin.vo.SysMenuVO;
+import com.auiucloud.admin.enums.MenuTypeEnum;
 import com.auiucloud.admin.mapper.SysMenuMapper;
 import com.auiucloud.admin.service.ISysMenuService;
 import com.auiucloud.admin.service.ISysRoleMenuService;
@@ -45,12 +47,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (userId.equals(CommonConstant.NODE_ONE_ID)) {
             LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
             queryWrapper.eq(SysMenu::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
+            queryWrapper.ne(SysMenu::getType, MenuTypeEnum.BUTTON.getCode());
             queryWrapper.orderByAsc(SysMenu::getSort);
-            return this.list(queryWrapper);
+            return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
         }
 
         List<SysUserRole> sysUserRoles = sysUserRoleService.getSysUserRoleListByUserId(userId);
-        List<Long> roleIds = Optional.ofNullable(sysUserRoles).orElse(Collections.emptyList()).stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        List<Long> roleIds = Optional.ofNullable(sysUserRoles).orElse(Collections.emptyList()).stream()
+                .map(SysUserRole::getRoleId)
+                .collect(Collectors.toList());
         return this.baseMapper.routes(roleIds);
     }
 
@@ -63,7 +68,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenu> treeList(Search search) {
         LambdaQueryWrapper<SysMenu> queryWrapper = buildSearchParams(search);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @NotNull
@@ -82,14 +87,14 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public boolean createMenu(SysMenuDto menuDto) {
+    public boolean createMenu(SysMenuVO menuDto) {
         SysMenu sysMenu = new SysMenu();
         BeanUtils.copyProperties(menuDto, sysMenu);
         return this.save(sysMenu);
     }
 
     @Override
-    public boolean updateMenuById(SysMenuDto menuDto) {
+    public boolean updateMenuById(SysMenuVO menuDto) {
         SysMenu sysMenu = new SysMenu();
         BeanUtils.copyProperties(menuDto, sysMenu);
         return this.updateById(sysMenu);
@@ -151,4 +156,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         long count = this.count(queryWrapper);
         return count > 0;
     }
+
+    @Override
+    public List<String> getSysMenuPermissionById(List<Long> menuIds) {
+        if (CollUtil.isNotEmpty(menuIds)) {
+            //3.根据menuId查询所有的满足条件的菜单列表,其中type=2为按钮
+            LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(SysMenu::getType, MenuTypeEnum.BUTTON.getCode());
+            queryWrapper.in(SysMenu::getId, menuIds);
+            List<SysMenu> menuList = this.list(queryWrapper);
+            return Optional.ofNullable(menuList).orElse(Collections.emptyList()).parallelStream()
+                    .map(SysMenu::getPermission)
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList();
+    }
+
 }
