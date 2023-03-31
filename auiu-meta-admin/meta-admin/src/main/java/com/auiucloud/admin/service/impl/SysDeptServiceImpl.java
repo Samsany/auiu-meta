@@ -8,7 +8,6 @@ import com.auiucloud.admin.domain.SysDept;
 import com.auiucloud.admin.domain.SysUser;
 import com.auiucloud.admin.mapper.SysDeptMapper;
 import com.auiucloud.admin.service.ISysDeptService;
-import com.auiucloud.admin.service.ISysUserService;
 import com.auiucloud.admin.vo.SysDeptTreeVO;
 import com.auiucloud.admin.vo.SysDeptVO;
 import com.auiucloud.core.common.constant.CommonConstant;

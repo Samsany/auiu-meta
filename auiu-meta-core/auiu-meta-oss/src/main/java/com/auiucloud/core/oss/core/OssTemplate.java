@@ -204,7 +204,7 @@ public class OssTemplate implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         ClientConfiguration clientConfiguration = new ClientConfiguration();
         AwsClientBuilder.EndpointConfiguration endpointConfiguration = new AwsClientBuilder.EndpointConfiguration(
                 ossProperties.getEndpoint(), ossProperties.getRegion());

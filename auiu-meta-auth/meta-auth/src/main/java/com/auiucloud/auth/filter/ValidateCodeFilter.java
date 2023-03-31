@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.auth.config.properties.ValidateCodeProperties;
 import com.auiucloud.auth.enums.ValidateCodeTypeEnum;
-import com.auiucloud.auth.security.captcha.ValidateCodeProcessorHolder;
+import com.auiucloud.auth.extension.captcha.ValidateCodeProcessorHolder;
 import com.auiucloud.core.common.exception.CaptchaException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,9 +74,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
                     return;
                 }
             }
-
-            chain.doFilter(request, response);
         }
+        chain.doFilter(request, response);
     }
 
 

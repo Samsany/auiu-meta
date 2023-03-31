@@ -32,35 +32,38 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        select id,
-               account,
-               dept_id,
-               real_name,
-               nickname,
-               avatar,
-               mobile,
-               email,
-               password,
-               gender,
-               birthday,
-               status,
-               built_in,
-               login_date,
-               login_ip,
-               register_ip,
-               register_address,
-               register_source,
-               create_time,
-               update_time,
-               create_by,
-               update_by,
-               remark,
-               is_deleted
-        from sys_user
+        select u.id,
+               u.account,
+               u.dept_id,
+               u.real_name,
+               u.nickname,
+               u.avatar,
+               u.mobile,
+               u.email,
+               u.password,
+               u.gender,
+               u.birthday,
+               u.status,
+               u.built_in,
+               u.login_date,
+               u.login_ip,
+               u.register_ip,
+               u.register_address,
+               u.register_source,
+               u.create_time,
+               u.update_time,
+               u.create_by,
+               u.update_by,
+               u.remark,
+               u.is_deleted
+        from sys_user u
+                 left join social_user_auth sua on sua.user_id = u.id
+                 left join social_user su on su.id = sua.social_user_id
     </sql>
 
-    <select id="selectSysUserInfoDTOByAccount" resultMap="BaseResultMap">
-
+    <select id="getSysUserByOpenId2Source" resultType="com.auiucloud.admin.domain.SysUser">
+        <include refid="Base_Column_List"/>
+        where u.is_deleted = 0 and su.open_id = #{openId} and su.source = #{source}
     </select>
 
 </mapper>

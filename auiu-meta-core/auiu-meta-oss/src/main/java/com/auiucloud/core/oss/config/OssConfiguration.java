@@ -2,6 +2,7 @@ package com.auiucloud.core.oss.config;
 
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.ComponentConstant;
+import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.oss.core.OssTemplate;
 import com.auiucloud.core.oss.props.OssProperties;
 import com.auiucloud.core.redis.core.RedisService;
@@ -37,6 +38,7 @@ public class OssConfiguration {
     @Bean
     @RefreshScope
     public OssProperties ossProperties(){
-        return (OssProperties) redisService.get(ComponentConstant.OSS_DEFAULT);
+        return (OssProperties) redisService.get(RedisKeyConstant.OSS_DEFAULT_CONFIG);
     }
+
 }

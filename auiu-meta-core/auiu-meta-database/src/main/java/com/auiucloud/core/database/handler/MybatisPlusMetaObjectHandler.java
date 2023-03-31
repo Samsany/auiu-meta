@@ -70,7 +70,8 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         try {
             username = SecurityUtil.getUsername();
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            log.debug(e.getMessage());
         }
         return username;
     }

@@ -28,6 +28,11 @@ public class SysOauthClient extends BaseEntity {
     private static final long serialVersionUID = 3028179941291254164L;
 
     /**
+     * 客户端类型
+     */
+    private String clientType;
+
+    /**
      * 客户端ID
      */
     private String clientId;

@@ -2,6 +2,7 @@ package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysDept;
 import com.auiucloud.admin.domain.SysUser;
+import com.auiucloud.admin.dto.SysUserDTO;
 import com.auiucloud.admin.dto.UpdatePasswordDTO;
 import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysUserService;
@@ -12,6 +13,8 @@ import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
+import com.auiucloud.core.validator.InsertGroup;
+import com.auiucloud.core.validator.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -76,7 +79,7 @@ public class SysUserController extends BaseController {
     @Log(value = "系统用户", exception = "新增系统用户请求异常")
     @PostMapping
     @Operation(summary = "新增系统用户")
-    public ApiResult<?> add(@Validated @RequestBody SysUserVO sysUser) {
+    public ApiResult<?> add(@Validated({InsertGroup.class})  @RequestBody SysUserDTO sysUser) {
         return ApiResult.condition(sysUserService.saveSysUserVO(sysUser));
     }
 
@@ -86,7 +89,7 @@ public class SysUserController extends BaseController {
     @Log(value = "系统用户", exception = "修改系统用户请求异常")
     @PutMapping
     @Operation(summary = "修改系统用户")
-    public ApiResult<?> edit(@Validated @RequestBody SysUserVO sysUser) {
+    public ApiResult<?> edit(@Validated({UpdateGroup.class}) @RequestBody SysUserDTO sysUser) {
         return ApiResult.condition(sysUserService.updateSysUserVOById(sysUser));
     }
 

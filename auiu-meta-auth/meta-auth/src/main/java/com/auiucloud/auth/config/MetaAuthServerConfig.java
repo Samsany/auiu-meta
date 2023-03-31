@@ -1,15 +1,15 @@
 package com.auiucloud.auth.config;
 
-import com.auiucloud.auth.security.granter.CaptchaTokenGranter;
-import com.auiucloud.auth.security.granter.SmsCodeTokenGranter;
-import com.auiucloud.auth.security.granter.SocialTokenGranter;
-import com.auiucloud.auth.service.impl.ClientDetailsServiceImpl;
-import com.auiucloud.auth.service.impl.PreAuthenticatedUserDetailsService;
+import com.auiucloud.auth.extension.captcha.CaptchaTokenGranter;
+import com.auiucloud.auth.extension.douyin.DouyinTokenGranter;
+import com.auiucloud.auth.extension.sms.SmsCodeTokenGranter;
+import com.auiucloud.auth.extension.social.SocialTokenGranter;
+import com.auiucloud.auth.service.AppletAuthRequest;
+import com.auiucloud.auth.service.impl.CustomClientDetailsService;
 import com.auiucloud.core.cloud.props.MetaApiProperties;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.security.model.MetaUser;
-import com.auiucloud.core.security.service.MetaUserDetailService;
 import com.auiucloud.core.security.service.impl.SingleLoginTokenServices;
 import com.xkcoding.justauth.AuthRequestFactory;
 import lombok.RequiredArgsConstructor;
@@ -51,13 +51,13 @@ import java.util.*;
 @EnableAuthorizationServer
 public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
+    private final KeyPair keyPair;
     private final MetaApiProperties metaApiProperties;
     private final AuthRequestFactory factory;
+    private final AppletAuthRequest appletAuthRequest;
     private final RedisService redisService;
-    private final KeyPair keyPair;
-    // private final UserDetailsService userDetailsService;
-    private final MetaUserDetailService metaUserDetailService;
-    private final ClientDetailsServiceImpl clientService;
+    private final UserDetailsService userDetailsService;
+    private final CustomClientDetailsService clientService;
     private final AuthenticationManager authenticationManager;
     private final RedisConnectionFactory redisConnectionFactory;
 
@@ -66,7 +66,9 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Bean
     public RedisTokenStore redisTokenStore() {
-        return new RedisTokenStore(redisConnectionFactory);
+        RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
+        redisTokenStore.setPrefix("meta:auth-token:");
+        return redisTokenStore;
     }
 
     /**
@@ -135,12 +137,12 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
             // 如果用户不为空 则把id放入jwt token中
             if (user != null) {
-                additionMessage.put(Oauth2Constant.META_USER_ID, String.valueOf(user.getId()));
+                additionMessage.put(Oauth2Constant.META_USER_ID, String.valueOf(user.getUserId()));
                 additionMessage.put(Oauth2Constant.META_USER_NAME, user.getUsername());
-                additionMessage.put(Oauth2Constant.META_AVATAR, user.getAvatar());
-                additionMessage.put(Oauth2Constant.META_ROLES, String.valueOf(user.getRoles()));
-                additionMessage.put(Oauth2Constant.META_DEPT_ID, user.getDeptId());
-                additionMessage.put(Oauth2Constant.META_TYPE, user.getType());
+                // additionMessage.put(Oauth2Constant.META_AVATAR, user.getAvatar());
+                additionMessage.put(Oauth2Constant.META_ROLES, String.valueOf(user.getAuthorities()));
+                // additionMessage.put(Oauth2Constant.META_DEPT_ID, user.getDeptId());
+                additionMessage.put(Oauth2Constant.META_LOGIN_TYPE, user.getLoginType());
             }
             ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionMessage);
             return oAuth2AccessToken;
@@ -155,7 +157,6 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     /**
-     * 重点
      * 先获取已经有的五种授权，然后添加我们自己的进去
      *
      * @param endpoints AuthorizationServerEndpointsConfigurer
@@ -172,6 +173,9 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
         // 社交登录模式
         granters.add(new SocialTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), redisService, factory));
+        // 抖音小程序模式
+        granters.add(new DouyinTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), appletAuthRequest));
         // 增加密码模式
         granters.add(new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory()));
         return new CompositeTokenGranter(granters);
@@ -200,24 +204,11 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      * 构建用户服务
      */
     private void addUserDetailsService(DefaultTokenServices tokenServices) {
-        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
-        Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-        // 管理系统客户端
-        clientUserDetailsServiceMap.put(Oauth2Constant.META_CLIENT_ADMIN_ID, metaUserDetailService);
-        // Android/IOS/H5 移动客户端
-        // clientUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID, memberUserDetailsService);
-        // 微信小程序客户端
-        // clientUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID, memberUserDetailsService);
-
-        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
-        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
-        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
-        //        if (userDetailsService != null) {
-        //            PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-        //            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
-        //            tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
-        //        }
+         if (userDetailsService != null) {
+             PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+             provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+             tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
+         }
     }
 
 }

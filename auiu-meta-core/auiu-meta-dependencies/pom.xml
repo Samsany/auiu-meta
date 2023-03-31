@@ -48,14 +48,15 @@
         <spring.cloud.version>2021.0.5</spring.cloud.version>
         <alibaba.cloud.version>2021.0.4.0</alibaba.cloud.version>
         <nacos-client.version>2.1.1</nacos-client.version>
+        <seata.version>1.6.1</seata.version>
+        <sentinel.version>1.8.2</sentinel.version>
 
         <spring.security.version>2.6.8</spring.security.version>
         <spring-boot-admin.version>2.6.7</spring-boot-admin.version>
         <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
         <spring.security.oauth2-jose.version>5.7.1</spring.security.oauth2-jose.version>
-
-        <sentinel.version>1.8.2</sentinel.version>
-        <justauth.version>1.4.0</justauth.version>
+        <justauth.version>1.16.1</justauth.version>
+        <justauth-start.version>1.4.0</justauth-start.version>
 
         <mysql.version>8.0.32</mysql.version>
         <druid.version>1.2.9</druid.version>
@@ -174,19 +175,11 @@
                 <artifactId>auiu-meta-feign</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>auiu-meta-auth</artifactId>
-                <version>${auiumeta.core.version}</version>
-            </dependency>
+
+            <!-- 微服务应用包 -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-auth-api</artifactId>
-                <version>${auiumeta.core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>auiu-meta-admin</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
@@ -196,7 +189,7 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>auiu-meta-support</artifactId>
+                <artifactId>meta-ums-api</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
@@ -255,10 +248,20 @@
                 <artifactId>spring-security-oauth2-jose</artifactId>
                 <version>${spring.security.oauth2-jose.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.seata</groupId>-->
+<!--                <artifactId>seata-spring-boot-starter</artifactId>-->
+<!--                <version>${seata.version}></version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>com.xkcoding.justauth</groupId>
                 <artifactId>justauth-spring-boot-starter</artifactId>
+                <version>${justauth-start.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>me.zhyd.oauth</groupId>
+                <artifactId>JustAuth</artifactId>
                 <version>${justauth.version}</version>
             </dependency>
 

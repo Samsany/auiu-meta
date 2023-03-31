@@ -93,7 +93,7 @@ public class LogAspect {
         String url = request.getRequestURI();
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
-        IpAddress ipAddress = IPUtil.getHttpServletRequestAddress(ip);
+        IpAddress ipAddress = IPUtil.getIpAddress(ip);
         String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
 
         // 参数
@@ -196,7 +196,7 @@ public class LogAspect {
 
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
-        IpAddress ipAddress = IPUtil.getHttpServletRequestAddress(ip);
+        IpAddress ipAddress = IPUtil.getIpAddress(ip);
         String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
 
 

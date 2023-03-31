@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.*;
+import com.auiucloud.admin.dto.SysUserDTO;
 import com.auiucloud.admin.dto.SysUserRoleDTO;
 import com.auiucloud.admin.dto.UpdatePasswordDTO;
 import com.auiucloud.admin.dto.UpdateStatusDTO;
@@ -103,6 +104,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     /**
+     * 第三方用户查询
+     *
+     * @param openId 用户标识
+     * @param source 所属平台
+     * @return
+     */
+    @Override
+    public UserInfoVO getSysUserByOpenId2Source(String openId, String source) {
+        SysUser sysUser = this.baseMapper.getSysUserByOpenId2Source(openId, source);
+        return this.buildUserInfoVo(sysUser);
+    }
+
+    /**
      * 组装LambdaQueryWrapper查询参数
      *
      * @param search  查询参数
@@ -168,21 +182,26 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Transactional
     @Override
-    public boolean saveSysUserVO(SysUserVO sysUser) {
+    public boolean saveSysUserVO(SysUserDTO sysUser) {
         SysUser user = new SysUser();
         BeanUtils.copyProperties(sysUser, user);
         if (this.checkUsernameExist(user)) {
-            throw new ApiException("用户账户已存在");
+            throw new ApiException("该账户已注册");
+        }
+        if (this.checkUserMobileExist(user)) {
+            throw new ApiException("该手机号已注册");
+        }
+        if (this.checkUserEmailExist(user)) {
+            throw new ApiException("该邮箱已注册");
         }
 
         user.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         boolean result = this.save(user);
-        List<SysRoleVO> roles = sysUser.getRoles();
-        if (result && CollUtil.isNotEmpty(roles)) {
+        if (result) {
             // 插入角色信息
             SysUserRoleDTO userRoleDTO = SysUserRoleDTO.builder()
                     .userId(user.getId())
-                    .roleIds(roles.parallelStream().map(SysRoleVO::getId).toList())
+                    .roleIds(sysUser.getRoleIds())
                     .build();
             sysUserRoleService.batchAddSysUserRole(userRoleDTO);
         }
@@ -197,22 +216,27 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Transactional
     @Override
-    public boolean updateSysUserVOById(SysUserVO sysUser) {
+    public boolean updateSysUserVOById(SysUserDTO sysUser) {
         SysUser user = new SysUser();
         BeanUtils.copyProperties(sysUser, user);
         if (this.checkUsernameExist(user)) {
-            throw new ApiException("用户账户已存在");
+            throw new ApiException("该账户已注册");
+        }
+        if (this.checkUserMobileExist(user)) {
+            throw new ApiException("该手机号已注册");
+        }
+        if (this.checkUserEmailExist(user)) {
+            throw new ApiException("该邮箱已注册");
         }
 
         boolean result = this.updateById(user);
-        List<SysRoleVO> roles = sysUser.getRoles();
-        if (result && CollUtil.isNotEmpty(roles)) {
+        if (result) {
             // 删除已有的角色
             sysUserRoleService.removeSysUserRoleByUserId(user.getId());
             // 插入角色信息
             SysUserRoleDTO userRoleDTO = SysUserRoleDTO.builder()
                     .userId(user.getId())
-                    .roleIds(roles.parallelStream().map(SysRoleVO::getId).toList())
+                    .roleIds(sysUser.getRoleIds())
                     .build();
             sysUserRoleService.batchAddSysUserRole(userRoleDTO);
         }
@@ -350,6 +374,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     /**
+     * 校验用户邮箱是否重复
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    @Override
+    public boolean checkUserEmailExist(SysUser sysUser) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getEmail, sysUser.getEmail());
+        queryWrapper.ne(sysUser.getId() != null, SysUser::getId, sysUser.getId());
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    /**
      * 用户信息组装
      *
      * @param sysUser 用户信息
@@ -408,10 +447,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
             // 构建用户信息
             UserInfoVO userInfo = UserInfoVO.builder()
-                    .sysUser(sysUser)
+                    .userId(sysUser.getId())
                     .username(sysUser.getAccount())
                     .roles(roles)
                     .permissions(permissions)
+                    .sysUser(sysUser)
                     .tenantId("")
                     .build();
             log.debug("feign调用：userInfo:{}", userInfo);

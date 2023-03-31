@@ -1,29 +1,22 @@
 package com.auiucloud.core.common.utils;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.jwt.Claims;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.context.UserContext;
-import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.common.model.LoginUser;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.nimbusds.jose.JWSObject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Security工具类
@@ -46,18 +39,31 @@ public class SecurityUtil {
         }
         return token;
     }
-
+    /**
+     * 从HttpServletRequest里获取access_token, 去除token前缀
+     *
+     * @return token
+     */
     public static String getRealToken() {
         String token = getHeaderToken();
         return token.replace(Oauth2Constant.JWT_TOKEN_PREFIX, "");
     }
-
+    /**
+     * 从token中解析用户信息
+     *
+     * @return JSONObject
+     */
     public static JSONObject getJwtPayload() {
         // 从token中解析用户信息
         String realToken = getRealToken();
         return getJwtPayload(realToken);
     }
-
+    /**
+     * 从token中解析用户信息
+     *
+     * @param realToken token
+     * @return JSONObject
+     */
     public static JSONObject getJwtPayload(String realToken) {
         // 从token中解析用户信息
         JWSObject jwsObject;
@@ -74,7 +80,7 @@ public class SecurityUtil {
     /**
      * 获取用户ID
      *
-     * @return 用户ID
+     * @return ID
      */
     public static Long getUserId() {
         return getJwtPayload().getLong(Oauth2Constant.META_USER_ID);
@@ -83,10 +89,19 @@ public class SecurityUtil {
     /**
      * 获取用户账户
      *
-     * @return 用户账户
+     * @return 账户
      */
     public static String getUsername() {
         return getJwtPayload().getStr(Oauth2Constant.META_USER_NAME);
+    }
+
+    /**
+     * 获取用户登录客户端
+     *
+     * @return 客户端
+     */
+    public static String getLoginClient() {
+        return getJwtPayload().getStr(Oauth2Constant.META_LOGIN_CLIENT);
     }
 
 
@@ -131,10 +146,10 @@ public class SecurityUtil {
         List<String> roles = JSONUtil.toList(rolesStr, String.class);
 
         LoginUser loginUser = LoginUser.builder()
-                .userId(jwtPayload.getStr(Oauth2Constant.META_USER_ID))
+                .userId(jwtPayload.getLong(Oauth2Constant.META_USER_ID))
                 .account(jwtPayload.getStr(Oauth2Constant.META_USER_NAME))
                 .roles(roles)
-                .type(jwtPayload.getInt(Oauth2Constant.META_TYPE))
+                .loginType(jwtPayload.getInt(Oauth2Constant.META_LOGIN_TYPE))
                 .build();
         UserContext.setUser(loginUser);
         return loginUser;
@@ -171,23 +186,19 @@ public class SecurityUtil {
     }
 
     /**
-     * 解析JWT获取获取认证身份标识
+     * 解析JWT获取认证类型
      *
      * @return
      */
     @SneakyThrows
-    public static String getAuthenticationIdentity() {
+    public static Integer getAuthenticationIdentity() {
         HttpServletRequest request = RequestHolder.getHttpServletRequest();
         String refreshToken = request.getParameter("refresh_token");
 
         String payload = StrUtil.toString(JWSObject.parse(refreshToken).getPayload());
         JSONObject jsonObject = JSONUtil.parseObj(payload);
 
-        String authenticationIdentity = jsonObject.getStr(Oauth2Constant.AUTHENTICATION_IDENTITY_KEY);
-        if (StrUtil.isBlank(authenticationIdentity)) {
-            authenticationIdentity = AuthenticationIdentityEnum.USERNAME.getValue();
-        }
-        return authenticationIdentity;
+        return jsonObject.getInt(Oauth2Constant.META_LOGIN_TYPE, CommonConstant.STATUS_DISABLE_VALUE);
     }
 
 }

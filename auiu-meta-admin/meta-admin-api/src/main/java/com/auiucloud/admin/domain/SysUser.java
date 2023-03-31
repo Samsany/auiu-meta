@@ -3,10 +3,7 @@ package com.auiucloud.admin.domain;
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
@@ -89,17 +86,20 @@ public class SysUser extends BaseEntity {
     /**
      * 账户是否过期(0-过期 1-未过期)
      */
-    private boolean accountNonExpired;
+    @Builder.Default
+    private boolean accountNonExpired = true;
 
     /**
      * 账户是否锁定(0-锁定 1-未锁定)
      */
-    private boolean accountNonLocked;
+    @Builder.Default
+    private boolean accountNonLocked = true;
 
     /**
      * 证书(密码)是否过期(0-过期 1-未过期)
      */
-    private boolean credentialsNonExpired;
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
 
     /**
      * 内置用户(0-否 1-是)

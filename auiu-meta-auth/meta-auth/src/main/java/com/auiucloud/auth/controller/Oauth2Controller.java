@@ -1,7 +1,7 @@
 package com.auiucloud.auth.controller;
 
 import com.auiucloud.auth.domain.Captcha;
-import com.auiucloud.auth.security.captcha.ValidateCodeProcessorHolder;
+import com.auiucloud.auth.extension.captcha.ValidateCodeProcessorHolder;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.log.annotation.Log;

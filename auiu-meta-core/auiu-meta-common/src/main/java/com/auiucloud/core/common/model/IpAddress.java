@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -15,16 +16,18 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class IpAddress implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 7646747214997153325L;
+
     private String regionNames;
     private String proCode;
     private String err;
     private String city;
     private String cityCode;
-    private String ip;
+    private String ip = "127.0.0.1";
     private String pro;
     private String regionCode;
-    private String region;
+    private String region = "localhost";
     private String addr;
 
 }

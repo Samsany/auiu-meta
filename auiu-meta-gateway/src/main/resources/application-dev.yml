@@ -2,7 +2,7 @@ server:
   port: 88
 spring:
   application:
-    name: @artifactId@
+    name: meta-gateway
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -12,7 +12,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:${server.port}/auiu-meta-auth/rsa/publicKey'
+          jwk-set-uri: 'http://localhost:${server.port}/meta-auth/rsa/publicKey'
   cloud:
     gateway:
       discovery:

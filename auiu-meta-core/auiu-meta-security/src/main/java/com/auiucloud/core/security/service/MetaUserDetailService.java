@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
  * @date 2021/12/22
  */
 public interface MetaUserDetailService extends UserDetailsService {
+
     /**
      * 根据手机号登录
      *
@@ -23,10 +24,11 @@ public interface MetaUserDetailService extends UserDetailsService {
     /**
      * 根据社交账号登录
      *
-     * @param openId 第三方的绑定的openId
+     * @param username 第三方绑定的用户账户
+     * @param source 第三方
      * @return UserDetails
      * @throws UsernameNotFoundException 用户不存在抛异常
      */
-    UserDetails loadUserBySocial(String openId) throws UsernameNotFoundException;
+    UserDetails loadUserBySocial(String username, Integer source) throws UsernameNotFoundException;
 
 }

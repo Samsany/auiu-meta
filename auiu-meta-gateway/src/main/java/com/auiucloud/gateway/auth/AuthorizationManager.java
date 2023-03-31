@@ -66,7 +66,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         }
 
         // 非管理端路径直接放行
-        if (!path.startsWith(RedisKeyConstant.ADMIN_URL_PATTERN)) {
+        if (!path.startsWith(Oauth2Constant.ADMIN_URL_PATTERN)) {
             return Mono.just(new AuthorizationDecision(true));
         }
 

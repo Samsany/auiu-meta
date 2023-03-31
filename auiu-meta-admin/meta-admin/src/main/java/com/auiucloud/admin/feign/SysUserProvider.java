@@ -32,4 +32,12 @@ public class SysUserProvider implements ISysUserProvider {
         return ApiResult.data(sysUserService.getUserInfoByUsername(username));
     }
 
+    @Override
+    @GetMapping(ProviderConstant.PROVIDER_USER_OPENID)
+    @Log(value = "第三方用户查询", exception = "第三方用户查询请求失败")
+    @Operation(summary = "第三方用户查询", description = "第三方用户查询")
+    public ApiResult<UserInfoVO> getSysUserByOpenId2Source(String openId, String source) {
+        // 查询用户关联表
+        return ApiResult.data(sysUserService.getSysUserByOpenId2Source(openId, source));
+    }
 }

@@ -26,4 +26,6 @@ public interface ISysUserProvider {
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
     ApiResult<UserInfoVO> getUserByUsername(@RequestParam String username);
 
+    @GetMapping(ProviderConstant.PROVIDER_USER_OPENID)
+    ApiResult<UserInfoVO> getSysUserByOpenId2Source(@RequestParam String openId, @RequestParam String source);
 }

@@ -1,6 +1,7 @@
 package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysUser;
+import com.auiucloud.admin.dto.SysUserDTO;
 import com.auiucloud.admin.dto.UpdatePasswordDTO;
 import com.auiucloud.admin.dto.UpdateStatusDTO;
 import com.auiucloud.admin.vo.SysUserVO;
@@ -54,6 +55,14 @@ public interface ISysUserService extends IService<SysUser> {
     UserInfoVO getUserInfoByUsername(String account);
 
     /**
+     * 第三方用户查询
+     * @param openId 用户标识
+     * @param source 所属平台
+     * @return
+     */
+    UserInfoVO getSysUserByOpenId2Source(String openId, String source);
+
+    /**
      * 根据部门ID查找用户
      *
      * @param deptId 部门ID
@@ -75,7 +84,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param sysUser 用户信息
      * @return boolean
      */
-    boolean saveSysUserVO(SysUserVO sysUser);
+    boolean saveSysUserVO(SysUserDTO sysUser);
 
     /**
      * 修改用户
@@ -83,7 +92,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param sysUser 用户信息
      * @return boolean
      */
-    boolean updateSysUserVOById(SysUserVO sysUser);
+    boolean updateSysUserVOById(SysUserDTO sysUser);
 
     /**
      * 根据用户ID修改用户状态
@@ -130,4 +139,12 @@ public interface ISysUserService extends IService<SysUser> {
      * @return boolean
      */
     boolean checkUserMobileExist(SysUser sysUser);
+    /**
+     * 校验用户邮箱是否重复
+     *
+     * @param sysUser 用户信息
+     * @return boolean
+     */
+    boolean checkUserEmailExist(SysUser sysUser);
+
 }

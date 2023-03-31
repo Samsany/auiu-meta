@@ -22,6 +22,8 @@
 
         <module>meta-gen</module>
         <module>meta-gen-api</module>
+
+        <module>meta-monitor</module>
     </modules>
 
 </project>

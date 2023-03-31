@@ -15,6 +15,16 @@ spring:
 meta:
   social:
     url: https://localhost:3100/social/login
+
+  applets:
+    douyin:
+      configs:
+        - appId: tt04fc72419bc33a4701
+          secret: 4e051869e9a20a0c5396bbd115648400ba136925  # 抖音小程序的Secret
+          token:  # 微信小程序消息服务器配置的token
+          aesKey:  # 微信小程序消息服务器配置的EncodingAESKey
+          msgDataFormat: JSON
+
 #  validate:
 #    img:
 #      length: 3

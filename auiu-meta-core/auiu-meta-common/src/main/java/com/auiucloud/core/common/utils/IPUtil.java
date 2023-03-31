@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Objects;
@@ -39,18 +40,32 @@ public class IPUtil {
         return getHttpServletRequestIpAddress(request);
     }
 
-
     /**
      * 根据ip获取详细地址
      */
-    public static IpAddress getHttpServletRequestAddress(String ip) {
-        String url = "https://whois.pconline.com.cn/ipJson.jsp";
-        HashMap<String, Object> paramMap = new HashMap<>();
-        paramMap.put("json", "true");
-        paramMap.put("ip", ip);
-        String result = HttpUtil.get(url, paramMap);
+    public static IpAddress getIpAddress(String ip) {
+        try {
+            String url = "https://whois.pconline.com.cn/ipJson.jsp";
+            HashMap<String, Object> paramMap = new HashMap<>();
+            paramMap.put("json", "true");
+            paramMap.put("ip", URLEncoder.encode(ip, StandardCharsets.UTF_8));
+            String result = HttpUtil.get(url, paramMap);
 
-        return JSONUtil.toBean(result, IpAddress.class);
+            return JSONUtil.toBean(result, IpAddress.class);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            log.error("获取IP地址异常");
+            e.printStackTrace();
+            return new IpAddress();
+        }
+    }
+
+    /**
+     * 获取详细地址
+     */
+    public static IpAddress getIpAddress() {
+        String ip = IPUtil.getHttpServletRequestIpAddress();
+        return getIpAddress(ip);
     }
 
     public static String getRealIp() {

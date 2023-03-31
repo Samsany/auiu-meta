@@ -1,7 +1,8 @@
 package com.auiucloud.auth.config;
 
-import com.auiucloud.auth.security.sms.SmsCodeAuthenticationSecurityConfig;
-import com.auiucloud.auth.security.social.SocialAuthenticationSecurityConfig;
+import com.auiucloud.auth.extension.douyin.DouyinAuthenticationSecurityConfig;
+import com.auiucloud.auth.extension.sms.SmsCodeAuthenticationSecurityConfig;
+import com.auiucloud.auth.extension.social.SocialAuthenticationSecurityConfig;
 import com.auiucloud.auth.service.SmsCodeSenderService;
 import com.auiucloud.auth.service.ValidateCodeService;
 import com.auiucloud.auth.service.impl.DefaultSmsCodeSenderImpl;
@@ -42,11 +43,9 @@ import javax.annotation.Resource;
 public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
-
-    @Resource
-    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
-    @Resource
+    private final SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     private final SocialAuthenticationSecurityConfig socialAuthenticationSecurityConfig;
+    private final DouyinAuthenticationSecurityConfig douyinAuthenticationSecurityConfig;
 
     @SneakyThrows
     @Override
@@ -55,6 +54,8 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(socialAuthenticationSecurityConfig)
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(douyinAuthenticationSecurityConfig)
                 .and()
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)

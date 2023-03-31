@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.auiucloud.component.mapper.SysConfigMapper">
+<mapper namespace="com.auiucloud.component.modules.oss.mapper.SysConfigMapper">
 
-    <resultMap id="BaseResultMap" type="com.auiucloud.component.domain.SysConfig">
+    <resultMap id="BaseResultMap" type="com.auiucloud.component.oss.domain.SysConfig">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
             <result property="configName" column="config_name" jdbcType="BIGINT"/>

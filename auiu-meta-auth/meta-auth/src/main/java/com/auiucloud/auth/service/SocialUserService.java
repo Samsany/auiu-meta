@@ -10,4 +10,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface SocialUserService extends IService<SocialUser> {
 
+    Boolean registerUserBySocial(Long userId, SocialUser socialUser);
 }

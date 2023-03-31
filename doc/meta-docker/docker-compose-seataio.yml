@@ -1,21 +1,21 @@
 version: '3'
 services:
   seata-server:
-    image: seataio/seata-server                  # 镜像`seataio/seata-server`
-    container_name: seata-server                 # 容器名为'seata-server'
-    hostname: seata-server                       # 定义主机名
-    restart: always                              # 指定容器退出后的重启策略为始终重启
+    image: seataio/seata-server:1.6.1     # 镜像`seataio/seata-server`
+    container_name: seata-server                              # 容器名为'seata-server'
+    restart: always                                           # 指定容器退出后的重启策略为始终重启
     #容器的映射端口
     ports:
+      - "7091:7091"
       - "8091:8091"
-    volumes:                                    # 数据卷挂载路径设置,将本机目录映射到容器目录
-      - ./seata-server/config/registry.conf:/seata-server/resources/registry.conf #左边是本地目录
-      - ./seata-server/logs:/root/logs/seata    #日志
-    environment:                                # 设置环境变量,相当于docker run命令中的-e
+    environment:
+      - STORE_MODE=db
+      # 以SEATA_IP作为host注册seata server
+      - SEATA_IP=139.196.120.28
       - SEATA_PORT=8091
-      - SEATA_IP=47.100.74.170
-      - SEATA_CONFIG_NAME=file:/seata-server/resources/registry.conf  #docker下目录
-
+    volumes:                                                  # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - "./seata-server/resources:/seata-server/resources"    # 配置文件
+      - "./seata-server/logs:/root/logs/seata"                # 日志
 
 ### 执行推送命令
 #  cd /opt/seata/nacos

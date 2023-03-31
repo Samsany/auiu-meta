@@ -25,19 +25,30 @@ public class ProviderConstant {
      * 远程调用公共前缀
      */
     public final String PROVIDER = "/provider";
-
     /**
      * 根据username查询用户信息
      */
     public final String PROVIDER_USER_USERNAME = PROVIDER + "/user/username";
-
     /**
      * 根据手机号查询用户信息
      */
     public final String PROVIDER_USER_MOBILE = PROVIDER + "/user/mobile";
+    /**
+     * 根据openId + source查询用户信息
+     */
+    public final String PROVIDER_USER_OPENID = PROVIDER + "/user/openid";
+    /**
+     * 根据uuid + source查询用户信息
+     */
+    public final String PROVIDER_USER_SOCIAL = PROVIDER + "/user/social";
 
     /**
      * 日志配置
      */
     public final String PROVIDER_LOG_SET = PROVIDER + "/log/set";
+
+    /**
+     * 第三方用户注册
+     */
+    public final String PROVIDER_USER_REGISTER_SOCIAL = PROVIDER + "/user/register/social";
 }

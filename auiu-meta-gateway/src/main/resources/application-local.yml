@@ -2,7 +2,7 @@ server:
   port: 88
 spring:
   application:
-    name: @artifactId@
+    name: meta-gateway
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

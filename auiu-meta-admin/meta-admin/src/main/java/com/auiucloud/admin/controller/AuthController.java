@@ -42,7 +42,7 @@ public class AuthController {
         UserInfoVO userInfo = sysUserService.getUserInfoByUsername(loginUser.getAccount());
 
         Map<String, Object> data = new HashMap<>(7);
-        data.put("userId", loginUser.getUserId());
+        data.put("userId", userInfo.getUserId());
         data.put("username", loginUser.getAccount());
         data.put("realName", userInfo.getSysUser().getRealName());
         data.put("nickname", userInfo.getSysUser().getNickname());
