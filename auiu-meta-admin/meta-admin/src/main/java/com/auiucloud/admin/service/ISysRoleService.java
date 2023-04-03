@@ -1,15 +1,13 @@
 package com.auiucloud.admin.service;
 
-import com.auiucloud.admin.domain.SysDictType;
 import com.auiucloud.admin.domain.SysRole;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.vo.SysRoleVO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author dries

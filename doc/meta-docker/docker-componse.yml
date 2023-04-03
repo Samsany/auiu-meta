@@ -1,0 +1,85 @@
+version: "3"
+services:
+  nacos:
+    # 默认使用nacos/nacos-server:v2.1.1
+    # m1环境下docker启动失败 使用nacos/nacos-server:v2.1.1-slim镜像解决
+    image: nacos/nacos-server:v2.1.1-slim
+    container_name: nacos-standalone-mysql
+    env_file:
+      - ./env/nacos-standlone-mysql.env
+    volumes:
+      - ./nacos/logs/:/home/nacos/logs
+      - ./nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9555:9555"
+    restart: always
+    networks:
+      - meta_net
+#    depends_on:
+#      - mysql
+
+#  mysql:
+#    container_name: mysql:8.0
+#    image: mysql:8.0.32
+#    env_file:
+#      - ./env/mysql.env
+#    volumes:
+#      - ./mysql:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+
+#  redis:
+#    image: redis:latest                                                               # 镜像'redis:latest'
+#    container_name: redis                                                             # 容器名为'redis'
+#    restart: always                                                                    # 指定容器退出后的重启策略为始终重启
+#    #    command: redis-server /etc/redis/redis.conf --requirepass 123456 --appendonly yes # 启动redis服务并添加密码为：123456,并开启redis持久化配置
+#    command: redis-server /etc/redis.conf # 启动redis服务 --requirepass Zxx131013@ --appendonly yes 并添加密码为：123456,并开启redis持久化配置
+#    environment: # 设置环境变量,相当于docker run命令中的-e
+#      TZ: Asia/Shanghai
+#      LANG: en_US.UTF-8
+#    volumes: # 数据卷挂载路径设置,将本机目录映射到容器目录
+#      - "./redis/data:/data"
+#      - "./redis/conf/redis.conf:/etc/redis.conf"  # `redis.conf`文件内容`http://download.redis.io/redis-stable/redis.conf`
+#    ports: # 映射端口
+#      - "6379:6379"
+#    networks:
+#      - meta_net
+
+  seata-server:
+    image: seataio/seata-server:1.6.1     # 镜像`seataio/seata-server`
+    hostname: seata-server
+    container_name: seata-server                              # 容器名为'seata-server'
+    restart: always                                           # 指定容器退出后的重启策略为始终重启
+    # 容器的映射端口
+    ports:
+      - "7091:7091"
+      - "8091:8091"
+    environment:
+      - STORE_MODE=db
+      # 以SEATA_IP作为host注册seata server
+      - SEATA_PORT=8091
+      - SEATA_IP=192.168.0.111
+    volumes:                                              # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - "./seata-server/resources:/seata-server/resources"    # 配置文件
+      - "./seata-server/logs:/root/logs/seata"                # 日志
+    networks:
+      - meta_net
+
+  # 默认的登录帐号和密码都是：sentinel
+  sentinel:
+    image: bladex/sentinel-dashboard                             # 镜像`bladex/sentinel-dashboard`
+    container_name: sentinel                                     # 容器名为'sentinel'
+    restart: always                                              # 指定容器退出后的重启策略为始终重启
+    environment:                                                 # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+    ports:                                                       # 映射端口
+      - "8858:8858"
+    networks:
+      - meta_net
+
+networks:
+  meta_net:
+    driver: bridge

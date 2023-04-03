@@ -1,7 +1,7 @@
 package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysRole;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysRoleService;
 import com.auiucloud.admin.vo.SysRoleVO;
 import com.auiucloud.core.common.api.ApiResult;

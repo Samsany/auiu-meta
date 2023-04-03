@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.SysOauthClient;
 import com.auiucloud.admin.dto.SysOauthClientDTO;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.mapper.SysOauthClientMapper;
 import com.auiucloud.admin.service.ISysOauthClientService;
 import com.auiucloud.core.common.constant.RedisKeyConstant;

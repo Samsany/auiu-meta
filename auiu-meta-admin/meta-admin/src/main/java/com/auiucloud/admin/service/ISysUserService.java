@@ -2,8 +2,8 @@ package com.auiucloud.admin.service;
 
 import com.auiucloud.admin.domain.SysUser;
 import com.auiucloud.admin.dto.SysUserDTO;
-import com.auiucloud.admin.dto.UpdatePasswordDTO;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.vo.SysUserVO;
 import com.auiucloud.admin.vo.UserInfoVO;
 import com.auiucloud.core.database.model.Search;

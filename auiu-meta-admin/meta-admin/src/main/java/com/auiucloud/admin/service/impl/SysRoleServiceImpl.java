@@ -6,7 +6,7 @@ import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.domain.SysRole;
 import com.auiucloud.admin.domain.SysRoleMenu;
 import com.auiucloud.admin.dto.SysRoleMenuDTO;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.mapper.SysRoleMapper;
 import com.auiucloud.admin.service.ISysRoleMenuService;
 import com.auiucloud.admin.service.ISysRoleService;

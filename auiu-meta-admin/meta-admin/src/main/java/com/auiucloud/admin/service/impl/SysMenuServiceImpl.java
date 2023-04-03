@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -67,8 +68,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenu> treeList(Search search) {
+        List<SysMenu> list = new ArrayList<>();
+        SysMenu menu = SysMenu.builder()
+                .id(0L)
+                .title("根菜单")
+                .parentId(0L)
+                .build();
+        list.add(menu);
         LambdaQueryWrapper<SysMenu> queryWrapper = buildSearchParams(search);
-        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+        List<SysMenu> dbList = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+        list.addAll(dbList);
+        return list;
     }
 
     @NotNull

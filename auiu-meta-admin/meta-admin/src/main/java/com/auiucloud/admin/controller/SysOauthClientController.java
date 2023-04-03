@@ -1,7 +1,7 @@
 package com.auiucloud.admin.controller;
 
 import com.auiucloud.admin.domain.SysOauthClient;
-import com.auiucloud.admin.dto.UpdateStatusDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.service.ISysOauthClientService;
 import com.auiucloud.admin.dto.SysOauthClientDTO;
 import com.auiucloud.core.common.api.ApiResult;
