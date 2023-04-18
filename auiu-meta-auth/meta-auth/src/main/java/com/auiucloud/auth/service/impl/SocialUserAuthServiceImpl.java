@@ -2,7 +2,7 @@ package com.auiucloud.auth.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.auiucloud.auth.domain.SocialUserAuth;
-import com.auiucloud.auth.service.SocialUserAuthService;
+import com.auiucloud.auth.service.ISocialUserAuthService;
 import com.auiucloud.auth.mapper.SocialUserAuthMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class SocialUserAuthServiceImpl extends ServiceImpl<SocialUserAuthMapper, SocialUserAuth>
-    implements SocialUserAuthService{
+    implements ISocialUserAuthService {
 
 }
 

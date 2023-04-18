@@ -25,7 +25,7 @@
         <result property="integral" column="integral" jdbcType="INTEGER"/>
         <result property="experience" column="experience" jdbcType="OTHER"/>
         <result property="signNum" column="sign_num" jdbcType="INTEGER"/>
-        <result property="level" column="level" jdbcType="BIGINT"/>
+        <result property="levelId" column="level_id" jdbcType="BIGINT"/>
         <result property="spreadUid" column="spread_uid" jdbcType="BIGINT"/>
         <result property="spreadTime" column="spread_time" jdbcType="TIMESTAMP"/>
         <result property="promoterTime" column="promoter_time" jdbcType="TIMESTAMP"/>
@@ -62,7 +62,7 @@
         password,gender,birthday,
         status,group_ids,tag_ids,
         balance,brokerage_price,integral,
-        experience,sign_num,level,
+        experience,sign_num,level_id,
         spread_uid,spread_time,promoter_time,
         is_promoter,pay_count,spread_count,
         country,province,city,
@@ -84,6 +84,10 @@
                u.email,
                u.password,
                u.status,
+               u.gender,
+               u.city,
+               u.province,
+               u.country,
                u.account_non_expired,
                u.account_non_locked,
                u.credentials_non_expired,
@@ -91,6 +95,8 @@
         from ums_user u
                  left join social_user_auth sua on sua.user_id = u.id
                  left join social_user su on su.id = sua.social_user_id
-        where u.is_deleted = 0 and su.open_id = #{openId} and su.source = #{source}
+        where u.is_deleted = 0
+          and su.open_id = #{openId}
+          and su.source = #{source}
     </select>
 </mapper>

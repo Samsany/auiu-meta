@@ -68,7 +68,7 @@ public class MetaUserDetailsServiceImpl implements MetaUserDetailService {
                 ApiResult<UserInfoVO> apiResult = sysUserProvider.getUserByUsername(username);
                 if (apiResult.successful() && ObjectUtil.isNotNull(apiResult.getData())) {
                     UserInfoVO userInfo = apiResult.getData();
-                    userInfo.setLoginType(AuthenticationIdentityEnum.USERNAME.getValue());
+                    userInfo.setLoginType(String.valueOf(AuthenticationIdentityEnum.USERNAME.getValue()));
                     userDetails = buildUserDetails(userInfo);
                 }
                 if (ObjectUtil.isNull(userDetails)) {
@@ -79,7 +79,7 @@ public class MetaUserDetailsServiceImpl implements MetaUserDetailService {
                 ApiResult<MemberInfoVO> apiResult = memberProvider.getUserByUsername(username);
                 if (apiResult.successful() && ObjectUtil.isNotNull(apiResult.getData())) {
                     MemberInfoVO userInfo = apiResult.getData();
-                    userInfo.setLoginType(AuthenticationIdentityEnum.USERNAME.getValue());
+                    userInfo.setLoginType(String.valueOf(AuthenticationIdentityEnum.USERNAME.getValue()));
                     userInfo.setAccount(username);
                     userDetails = buildUserDetails(userInfo);
                 }
@@ -112,7 +112,7 @@ public class MetaUserDetailsServiceImpl implements MetaUserDetailService {
                 ApiResult<UserInfoVO> apiResult = sysUserProvider.getUserByUsername(username);
                 if (apiResult.successful() && ObjectUtil.isNotNull(apiResult.getData())) {
                     UserInfoVO userInfo = apiResult.getData();
-                    userInfo.setLoginType(source);
+                    userInfo.setLoginType(String.valueOf(source));
                     userDetails = buildUserDetails(userInfo);
                 }
                 if (ObjectUtil.isNull(userDetails)) {
@@ -123,7 +123,7 @@ public class MetaUserDetailsServiceImpl implements MetaUserDetailService {
                 ApiResult<MemberInfoVO> apiResult = memberProvider.getUserByUsername(username);
                 if (apiResult.successful() && ObjectUtil.isNotNull(apiResult.getData())) {
                     MemberInfoVO userInfo = apiResult.getData();
-                    userInfo.setLoginType(source);
+                    userInfo.setLoginType(String.valueOf(source));
                     userDetails = buildUserDetails(userInfo);
                 }
                 if (ObjectUtil.isNull(userDetails)) {

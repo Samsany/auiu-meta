@@ -1,7 +1,9 @@
 package com.auiucloud.ums.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
@@ -10,6 +12,7 @@ import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.validator.InsertGroup;
 import com.auiucloud.core.validator.UpdateGroup;
 import com.auiucloud.ums.domain.Member;
+import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.service.IMemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -74,7 +77,7 @@ public class MemberController extends BaseController {
     @Log(value = "会员", exception = "新增会员请求异常")
     @PostMapping
     @Operation(summary = "新增会员")
-    public ApiResult<?> add(@Validated({InsertGroup.class}) @RequestBody Member member) {
+    public ApiResult<?> add(@Validated({InsertGroup.class}) @RequestBody RegisterMemberDTO member) {
         return ApiResult.condition(memberService.saveMember(member));
     }
 
@@ -86,6 +89,16 @@ public class MemberController extends BaseController {
     @Operation(summary = "修改会员")
     public ApiResult<?> edit(@Validated({UpdateGroup.class}) @RequestBody Member member) {
         return ApiResult.condition(memberService.updateMemberById(member));
+    }
+
+    /**
+     * 修改系统用户密码
+     */
+    @Log(value = "系统用户", exception = "修改系统用户请求异常")
+    @PutMapping("/setNewPassword")
+    @Operation(summary = "修改用户密码")
+    public ApiResult<?> setNewPassword(@Validated({UpdatePasswordDTO.SetPasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        return ApiResult.condition(memberService.setNewPassword(updatePasswordDTO));
     }
 
     /**

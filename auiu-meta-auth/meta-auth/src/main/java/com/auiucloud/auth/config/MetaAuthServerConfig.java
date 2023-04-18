@@ -4,6 +4,7 @@ import com.auiucloud.auth.extension.captcha.CaptchaTokenGranter;
 import com.auiucloud.auth.extension.douyin.DouyinTokenGranter;
 import com.auiucloud.auth.extension.sms.SmsCodeTokenGranter;
 import com.auiucloud.auth.extension.social.SocialTokenGranter;
+import com.auiucloud.auth.extension.wechat.WechatTokenGranter;
 import com.auiucloud.auth.service.AppletAuthRequest;
 import com.auiucloud.auth.service.impl.CustomClientDetailsService;
 import com.auiucloud.core.cloud.props.MetaApiProperties;
@@ -173,6 +174,9 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
         // 社交登录模式
         granters.add(new SocialTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), redisService, factory));
+        // 微信小程序模式
+        granters.add(new WechatTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), appletAuthRequest));
         // 抖音小程序模式
         granters.add(new DouyinTokenGranter(authenticationManager, tokenServices, endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory(), appletAuthRequest));
@@ -187,7 +191,7 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      * @return DefaultTokenServices
      */
     private DefaultTokenServices createDefaultTokenServices() {
-        DefaultTokenServices tokenServices = new SingleLoginTokenServices(metaApiProperties.isSingleLogin());
+        DefaultTokenServices tokenServices = new SingleLoginTokenServices(metaApiProperties.getSingleLogin());
         tokenServices.setTokenStore(redisTokenStore());
         // 支持刷新Token
         tokenServices.setSupportRefreshToken(Boolean.TRUE);

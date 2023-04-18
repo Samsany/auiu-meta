@@ -66,7 +66,7 @@ public class MemberProvider implements IMemberProvider {
     @PostMapping(ProviderConstant.PROVIDER_USER_REGISTER_SOCIAL)
     @Log(value = "社交用户注册", exception = "社交用户注册请求失败")
     @Operation(summary = "社交用户注册", description = "社交用户注册")
-    public ApiResult<Boolean> registerMemberBySocial(MemberInfoDTO memberInfoDTO) {
+    public ApiResult<MemberInfoDTO> registerMemberBySocial(MemberInfoDTO memberInfoDTO) {
         return ApiResult.data(memberService.registerMemberByApplet(memberInfoDTO));
     }
 }

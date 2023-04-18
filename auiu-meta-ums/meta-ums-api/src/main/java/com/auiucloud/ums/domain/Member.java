@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -74,7 +75,7 @@ public class Member extends BaseEntity {
     /**
      * 出生日期
      */
-    private Date birthday;
+    private LocalDate birthday;
 
     /**
      * 是否启用(0-正常 1-禁用)
@@ -147,7 +148,7 @@ public class Member extends BaseEntity {
     /**
      * 用户等级
      */
-    private Long level;
+    private Long levelId;
 
     /**
      * 推广员id

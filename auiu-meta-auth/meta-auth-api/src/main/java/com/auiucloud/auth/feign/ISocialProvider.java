@@ -24,13 +24,4 @@ public interface ISocialProvider {
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
     ApiResult<SocialUser> getSocialUserByOpenId2Source(@RequestParam String openId, @RequestParam String source);
 
-    /**
-     * 注册第三方用户信息
-     *
-     * @param socialUser 用户信息
-     * @return ApiResult
-     */
-    @PostMapping(ProviderConstant.PROVIDER_USER_REGISTER_SOCIAL + "/{userId}")
-    ApiResult<SocialUser> registerUserBySocial(@PathVariable Long userId, @RequestBody SocialUser socialUser);
-
 }

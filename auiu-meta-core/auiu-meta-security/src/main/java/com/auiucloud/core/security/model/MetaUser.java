@@ -29,13 +29,13 @@ public class MetaUser implements UserDetails {
     /**
      * 登录类型
      */
-    private final Integer loginType;
+    private final String loginType;
 
-    public MetaUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities, Integer loginType) {
+    public MetaUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities, String loginType) {
         this(userId, username, password, authorities, true, true, true, true, loginType);
     }
 
-    public MetaUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, Integer loginType) {
+    public MetaUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired, String loginType) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -46,44 +46,6 @@ public class MetaUser implements UserDetails {
         this.authorities = authorities;
         this.loginType = loginType;
     }
-
-    //    public MetaUser(Long id,
-//                    String username,
-//                    Long deptId,
-//                    List<String> roles,
-//                    String mobile,
-//                    String avatar,
-//                    String password,
-//                    int type,
-//                    boolean enabled,
-//                    boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-//                    Collection<? extends GrantedAuthority> authorities) {
-//        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//        this.id = id;
-//        this.roles = roles;
-//        this.deptId = deptId;
-//        this.mobile = mobile;
-//        this.avatar = avatar;
-//        this.type = type;
-//    }
-//
-//    public MetaUser(Long id,
-//                    String username,
-//                    String openId,
-//                    List<String> roles,
-//                    String mobile,
-//                    String avatar,
-//                    String password,
-//                    int type,
-//                    boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
-//                    Collection<? extends GrantedAuthority> authorities) {
-//        this.id = id;
-//        this.roles = roles;
-//        this.openId = openId;
-//        this.mobile = mobile;
-//        this.avatar = avatar;
-//        this.type = type;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

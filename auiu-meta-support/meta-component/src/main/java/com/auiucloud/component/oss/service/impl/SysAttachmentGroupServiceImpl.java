@@ -35,6 +35,19 @@ public class SysAttachmentGroupServiceImpl extends ServiceImpl<SysAttachmentGrou
     }
 
     @Override
+    public SysAttachmentGroup getUploadGroupById(Long groupId) {
+        SysAttachmentGroup group = this.getById(groupId);
+        if (ObjectUtil.isNotNull(group)) {
+            return group;
+        }
+        return SysAttachmentGroup.builder()
+                .id(0L)
+                .bizPath("")
+                .name("根目录")
+                .build();
+    }
+
+    @Override
     public boolean checkAttachmentGroupNameExist(SysAttachmentGroup attachmentGroup) {
         LambdaQueryWrapper<SysAttachmentGroup> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.ne(ObjectUtil.isNotNull(attachmentGroup.getId()), SysAttachmentGroup::getId, attachmentGroup.getId());

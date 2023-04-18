@@ -1,10 +1,12 @@
 package com.auiucloud.ums.service;
 
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.MemberInfoDTO;
+import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -38,7 +40,7 @@ public interface IMemberService extends IService<Member> {
      */
     MemberInfoVO getMemberByOpenId2Source(String uuid, String source);
 
-    boolean saveMember(Member member);
+    boolean saveMember(RegisterMemberDTO member);
 
     /**
      *
@@ -47,7 +49,7 @@ public interface IMemberService extends IService<Member> {
      * @param memberInfoDTO 用户信息
      * @return Boolean
      */
-    Boolean registerMemberByApplet(MemberInfoDTO memberInfoDTO);
+    MemberInfoDTO registerMemberByApplet(MemberInfoDTO memberInfoDTO);
 
     Member getMemberInfoById(Long id);
 
@@ -59,4 +61,11 @@ public interface IMemberService extends IService<Member> {
 
     boolean checkUserMobileExist(Member member);
 
+    boolean checkHasUserByGroupId(Long userGroupId);
+
+    boolean checkHasUserByTagId(Long tagId);
+
+    boolean checkHasUserByLevelId(Long levelId);
+
+    boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
 }

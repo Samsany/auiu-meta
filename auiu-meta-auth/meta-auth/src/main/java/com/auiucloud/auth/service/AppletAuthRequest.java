@@ -1,5 +1,10 @@
 package com.auiucloud.auth.service;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.WxMaUserService;
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.lang.ObjectId;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -7,6 +12,7 @@ import cn.hutool.json.JSONUtil;
 import com.auiucloud.admin.feign.ISysUserProvider;
 import com.auiucloud.admin.vo.UserInfoVO;
 import com.auiucloud.auth.config.DouyinAppletsConfiguration;
+import com.auiucloud.auth.config.WechatAppletsConfiguration;
 import com.auiucloud.auth.domain.MetaClientDetails;
 import com.auiucloud.auth.enums.Oauth2ClientTypeEnum;
 import com.auiucloud.auth.model.AppletAuthCallback;
@@ -17,11 +23,14 @@ import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.enums.IBaseEnum;
+import com.auiucloud.core.common.exception.AuthException;
+import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
@@ -41,98 +50,163 @@ public class AppletAuthRequest {
     @Resource
     private IMemberProvider memberProvider;
     @Resource
+    private ISocialUserService socialUserService;
+    @Resource
     private RedisService redisService;
 
     /**
      * 小程序用户登录授权
      *
-     * @param source   小程序类型
      * @param callback 授权信息
      * @return ApiResult
      */
-    public AppletUserInfo login(String source, AppletAuthCallback callback) {
+    public AppletUserInfo login(AppletAuthCallback callback) {
 
-        AuthenticationIdentityEnum anEnum = IBaseEnum.getEnumByName(source, AuthenticationIdentityEnum.class);
+        AuthenticationIdentityEnum anEnum = IBaseEnum.getEnumByName(callback.getSource(), AuthenticationIdentityEnum.class);
         switch (anEnum) {
             case DOUYIN_APPLET -> {
-                // 获取Service
-                DouyinAppletsService douyinAppletService = DouyinAppletsConfiguration.getDouyinAppletService(callback.getAppId());
-                // 获取openid unionid
-                AppletCode2Session code2Session = douyinAppletService.getCode2Session(callback.getCode());
-
                 // 查询用户信息 判断客户端类型
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 String clientId = authentication.getName();
-                log.info("客户端：{}", clientId);
+                DouyinAppletsService douyinAppletService = null;
+                AppletCode2Session code2Session = null;
+                if (StrUtil.isBlank(callback.getOpenId())) {
+                    // 获取Service
+                    douyinAppletService = DouyinAppletsConfiguration.getDouyinAppletService(callback.getAppId());
+                    // 获取openid unionid
+                    code2Session = douyinAppletService.getCode2Session(callback.getCode());
+                    callback.setOpenId(code2Session.getOpenid());
+                    callback.setUnionId(code2Session.getOpenid());
+                }
+                log.debug("客户端：{}", clientId);
                 MetaClientDetails clientDetails = (MetaClientDetails) redisService.get(RedisKeyConstant.cacheClientKey(clientId));
 
                 Oauth2ClientTypeEnum clientTypeEnum = IBaseEnum.getEnumByValue(clientDetails.getClientType(), Oauth2ClientTypeEnum.class);
                 switch (clientTypeEnum) {
+                    // 管理端
                     case ADMIN -> {
-                        ApiResult<UserInfoVO> apiResult = sysUserProvider.getSysUserByOpenId2Source(code2Session.getOpenid(), source);
+                        ApiResult<UserInfoVO> apiResult = sysUserProvider.getSysUserByOpenId2Source(callback.getOpenId(), callback.getSource());
                     }
+                    // 会员端
                     case MEMBER -> {
-                        ApiResult<MemberInfoVO> apiResult = memberProvider.getMemberByOpenId2Source(code2Session.getOpenid(), source);
+                        // 组装用户来源
+                        String source = callback.getSource() + StringPool.AT + clientId;
+                        ApiResult<MemberInfoVO> apiResult = memberProvider.getMemberByOpenId2Source(callback.getOpenId(), source);
                         AppletUserInfo userInfo = null;
-                        if (apiResult != null) {
-                            MemberInfoVO memberInfo = apiResult.getData();
-                            if (apiResult.successful() && memberInfo != null) {
+                        MemberInfoVO memberInfo = apiResult.getData();
+                        if (apiResult.successful() && memberInfo != null) {
+                            userInfo = AppletUserInfo.builder()
+                                    .userId(memberInfo.getUserId())
+                                    .account(memberInfo.getAccount())
+                                    .openId(memberInfo.getOpenId())
+                                    .nickName(memberInfo.getNickname())
+                                    .avatarUrl(memberInfo.getAvatar())
+                                    .gender(String.valueOf(memberInfo.getGender()))
+                                    .city(memberInfo.getCity())
+                                    .province(memberInfo.getProvince())
+                                    .country(memberInfo.getCountry())
+                                    .build();
+                        } else if (apiResult.getCode() == ResultCode.USER_ERROR_A0201.getCode()) {
+                            String encryptedData = callback.getEncryptedData();
+                            String iv = callback.getIv();
+                            String rawUserInfo = callback.getRawUserInfo();
+                            String sessionKey = code2Session.getSession_key();
+
+                            // 解密 encryptedData 获取用户信息
+                            if (StrUtil.isNotBlank(encryptedData) && StrUtil.isNotBlank(iv)) {
+                                userInfo = douyinAppletService.getUserInfo(sessionKey, encryptedData, iv);
+                            } else if (StrUtil.isNotBlank(rawUserInfo)) {
+                                userInfo = AppletUserInfo.fromJson(rawUserInfo);
+                            } else {
                                 userInfo = AppletUserInfo.builder()
-                                        .userId(memberInfo.getUserId())
-                                        .account(memberInfo.getAccount())
-                                        .openId(memberInfo.getOpenId())
-                                        .nickName(memberInfo.getNickname())
-                                        .avatarUrl(memberInfo.getAvatar())
-                                        .gender(memberInfo.getGender())
-                                        .city(memberInfo.getCity())
-                                        .province(memberInfo.getProvince())
-                                        .country(memberInfo.getCountry())
+                                        .nickName(RandomUtil.randomString("#",6))
+                                        .gender("2")
                                         .build();
-                            } else if (apiResult.getCode() == ResultCode.USER_ERROR_A0201.getCode()) {
-                                String encryptedData = callback.getEncryptedData();
-                                String iv = callback.getIv();
-                                String rawUserInfo = callback.getRawUserInfo();
-                                String sessionKey = code2Session.getSession_key();
-
-                                // 解密 encryptedData 获取用户信息
-                                if (StrUtil.isNotBlank(encryptedData) && StrUtil.isNotBlank(iv)) {
-                                    userInfo = douyinAppletService.getUserInfo(sessionKey, encryptedData, iv);
-                                } else if (StrUtil.isNotBlank(rawUserInfo)){
-                                    userInfo = AppletUserInfo.fromJson(rawUserInfo);
-                                } else {
-                                    userInfo = AppletUserInfo.builder()
-                                            .nickName("#游客" + RandomUtil.randomNumbers(6))
-                                            .gender(2)
-                                            .build();
-                                }
-                                // 构建用户信息
-                                MemberInfoDTO build = MemberInfoDTO.builder()
-                                        .account(ObjectId.next())
-                                        .openId(code2Session.getOpenid())
-                                        .unionId(code2Session.getUnionid())
-                                        .nickname(userInfo.getNickName())
-                                        .avatar(userInfo.getAvatarUrl())
-                                        .gender(userInfo.getGender())
-                                        .country(userInfo.getCountry())
-                                        .province(userInfo.getProvince())
-                                        .city(userInfo.getCity())
-                                        .language(userInfo.getLanguage())
-                                        .registerSource(callback.getSource())
-                                        .build();
-
-                                memberProvider.registerMemberBySocial(build);
-
-                                userInfo = userInfo
-                                        .withAccount(build.getAccount())
-                                        .withOpenId(build.getOpenId())
-                                        .withUnionId(build.getUnionId());
                             }
+
+                            // 注册用户
+                            callback.setSource(source);
+                            userInfo = socialUserService.registerMemberBySocial(userInfo, callback);
                         }
 
                         return userInfo;
                     }
                 }
+            }
+            case WECHAT_APPLET -> {
+                // 查询用户信息 判断客户端类型
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String clientId = authentication.getName();
+                WxMaService wxMaService = null;
+                WxMaJscode2SessionResult session = null;
+                if (StrUtil.isBlank(callback.getOpenId())) {
+                    try {
+                        // 获取Service
+                        wxMaService = WechatAppletsConfiguration.getWechatAppletsService(callback.getAppId());
+                        WxMaUserService userService = wxMaService.getUserService();
+                        // 获取openid unionid
+                        session = userService.getSessionInfo(callback.getCode());
+                        callback.setOpenId(session.getOpenid());
+                        callback.setUnionId(session.getOpenid());
+                        log.debug("客户端：{}", clientId);
+                        MetaClientDetails clientDetails = (MetaClientDetails) redisService.get(RedisKeyConstant.cacheClientKey(clientId));
 
+                        Oauth2ClientTypeEnum clientTypeEnum = IBaseEnum.getEnumByValue(clientDetails.getClientType(), Oauth2ClientTypeEnum.class);
+                        switch (clientTypeEnum) {
+                            // 管理端
+                            case ADMIN -> {
+                                ApiResult<UserInfoVO> apiResult = sysUserProvider.getSysUserByOpenId2Source(callback.getOpenId(), callback.getSource());
+                            }
+                            // 会员端
+                            case MEMBER -> {
+                                // 组装用户来源
+                                String source = callback.getSource() + StringPool.AT + clientId;
+                                ApiResult<MemberInfoVO> apiResult = memberProvider.getMemberByOpenId2Source(callback.getOpenId(), source);
+                                AppletUserInfo userInfo = null;
+                                MemberInfoVO memberInfo = apiResult.getData();
+                                if (apiResult.successful() && memberInfo != null) {
+                                    userInfo = AppletUserInfo.builder()
+                                            .userId(memberInfo.getUserId())
+                                            .account(memberInfo.getAccount())
+                                            .openId(memberInfo.getOpenId())
+                                            .nickName(memberInfo.getNickname())
+                                            .avatarUrl(memberInfo.getAvatar())
+                                            .gender(String.valueOf(memberInfo.getGender()))
+                                            .city(memberInfo.getCity())
+                                            .province(memberInfo.getProvince())
+                                            .country(memberInfo.getCountry())
+                                            .build();
+                                } else if (apiResult.getCode() == ResultCode.USER_ERROR_A0201.getCode()) {
+                                    String encryptedData = callback.getEncryptedData();
+                                    String iv = callback.getIv();
+                                    String rawUserInfo = callback.getRawUserInfo();
+                                    String sessionKey = session.getSessionKey();
+
+                                    // 解密 encryptedData 获取用户信息
+                                    if (StrUtil.isNotBlank(encryptedData) && StrUtil.isNotBlank(iv)) {
+                                        WxMaUserInfo maUserInfo = userService.getUserInfo(sessionKey, encryptedData, iv);
+                                        userInfo = AppletUserInfo.fromJson(JSONUtil.toJsonStr(maUserInfo));
+                                    } else if (StrUtil.isNotBlank(rawUserInfo)) {
+                                        userInfo = AppletUserInfo.fromJson(rawUserInfo);
+                                    } else {
+                                        userInfo = AppletUserInfo.builder()
+                                                .gender("2")
+                                                .build();
+                                    }
+
+                                    userInfo.setNickName(RandomUtil.randomString("#",6));
+                                    // 注册用户
+                                    callback.setSource(source);
+                                    userInfo = socialUserService.registerMemberBySocial(userInfo, callback);
+                                }
+
+                                return userInfo;
+                            }
+                        }
+                    } catch (Exception e) {
+                        throw new AuthException(e.getMessage());
+                    }
+                }
             }
         }
 

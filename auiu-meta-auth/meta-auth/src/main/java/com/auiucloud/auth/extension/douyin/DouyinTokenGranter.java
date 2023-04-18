@@ -5,6 +5,7 @@ import com.auiucloud.auth.model.AppletAuthCallback;
 import com.auiucloud.auth.model.AppletUserInfo;
 import com.auiucloud.auth.service.AppletAuthRequest;
 import com.auiucloud.core.common.constant.Oauth2Constant;
+import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,31 +45,47 @@ public class DouyinTokenGranter extends AbstractTokenGranter {
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
         String appId = parameters.get("appId");
-        String code = parameters.get("code");
-        String encryptedData = parameters.get("encryptedData");
-        String iv = parameters.get("iv");
-        String rawUserInfo = parameters.get("userInfo");
+        String openId = parameters.get("openId");
 
-        // 移除后续无用参数
-        parameters.remove("code");
-        parameters.remove("encryptedData");
-        parameters.remove("iv");
-        parameters.remove("userInfo");
-
-        if (StrUtil.isBlank(appId) || StrUtil.isBlank(code) ) {
+        if (StrUtil.isBlank(appId)) {
             throw new UserDeniedAuthorizationException("未传入请求参数");
         }
-        String[] split = code.split("-");
-        String oauthType = split[0];
-        code = StrUtil.subSuf(code, oauthType.length() + 1);
 
-        AppletAuthCallback authCallback = AppletAuthCallback.builder()
-                .appId(appId)
-                .code(code).encryptedData(encryptedData).iv(iv).rawUserInfo(rawUserInfo)
-                .build();
+        AppletUserInfo appletUserInfo;
+        if (StrUtil.isNotBlank(openId)) {
+            AppletAuthCallback authCallback = AppletAuthCallback.builder()
+                    .openId(openId)
+                    .appId(appId)
+                    .source(AuthenticationIdentityEnum.DOUYIN_APPLET.name())
+                    .build();
 
-        // 第三方登录
-        AppletUserInfo appletUserInfo = appletAuthRequest.login(oauthType, authCallback);
+            appletUserInfo = appletAuthRequest.login(authCallback);
+        } else {
+            String code = parameters.get("code");
+            String encryptedData = parameters.get("encryptedData");
+            String iv = parameters.get("iv");
+            String rawUserInfo = parameters.get("userInfo");
+
+            // 移除后续无用参数
+            parameters.remove("code");
+            parameters.remove("encryptedData");
+            parameters.remove("iv");
+            parameters.remove("userInfo");
+
+            if (StrUtil.isBlank(code) ) {
+                throw new UserDeniedAuthorizationException("未传入请求参数");
+            }
+
+            AppletAuthCallback authCallback = AppletAuthCallback.builder()
+                    .openId(openId)
+                    .appId(appId)
+                    .code(code).encryptedData(encryptedData).iv(iv).rawUserInfo(rawUserInfo)
+                    .source(AuthenticationIdentityEnum.DOUYIN_APPLET.name())
+                    .build();
+            // 第三方登录
+            appletUserInfo = appletAuthRequest.login(authCallback);
+        }
+
         if (appletUserInfo == null) {
             throw new InvalidGrantException("Could not authenticate user.");
         }

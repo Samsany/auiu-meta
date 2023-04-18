@@ -3,6 +3,7 @@ package com.auiucloud.auth.config;
 import com.auiucloud.auth.extension.douyin.DouyinAuthenticationSecurityConfig;
 import com.auiucloud.auth.extension.sms.SmsCodeAuthenticationSecurityConfig;
 import com.auiucloud.auth.extension.social.SocialAuthenticationSecurityConfig;
+import com.auiucloud.auth.extension.wechat.WechatAuthenticationSecurityConfig;
 import com.auiucloud.auth.service.SmsCodeSenderService;
 import com.auiucloud.auth.service.ValidateCodeService;
 import com.auiucloud.auth.service.impl.DefaultSmsCodeSenderImpl;
@@ -46,6 +47,7 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     private final SocialAuthenticationSecurityConfig socialAuthenticationSecurityConfig;
     private final DouyinAuthenticationSecurityConfig douyinAuthenticationSecurityConfig;
+    private final WechatAuthenticationSecurityConfig wechatAuthenticationSecurityConfig;
 
     @SneakyThrows
     @Override
@@ -54,6 +56,8 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
                 .apply(socialAuthenticationSecurityConfig)
                 .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
+                .and()
+                .apply(wechatAuthenticationSecurityConfig)
                 .and()
                 .apply(douyinAuthenticationSecurityConfig)
                 .and()

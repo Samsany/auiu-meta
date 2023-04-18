@@ -9,22 +9,22 @@ import lombok.Data;
 public class AppletConfig {
 
     /**
-     * 设置抖音小程序的appid
+     * 设置小程序的appid
      */
     private String appId;
 
     /**
-     * 设置抖音小程序的Secret
+     * 设置小程序的Secret
      */
     private String secret;
 
     /**
-     * 设置抖音小程序消息服务器配置的token
+     * 设置小程序消息服务器配置的token
      */
     private String token;
 
     /**
-     * 设置抖音小程序消息服务器配置的EncodingAESKey
+     * 设置小程序消息服务器配置的EncodingAESKey
      */
     private String aesKey;
 

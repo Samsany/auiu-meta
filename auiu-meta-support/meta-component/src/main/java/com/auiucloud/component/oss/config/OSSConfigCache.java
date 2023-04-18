@@ -1,8 +1,10 @@
 package com.auiucloud.component.oss.config;
 
-import com.auiucloud.component.oss.service.ISysConfigService;
+import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ import javax.annotation.PreDestroy;
  **/
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OSSConfigCache {
 
     private final ISysConfigService sysConfigService;
@@ -26,7 +28,7 @@ public class OSSConfigCache {
         sysConfigService.getOssProperties();
     }
 
-    @PreDestroy
+   @PreDestroy
     public void destroy() {
         //系统运行结束
         sysConfigService.clearOss();
@@ -37,5 +39,4 @@ public class OSSConfigCache {
         //每2小时执行一次缓存
         init();
     }
-
 }

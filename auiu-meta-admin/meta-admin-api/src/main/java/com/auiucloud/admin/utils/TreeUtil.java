@@ -55,7 +55,7 @@ public class TreeUtil {
                 // 0-目录 1-菜单 2-按钮
                 if (sysMenu.getType() == CommonConstant.ROOT_NODE_ID.intValue()) {
                     routeVo.setComponent(StrUtil.isBlank(sysMenu.getComponent()) ? "Layout" : sysMenu.getComponent());
-                    routeVo.setRedirect("noRedirect");
+                    routeVo.setRedirect(StrUtil.isBlank(sysMenu.getRedirect()) ? "noRedirect" : sysMenu.getRedirect());
                     if (sysMenu.getAlwaysShow() == CommonConstant.STATUS_DISABLE_VALUE) {
                         meta.setAlwaysShow(null);
                     }

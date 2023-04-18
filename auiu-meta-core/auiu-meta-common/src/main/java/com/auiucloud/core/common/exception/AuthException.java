@@ -8,7 +8,7 @@ import lombok.Getter;
  * @date 2021/12/21
  */
 @Getter
-public class AuthException extends Exception {
+public class AuthException extends RuntimeException {
 
     private static final long serialVersionUID = 6346362155694433702L;
 

@@ -1,6 +1,7 @@
 package com.auiucloud.core.oss.props;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,9 +12,11 @@ import java.io.Serializable;
  * @author dries
  **/
 @Data
+//@ConfigurationProperties(prefix = OssProperties.PREFIX)
 public class OssProperties implements Serializable {
+
     @Serial
-    private static final long serialVersionUID = 890060751082683761L;
+    private static final long serialVersionUID = -1842703194674612285L;
 
     /**
      * 服务提供商

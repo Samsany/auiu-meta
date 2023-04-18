@@ -1,11 +1,10 @@
 package com.auiucloud.ums.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -13,12 +12,15 @@ import java.util.Date;
  * @author dries
  **/
 @Data
+@With
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "会员登录信息传输对象")
-public class MemberInfoDTO {
+public class MemberInfoDTO implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 5588228766124113893L;
     /**
      * 账号ID
      */

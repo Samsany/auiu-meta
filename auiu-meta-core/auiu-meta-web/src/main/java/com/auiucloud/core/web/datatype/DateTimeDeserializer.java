@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 
+import java.io.Serial;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,13 +31,16 @@ public class DateTimeDeserializer extends SimpleModule {
     public static final DateTimeFormatter DATETIME_MINI_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATETIME_MINI);
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_DATE);
     public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(PATTERN_TIME);
+    @Serial
     private static final long serialVersionUID = -6002410973626747229L;
 
     public DateTimeDeserializer() {
         super(PackageVersion.VERSION);
+
         this.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DATETIME_FORMATTER));
         this.addDeserializer(LocalDate.class, new LocalDateDeserializer(DATE_FORMATTER));
         this.addDeserializer(LocalTime.class, new LocalTimeDeserializer(TIME_FORMATTER));
+
         this.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATETIME_FORMATTER));
         this.addSerializer(LocalDate.class, new LocalDateSerializer(DATE_FORMATTER));
         this.addSerializer(LocalTime.class, new LocalTimeSerializer(TIME_FORMATTER));

@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
  * @date 2021/12/27
  */
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class PreAuthFilter implements GlobalFilter, Ordered {
 
@@ -40,15 +40,15 @@ public class PreAuthFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
         // 如果未启用网关验证，则跳过
-        if (!metaApiProperties.isEnabled()) {
+        if (!metaApiProperties.getEnabled()) {
             return chain.filter(exchange);
         }
 
         ServerHttpRequest request = exchange.getRequest();
         // 白名单路径跳过并移除JWT请求头
         String path = replacePrefix(request.getURI().getPath());
-        String requestUrl = request.getURI().getRawPath();
-        if (ignoreUrl(path) || ignoreUrl(requestUrl)) {
+        String rawPath = request.getURI().getRawPath();
+        if (ignoreUrl(path) || ignoreUrl(rawPath)) {
             request = request.mutate().header(Oauth2Constant.JWT_TOKEN_HEADER, "").build();
             exchange = exchange.mutate().request(request).build();
             return chain.filter(exchange);

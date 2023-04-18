@@ -25,14 +25,14 @@ import java.util.*;
  * aws-s3 通用存储操作 支持所有兼容s3协议的云存储: 阿里云OSS，腾讯云COS，七牛云，京东云，minio 等
  *
  * <p>
- *     oss: enable: true
- *     endpoint: http://127.0.0.1:9000
- *     pathStyleAccess 采用nginx反向代理或者AWS S3 配置为true，支持第三方云存储配置成false
- *     pathStyleAccess: false
- *     access-key: mate
- *     secret-key: mate
- *     bucket-name: mate
- *     region: custom-domain: oss.mate.vip
+ * oss: enable: true
+ * endpoint: http://127.0.0.1:9000
+ * pathStyleAccess 采用nginx反向代理或者AWS S3 配置为true，支持第三方云存储配置成false
+ * pathStyleAccess: false
+ * access-key: meta
+ * secret-key: meta
+ * bucket-name: meta
+ * region: custom-domain: oss.meta.com
  * </p>
  *
  * @author dries

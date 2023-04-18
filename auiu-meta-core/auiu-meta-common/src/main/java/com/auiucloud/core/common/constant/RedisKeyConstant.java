@@ -24,11 +24,11 @@ public class RedisKeyConstant {
     /**
      * 抖音小程序 access_token
      */
-    public static String DOUYIN_APPLET_ACCESS_TOKEN = ROOT_DIR + "system-config:applets:douyin:access_token::";
+    public static final String DOUYIN_APPLET_ACCESS_TOKEN = ROOT_DIR + "system-config:applets:douyin:access_token::";
     /**
      * OSS默认配置
      */
-    public static String OSS_DEFAULT_CONFIG = ROOT_DIR + "system-config:oss";
+    public static final String OSS_DEFAULT_CONFIG = ROOT_DIR + "system-config:oss";
 
     /**
      * ---- Redis缓存权限规则key 缓存相关 ----

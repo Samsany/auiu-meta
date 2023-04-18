@@ -45,7 +45,7 @@ public class MetaApiProperties {
     /**
      * 单机登录，默认false
      */
-    private boolean singleLogin;
+    private Boolean singleLogin = false;
     /**
      * 忽略URL，List列表形式
      */
@@ -54,7 +54,7 @@ public class MetaApiProperties {
     /**
      * 是否启用网关鉴权模式
      */
-    private boolean enabled = true;
+    private Boolean enabled = true;
 
     /**
      * 首次加载合并ENDPOINTS

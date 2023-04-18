@@ -31,7 +31,7 @@ public class AppletUserInfo implements Serializable {
 
     private String avatarUrl;
 
-    private int gender;
+    private String gender;
 
     private String city;
 

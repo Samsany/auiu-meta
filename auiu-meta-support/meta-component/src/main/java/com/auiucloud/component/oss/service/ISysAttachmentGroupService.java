@@ -16,4 +16,6 @@ public interface ISysAttachmentGroupService extends IService<SysAttachmentGroup>
     List<SysAttachmentGroup> selectAttachmentGroupList(Search search, SysAttachmentGroup attachmentGroup);
 
     boolean checkAttachmentGroupNameExist(SysAttachmentGroup attachmentGroup);
+
+    SysAttachmentGroup getUploadGroupById(Long groupId);
 }

@@ -3,29 +3,37 @@ package com.auiucloud.component.oss.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.component.oss.domain.SysAttachment;
+import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
-import com.auiucloud.component.oss.service.ISysConfigService;
+import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.exception.ApiException;
+import com.auiucloud.core.common.utils.FileUtil;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.oss.core.OssTemplate;
 import com.auiucloud.core.oss.props.OssProperties;
-import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.web.utils.OssUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -42,12 +50,13 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
 
     private final OssTemplate ossTemplate;
     private final ISysConfigService configService;
+    private final ISysAttachmentGroupService sysAttachmentGroupService;
 
     /**
      * 分页查询附件
      *
      * @param search     参数
-     * @param attachment
+     * @param attachment 参数
      * @return PageUtils
      */
     @Override
@@ -72,51 +81,35 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      */
     @Transactional
     @Override
-    public ApiResult<?> upload(MultipartFile file) {
-        OssProperties ossProperties = getOssProperties();
-        String fileName = UUID.randomUUID().toString().replace("-", "")
-                + StringPool.DOT + FilenameUtils.getExtension(file.getOriginalFilename());
-        Map<String, String> uMap = new HashMap<>(4);
-        try {
-            //上传文件
-            assert ossProperties != null;
-            ossTemplate.putObject(ossProperties.getBucketName(), fileName, file.getInputStream(), file.getSize(), file.getContentType());
+    public Map<String, Object> upload(MultipartFile file) {
+        return this.upload(file, 0L, null);
+    }
 
-            //生成URL
-            String url = ossProperties.getCustomDomain() + StringPool.SLASH + fileName;
-
-            //自定义返回报文
-            uMap.put("bucketName", ossProperties.getBucketName());
-            uMap.put("fileName", fileName);
-            uMap.put("url", url);
-            //上传成功后记录入库
-            this.attachmentLog(file, url, fileName);
-        } catch (Exception e) {
-            log.error("上传失败", e);
-            return ApiResult.fail(e.getMessage());
-        }
-        return ApiResult.data(uMap);
+    @Transactional
+    @Override
+    public Map<String, Object> upload(MultipartFile file, Long groupId) {
+        return this.upload(file, groupId, null);
     }
 
     /**
      * @param file     文件
      * @param groupId  文件分组 默认 0(根目录)
-     * @param bizPath  文件路径
      * @param filename 自定义上传文件名
-     * @return
+     * @return Map<String, Object>
      */
+    @Transactional
     @Override
-    public ApiResult<?> upload(MultipartFile file, Long groupId, String bizPath, String filename) {
+    public Map<String, Object> upload(MultipartFile file, Long groupId, String filename) {
         OssProperties ossProperties = getOssProperties();
+        SysAttachmentGroup group = sysAttachmentGroupService.getUploadGroupById(groupId);
         if (StrUtil.isBlank(filename)) {
             filename = UUID.randomUUID().toString().replace("-", "")
                     + StringPool.DOT + FilenameUtils.getExtension(file.getOriginalFilename());
         }
 
-        String filePath = bizPath + StringPool.SLASH + filename;
-        ;
-
-        Map<String, String> uMap = new HashMap<>(4);
+        String bizPath = group.getBizPath();
+        String filePath = StrUtil.isNotBlank(bizPath) ? bizPath.concat(StringPool.SLASH + filename) : filename;
+        Map<String, Object> uMap = new HashMap<>();
         try {
             //上传文件
             assert ossProperties != null;
@@ -129,13 +122,20 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             uMap.put("bucketName", ossProperties.getBucketName());
             uMap.put("fileName", filename);
             uMap.put("url", url);
+            // 文件大小 单位kb
+            uMap.put("size", file.getSize() / 1024);
+            if (FileUtil.getFileType(FileUtil.getExtensionName(filename)).equals("pic")) {
+                BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+                uMap.put("width", bufferedImage.getWidth());
+                uMap.put("height", bufferedImage.getHeight());
+            }
             //上传成功后记录入库
             this.attachmentLog(file, url, groupId, filename);
         } catch (Exception e) {
             log.error("上传失败", e);
-            return ApiResult.fail(e.getMessage());
+            throw new ApiException(e.getMessage());
         }
-        return ApiResult.data(uMap);
+        return uMap;
     }
 
     @Override
@@ -163,19 +163,18 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         return this.removeById(id);
     }
 
-    public boolean attachmentLog(MultipartFile file, String url, String filename) {
-        return attachmentLog(file, url, 0L, filename);
-    }
-
     /**
      * 将上传成功的文件记录入库
      *
      * @param file     　文件
      * @param url      　返回的URL
-     * @param groupId
-     * @param filename
+     * @param groupId  附件分组
+     * @param filename 新文件名
      * @return boolean
      */
+    @Override
+    @SneakyThrows
+    @Transactional(rollbackFor = Exception.class)
     public boolean attachmentLog(MultipartFile file, String url, Long groupId, String filename) {
         SysAttachment sysAttachment = new SysAttachment();
 

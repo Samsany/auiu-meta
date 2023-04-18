@@ -20,10 +20,12 @@ public class AppletAuthCallback implements Serializable {
     private static final long serialVersionUID = 8681137482123965183L;
 
     private String appId;
+    private String openId;
+    private String unionId;
     private String code;
-    private String encryptedData;
     private String iv;
-    private String rawUserInfo;
+    private String encryptedData;
     private String source;
+    private String rawUserInfo;
 
 }

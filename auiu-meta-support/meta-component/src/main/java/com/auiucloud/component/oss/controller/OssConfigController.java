@@ -1,7 +1,7 @@
 package com.auiucloud.component.oss.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.component.oss.service.ISysConfigService;
+import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.oss.props.OssProperties;

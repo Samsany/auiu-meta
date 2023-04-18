@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -18,7 +20,7 @@ import java.util.Date;
 public class MemberInfoVO {
 
     /**
-     * 账号
+     * UID
      */
     private Long userId;
 
@@ -26,10 +28,6 @@ public class MemberInfoVO {
      * 账号
      */
     private String account;
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 真实姓名
@@ -57,6 +55,11 @@ public class MemberInfoVO {
     private String email;
 
     /**
+     * 密码
+     */
+    private String password;
+
+    /**
      * 性别(0-女性 1-男性 2-未知)
      */
     private Integer gender;
@@ -74,17 +77,20 @@ public class MemberInfoVO {
     /**
      * 账户是否过期(0-过期 1-未过期)
      */
-    private boolean accountNonExpired;
+    @Builder.Default
+    private boolean accountNonExpired = true;
 
     /**
      * 账户是否锁定(0-锁定 1-未锁定)
      */
-    private boolean accountNonLocked;
+    @Builder.Default
+    private boolean accountNonLocked = true;
 
     /**
      * 证书(密码)是否过期(0-过期 1-未过期)
      */
-    private boolean credentialsNonExpired;
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
 
     /**
      * openId
@@ -92,14 +98,79 @@ public class MemberInfoVO {
     private String openId;
 
     /**
-     * 会员积分
+     * 身份证号码
      */
-    private Integer point;
+    private String cardId;
+
+    /**
+     * 用户分组id
+     */
+    private String groupIds;
+
+    /**
+     * 用户标签id
+     */
+    private String tagIds;
 
     /**
      * 会员余额
      */
     private BigDecimal balance;
+
+    /**
+     * 佣金余额
+     */
+    private BigDecimal brokeragePrice;
+
+    /**
+     * 用户积分
+     */
+    private Integer integral;
+
+    /**
+     * 用户经验
+     */
+    private Integer experience;
+
+    /**
+     * 连续签到天数
+     */
+    private Integer signNum;
+
+    /**
+     * 用户等级
+     */
+    private Long levelId;
+
+    /**
+     * 推广员id
+     */
+    private Long spreadUid;
+
+    /**
+     * 推广员关联时间
+     */
+    private Date spreadTime;
+
+    /**
+     * 成为分销员时间
+     */
+    private Date promoterTime;
+
+    /**
+     * 是否为推广员
+     */
+    private Integer isPromoter;
+
+    /**
+     * 用户下单次数
+     */
+    private Integer payCount;
+
+    /**
+     * 下级人数
+     */
+    private Integer spreadCount;
 
     /**
      * 国家
@@ -127,6 +198,11 @@ public class MemberInfoVO {
     private String language;
 
     /**
+     * 用户登录类型 1：用户名密码登录　2：手机号登录　3：社交登录
+     */
+    private String loginType;
+
+    /**
      * 最后登录时间
      */
     private Date loginDate;
@@ -152,9 +228,7 @@ public class MemberInfoVO {
     private String registerSource;
 
     /**
-     * 登录类型　1：用户名密码登录　2：手机号登录　3：社交登录
+     * 注册时间
      */
-    @Schema(description = "登录类型")
-    private String loginType;
-
+    private LocalDateTime createTime;
 }

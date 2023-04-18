@@ -7,26 +7,34 @@ import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.auth.feign.ISocialProvider;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
+import com.auiucloud.core.common.exception.AuthException;
 import com.auiucloud.core.common.model.IpAddress;
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.IPUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.MemberInfoDTO;
+import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.mapper.MemberMapper;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author dries
@@ -39,6 +47,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         implements IMemberService {
 
     private final ISocialProvider socialProvider;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 会员分页列表
@@ -50,54 +59,38 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     @Override
     public PageUtils listPage(Search search, Member member) {
         LambdaQueryWrapper<Member> queryWrapper = buildSearchParams(search, member);
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+        IPage<Member> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.getRecords().parallelStream().forEach(this::hidePrivacyField);
+        return new PageUtils(page);
     }
 
     @Override
     public List<Member> selectMemberList(Search search, Member member) {
         LambdaQueryWrapper<Member> queryWrapper = buildSearchParams(search, member);
-        return this.list(queryWrapper);
+        List<Member> list = this.list(queryWrapper);
+        // 对member部分字段进行隐藏显示，保护隐私
+        Optional.ofNullable(list).orElse(Collections.emptyList())
+                .parallelStream()
+                .forEach(this::hidePrivacyField);
+        return list;
     }
 
-    @Override
-    public boolean saveMember(Member member) {
-        return this.save(member);
+    private void hidePrivacyField(Member member) {
+        if (StrUtil.isNotBlank(member.getMobile())) {
+            member.setMobile(StrUtil.hide(member.getMobile(), 3, member.getMobile().length() - 4));
+        }
+        if (StrUtil.isNotBlank(member.getCardId())) {
+            member.setCardId(StrUtil.hide(member.getCardId(), 3, member.getCardId().length() - 4));
+        }
+        member.setPassword("");
     }
 
     @Override
     public Member getMemberInfoById(Long id) {
-        return getById(id);
-    }
-
-    @Override
-    public boolean updateMemberById(Member member) {
-        return this.updateById(member);
-    }
-
-    @Override
-    public boolean setUserStatus(UpdateStatusDTO updateStatusDTO) {
-        LambdaUpdateWrapper<Member> updateWrapper = Wrappers.lambdaUpdate();
-        updateWrapper.set(Member::getStatus, updateStatusDTO.getStatus());
-        updateWrapper.eq(Member::getId, updateStatusDTO.getId());
-        return this.update(updateWrapper);
-    }
-
-    @Override
-    public boolean checkUsernameExist(Member member) {
-        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Member::getAccount, member.getAccount());
-        queryWrapper.ne(member.getId() != null, Member::getId, member.getId());
-        queryWrapper.last("limit 1");
-        return this.count(queryWrapper) > 0;
-    }
-
-    @Override
-    public boolean checkUserMobileExist(Member member) {
-        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Member::getMobile, member.getMobile());
-        queryWrapper.ne(member.getId() != null, Member::getId, member.getId());
-        queryWrapper.last("limit 1");
-        return this.count(queryWrapper) > 0;
+        // 对member部分字段进行隐藏显示，保护隐私
+        Member member = this.getById(id);
+        hidePrivacyField(member);
+        return member;
     }
 
     /**
@@ -134,15 +127,51 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         return memberInfoVO.withUserId(member.getId());
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean saveMember(RegisterMemberDTO registerMemberDTO) {
+        Member member = new Member();
+        BeanUtils.copyProperties(registerMemberDTO, member);
+        if (!registerMemberDTO.getPassword().equals(registerMemberDTO.getConfirmPassword())) {
+            throw new ApiException("两次输入密码不一致!");
+        }
+        member.setPassword(passwordEncoder.encode(registerMemberDTO.getConfirmPassword()));
+        if (StrUtil.isNotBlank(member.getNickname())) {
+            // 对mobile部分字段进行隐藏显示，保护隐私
+            member.setNickname(StrUtil.hide(member.getMobile(), 3, member.getMobile().length() - 4));
+        }
+        return this.save(member);
+    }
+
+    @Override
+    public boolean updateMemberById(Member member) {
+        return this.updateById(member);
+    }
+
+    @Override
+    public boolean setUserStatus(UpdateStatusDTO updateStatusDTO) {
+        LambdaUpdateWrapper<Member> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(Member::getStatus, updateStatusDTO.getStatus());
+        updateWrapper.eq(Member::getId, updateStatusDTO.getId());
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    public boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO) {
+        LambdaUpdateWrapper<Member> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.set(Member::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
+        queryWrapper.eq(Member::getId, updatePasswordDTO.getId());
+        return this.update(queryWrapper);
+    }
+
     /**
      * 用户注册
      *
      * @param memberInfoDTO 用户信息
      * @return Boolean
      */
-    @GlobalTransactional(rollbackFor = Exception.class)
     @Override
-    public Boolean registerMemberByApplet(MemberInfoDTO memberInfoDTO) {
+    public MemberInfoDTO registerMemberByApplet(MemberInfoDTO memberInfoDTO) {
         Member member = new Member();
         BeanUtils.copyProperties(memberInfoDTO, member);
         // 获取用户注册信息
@@ -153,16 +182,51 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         member.setRegisterAddress(pro + city + ipAddress.getRegion());
         boolean result = this.save(member);
         if (result) {
-            // 绑定用户关系
-            SocialUser build = SocialUser.builder()
-                    .uuid(memberInfoDTO.getOpenId())
-                    .source(memberInfoDTO.getRegisterSource())
-                    .openId(memberInfoDTO.getOpenId())
-                    .unionId(memberInfoDTO.getUnionId())
-                    .build();
-            socialProvider.registerUserBySocial(member.getId(), build);
+            return memberInfoDTO.withId(member.getId());
         }
-        return result;
+        throw new AuthException(ResultCode.USER_ERROR_A0100);
+    }
+
+    @Override
+    public boolean checkUsernameExist(Member member) {
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Member::getAccount, member.getAccount());
+        queryWrapper.ne(member.getId() != null, Member::getId, member.getId());
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    @Override
+    public boolean checkUserMobileExist(Member member) {
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Member::getMobile, member.getMobile());
+        queryWrapper.ne(member.getId() != null, Member::getId, member.getId());
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    @Override
+    public boolean checkHasUserByGroupId(Long userGroupId) {
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.apply("find_in_set(" + userGroupId + ", group_ids)");
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    @Override
+    public boolean checkHasUserByTagId(Long tagId) {
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.apply("find_in_set(" + tagId + ", tag_ids)");
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
+    }
+
+    @Override
+    public boolean checkHasUserByLevelId(Long levelId) {
+        LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Member::getLevelId, levelId);
+        queryWrapper.last("limit 1");
+        return this.count(queryWrapper) > 0;
     }
 
     /**

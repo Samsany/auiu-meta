@@ -45,5 +45,5 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @PostMapping(ProviderConstant.PROVIDER_USER_REGISTER_SOCIAL)
-    ApiResult<Boolean> registerMemberBySocial(@RequestBody MemberInfoDTO memberInfoDTO);
+    ApiResult<MemberInfoDTO> registerMemberBySocial(@RequestBody MemberInfoDTO memberInfoDTO);
 }
