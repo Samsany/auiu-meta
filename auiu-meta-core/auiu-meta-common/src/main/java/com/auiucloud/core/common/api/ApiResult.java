@@ -145,16 +145,15 @@ public class ApiResult<T> implements Serializable {
     }
 
     public static <T> ApiResult<T> condition(boolean flag) {
-        return flag ? success(ResultCode.SUCCESS.getMessage()) : fail(ResultCode.USER_ERROR_A0500.getMessage());
+        return flag ? success(ResultCode.SUCCESS.getMessage()) : fail();
     }
 
     public static <T> ApiResult<T> condition(String message, boolean flag) {
-        return flag ? success(ResultCode.SUCCESS.getMessage()) : fail(message);
+        return flag ? success(message) : fail();
     }
 
     public boolean successful() {
         return code == ResultCode.SUCCESS.getCode();
     }
-
 
 }

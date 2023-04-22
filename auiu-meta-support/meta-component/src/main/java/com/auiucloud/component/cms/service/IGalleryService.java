@@ -1,9 +1,16 @@
 package com.auiucloud.component.cms.service;
 
 import com.auiucloud.component.cms.domain.Gallery;
+import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
+import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
+import com.auiucloud.core.database.model.Search;
+import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
 * @author dries
@@ -12,5 +19,20 @@ import org.springframework.web.multipart.MultipartFile;
 */
 public interface IGalleryService extends IService<Gallery> {
 
-    ApiResult<?> upload(MultipartFile file);
+    List<GalleryVO> selectGalleryListByCId(Long cId);
+
+    List<GalleryVO> selectGalleryListByCId2Limit(Long cId, Integer limit);
+
+    GalleryVO selectGalleryInfoById(Long galleryId);
+
+    ApiResult<?> upload(MultipartFile file, Long cId);
+
+    PageUtils selectGalleryPage(Search search, Gallery gallery);
+
+    boolean joinGalleryCollection(JoinGalleryCollectionDTO joinGalleryCollectionDTO);
+
+    boolean removeGalleryByIds(List<Long> ids);
+
+    boolean setGalleryTopStatus(UpdateStatusDTO statusDTO);
+
 }

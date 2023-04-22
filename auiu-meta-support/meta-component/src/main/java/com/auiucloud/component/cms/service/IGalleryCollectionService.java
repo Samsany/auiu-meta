@@ -1,9 +1,13 @@
 package com.auiucloud.component.cms.service;
 
 import com.auiucloud.component.cms.domain.GalleryCollection;
+import com.auiucloud.component.cms.vo.GalleryCollectionVO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
 * @author dries
@@ -12,7 +16,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IGalleryCollectionService extends IService<GalleryCollection> {
 
-    PageUtils selectCollectionPage(Search search, GalleryCollection galleryCollection);
+    List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection);
+
+    PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection);
 
     boolean checkGalleryCollectNameExist(GalleryCollection galleryCollection);
+
+    boolean addGalleryCollect(GalleryCollectionVO galleryCollection);
+
+    boolean updateGalleryCollectById(GalleryCollectionVO galleryCollection);
+
+    boolean removeGalleryCollectionByIds(List<Long> ids);
+
+    boolean setCollectionTopStatus(UpdateStatusDTO statusDTO);
 }

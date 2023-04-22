@@ -24,4 +24,6 @@ public interface IPicTagService extends IService<PicTag> {
     boolean setStatus(UpdateStatusDTO updateStatusDTO);
 
     List<PicTag> selectRecommendPicTagList();
+
+    List<PicTag> selectCommonPicTagList(Integer type);
 }

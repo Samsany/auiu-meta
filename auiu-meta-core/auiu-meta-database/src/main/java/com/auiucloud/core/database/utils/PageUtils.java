@@ -1,9 +1,14 @@
 package com.auiucloud.core.database.utils;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import com.auiucloud.core.common.enums.OrderTypeEnum;
+import com.auiucloud.core.common.utils.sql.SqlUtil;
 import com.auiucloud.core.database.model.Search;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.Data;
 
 import java.util.Collections;
@@ -60,15 +65,15 @@ public class PageUtils {
     /**
      * pageHelper分页
      */
-    // public PageUtils(List<?> list) {
-    //     PageInfo<?> pageInfo = new PageInfo<>(list);
-    //     this.list = pageInfo.getList();
-    //     this.totalCount = Math.toIntExact(pageInfo.getTotal());
-    //     this.pageSize = pageInfo.getPageSize();
-    //     this.pageNum = pageInfo.getPageNum();
-    //     this.totalPage = pageInfo.getPages();
-    //     this.hasNextPage = pageInfo.isHasNextPage();
-    // }
+     public PageUtils(List<?> list) {
+         PageInfo<?> pageInfo = new PageInfo<>(list);
+         this.list = pageInfo.getList();
+         this.totalCount = Math.toIntExact(pageInfo.getTotal());
+         this.pageSize = pageInfo.getPageSize();
+         this.pageNum = pageInfo.getPageNum();
+         this.totalPage = pageInfo.getPages();
+         this.hasNextPage = pageInfo.isHasNextPage();
+     }
 
     /**
      * 手工分页
@@ -168,22 +173,22 @@ public class PageUtils {
         return new Page<T>(pageNum, pageSize);
     }
 
-//    public static void startPage(Search search) {
-//        String order = search.getOrder();
-//        String orderByColumn = search.getProp();
-//        if (StrUtil.isNotBlank(orderByColumn)) {
-//            String orderBy = SqlUtil.sqlInject(orderByColumn);
-//            if (StrUtil.isNotBlank(order)) {
-//                if (OrderTypeEnum.ASC.getValue().equalsIgnoreCase(order) || OrderTypeEnum.DESC.getValue().equalsIgnoreCase(order)) {
-//                    orderBy = orderBy + " " + order;
-//                }
-//            }
-//            // 开启分页
-//            PageHelper.startPage(search.getPageNum(), search.getPageSize(), orderBy);
-//        } else {
-//            // 开启分页
-//            PageHelper.startPage(search.getPageNum(), search.getPageSize());
-//        }
-//    }
+    public static void startPage(Search search) {
+        String order = search.getOrder();
+        String orderByColumn = search.getProp();
+        if (StrUtil.isNotBlank(orderByColumn)) {
+            String orderBy = SqlUtil.sqlInject(orderByColumn);
+            if (StrUtil.isNotBlank(order)) {
+                if (OrderTypeEnum.ASC.getValue().equalsIgnoreCase(order) || OrderTypeEnum.DESC.getValue().equalsIgnoreCase(order)) {
+                    orderBy = orderBy + " " + order;
+                }
+            }
+            // 开启分页
+            PageHelper.startPage(search.getPageNum(), search.getPageSize(), orderBy);
+        } else {
+            // 开启分页
+            PageHelper.startPage(search.getPageNum(), search.getPageSize());
+        }
+    }
 
 }

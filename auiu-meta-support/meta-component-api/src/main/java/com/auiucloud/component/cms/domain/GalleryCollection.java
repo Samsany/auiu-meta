@@ -57,9 +57,9 @@ public class GalleryCollection extends BaseEntity {
     private Integer isTop;
 
     /**
-     * 是否公开(0-否 1-是)
+     * 状态(0-仅自己可见 1-广场可见)
      */
-    private Integer isPublic;
+    private Integer status;
 
     /**
      * 排序

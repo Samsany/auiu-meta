@@ -46,13 +46,26 @@ public class CmsOpenApiController extends BaseController {
     }
 
     /**
-     * 查询轮播广告列表
+     * 查询图片标签列表
      */
     @Log(value = "图片标签")
     @GetMapping("/pic-tag/recommend/list")
     @Operation(summary = "查询图片标签推荐列表")
     public ApiResult<?> picTagRecommendList() {
         return ApiResult.data(picTagService.selectRecommendPicTagList());
+    }
+
+    /**
+     * 查询图片标签列表
+     */
+    @Log(value = "图片标签")
+    @GetMapping("/pic-tag/common/list")
+    @Operation(summary = "查询图片标签列表")
+    @Parameters({
+            @Parameter(name = "type", description = "0-展示所有，1-组装全部、合集", in = ParameterIn.QUERY, required = true, example = "0"),
+    })
+    public ApiResult<?> picTagCommonList(@Parameter(hidden = true) Integer type) {
+        return ApiResult.data(picTagService.selectCommonPicTagList(type));
     }
 
 }

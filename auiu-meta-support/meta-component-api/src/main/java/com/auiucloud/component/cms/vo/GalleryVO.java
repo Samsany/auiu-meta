@@ -1,40 +1,43 @@
-package com.auiucloud.component.cms.domain;
+package com.auiucloud.component.cms.vo;
 
-import com.auiucloud.core.database.model.BaseEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
 /**
- * 作品表
- * @TableName cms_gallery
- */
+ * @author dries
+ **/
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = true)
-@TableName(value ="cms_gallery")
-public class Gallery extends BaseEntity {
+public class GalleryVO implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 7849471655351236866L;
+    private static final long serialVersionUID = 3368465545838247840L;
+
+    /**
+     * 编号主键标识
+     */
+    private Long id;
+
     /**
      * 创建人ID
      */
     private Long uId;
+
+    /**
+     * 创建人昵称
+     */
+    private String nickname;
+
+    /**
+     * 创建人头像
+     */
+    private String avatar;
 
     /**
      * 标题
@@ -107,9 +110,19 @@ public class Gallery extends BaseEntity {
     private Long tagId;
 
     /**
+     * 标签ID
+     */
+    private String tag;
+
+    /**
      * 合集ID
      */
     private Long collectionId;
+
+    /**
+     * 合集名称
+     */
+    private String collection;
 
     /**
      * 是否发布(0-否 1-是)
@@ -147,18 +160,32 @@ public class Gallery extends BaseEntity {
     private Integer approvalStatus;
 
     /**
-     * 作品类型(0-壁纸 2-AI创作)
+     * 作品类型(0-壁纸 1-AI创作)
      */
     private Integer type;
 
     /**
      * 发布时间
      */
-    private LocalDateTime publishedTime;
+    private Date publishedTime;
 
     /**
-     * 租户ID
+     * 创建人
      */
-    private Long tenantId;
+    private String createBy;
 
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
+    /**
+     * 是否选中，默认 false
+     */
+    private Boolean checked = false;
 }

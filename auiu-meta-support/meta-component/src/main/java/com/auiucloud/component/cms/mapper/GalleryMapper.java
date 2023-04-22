@@ -1,7 +1,10 @@
 package com.auiucloud.component.cms.mapper;
 
 import com.auiucloud.component.cms.domain.Gallery;
+import com.auiucloud.component.cms.vo.GalleryVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
 * @author dries
@@ -11,6 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface GalleryMapper extends BaseMapper<Gallery> {
 
+    GalleryVO selectGalleryVOById(@Param("galleryId") Long galleryId);
 }
 
 

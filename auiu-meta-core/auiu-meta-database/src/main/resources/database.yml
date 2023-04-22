@@ -1,6 +1,6 @@
 # mybatis-plus配置
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/*.xml
+  mapper-locations: classpath*:/mapper/**/*.xml
   # 实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.auiucloud.**.model,com.auiucloud.**.domain
   # 支持统配符 * 或者 ; 分割
