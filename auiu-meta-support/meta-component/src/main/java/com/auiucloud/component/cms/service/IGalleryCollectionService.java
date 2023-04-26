@@ -20,6 +20,8 @@ public interface IGalleryCollectionService extends IService<GalleryCollection> {
 
     PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection);
 
+    GalleryCollectionVO getGalleryCollect(Long collectId);
+
     boolean checkGalleryCollectNameExist(GalleryCollection galleryCollection);
 
     boolean addGalleryCollect(GalleryCollectionVO galleryCollection);

@@ -50,6 +50,12 @@ spring:
       transport:
         port: @sentinel.port@
         dashboard: @sentinel.dashboard@
+    # 缓存配置
+    loadbalancer:
+      cache:
+        enabled: true
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
 
 # Feign开启对Sentinel支持
 feign:

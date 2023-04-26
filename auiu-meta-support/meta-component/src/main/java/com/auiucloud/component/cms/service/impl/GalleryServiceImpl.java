@@ -1,16 +1,19 @@
 package com.auiucloud.component.cms.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alibaba.nacos.shaded.com.google.protobuf.Api;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
+import com.auiucloud.component.cms.domain.UserGalleryLike;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.GalleryMapper;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.service.IPicTagService;
+import com.auiucloud.component.cms.service.IUserGalleryLikeService;
 import com.auiucloud.component.cms.vo.GalleryVO;
+import com.auiucloud.component.cms.vo.UserGalleryLikeVO;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
@@ -27,6 +30,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -34,10 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +57,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     private final IGalleryCollectionService galleryCollectionService;
     private final IMemberProvider memberProvider;
     private final IPicTagService picTagService;
+    private final IUserGalleryLikeService userGalleryLikeService;
 
     @Override
     public List<GalleryVO> selectGalleryListByCId(Long cId) {
@@ -79,28 +81,57 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     }
 
     @Override
-    public GalleryVO selectGalleryInfoById(Long galleryId) {
+    public PageUtils selectCommonGalleryPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
 
-        GalleryVO galleryVO = baseMapper.selectGalleryVOById(galleryId);
-        // GalleryVO galleryVO = new GalleryVO();
-        // BeanUtils.copyProperties(gallery, galleryVO);
-
-        // 组装信息
-        // 1.1 用户信息
-
-        try {
-            ApiResult<MemberInfoVO> getUserResult = memberProvider.getUserByUsername(galleryVO.getCreateBy());
-            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful() && ObjectUtil.isNotNull(getUserResult.getData())) {
-                MemberInfoVO memberInfo = getUserResult.getData();
-                galleryVO.setNickname(memberInfo.getNickname());
-                galleryVO.setAvatar(memberInfo.getAvatar());
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        // 查询全部
+        if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
+            queryWrapper.orderByDesc(Gallery::getCreateTime);
+        } else if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
+            // todo 查询合集
+        } else {
+            queryWrapper.eq(Gallery::getTagId, gallery.getTagId());
+            // queryWrapper.orderByDesc(Gallery::getDownloadTimes);
+            // queryWrapper.orderByDesc(Gallery::getSort);
+            queryWrapper.orderByDesc(Gallery::getCreateTime);
         }
 
-        // todo 设置下载积分
-        return galleryVO;
+        PageUtils.startPage(search);
+        List<Gallery> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
+        PageUtils pageUtils = new PageUtils(list);
+
+        List<Long> userIds = list.parallelStream().map(Gallery::getUId).toList();
+        List<MemberInfoVO> memberInfoVOS = getMemberInfoVOS(userIds);
+
+        List<Long> galleryIds = list.parallelStream().map(Gallery::getId).toList();
+        List<UserGalleryLikeVO> userGalleryLikeVOS = new ArrayList<>();
+        if (CollUtil.isNotEmpty(galleryIds)) {
+            userGalleryLikeVOS.addAll(userGalleryLikeService.selectGalleryLikeVOListByGalleryIds(galleryIds));
+        }
+
+        List<GalleryVO> collect = list
+                .stream().map(it -> {
+                    GalleryVO galleryVO = new GalleryVO();
+                    BeanUtils.copyProperties(it, galleryVO);
+
+                    buildUserGalleryLikeVO(galleryVO, userGalleryLikeVOS);
+                    buildGalleryUserVO(galleryVO, memberInfoVOS);
+                    return galleryVO;
+                })
+                .toList();
+        pageUtils.setList(collect);
+        return pageUtils;
+    }
+
+    @Override
+    public GalleryVO selectGalleryInfoById(Long galleryId) {
+        GalleryVO galleryVO = baseMapper.selectGalleryVOById(galleryId);
+
+        // 组装点赞信息
+        List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGalleryId(galleryId);
+        buildUserGalleryLikeVO(galleryVO, userGalleryLikeVOS);
+        // todo 组装下载记录
+        return getGalleryVO(galleryVO);
     }
 
     @Transactional
@@ -156,19 +187,13 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         if (ObjectUtil.isNotNull(collection)) {
             List<Long> galleryIds = joinGalleryCollectionDTO.getGalleryIds();
             // 批量查询作品
-            List<GalleryCollection> galleryCollections = Optional.ofNullable(galleryCollectionService.listByIds(galleryIds)).orElse(Collections.emptyList());
+            List<Gallery> galleryCollections = Optional.ofNullable(this.listByIds(galleryIds)).orElse(Collections.emptyList());
             List<Gallery> galleryList = galleryCollections.parallelStream()
-                    .map(it -> {
-                        Gallery build = Gallery.builder()
-                                .collectionId(collection.getId())
-                                .tagId(collection.getTagId())
-                                .id(it.getId())
-                                .build();
-                        if (ObjectUtil.isNull(it.getTagId())) {
-                            build.setTagId(collection.getTagId());
-                        }
-                        return build;
-                    }).collect(Collectors.toList());
+                    .map(it -> Gallery.builder()
+                            .collectionId(collection.getId())
+                            .tagId(collection.getTagId())
+                            .id(it.getId())
+                            .build()).collect(Collectors.toList());
             return this.updateBatchById(galleryList);
         }
         return false;
@@ -177,11 +202,33 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     @Override
     public boolean setGalleryTopStatus(UpdateStatusDTO statusDTO) {
         Gallery gallery = this.getById(statusDTO.getId());
-        if(!gallery.getUId().equals(SecurityUtil.getUserId())) {
+        if (!gallery.getUId().equals(SecurityUtil.getUserId())) {
             throw new ApiException(ResultCode.USER_ERROR_A0300);
         }
         gallery.setIsTop(statusDTO.getStatus());
         return this.updateById(gallery);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean likeGallery(Long postId, Integer type) {
+        Long userId = SecurityUtil.getUserId();
+        UserGalleryLike userGalleryLike = userGalleryLikeService.selectGalleryLikeByUserId2GalleryId(userId, postId, type);
+        if (ObjectUtil.isNull(userGalleryLike)) {
+            userGalleryLike = UserGalleryLike.builder()
+                    .uId(userId)
+                    .postId(postId)
+                    .type(type)
+                    .status(CommonConstant.STATUS_NORMAL_VALUE)
+                    .build();
+        } else {
+            if (userGalleryLike.getStatus().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                userGalleryLike.setStatus(CommonConstant.STATUS_DISABLE_VALUE);
+            } else {
+                userGalleryLike.setStatus(CommonConstant.STATUS_NORMAL_VALUE);
+            }
+        }
+        return userGalleryLikeService.saveOrUpdate(userGalleryLike);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -214,6 +261,77 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     return galleryVO;
                 })
                 .toList();
+    }
+
+    // 组装作品信息
+    @Nullable
+    private GalleryVO getGalleryVO(GalleryVO galleryVO) {
+        try {
+            ApiResult<MemberInfoVO> getUserResult = memberProvider.getUserByUsername(galleryVO.getCreateBy());
+            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful() && ObjectUtil.isNotNull(getUserResult.getData())) {
+                MemberInfoVO memberInfo = getUserResult.getData();
+                galleryVO.setNickname(memberInfo.getNickname());
+                galleryVO.setAvatar(memberInfo.getAvatar());
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return galleryVO;
+    }
+
+    // 组装作品用户信息
+    private void buildGalleryUserVO(GalleryVO galleryVO, List<MemberInfoVO> memberInfoVOS) {
+        if (CollUtil.isNotEmpty(memberInfoVOS)) {
+            memberInfoVOS.parallelStream()
+                    .filter(it -> it.getUserId().equals(galleryVO.getUId()))
+                    .findAny()
+                    .ifPresent(memberInfo -> {
+                        galleryVO.setNickname(memberInfo.getNickname());
+                        galleryVO.setAvatar(memberInfo.getAvatar());
+                    });
+        }
+    }
+
+    private void buildUserGalleryLikeVO(GalleryVO galleryVO, List<UserGalleryLikeVO> userGalleryLikeVOS) {
+        List<UserGalleryLikeVO> likeList = userGalleryLikeVOS.parallelStream()
+                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryVO.getId())
+                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryLikeType.GALLERY.getValue()))
+                .collect(Collectors.toList());
+        galleryVO.setLikeList(likeList);
+        galleryVO.setLikeNum(likeList.size());
+
+        // 组装收藏信息
+        List<UserGalleryLikeVO> favoriteList = userGalleryLikeVOS.parallelStream()
+                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryVO.getId())
+                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryLikeType.GALLERY_COLLECTION.getValue()))
+                .collect(Collectors.toList());
+        galleryVO.setFavoriteList(favoriteList);
+        galleryVO.setFavoriteNum(favoriteList.size());
+        try {
+            Long userId = SecurityUtil.getUserId();
+            List<Long> likeUserIds = likeList.parallelStream().map(UserGalleryLikeVO::getUId).toList();
+            List<Long> favoriteUserIds = favoriteList.parallelStream().map(UserGalleryLikeVO::getUId).toList();
+
+            galleryVO.setIsLike(likeUserIds.contains(userId));
+            galleryVO.setIsFavorite(favoriteUserIds.contains(userId));
+        } catch (Exception ignored) {
+        }
+    }
+
+    // 获取用户信息
+    @NotNull
+    private List<MemberInfoVO> getMemberInfoVOS(List<Long> userIds) {
+        List<MemberInfoVO> memberInfoVOS = new ArrayList<>();
+        try {
+            ApiResult<List<MemberInfoVO>> getUserResult = memberProvider.getUserListByIds(userIds);
+            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful() && CollUtil.isNotEmpty(getUserResult.getData())) {
+                List<MemberInfoVO> memberInfos = getUserResult.getData();
+                memberInfoVOS.addAll(memberInfos);
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return memberInfoVOS;
     }
 }
 

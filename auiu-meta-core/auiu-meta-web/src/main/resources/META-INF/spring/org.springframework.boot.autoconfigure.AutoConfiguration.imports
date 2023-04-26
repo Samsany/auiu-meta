@@ -1,3 +1,5 @@
 com.auiucloud.core.web.config.ExceptionConfiguration
 com.auiucloud.core.web.config.WebConfiguration
 com.auiucloud.core.web.config.DateConverterConfiguration
+com.auiucloud.core.web.config.UndertowHttp2Configuration
+

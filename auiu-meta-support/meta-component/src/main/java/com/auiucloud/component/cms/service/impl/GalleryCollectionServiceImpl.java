@@ -1,26 +1,27 @@
 package com.auiucloud.component.cms.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
+import com.auiucloud.component.cms.domain.PicTag;
 import com.auiucloud.component.cms.mapper.GalleryCollectionMapper;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
+import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
-import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -46,6 +46,8 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Lazy
     @Resource
     private IGalleryService galleryService;
+
+    private final IPicTagService picTagService;
 
     @Override
     public List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection) {
@@ -67,27 +69,57 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         PageUtils.startPage(search);
         List<GalleryCollection> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
         PageUtils pageUtils = new PageUtils(list);
-        List<GalleryCollectionVO> galleryCollectionVOS = list.stream().map(it -> {
-            GalleryCollectionVO galleryCollectionVO = new GalleryCollectionVO();
-            // 查询作品
-            List<GalleryVO> galleries = galleryService.selectGalleryListByCId(it.getId());
-            galleryCollectionVO.setGalleryList(galleries);
-            galleryCollectionVO.setGalleryNum(galleries.size());
-            if (StrUtil.isBlank(it.getCover())) {
-                // 组装封面图
-                List<String> covers = galleries.stream()
-                        .map(GalleryVO::getPic)
-                        .filter(Objects::nonNull)
-                        .limit(4)
-                        .toList();
-                galleryCollectionVO.setCovers(covers);
-            }
-            BeanUtils.copyProperties(it, galleryCollectionVO);
-            return galleryCollectionVO;
-        }).toList();
-
+        List<Long> tagIds = list.parallelStream().map(GalleryCollection::getTagId).filter(Objects::nonNull).toList();
+        List<GalleryCollectionVO> galleryCollectionVOS = list.stream().map(it -> getGalleryCollectionVO(it, tagIds)).toList();
         pageUtils.setList(galleryCollectionVOS);
         return pageUtils;
+    }
+
+    @Override
+    public GalleryCollectionVO getGalleryCollect(Long collectId) {
+        GalleryCollection galleryCollection = this.getById(collectId);
+        List<Long> tagIds = null;
+        if (ObjectUtil.isNotNull(galleryCollection.getTagId())) {
+            tagIds = List.of(galleryCollection.getTagId());
+        }
+        return getGalleryCollectionVO(galleryCollection, tagIds);
+    }
+
+    @NotNull
+    private GalleryCollectionVO getGalleryCollectionVO(GalleryCollection galleryCollection, List<Long> tagIds) {
+        GalleryCollectionVO galleryCollectionVO = getGalleryCollectionVO(galleryCollection);
+        if (CollUtil.isNotEmpty(tagIds)) {
+            List<PicTag> picTagList = Optional.ofNullable(picTagService.listByIds(tagIds)).orElse(Collections.emptyList());
+            if (ObjectUtil.isNotNull(galleryCollection.getTagId())) {
+                picTagList.parallelStream()
+                        .filter(it -> it.getId().equals(galleryCollection.getTagId()))
+                        .findAny()
+                        .ifPresent(it -> {
+                            galleryCollectionVO.setTag(it.getName());
+                        });
+            }
+        }
+
+        return galleryCollectionVO;
+    }
+
+    @NotNull
+    private GalleryCollectionVO getGalleryCollectionVO(GalleryCollection galleryCollection) {
+        GalleryCollectionVO galleryCollectionVO = new GalleryCollectionVO();
+        BeanUtils.copyProperties(galleryCollection, galleryCollectionVO);
+        // 查询作品
+        List<GalleryVO> galleries = galleryService.selectGalleryListByCId(galleryCollection.getId());
+        galleryCollectionVO.setGalleryList(galleries);
+        galleryCollectionVO.setGalleryNum(galleries.size());
+        if (StrUtil.isBlank(galleryCollection.getCover())) {
+            // 组装封面图
+            List<String> covers = galleries.stream()
+                    .limit(4)
+                    .map(GalleryVO::getPic)
+                    .toList();
+            galleryCollectionVO.setCovers(covers);
+        }
+        return galleryCollectionVO;
     }
 
     @Override
@@ -113,7 +145,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Override
     public boolean setCollectionTopStatus(UpdateStatusDTO statusDTO) {
         GalleryCollection galleryCollection = this.getById(statusDTO.getId());
-        if(!galleryCollection.getUId().equals(SecurityUtil.getUserId())) {
+        if (!galleryCollection.getUId().equals(SecurityUtil.getUserId())) {
             throw new ApiException(ResultCode.USER_ERROR_A0300);
         }
         galleryCollection.setIsTop(statusDTO.getStatus());

@@ -47,6 +47,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> authentication, AuthorizationContext authorizationContext) {
+
         // 如果未启用网关验证，则跳过
         if (!metaApiProperties.getEnabled()) {
             return Mono.just(new AuthorizationDecision(true));
@@ -66,9 +67,10 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         String restPath = request.getMethodValue() + "_" + uri.getPath();
 
         if (ignoreUrl(path) || ignoreUrl(rawPath)) {
-            if (!pathMatcher.match(Oauth2Constant.OAUTH_ALL, path)) {
-                request = request.mutate().headers(httpHeaders -> httpHeaders.remove(Oauth2Constant.JWT_TOKEN_HEADER)).build();
-            }
+            // 移除请求头
+            // if (!pathMatcher.match(Oauth2Constant.OAUTH_ALL, path)) {
+            //     request = request.mutate().headers(httpHeaders -> httpHeaders.remove(Oauth2Constant.JWT_TOKEN_HEADER)).build();
+            // }
 
             exchange.mutate().request(request).build();
             return Mono.just(new AuthorizationDecision(true));
@@ -149,7 +151,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
      * @return boolean
      */
     private boolean ignoreUrl(String path) {
-        return metaApiProperties.getIgnoreUrls().stream()
+        return metaApiProperties.getIgnoreUrls().parallelStream()
                 .anyMatch(url -> pathMatcher.match(url, path));
     }
 

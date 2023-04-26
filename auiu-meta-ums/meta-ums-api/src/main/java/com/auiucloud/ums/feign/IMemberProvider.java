@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 /**
  * 会员远程调用接口
  *
@@ -18,6 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
  **/
 @FeignClient(value = FeignConstant.META_CLOUD_MEMBER)
 public interface IMemberProvider {
+
+    /**
+     * 根据用户名查询
+     *
+     * @param userIds 用户名
+     * @return ApiResult
+     */
+    @PostMapping(ProviderConstant.PROVIDER_USER_USERNAME)
+    ApiResult<List<MemberInfoVO>> getUserListByIds(@RequestBody List<Long> userIds);
 
     /**
      * 根据用户名查询
@@ -46,4 +57,5 @@ public interface IMemberProvider {
      */
     @PostMapping(ProviderConstant.PROVIDER_USER_REGISTER_SOCIAL)
     ApiResult<MemberInfoDTO> registerMemberBySocial(@RequestBody MemberInfoDTO memberInfoDTO);
+
 }

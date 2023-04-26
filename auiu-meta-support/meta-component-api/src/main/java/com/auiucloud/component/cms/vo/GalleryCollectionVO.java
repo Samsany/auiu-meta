@@ -2,10 +2,12 @@ package com.auiucloud.component.cms.vo;
 
 import com.auiucloud.core.validator.UpdateGroup;
 import com.auiucloud.core.validator.Xss;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,7 +30,7 @@ public class GalleryCollectionVO implements Serializable {
     /**
      * 编号主键标识
      */
-    @NotBlank(message = "参数异常，请重新尝试", groups = UpdateGroup.class)
+    @NotNull(message = "参数异常", groups = UpdateGroup.class)
     private Long id;
 
     /**
@@ -53,6 +55,11 @@ public class GalleryCollectionVO implements Serializable {
      * 标签ID
      */
     private Long tagId;
+
+    /**
+     * 标签
+     */
+    private String tag;
 
     /**
      * 作品数量

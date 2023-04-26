@@ -1,5 +1,6 @@
 package com.auiucloud.ums.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
@@ -32,9 +33,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -73,6 +76,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
                 .parallelStream()
                 .forEach(this::hidePrivacyField);
         return list;
+    }
+
+    @Override
+    public List<MemberInfoVO> getMemberListByIds(List<Long> userIds) {
+        if (CollUtil.isEmpty(userIds)) {
+            return Collections.emptyList();
+        }
+        List<Member> list = this.listByIds(userIds);
+        // 对member部分字段进行隐藏显示，保护隐私
+        return Optional.ofNullable(list).orElse(Collections.emptyList())
+                .parallelStream()
+                .map(this::getMemberInfoVO)
+                .collect(Collectors.toList());
     }
 
     private void hidePrivacyField(Member member) {
@@ -255,6 +271,18 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         queryWrapper.orderByDesc(Member::getCreateTime);
 
         return queryWrapper;
+    }
+
+    /**
+     * 用户信息转化
+     *
+     * @param member 用户信息
+     * @return MemberInfoVO
+     */
+    public MemberInfoVO getMemberInfoVO(Member member) {
+        MemberInfoVO memberInfoVO = new MemberInfoVO();
+        BeanUtils.copyProperties(member, memberInfoVO);
+        return memberInfoVO.withUserId(member.getId());
     }
 }
 

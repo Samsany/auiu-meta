@@ -1,5 +1,7 @@
 package com.auiucloud.component.cms.vo;
 
+import com.auiucloud.component.cms.domain.UserGalleryLike;
+import com.auiucloud.ums.domain.UserFollower;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,6 +11,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author dries
@@ -188,4 +191,34 @@ public class GalleryVO implements Serializable {
      * 是否选中，默认 false
      */
     private Boolean checked = false;
+
+    /**
+     * 是否点赞，默认false
+     */
+    private Boolean isLike = false;
+
+    /**
+     * 点赞数
+     */
+    private Integer likeNum;
+
+    /**
+     * 点赞列表
+     */
+    private List<UserGalleryLikeVO> likeList;
+
+    /**
+     * 是否收藏，默认false
+     */
+    private Boolean isFavorite = false;
+
+    /**
+     * 收藏数
+     */
+    private Integer favoriteNum;
+
+    /**
+     * 收藏列表
+     */
+    private List<UserGalleryLikeVO> favoriteList;
 }

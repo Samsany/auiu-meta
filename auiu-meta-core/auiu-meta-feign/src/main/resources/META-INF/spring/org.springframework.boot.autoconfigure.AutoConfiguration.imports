@@ -1,2 +1,1 @@
-com.auiucloud.core.feign.config.FeignInterceptorConfiguration
 com.auiucloud.core.feign.config.MetaFeignAutoConfiguration

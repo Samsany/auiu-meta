@@ -1,11 +1,13 @@
 package com.auiucloud.auth.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.auth.model.*;
 import com.auiucloud.auth.props.DouyinAppletProps;
 import com.auiucloud.auth.service.DouyinAppletsService;
 import com.auiucloud.auth.utils.AuthCryptUtils;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.redis.core.RedisService;
@@ -18,7 +20,9 @@ import org.springframework.http.MediaType;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -96,6 +100,65 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
     @Override
     public AppletUserInfo getUserInfo(String sessionKey, String encryptedData, String iv) {
         return AppletUserInfo.fromJson(AuthCryptUtils.decrypt(encryptedData, sessionKey, iv));
+    }
+
+    @Override
+    public boolean checkText(String content) {
+        String accessToken = getAccessToken();
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("X-Token", accessToken);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("content", content);
+        // 设置请求参数
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("tasks", List.of(map));
+
+        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
+        TextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, TextAntidirtResult.class);
+        List<TextAntidirtResult.ResultData> data = apiResponse.getData();
+
+        for (TextAntidirtResult.ResultData datum : data) {
+            if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                List<TextAntidirtResult.Predicts> predicts = datum.getPredicts();
+                for (TextAntidirtResult.Predicts predict : predicts) {
+                    if (predict.getHit()) {
+                        // throw new ApiException("内容包含敏感信息，请修改");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean checkImage(String image) {
+        String accessToken = getAccessToken();
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // 设置请求参数
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("app_id", appletConfig.getAppId());
+        paramsMap.put("access_token", accessToken);
+        // 检测的图片链接
+        paramsMap.put("image", image);
+        // 图片数据的 base64 格式，有 image 字段时，此字段无效
+        // paramsMap.put("image_data", image);
+
+        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
+        ImageDetectionResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_IMAGE_DETECTION_V2__PROD_URL, httpEntity, ImageDetectionResult.class);
+        if (apiResponse.getError().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+            List<ImageDetectionResult.Predict> predicts = apiResponse.getPredicts();
+            List<ImageDetectionResult.Predict> predictList = predicts.parallelStream().filter(ImageDetectionResult.Predict::getHit).collect(Collectors.toList());
+            return !CollUtil.isNotEmpty(predictList);
+        }
+
+        return false;
     }
 
     public AppletConfig getAppletConfig() {

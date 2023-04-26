@@ -23,6 +23,8 @@ public interface IGalleryService extends IService<Gallery> {
 
     List<GalleryVO> selectGalleryListByCId2Limit(Long cId, Integer limit);
 
+    PageUtils selectCommonGalleryPage(Search search, Gallery gallery);
+
     GalleryVO selectGalleryInfoById(Long galleryId);
 
     ApiResult<?> upload(MultipartFile file, Long cId);
@@ -34,5 +36,14 @@ public interface IGalleryService extends IService<Gallery> {
     boolean removeGalleryByIds(List<Long> ids);
 
     boolean setGalleryTopStatus(UpdateStatusDTO statusDTO);
+
+    /**
+     * 点赞/取消点赞帖子
+     *
+     * @param postId 帖子ID
+     * @param type 帖子类型
+     * @return boolean
+     */
+    boolean likeGallery(Long postId, Integer type);
 
 }

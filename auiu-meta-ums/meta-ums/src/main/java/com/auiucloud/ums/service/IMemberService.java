@@ -23,6 +23,8 @@ public interface IMemberService extends IService<Member> {
 
     List<Member> selectMemberList(Search search, Member member);
 
+    List<MemberInfoVO> getMemberListByIds(List<Long> userIds);
+
     /**
      * 根据用户username 查询会员信息
      *
@@ -68,4 +70,5 @@ public interface IMemberService extends IService<Member> {
     boolean checkHasUserByLevelId(Long levelId);
 
     boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
+
 }

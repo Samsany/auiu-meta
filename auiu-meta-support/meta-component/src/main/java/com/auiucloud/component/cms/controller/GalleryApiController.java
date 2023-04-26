@@ -1,6 +1,7 @@
 package com.auiucloud.component.cms.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.StopWatch;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
@@ -9,6 +10,7 @@ import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.context.UserContext;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -65,6 +67,15 @@ public class GalleryApiController extends BaseController {
         return ApiResult.data(galleryCollectionService.selectUserCollectionApiPage(search, galleryCollection));
     }
 
+    /**
+     * 查询作品合集
+     */
+    @Log(value = "作品")
+    @GetMapping("/collection/info/{collectId}")
+    @Operation(summary = "查询作品合集")
+    public ApiResult<?> getCollection(@PathVariable Long collectId) {
+        return ApiResult.data(galleryCollectionService.getGalleryCollect(collectId));
+    }
 
     /**
      * 新增作品合集
@@ -79,6 +90,20 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
+     * 编辑作品合集
+     */
+    @Log(value = "作品")
+    @PutMapping("/collection/edit")
+    @Operation(summary = "编辑作品合集")
+    public ApiResult<?> editCollection(@Validated({UpdateGroup.class}) @RequestBody GalleryCollectionVO galleryCollection) {
+        Long userId = SecurityUtil.getUserId();
+        if (!galleryCollection.getUId().equals(userId)) {
+            return ApiResult.fail(ResultCode.USER_ERROR_A0300);
+        }
+        return ApiResult.condition(galleryCollectionService.updateGalleryCollectById(galleryCollection));
+    }
+
+    /**
      * 设置作品合集置顶
      */
     @Log(value = "作品")
@@ -90,21 +115,7 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
-     * 编辑作品合集
-     */
-    @Log(value = "作品")
-    @PutMapping("/collection/edit")
-    @Operation(summary = "编辑作品合集")
-    public ApiResult<?> editCollection(@Validated({UpdateGroup.class}) @RequestBody GalleryCollectionVO galleryCollection) {
-        Long userId = SecurityUtil.getUserId();
-        if (galleryCollection.getUId().equals(userId)) {
-            return ApiResult.fail(ResultCode.USER_ERROR_A0300);
-        }
-        return ApiResult.condition(galleryCollectionService.updateGalleryCollectById(galleryCollection));
-    }
-
-    /**
-     * 编辑作品合集
+     * 作品加入合集
      */
     @Log(value = "作品")
     @PutMapping("/collection/join")
@@ -148,7 +159,7 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
-     * 查询作品列表
+     * 查询作品详情
      */
     @Log(value = "作品")
     @GetMapping("/info/{galleryId}")
@@ -169,6 +180,20 @@ public class GalleryApiController extends BaseController {
     public ApiResult<?> setGalleryTopStatus(@Validated @RequestBody UpdateStatusDTO statusDTO) {
         String message = statusDTO.getStatus() == 0 ? "取消置顶" : "已置顶";
         return ApiResult.condition(message, galleryService.setGalleryTopStatus(statusDTO));
+    }
+
+    /**
+     * 点赞/取消点赞 作品/合集
+     */
+    @Log(value = "作品")
+    @GetMapping("/like/{postId}")
+    @Operation(summary = "点赞/取消点赞")
+    @Parameters({
+            @Parameter(name = "postId", description = "帖子ID", in = ParameterIn.PATH, required = true),
+            @Parameter(name = "type", description = "帖子类型", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> likeGallery(@PathVariable Long postId, @RequestParam Integer type) {
+        return ApiResult.condition(galleryService.likeGallery(postId, type));
     }
 
     /**

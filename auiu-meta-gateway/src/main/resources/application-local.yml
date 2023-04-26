@@ -16,8 +16,10 @@ spring:
   cloud:
     gateway:
       httpclient:
+        ssl:
+          use-insecure-trust-manager: true
         connect-timeout: 5000
-#        response-timeout: 20s
+        response-timeout: 5s
       discovery:
         locator:
           enabled: true

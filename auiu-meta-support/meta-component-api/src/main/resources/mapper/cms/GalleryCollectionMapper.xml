@@ -29,4 +29,54 @@
         update_time,create_by,update_by,
         remark,tenant_id,is_deleted
     </sql>
+    <select id="selectGalleryCollectVOById" resultType="com.auiucloud.component.cms.vo.GalleryCollectionVO">
+        select cgc.id,
+               cgc.u_id,
+               cgc.title,
+               cgc.cover,
+               cgc.tag_id,
+               cgc.is_top,
+               cgc.status,
+               cgc.sort,
+               cgc.create_time,
+               cgc.update_time,
+               cgc.create_by,
+               cgc.update_by,
+               cgc.remark,
+               cg.id,
+               cg.u_id,
+               cg.title,
+               cg.pic,
+               cg.prompt,
+               cg.negative_prompt,
+               cg.width,
+               cg.height,
+               cg.size,
+               cg.seed,
+               cg.model,
+               cg.fusion_model,
+               cg.steps,
+               cg.sampler,
+               cg.cfg_scale,
+               cg.tag_id,
+               cg.collection_id,
+               cg.is_published,
+               cg.is_top,
+               cg.download_integral,
+               cg.download_times,
+               cg.views,
+               cg.sort,
+               cg.approval_status,
+               cg.type,
+               cg.published_time,
+               cg.create_time,
+               cg.update_time,
+               cg.create_by,
+               cg.update_by,
+               cg.remark
+        from cms_gallery_collection cgc
+                 left join cms_gallery cg on cgc.id = cg.collection_id
+        where cgc.is_deleted = 0
+          and cgc.id = #{collectId};
+    </select>
 </mapper>

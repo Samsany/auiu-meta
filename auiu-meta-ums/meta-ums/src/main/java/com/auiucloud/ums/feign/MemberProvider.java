@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author dries
  **/
@@ -25,6 +27,19 @@ public class MemberProvider implements IMemberProvider {
 
     private final IMemberService memberService;
 
+
+    /**
+     * 根据用户ID批量查询用户列表
+     *
+     * @param userIds 用户ID
+     * @return ApiResult
+     */
+    @Override
+    @Log(value = "用户ID批量查询用户列表", exception = "用户ID查询用户列表请求失败")
+    @Operation(summary = "用户ID批量查询用户列表", description = "用户ID批量查询用户列表")
+    public ApiResult<List<MemberInfoVO>> getUserListByIds(List<Long> userIds) {
+        return ApiResult.data(memberService.getMemberListByIds(userIds));
+    }
 
     /**
      * 根据用户名查询

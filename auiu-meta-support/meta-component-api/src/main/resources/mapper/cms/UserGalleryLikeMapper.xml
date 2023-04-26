@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auiucloud.component.cms.mapper.UserGalleryLikeMapper">
+
+    <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.UserGalleryLike">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="uId" column="u_id" jdbcType="BIGINT"/>
+            <result property="postId" column="post_id" jdbcType="BIGINT"/>
+            <result property="type" column="type" jdbcType="TINYINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,u_id,post_id,
+        type,status,create_time,
+        update_time
+    </sql>
+
+    <select id="selectGalleryLikeVOListByGalleryId"
+            resultType="com.auiucloud.component.cms.vo.UserGalleryLikeVO">
+        select uugl.id,
+               uugl.u_id,
+               u2.avatar,
+               u2.nickname,
+               uugl.post_id,
+               uugl.type,
+               uugl.status,
+               uugl.create_time,
+               uugl.update_time
+        from ums_user_gallery_like uugl
+                 left join ums_user u2 on u2.id = uugl.u_id and u2.is_deleted = 0
+        where uugl.status = 0
+          and uugl.post_id = #{galleryId}
+    </select>
+
+    <select id="selectGalleryLikeVOListByGalleryIds"
+            resultType="com.auiucloud.component.cms.vo.UserGalleryLikeVO">
+        select uugl.id,
+        uugl.u_id,
+        u2.avatar,
+        u2.nickname,
+        uugl.post_id,
+        uugl.type,
+        uugl.status,
+        uugl.create_time,
+        uugl.update_time
+        from ums_user_gallery_like uugl
+        left join ums_user u2 on u2.id = uugl.u_id and u2.is_deleted = 0
+        where uugl.status = 0 and uugl.post_id in
+        <foreach collection="list" open="(" close=")" separator="," item="item" index="index">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

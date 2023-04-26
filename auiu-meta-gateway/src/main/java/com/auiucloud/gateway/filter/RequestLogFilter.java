@@ -60,8 +60,8 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
             responseArgs.add(requestUrl);
             responseArgs.add(executeTime + "ms");
 
-            //            responseLog.append("<=== META-TRACE-ID: {}\n");
-            //            responseArgs.add(traceId);
+            responseLog.append("<=== META-TRACE-ID: {}\n");
+            responseArgs.add(traceId);
 
             // 打印请求头
             HttpHeaders httpHeaders = response.getHeaders();

@@ -3,6 +3,7 @@ package com.auiucloud.component.cms.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.component.cms.domain.PicTag;
+import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.PicTagMapper;
 import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.core.common.constant.CommonConstant;
@@ -58,16 +59,16 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
 
         if (type.equals(CommonConstant.STATUS_DISABLE_VALUE)) {
             PicTag allPicTag = PicTag.builder()
-                    .id(0L)
-                    .name("全部")
+                    .id(GalleryEnums.GalleryTagType.ALL.getValue())
+                    .name(GalleryEnums.GalleryTagType.ALL.getLabel())
                     .build();
-            PicTag collectionPicTag = PicTag.builder()
-                    .id(-1L)
-                    .name("合集")
-                    .build();
-
             picTagList.add(allPicTag);
-            picTagList.add(collectionPicTag);
+
+//            PicTag collectionPicTag = PicTag.builder()
+//                    .id(GalleryEnums.GalleryTagType.COLLECTION.getValue())
+//                    .name(GalleryEnums.GalleryTagType.COLLECTION.getLabel())
+//                    .build();
+//            picTagList.add(collectionPicTag);
         }
         picTagList.addAll(list);
 

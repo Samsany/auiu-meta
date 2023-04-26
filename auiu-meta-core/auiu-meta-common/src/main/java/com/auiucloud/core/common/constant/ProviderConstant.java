@@ -28,6 +28,10 @@ public class ProviderConstant {
     /**
      * 根据username查询用户信息
      */
+    public final String PROVIDER_USER_LIST = PROVIDER + "/user/list";
+    /**
+     * 根据username查询用户信息
+     */
     public final String PROVIDER_USER_USERNAME = PROVIDER + "/user/username";
     /**
      * 根据手机号查询用户信息

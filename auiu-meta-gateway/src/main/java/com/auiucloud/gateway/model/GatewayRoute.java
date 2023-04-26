@@ -3,6 +3,7 @@ package com.auiucloud.gateway.model;
 import lombok.Data;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
  */
 @Data
 public class GatewayRoute implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 7949469082270266974L;
 
     List<RouteDefinition> routes;
