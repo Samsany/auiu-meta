@@ -9,6 +9,7 @@ import com.alibaba.nacos.api.exception.NacosException;
 import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.gateway.model.GatewayRoute;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.config.GatewayProperties;
@@ -17,7 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.yaml.snakeyaml.Yaml;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 

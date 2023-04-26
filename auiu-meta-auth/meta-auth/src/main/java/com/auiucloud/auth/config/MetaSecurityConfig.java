@@ -17,18 +17,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-
-import javax.annotation.Resource;
 
 /**
  * 安全配置中心
@@ -41,47 +39,34 @@ import javax.annotation.Resource;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
+public class MetaSecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+//    private final UserDetailsService userDetailsService;
     private final SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     private final SocialAuthenticationSecurityConfig socialAuthenticationSecurityConfig;
     private final DouyinAuthenticationSecurityConfig douyinAuthenticationSecurityConfig;
     private final WechatAuthenticationSecurityConfig wechatAuthenticationSecurityConfig;
 
-    @SneakyThrows
-    @Override
-    protected void configure(HttpSecurity http) {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry config = http
-                .apply(socialAuthenticationSecurityConfig)
-                .and()
-                .apply(smsCodeAuthenticationSecurityConfig)
-                .and()
-                .apply(wechatAuthenticationSecurityConfig)
-                .and()
-                .apply(douyinAuthenticationSecurityConfig)
-                .and()
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests();
-
-        config
+                .authorizeHttpRequests()
                 // 任何请求
                 .anyRequest()
                 // 全部放行 由网关处理授权
                 .permitAll();
-    }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                // 配置 AuthenticationManager 使用 userService
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        http.apply(socialAuthenticationSecurityConfig);
+        http.apply(smsCodeAuthenticationSecurityConfig);
+        http.apply(wechatAuthenticationSecurityConfig);
+        http.apply(douyinAuthenticationSecurityConfig);
+        return http.build();
     }
 
     /**
@@ -93,16 +78,14 @@ public class MetaSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Spring Security OAuth2 支持 grant_type=password
-     * 必须要配置 AuthenticationManager
+     * 解决 无法直接注入 AuthenticationManager
      *
      * @return AuthenticationManager
+     * @throws Exception 异常
      */
     @Bean
-    @Override
-    @SneakyThrows
-    public AuthenticationManager authenticationManagerBean() {
-        return super.authenticationManagerBean();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
+        return auth.getAuthenticationManager();
     }
 
     @Bean

@@ -64,7 +64,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         URI uri = request.getURI();
         String path = replacePrefix(request.getURI().getPath());
         String rawPath = request.getURI().getRawPath();
-        String restPath = request.getMethodValue() + "_" + uri.getPath();
+        String restPath = request.getMethod().name() + "_" + uri.getPath();
 
         if (ignoreUrl(path) || ignoreUrl(rawPath)) {
             // 移除请求头

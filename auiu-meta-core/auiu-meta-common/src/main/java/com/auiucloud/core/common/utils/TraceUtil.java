@@ -2,9 +2,8 @@ package com.auiucloud.core.common.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.constant.MetaConstant;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.MDC;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 链路追踪工具类

@@ -5,20 +5,30 @@ import com.alibaba.csp.sentinel.adapter.spring.webflux.callback.BlockRequestHand
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.fastjson.JSONObject;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.sentinel.feign.MateSentinelInvocationHandler;
 import feign.Feign;
+import feign.InvocationHandlerFactory;
+import feign.Target;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.FallbackFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.util.Map;
 
 /**
  * @author dries
@@ -31,7 +41,7 @@ public class SentinelConfiguration {
     @Bean
     @Scope("prototype")
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(name = "feign.sentinel.enabled")
+    @ConditionalOnProperty(name = "spring.cloud.openfeign.sentinel.enabled")
     public Feign.Builder feignSentinelBuilder() {
         return new Feign.Builder();
     }

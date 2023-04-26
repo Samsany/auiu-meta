@@ -2,13 +2,13 @@ package com.auiucloud.core.common.config;
 
 import com.auiucloud.core.common.props.ThreadPoolConfigProps;
 import com.auiucloud.core.common.utils.CustomThreadPoolTaskExecutor;
+import jakarta.annotation.Resource;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import javax.annotation.Resource;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**

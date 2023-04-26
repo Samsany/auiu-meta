@@ -4,10 +4,7 @@ import ch.qos.logback.classic.util.LogbackMDCAdapter;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import org.slf4j.spi.MDCAdapter;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 重构{@link LogbackMDCAdapter}类，搭配TransmittableThreadLocal实现父子线程之间的数据传递
@@ -26,7 +23,9 @@ public class TransmitLocalMDCAdapter implements MDCAdapter {
         MDC.mdcAdapter = mtcMDCAdapter;
     }
 
+    private final ThreadLocal<Map<String, Deque<String>>> tlMapOfStacks = new TransmittableThreadLocal<>();
     private final ThreadLocal<Map<String, String>> copyOnInheritThreadLocal = new TransmittableThreadLocal<>();
+
     /**
      * keeps track of the last operation performed
      */
@@ -183,5 +182,32 @@ public class TransmitLocalMDCAdapter implements MDCAdapter {
 
         // the newMap replaces the old one for serialisation's sake
         copyOnInheritThreadLocal.set(newMap);
+    }
+
+    @Override
+    public void pushByKey(String key, String value) {
+        tlMapOfStacks.get()
+                .computeIfAbsent(key, ignored -> new ArrayDeque<>())
+                .push(value);
+    }
+
+    @Override
+    public String popByKey(String key) {
+        final Deque<String> deque = tlMapOfStacks.get().get(key);
+        return deque != null ? deque.poll() : null;
+    }
+
+    @Override
+    public Deque<String> getCopyOfDequeByKey(String key) {
+        final Deque<String> deque = tlMapOfStacks.get().get(key);
+        return deque != null ? new ArrayDeque<>(deque) : null;
+    }
+
+    @Override
+    public void clearDequeByKey(String key) {
+        final Deque<String> deque = tlMapOfStacks.get().get(key);
+        if (deque != null) {
+            deque.clear();
+        }
     }
 }

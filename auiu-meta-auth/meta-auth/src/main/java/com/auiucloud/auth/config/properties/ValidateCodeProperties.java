@@ -2,6 +2,7 @@ package com.auiucloud.auth.config.properties;
 
 import com.auiucloud.auth.enums.ImgCodeCharEnum;
 import com.auiucloud.auth.enums.ImgCodeTypeEnum;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,7 +10,6 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 

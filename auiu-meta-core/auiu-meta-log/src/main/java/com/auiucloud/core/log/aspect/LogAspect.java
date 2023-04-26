@@ -10,6 +10,7 @@ import com.auiucloud.core.common.utils.*;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.log.event.LogEvent;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -27,7 +28,6 @@ import org.springframework.core.annotation.SynthesizingMethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package com.auiucloud.core.feign.constant;
+package com.auiucloud.core.common.constant;
 
 import lombok.experimental.UtilityClass;
 

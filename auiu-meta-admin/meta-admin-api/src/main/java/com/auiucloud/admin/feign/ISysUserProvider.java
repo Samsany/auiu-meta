@@ -3,7 +3,7 @@ package com.auiucloud.admin.feign;
 import com.auiucloud.admin.vo.UserInfoVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
-import com.auiucloud.core.feign.constant.FeignConstant;
+import com.auiucloud.core.common.constant.FeignConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -56,7 +56,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <auiumeta.core.version>1.0.1</auiumeta.core.version>
+        <auiu-meta.core.version>1.0.1</auiu-meta.core.version>
     </properties>
 
     <dependencyManagement>
@@ -64,7 +64,7 @@
             <dependency>
                 <groupId>com.auiucloud</groupId>
                 <artifactId>auiu-meta-dependencies</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

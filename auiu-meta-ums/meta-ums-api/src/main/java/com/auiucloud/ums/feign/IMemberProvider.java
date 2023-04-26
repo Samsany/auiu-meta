@@ -2,7 +2,7 @@ package com.auiucloud.ums.feign;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
-import com.auiucloud.core.feign.constant.FeignConstant;
+import com.auiucloud.core.common.constant.FeignConstant;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;

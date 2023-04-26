@@ -1,6 +1,6 @@
 package com.auiucloud.core.validator;
 
-import javax.validation.groups.Default;
+import jakarta.validation.groups.Default;
 
 /**
  * @author dries

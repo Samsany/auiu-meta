@@ -2,7 +2,7 @@ package com.auiucloud.core.log.feign;
 
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.CommonLog;
-import com.auiucloud.core.feign.constant.FeignConstant;
+import com.auiucloud.core.common.constant.FeignConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 

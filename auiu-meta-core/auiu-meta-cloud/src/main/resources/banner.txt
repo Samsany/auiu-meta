@@ -1,4 +1,6 @@
 ${AnsiColor.BRIGHT_YELLOW}
+Application Version: ${auiu-meta.core.version}
+Spring Boot Version: ${spring-boot.version}
 ////////////////////////////////////////////////////////////////////
 //                          _ooOoo_                               //
 //                         o8888888o                              //

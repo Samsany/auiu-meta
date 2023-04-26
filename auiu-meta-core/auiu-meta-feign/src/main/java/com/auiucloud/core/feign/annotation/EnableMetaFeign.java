@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClientsConfiguration;
 import org.springframework.cloud.openfeign.MetaFeignClientsRegistrar;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
@@ -26,6 +27,7 @@ public @interface EnableMetaFeign {
      *
      * @return the array of 'basePackages'.
      */
+    @AliasFor(annotation = EnableFeignClients.class, value = "value")
     String[] value() default {};
 
     /**
@@ -38,6 +40,7 @@ public @interface EnableMetaFeign {
      *
      * @return the array of 'basePackages'.
      */
+    @AliasFor(annotation = EnableFeignClients.class)
     String[] basePackages() default {"com.auiucloud.*"};
 
     /**
@@ -49,6 +52,7 @@ public @interface EnableMetaFeign {
      *
      * @return the array of 'basePackageClasses'.
      */
+    @AliasFor(annotation = EnableFeignClients.class)
     Class<?>[] basePackageClasses() default {};
 
     /**
@@ -58,6 +62,7 @@ public @interface EnableMetaFeign {
      *
      * @see FeignClientsConfiguration for the defaults
      */
+    @AliasFor(annotation = EnableFeignClients.class)
     Class<?>[] defaultConfiguration() default {};
 
     /**
@@ -65,6 +70,7 @@ public @interface EnableMetaFeign {
      *
      * @return
      */
+    @AliasFor(annotation = EnableFeignClients.class)
     Class<?>[] clients() default {};
 
 }

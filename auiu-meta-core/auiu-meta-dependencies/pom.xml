@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.9</version>
+        <version>3.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,17 +42,17 @@
 
     <properties>
         <java.version>17</java.version>
-        <auiumeta.core.version>1.0.1</auiumeta.core.version>
+        <auiu-meta.core.version>1.0.1</auiu-meta.core.version>
 
-        <spring.boot.version>2.7.9</spring.boot.version>
-        <spring.cloud.version>2021.0.5</spring.cloud.version>
-        <alibaba.cloud.version>2021.0.4.0</alibaba.cloud.version>
-        <nacos-client.version>2.1.1</nacos-client.version>
+        <spring.boot.version>3.0.6</spring.boot.version>
+        <spring.cloud.version>2022.0.2</spring.cloud.version>
+        <alibaba.cloud.version>2022.0.0.0-RC1</alibaba.cloud.version>
+        <nacos-client.version>2.2.2</nacos-client.version>
         <seata.version>1.6.1</seata.version>
         <sentinel.version>1.8.2</sentinel.version>
 
         <spring.security.version>2.6.8</spring.security.version>
-        <spring-boot-admin.version>2.6.7</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
         <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
         <spring.security.oauth2-jose.version>5.7.1</spring.security.oauth2-jose.version>
         <justauth.version>1.16.1</justauth.version>
@@ -60,33 +60,30 @@
 
         <mysql.version>8.0.32</mysql.version>
         <druid.version>1.2.9</druid.version>
-        <pagehelper.version>1.4.2</pagehelper.version>
+        <pagehelper.version>1.4.6</pagehelper.version>
         <velocity.version>2.3</velocity.version>
         <mybatis.plus.version>3.5.3.1</mybatis.plus.version>
         <mybatis.plus.generator.version>3.5.3</mybatis.plus.generator.version>
         <dynamic-datasource.version>3.4.1</dynamic-datasource.version>
 
-        <springdoc.version>1.6.14</springdoc.version>
-        <swagger.version>3.0.0</swagger.version>
-        <swagger.models.version>1.6.3</swagger.models.version>
-        <knife4j.version>3.0.5</knife4j.version>
+        <springdoc.version>1.7.0</springdoc.version>
 
         <easypoi.version>4.4.0</easypoi.version>
-        <lombok.version>1.18.24</lombok.version>
-        <hutool.version>5.8.13</hutool.version>
+        <lombok.version>1.18.26</lombok.version>
+        <hutool.version>5.8.18</hutool.version>
         <easyexcel.version>3.1.1</easyexcel.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lan3.version>3.12.0</commons-lan3.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
-        <jakarta.validation.version>2.0.2</jakarta.validation.version>
-        <jackson.version>2.14.1</jackson.version>
-        <gson.version>2.9.1</gson.version>
-        <fastjson.version>2.0.9</fastjson.version>
-        <nimbus.version>9.15.2</nimbus.version>
-        <reactor-core.version>3.4.18</reactor-core.version>
-        <transmittable-thread-local.version>2.12.3</transmittable-thread-local.version>
-        <snakeyaml.version>1.33</snakeyaml.version>
+        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
+        <jakarta.validation.version>3.0.2</jakarta.validation.version>
+        <jackson.version>2.15.0</jackson.version>
+        <gson.version>2.10.1</gson.version>
+        <fastjson.version>2.0.29</fastjson.version>
+        <nimbus.version>9.31</nimbus.version>
+        <reactor-core.version>3.5.5</reactor-core.version>
+        <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <nashorn-core.version>15.4</nashorn-core.version>
         <aws-java-sdk-s3.version>1.12.423</aws-java-sdk-s3.version>
@@ -99,109 +96,109 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-common</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-database</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-security</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-validator</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.auiucloud</groupId>
                 <artifactId>auiu-meta-log</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-oss</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-file</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-rule</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-sms</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-redis</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-rabbit</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-web</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-cloud</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-seata</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-sentinel</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-feign</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
 
             <!-- 微服务应用包 -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-auth-api</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-admin-api</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-ums-api</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-component-api</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>meta-gen-api</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
             </dependency>
 
             <!-- 微服务基础包 -->

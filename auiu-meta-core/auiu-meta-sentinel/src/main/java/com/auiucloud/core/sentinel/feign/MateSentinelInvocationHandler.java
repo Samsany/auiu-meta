@@ -48,15 +48,15 @@ public class MateSentinelInvocationHandler implements InvocationHandler {
 
     private Map<Method, Method> fallbackMethodMap;
 
-    MateSentinelInvocationHandler(Target<?> target, Map<Method, InvocationHandlerFactory.MethodHandler> dispatch,
-                                  FallbackFactory fallbackFactory) {
+    public MateSentinelInvocationHandler(Target<?> target, Map<Method, InvocationHandlerFactory.MethodHandler> dispatch,
+                                         FallbackFactory fallbackFactory) {
         this.target = checkNotNull(target, "target");
         this.dispatch = checkNotNull(dispatch, "dispatch");
         this.fallbackFactory = fallbackFactory;
         this.fallbackMethodMap = toFallbackMethod(dispatch);
     }
 
-    MateSentinelInvocationHandler(Target<?> target, Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
+    public MateSentinelInvocationHandler(Target<?> target, Map<Method, InvocationHandlerFactory.MethodHandler> dispatch) {
         this.target = checkNotNull(target, "target");
         this.dispatch = checkNotNull(dispatch, "dispatch");
     }

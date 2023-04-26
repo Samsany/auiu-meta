@@ -2,8 +2,8 @@ package com.auiucloud.core.validator;
 
 import com.auiucloud.core.common.enums.StatusEnum;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * 校验状态，判断是否为 StatusEnum 中的值

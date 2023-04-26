@@ -56,8 +56,12 @@ spring:
         enabled: true
         caffeine:
           spec: initialCapacity=500,expireAfterWrite=5s
-
-# Feign开启对Sentinel支持
-feign:
-  sentinel:
-    enabled: true
+    # openfeign 配置
+    openfeign:
+      # Feign开启对Sentinel支持
+      sentinel:
+        enabled: true
+      httpclient:
+        enabled: true
+      okhttp:
+        enabled: true

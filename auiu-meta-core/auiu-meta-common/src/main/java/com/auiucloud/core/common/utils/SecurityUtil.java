@@ -10,10 +10,10 @@ import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.common.model.LoginUser;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.nimbusds.jose.JWSObject;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.*;

@@ -3,7 +3,7 @@ package com.auiucloud.auth.feign;
 import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
-import com.auiucloud.core.feign.constant.FeignConstant;
+import com.auiucloud.core.common.constant.FeignConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

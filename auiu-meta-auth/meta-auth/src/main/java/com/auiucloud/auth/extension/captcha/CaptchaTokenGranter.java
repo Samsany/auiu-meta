@@ -6,6 +6,7 @@ import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.redis.core.RedisService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
@@ -15,7 +16,6 @@ import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

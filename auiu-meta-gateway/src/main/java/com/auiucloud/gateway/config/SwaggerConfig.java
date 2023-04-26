@@ -4,16 +4,17 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.AbstractSwaggerUiConfigProperties;
+import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.SwaggerUiConfigProperties;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -27,7 +28,7 @@ import java.util.*;
 public class SwaggerConfig {
 
     private final RouteDefinitionLocator routeDefinitionLocator;
-    private final SwaggerUiConfigProperties swaggerUiConfigProperties;
+//    private final SwaggerUiConfigProperties swaggerUiConfigProperties;
     private static final String API_URI = "/v3/api-docs";
 
     @Bean
@@ -49,24 +50,37 @@ public class SwaggerConfig {
         );
     }
 
-    @PostConstruct
-    public void autoInitSwaggerUrls() {
+    @Bean
+    public List<GroupedOpenApi> apis() {
+        List<GroupedOpenApi> groups = new ArrayList<>();
         List<RouteDefinition> definitions = routeDefinitionLocator.getRouteDefinitions().collectList().block();
-
-        Optional.ofNullable(definitions).orElse(Collections.emptyList()).forEach(routeDefinition -> {
-            AbstractSwaggerUiConfigProperties.SwaggerUrl swaggerUrl = new AbstractSwaggerUiConfigProperties.SwaggerUrl(
-                    routeDefinition.getId().replace("ReactiveCompositeDiscoveryClient_", "").toLowerCase(),
-                    routeDefinition.getUri().toString().replace("lb://", "").toLowerCase() + API_URI,
-                    routeDefinition.getUri().toString().replace("lb://", "").toLowerCase()
-            );
-            Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> urls = swaggerUiConfigProperties.getUrls();
-            if (urls == null) {
-                urls = new LinkedHashSet<>();
-                swaggerUiConfigProperties.setUrls(urls);
-            }
-            urls.add(swaggerUrl);
-            log.error("{}", swaggerUiConfigProperties.getUrls());
-        });
+        Optional.ofNullable(definitions).orElse(Collections.emptyList())
+                .parallelStream().forEach(routeDefinition -> {
+                    String name = routeDefinition.getUri().toString().replace("lb://", "").toLowerCase();
+                    groups.add(GroupedOpenApi.builder()
+                            .pathsToMatch("/" + name + "/**").group(name).build());
+                });
+        return groups;
     }
+
+//    @PostConstruct
+//    public void autoInitSwaggerUrls() {
+//        List<RouteDefinition> definitions = routeDefinitionLocator.getRouteDefinitions().collectList().block();
+//
+//        Optional.ofNullable(definitions).orElse(Collections.emptyList()).forEach(routeDefinition -> {
+//            AbstractSwaggerUiConfigProperties.SwaggerUrl swaggerUrl = new AbstractSwaggerUiConfigProperties.SwaggerUrl(
+//                    routeDefinition.getId().replace("ReactiveCompositeDiscoveryClient_", "").toLowerCase(),
+//                    routeDefinition.getUri().toString().replace("lb://", "").toLowerCase() + API_URI,
+//                    routeDefinition.getUri().toString().replace("lb://", "").toLowerCase()
+//            );
+//            Set<AbstractSwaggerUiConfigProperties.SwaggerUrl> urls = swaggerUiConfigProperties.getUrls();
+//            if (urls == null) {
+//                urls = new LinkedHashSet<>();
+//                swaggerUiConfigProperties.setUrls(urls);
+//            }
+//            urls.add(swaggerUrl);
+//            log.error("{}", swaggerUiConfigProperties.getUrls());
+//        });
+//    }
 
 }

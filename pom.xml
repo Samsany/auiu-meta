@@ -21,16 +21,16 @@
     </modules>
 
     <properties>
-        <auiumeta.core.version>1.0.1</auiumeta.core.version>
+        <auiu-meta.core.version>1.0.1</auiu-meta.core.version>
 
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.boot.version>2.7.3</spring.boot.version>
+        <spring.boot.version>3.0.6</spring.boot.version>
 
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>com.auiucloud</groupId>
                 <artifactId>auiu-meta-dependencies</artifactId>
-                <version>${auiumeta.core.version}</version>
+                <version>${auiu-meta.core.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -56,7 +56,7 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.version}</version>
                     <configuration>
-                        <fork>true</fork>
+                        <!-- <fork>true</fork> -->
                         <finalName>${project.build.finalName}</finalName>
                     </configuration>
                     <executions>
