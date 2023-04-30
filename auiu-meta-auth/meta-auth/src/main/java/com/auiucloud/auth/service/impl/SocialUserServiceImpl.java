@@ -1,6 +1,7 @@
 package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.lang.ObjectId;
+import cn.hutool.core.util.RandomUtil;
 import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.auth.domain.SocialUserAuth;
 import com.auiucloud.auth.mapper.SocialUserMapper;

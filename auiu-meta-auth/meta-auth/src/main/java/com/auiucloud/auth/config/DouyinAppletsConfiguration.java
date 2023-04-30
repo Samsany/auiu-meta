@@ -6,6 +6,7 @@ import com.auiucloud.auth.config.properties.DouyinAppletsProperties;
 import com.auiucloud.auth.model.AppletConfig;
 import com.auiucloud.auth.service.DouyinAppletsService;
 import com.auiucloud.auth.service.impl.DouyinAppletsServiceImpl;
+import com.auiucloud.core.redis.core.RedisService;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -21,7 +22,8 @@ import java.util.Map;
 @Configuration
 public class DouyinAppletsConfiguration {
 
-
+    @Resource
+    private RedisService redisService;
     @Resource
     private DouyinAppletsProperties properties;
 
@@ -42,7 +44,7 @@ public class DouyinAppletsConfiguration {
         List<AppletConfig> configs = properties.getConfigs();
         if (CollUtil.isNotEmpty(configs)) {
             for (AppletConfig app : configs) {
-                DouyinAppletsServiceImpl service = new DouyinAppletsServiceImpl(app);
+                DouyinAppletsServiceImpl service = new DouyinAppletsServiceImpl(redisService, app);
 
                 DOUYIN_APPLETS_SERVICES.put(app.getAppId(), service);
             }

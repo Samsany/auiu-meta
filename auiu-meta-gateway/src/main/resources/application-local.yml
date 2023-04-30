@@ -19,7 +19,7 @@ spring:
         ssl:
           use-insecure-trust-manager: true
         connect-timeout: 5000
-        response-timeout: 5s
+        response-timeout: 20s
       discovery:
         locator:
           enabled: true

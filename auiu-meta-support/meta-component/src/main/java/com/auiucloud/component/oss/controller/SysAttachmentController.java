@@ -47,7 +47,7 @@ public class SysAttachmentController {
                                @RequestParam(required = false) String filename
 
     ) {
-        return ApiResult.data(sysAttachmentService.upload(file, groupId, filename));
+        return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, false, false));
     }
 
     @Log(value = "删除文件")

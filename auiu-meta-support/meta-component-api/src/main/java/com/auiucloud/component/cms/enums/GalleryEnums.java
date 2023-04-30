@@ -36,6 +36,18 @@ public class GalleryEnums {
 
     @Getter
     @AllArgsConstructor
+    public enum GalleryIsPublished implements IBaseEnum<Integer> {
+
+        NO(0, "未发布"),
+        YES(1, "已发布"),
+        ;
+
+        private final Integer value;
+        private final String label;
+    }
+
+    @Getter
+    @AllArgsConstructor
     public enum GalleryApprovalStatus implements IBaseEnum<Integer> {
 
         AWAIT(0, "待审核"),

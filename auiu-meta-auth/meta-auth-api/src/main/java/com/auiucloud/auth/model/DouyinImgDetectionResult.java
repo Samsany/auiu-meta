@@ -10,7 +10,7 @@ import java.util.List;
  * @author dries
  **/
 @Data
-public class ImageDetectionResult implements Serializable {
+public class DouyinImgDetectionResult implements Serializable {
     @Serial
     private static final long serialVersionUID = -8651251633782467977L;
 

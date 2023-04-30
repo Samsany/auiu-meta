@@ -55,4 +55,25 @@ public class ProviderConstant {
      * 第三方用户注册
      */
     public final String PROVIDER_USER_REGISTER_SOCIAL = PROVIDER + "/user/register/social";
+
+    /**
+     * 抖音内容安全检测
+     */
+    public final String PROVIDER_DOUYIN_CHECK_TEXT = PROVIDER + "/douyin/check/text";
+    /**
+     * 抖音内容安全检测
+     */
+    public final String PROVIDER_DOUYIN_CHECK_TEXTS = PROVIDER + "/douyin/check/texts";
+    /**
+     * 抖音图片安全检测
+     */
+    public final String PROVIDER_DOUYIN_CHECK_IMAGE = PROVIDER + "/douyin/check/image";
+    public final String PROVIDER_DOUYIN_CHECK_IMAGE_DATA = PROVIDER + "/douyin/check/image-data";
+
+    // ---------------------------------------------------- META-COMPONENT -------------------------------------------------------------
+    /**
+     * 根据用户ID查询作品数量
+     */
+    public final String PROVIDER_USER_GALLERY_NUM = PROVIDER + "/user/gallery/count";
+
 }

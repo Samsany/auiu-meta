@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
 * @author dries
 * @description 针对表【cms_gallery(作品表)】的数据库操作Mapper
@@ -15,6 +17,8 @@ import org.apache.ibatis.annotations.Select;
 public interface GalleryMapper extends BaseMapper<Gallery> {
 
     GalleryVO selectGalleryVOById(@Param("galleryId") Long galleryId);
+
+    List<GalleryVO> selectGalleryReCommendList();
 }
 
 

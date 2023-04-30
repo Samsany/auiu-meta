@@ -54,6 +54,16 @@ public class RegisterMemberDTO {
     private String avatar;
 
     /**
+     * 背景
+     */
+    private String bgImg;
+
+    /**
+     * 邀请码
+     */
+    private String invitationCode;
+
+    /**
      * 手机号
      */
     @NotBlank(message = "手机号不能为空")

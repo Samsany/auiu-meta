@@ -10,7 +10,7 @@ import java.util.List;
  * @author dries
  **/
 @Data
-public class TextAntidirtResult implements Serializable {
+public class DouyinTextAntidirtResult implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -2099668243224129466L;

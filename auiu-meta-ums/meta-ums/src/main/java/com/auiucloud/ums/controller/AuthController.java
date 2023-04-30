@@ -6,6 +6,7 @@ import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.vo.MemberInfoVO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class AuthController {
     @GetMapping("/user/info")
     public ApiResult<?> getUser() {
         // 获取当前登录用户信息
-        MemberInfoVO userInfo = memberService.getMemberByUsername(SecurityUtil.getUsername());
+        UserInfoVO userInfo = memberService.getUserInfoVOById(SecurityUtil.getUserId());
         return ApiResult.data(userInfo);
     }
 

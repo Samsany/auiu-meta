@@ -33,6 +33,10 @@ meta:
           aesKey:  # 微信小程序消息服务器配置的EncodingAESKey
           msgDataFormat: JSON
 
+  seata:
+    application-id: ${spring.application.name}
+    tx-service-group: default_tx_group
+
 #  validate:
 #    img:
 #      length: 3
@@ -42,7 +46,7 @@ justauth:
   enabled: true
   cache:
     type: redis
-    prefix: 'SOCIAL::STATE::'
+    prefix: 'meta:SOCIAL::STATE::'
   type:
     DOUYIN:
       client-id: awp2r95patxpcplt

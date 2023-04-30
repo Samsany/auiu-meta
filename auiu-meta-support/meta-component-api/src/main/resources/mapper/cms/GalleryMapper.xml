@@ -57,6 +57,7 @@
                g.u_id,
                g.title,
                g.pic,
+               g.thumb_url,
                g.prompt,
                g.negative_prompt,
                g.width,
@@ -93,5 +94,47 @@
                  left join cms_pic_tag cpt on g.tag_id = cpt.id and cpt.is_deleted = 0
         where g.is_deleted = 0
           and g.id = #{galleryId}
+    </select>
+    <select id="selectGalleryReCommendList" resultType="com.auiucloud.component.cms.vo.GalleryVO">
+        select g.id,
+               g.u_id,
+               g.title,
+               g.pic,
+               g.thumb_url,
+               g.prompt,
+               g.negative_prompt,
+               g.width,
+               g.height,
+               g.size,
+               g.seed,
+               g.model,
+               g.fusion_model,
+               g.steps,
+               g.sampler,
+               g.cfg_scale,
+               g.tag_id,
+               g.collection_id,
+               g.is_published,
+               g.is_top,
+               g.download_integral,
+               g.download_times,
+               g.views,
+               g.sort,
+               g.approval_status,
+               g.type,
+               g.published_time,
+               g.create_time,
+               g.update_time,
+               g.create_by,
+               g.update_by,
+               g.remark,
+               g.tenant_id,
+               g.is_deleted,
+               cgc.title collection,
+               cpt.name  tag
+        from cms_gallery g
+                 left join cms_gallery_collection cgc on g.collection_id = cgc.id and cgc.is_deleted = 0
+                 left join cms_pic_tag cpt on g.tag_id = cpt.id and cpt.is_deleted = 0
+        where g.is_deleted = 0 order by rand() limit 9
     </select>
 </mapper>

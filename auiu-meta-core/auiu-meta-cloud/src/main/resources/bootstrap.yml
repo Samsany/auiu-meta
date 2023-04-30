@@ -12,6 +12,8 @@ spring:
 
   cloud:
     nacos:
+      username: nacos
+      password: Zxx131013@nacos
       config:
         namespace: @config.namespace@
         server-addr: @config.server-addr@
@@ -30,7 +32,7 @@ spring:
 
          # 常规配置文件
          # 优先级大于 shared-configs，在 shared-configs 之后加载
-#        extension-configs:
+      #        extension-configs:
 #          - data-id: auiu-meta.yaml
 #            group: DEFAULT_GROUP   # 默认为DEFAULT_GROUP
 #            refresh: true   # 是否动态刷新，默认为false
@@ -56,8 +58,11 @@ spring:
         enabled: true
         caffeine:
           spec: initialCapacity=500,expireAfterWrite=5s
-
 # Feign开启对Sentinel支持
 feign:
   sentinel:
     enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false

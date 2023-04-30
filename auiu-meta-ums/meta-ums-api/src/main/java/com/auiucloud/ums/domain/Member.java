@@ -53,6 +53,11 @@ public class Member extends BaseEntity {
     private String avatar;
 
     /**
+     * 背景
+     */
+    private String bgImg;
+
+    /**
      * 手机号
      */
     private String mobile;
@@ -149,6 +154,12 @@ public class Member extends BaseEntity {
      * 用户等级
      */
     private Long levelId;
+
+    /**
+     * 邀请码
+     */
+    private String invitationCode;
+
 
     /**
      * 推广员id

@@ -45,6 +45,16 @@ public class MemberInfoVO {
     private String avatar;
 
     /**
+     * 背景
+     */
+    private String bgImg;
+
+    /**
+     * 邀请码
+     */
+    private String invitationCode;
+
+    /**
      * 手机号
      */
     private String mobile;

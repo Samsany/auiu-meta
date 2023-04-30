@@ -11,6 +11,8 @@
         <result property="realName" column="real_name" jdbcType="VARCHAR"/>
         <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="bgImg" column="bg_img" jdbcType="VARCHAR"/>
+        <result property="invitationCode" column="invitation_code" jdbcType="VARCHAR"/>
         <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="cardId" column="card_id" jdbcType="VARCHAR"/>
@@ -80,6 +82,8 @@
                u.real_name,
                u.nickname,
                u.avatar,
+               u.bg_img,
+               u.invitation_code,
                u.mobile,
                u.email,
                u.password,
@@ -98,5 +102,51 @@
         where u.is_deleted = 0
           and su.open_id = #{openId}
           and su.source = #{source}
+    </select>
+    <select id="selectUserRecommendList" resultType="com.auiucloud.ums.vo.UserInfoVO">
+        select id,
+        account,
+        real_name,
+        nickname,
+        avatar,
+        bg_img,
+        invitation_code,
+        status,
+        remark
+        from ums_user
+        <where>
+            is_deleted = 0 and status = 0
+            <if test="userId != null">
+                and id != #{userId}
+            </if>
+            order by rand() limit 10;
+        </where>
+
+    </select>
+    <select id="selectUserAttentionList" resultType="com.auiucloud.ums.vo.UserInfoVO">
+        select uu.id,
+               uu.account,
+               uu.nickname,
+               uu.avatar,
+               uu.bg_img,
+               uu.invitation_code
+        from ums_user uu
+                 inner join ums_user_follower uuf on uu.id = uuf.u_id
+        where uuf.follower_id = #{userId}
+          and uuf.status = 0
+          and uu.is_deleted = 0;
+    </select>
+    <select id="selectUserFollowerList" resultType="com.auiucloud.ums.vo.UserInfoVO">
+        select uu.id,
+               uu.account,
+               uu.nickname,
+               uu.avatar,
+               uu.bg_img,
+               uu.invitation_code
+        from ums_user uu
+                 inner join ums_user_follower uuf on uu.id = uuf.follower_id
+        where uuf.u_id = #{userId}
+          and uuf.status = 0
+          and uu.is_deleted = 0;
     </select>
 </mapper>

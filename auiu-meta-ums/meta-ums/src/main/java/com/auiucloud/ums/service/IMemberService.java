@@ -7,6 +7,7 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,9 +22,17 @@ public interface IMemberService extends IService<Member> {
 
     PageUtils listPage(Search search, Member member);
 
+    PageUtils selectOpenApiUserPage(Search search);
+    PageUtils selectUserAttentionPage(Search search);
+    PageUtils selectUserFollowerPage(Search search);
+
     List<Member> selectMemberList(Search search, Member member);
 
     List<MemberInfoVO> getMemberListByIds(List<Long> userIds);
+
+    List<UserInfoVO> userRecommendList();
+
+    UserInfoVO getUserInfoVOById(Long userId);
 
     /**
      * 根据用户username 查询会员信息
@@ -70,5 +79,4 @@ public interface IMemberService extends IService<Member> {
     boolean checkHasUserByLevelId(Long levelId);
 
     boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
-
 }

@@ -2,13 +2,16 @@ package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.auiucloud.auth.enums.DouyinEnums;
 import com.auiucloud.auth.model.*;
 import com.auiucloud.auth.props.DouyinAppletProps;
 import com.auiucloud.auth.service.DouyinAppletsService;
 import com.auiucloud.auth.utils.AuthCryptUtils;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
+import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.web.utils.RestTemplateUtil;
@@ -17,8 +20,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 
-import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +37,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DouyinAppletsServiceImpl implements DouyinAppletsService {
 
-    @Resource
-    private RedisService redisService;
+    private final RedisService redisService;
 
     private AppletConfig appletConfig;
 
-    public DouyinAppletsServiceImpl(AppletConfig appletConfig) {
+    public DouyinAppletsServiceImpl(RedisService redisService, AppletConfig appletConfig) {
+        this.redisService = redisService;
         this.appletConfig = appletConfig;
     }
 
@@ -110,55 +116,130 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("X-Token", accessToken);
 
-        Map<String, String> map = new HashMap<>();
-        map.put("content", content);
         // 设置请求参数
-        Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("tasks", List.of(map));
+        JSONObject object = new JSONObject();
+        object.set("content", content);
+        MultiValueMap<String, Object> paramsMap = new LinkedMultiValueMap<>();
+        paramsMap.put("tasks", List.of(object));
 
-        HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
-        TextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, TextAntidirtResult.class);
-        List<TextAntidirtResult.ResultData> data = apiResponse.getData();
+        try {
+            HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
+            DouyinTextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, DouyinTextAntidirtResult.class);
+            List<DouyinTextAntidirtResult.ResultData> data = apiResponse.getData();
 
-        for (TextAntidirtResult.ResultData datum : data) {
-            if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
-                List<TextAntidirtResult.Predicts> predicts = datum.getPredicts();
-                for (TextAntidirtResult.Predicts predict : predicts) {
-                    if (predict.getHit()) {
-                        // throw new ApiException("内容包含敏感信息，请修改");
-                        return false;
+            for (DouyinTextAntidirtResult.ResultData datum : data) {
+                if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                    List<DouyinTextAntidirtResult.Predicts> predicts = datum.getPredicts();
+                    for (DouyinTextAntidirtResult.Predicts predict : predicts) {
+                        if (predict.getHit()) {
+                            return false;
+                        }
                     }
                 }
             }
+        } catch (RestClientException e) {
+            throw new ApiException("抖音内容安全检测接口异常，验证失败");
         }
         return true;
     }
 
     @Override
-    public boolean checkImage(String image) {
+    public List<Integer> checkTextList(List<String> contents) {
         String accessToken = getAccessToken();
         // 设置请求头
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("X-Token", accessToken);
 
+        // 设置请求参数
+        List<Object> objList = new ArrayList<>();
+        for (String content : contents) {
+            JSONObject obj = new JSONObject();
+            obj.set("content", content);
+            objList.add(obj);
+        }
+        MultiValueMap<String, Object> paramsMap = new LinkedMultiValueMap<>();
+        paramsMap.put("tasks", objList);
+
+        List<Integer> errIndex = new ArrayList<>();
+        try {
+            HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
+            DouyinTextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, DouyinTextAntidirtResult.class);
+            List<DouyinTextAntidirtResult.ResultData> data = apiResponse.getData();
+
+            int index = 0;
+            for (DouyinTextAntidirtResult.ResultData datum : data) {
+                if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                    List<DouyinTextAntidirtResult.Predicts> predicts = datum.getPredicts();
+                    for (DouyinTextAntidirtResult.Predicts predict : predicts) {
+                        if (predict.getHit()) {
+                            errIndex.add(index);
+                            index++;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new ApiException("抖音内容安全检测接口异常，请重试");
+        }
+        return errIndex;
+    }
+
+    @Override
+    public String checkImage(String image) {
         // 设置请求参数
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("app_id", appletConfig.getAppId());
+
+        String accessToken = getAccessToken();
         paramsMap.put("access_token", accessToken);
         // 检测的图片链接
         paramsMap.put("image", image);
         // 图片数据的 base64 格式，有 image 字段时，此字段无效
         // paramsMap.put("image_data", image);
 
+        return checkImage(paramsMap);
+    }
+
+    @Override
+    public String checkImageData(String imageData) {
+        // 设置请求参数
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("app_id", appletConfig.getAppId());
+        String accessToken = getAccessToken();
+        paramsMap.put("access_token", accessToken);
+        // 检测的图片链接
+        // paramsMap.put("image", image);
+        // 图片数据的 base64 格式，有 image 字段时，此字段无效
+        paramsMap.put("image_data", imageData);
+        return checkImage(paramsMap);
+    }
+
+    private String checkImage(Map<String, Object> paramsMap) {
+        // 设置请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
         HttpEntity<Map<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
-        ImageDetectionResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_IMAGE_DETECTION_V2__PROD_URL, httpEntity, ImageDetectionResult.class);
+        DouyinImgDetectionResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_IMAGE_DETECTION_V2__PROD_URL, httpEntity, DouyinImgDetectionResult.class);
         if (apiResponse.getError().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
-            List<ImageDetectionResult.Predict> predicts = apiResponse.getPredicts();
-            List<ImageDetectionResult.Predict> predictList = predicts.parallelStream().filter(ImageDetectionResult.Predict::getHit).collect(Collectors.toList());
-            return !CollUtil.isNotEmpty(predictList);
+            List<DouyinImgDetectionResult.Predict> predicts = apiResponse.getPredicts();
+            List<DouyinImgDetectionResult.Predict> predictList = predicts.parallelStream()
+                    .filter(DouyinImgDetectionResult.Predict::getHit).toList();
+            String msg = "";
+            if (CollUtil.isNotEmpty(predictList)) {
+                msg = predictList.parallelStream().map(it -> {
+                    String modelName = it.getModel_name();
+                    DouyinEnums.ImageDetection enumByValue = IBaseEnum.getEnumByValue(modelName, DouyinEnums.ImageDetection.class);
+                    return enumByValue.getLabel();
+                }).collect(Collectors.joining(","));
+            }
+
+            log.info("抖音图片安全检测：{}", msg);
+            return msg;
         }
 
-        return false;
+        throw new ApiException("抖音图片安全检测接口异常,请重试");
     }
 
     public AppletConfig getAppletConfig() {

@@ -2,10 +2,12 @@ package com.auiucloud.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.auth.feign.ISocialProvider;
+import com.auiucloud.component.feign.IUserGalleryProvider;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.AuthException;
@@ -13,6 +15,7 @@ import com.auiucloud.core.common.model.IpAddress;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.IPUtil;
+import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
@@ -20,22 +23,23 @@ import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.mapper.MemberMapper;
 import com.auiucloud.ums.service.IMemberService;
+import com.auiucloud.ums.service.IUserFollowerService;
 import com.auiucloud.ums.vo.MemberInfoVO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,8 +53,10 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         implements IMemberService {
 
-    private final ISocialProvider socialProvider;
     private final PasswordEncoder passwordEncoder;
+    private final ISocialProvider socialProvider;
+    private final IUserFollowerService userFollowerService;
+    private final IUserGalleryProvider userGalleryProvider;
 
     /**
      * 会员分页列表
@@ -65,6 +71,77 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         IPage<Member> page = this.page(PageUtils.getPage(search), queryWrapper);
         page.getRecords().parallelStream().forEach(this::hidePrivacyField);
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<UserInfoVO> userRecommendList() {
+        // 获取用户
+        Long userId = SecurityUtil.getUserIdOrDefault();
+        List<UserInfoVO> userInfoVOList = baseMapper.selectUserRecommendList(userId);
+        Optional.ofNullable(userInfoVOList).ifPresent(creatorVOS -> creatorVOS.parallelStream().forEach(it -> {
+            // 设置是否关注该创作者
+            if (ObjectUtil.isNotNull(userId)) {
+                boolean isAttention = userFollowerService.checkedAttentionUser(userId, it.getId());
+                it.setIsAttention(isAttention);
+            }
+        }));
+        return userInfoVOList;
+    }
+
+    @Override
+    public PageUtils selectOpenApiUserPage(Search search) {
+
+        // 获取用户
+        Long userId = SecurityUtil.getUserIdOrDefault();
+        LambdaQueryWrapper<Member> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(StrUtil.isNotBlank(search.getKeyword()), Member::getInvitationCode, search.getKeyword());
+        queryWrapper.ne(ObjectUtil.isNotNull(userId), Member::getId, userId);
+        // todo 用户排序逻辑待完善
+        queryWrapper.orderByDesc(Member::getCreateTime);
+        IPage<Member> page = this.page(PageUtils.getPage(search), queryWrapper);
+        if (page.getRecords().size() > 0) {
+            page.convert(it -> getUserInfoVO(userId, it));
+        }
+
+        return new PageUtils(page);
+    }
+
+    @Override
+    public UserInfoVO getUserInfoVOById(Long userId) {
+        Member member = this.getById(userId);
+        return getUserInfoVO(userId, member);
+    }
+
+    @Override
+    public PageUtils selectUserAttentionPage(Search search) {
+        // 获取用户
+        Long userId = SecurityUtil.getUserId();
+        List<UserInfoVO> userInfoVOList = baseMapper.selectUserAttentionList(userId);
+        Optional.ofNullable(userInfoVOList).ifPresent(creatorVOS -> creatorVOS.parallelStream().forEach(it -> {
+            // 判断是否互关
+            it.setIsAttention(Boolean.FALSE);
+            if (ObjectUtil.isNotNull(userId)) {
+                boolean isAttention = userFollowerService.checkedAttentionUser(it.getId(), userId);
+                it.setIsAttention(isAttention);
+            }
+        }));
+        return new PageUtils(search, userInfoVOList);
+    }
+
+    @Override
+    public PageUtils selectUserFollowerPage(Search search) {
+        // 获取用户
+        Long userId = SecurityUtil.getUserId();
+        List<UserInfoVO> userInfoVOList = baseMapper.selectUserFollowerList(userId);
+        Optional.ofNullable(userInfoVOList).ifPresent(creatorVOS -> creatorVOS.parallelStream().forEach(it -> {
+            // 判断是否互关
+            it.setIsAttention(Boolean.FALSE);
+            if (ObjectUtil.isNotNull(userId)) {
+                boolean isAttention = userFollowerService.checkedAttentionUser(userId, it.getId());
+                it.setIsAttention(isAttention);
+            }
+        }));
+        return new PageUtils(search, userInfoVOList);
     }
 
     @Override
@@ -128,7 +205,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     /**
      * 根据第三方信息(uuid+source)查询会员信息
      *
-     * @param openId   用户唯一标识
+     * @param openId 用户唯一标识
      * @param source 第三方系统标识
      * @return MemberInfoVO
      */
@@ -159,6 +236,34 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         return this.save(member);
     }
 
+    /**
+     * 用户注册
+     *
+     * @param memberInfoDTO 用户信息
+     * @return Boolean
+     */
+    @Override
+    public MemberInfoDTO registerMemberByApplet(MemberInfoDTO memberInfoDTO) {
+        Member member = new Member();
+        BeanUtils.copyProperties(memberInfoDTO, member);
+        // 生成用户邀请码
+        String code = RandomUtil.randomString(6);
+        member.setInvitationCode(code);
+        // todo 设置默认背景
+        // 获取用户注册信息
+        IpAddress ipAddress = IPUtil.getIpAddress();
+        String pro = StrUtil.isBlank(ipAddress.getPro()) ? "" : ipAddress.getPro();
+        String city = StrUtil.isBlank(ipAddress.getCity()) ? "" : ipAddress.getCity();
+        member.setRegisterIp(ipAddress.getIp());
+        member.setRegisterAddress(pro + city + ipAddress.getRegion());
+        boolean result = this.save(member);
+        if (result) {
+            return memberInfoDTO.withId(member.getId());
+        }
+        throw new AuthException(ResultCode.USER_ERROR_A0100);
+    }
+
+
     @Override
     public boolean updateMemberById(Member member) {
         return this.updateById(member);
@@ -178,29 +283,6 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         queryWrapper.set(Member::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
         queryWrapper.eq(Member::getId, updatePasswordDTO.getId());
         return this.update(queryWrapper);
-    }
-
-    /**
-     * 用户注册
-     *
-     * @param memberInfoDTO 用户信息
-     * @return Boolean
-     */
-    @Override
-    public MemberInfoDTO registerMemberByApplet(MemberInfoDTO memberInfoDTO) {
-        Member member = new Member();
-        BeanUtils.copyProperties(memberInfoDTO, member);
-        // 获取用户注册信息
-        IpAddress ipAddress = IPUtil.getIpAddress();
-        String pro = StrUtil.isBlank(ipAddress.getPro()) ? "" : ipAddress.getPro();
-        String city = StrUtil.isBlank(ipAddress.getCity()) ? "" : ipAddress.getCity();
-        member.setRegisterIp(ipAddress.getIp());
-        member.setRegisterAddress(pro + city + ipAddress.getRegion());
-        boolean result = this.save(member);
-        if (result) {
-            return memberInfoDTO.withId(member.getId());
-        }
-        throw new AuthException(ResultCode.USER_ERROR_A0100);
     }
 
     @Override
@@ -248,7 +330,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     /**
      * 组装LambdaQueryWrapper查询参数
      *
-     * @param search  查询参数
+     * @param search 查询参数
      * @param member 查询参数
      * @return queryWrapper
      */
@@ -283,6 +365,43 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         MemberInfoVO memberInfoVO = new MemberInfoVO();
         BeanUtils.copyProperties(member, memberInfoVO);
         return memberInfoVO.withUserId(member.getId());
+    }
+
+    public UserInfoVO getUserInfoVO(Long userId, Member member) {
+        UserInfoVO build = UserInfoVO.builder()
+                .id(member.getId())
+                .account(member.getAccount())
+                .nickname(member.getNickname())
+                .avatar(member.getAvatar())
+                .bgImg(member.getBgImg())
+                .invitationCode(member.getInvitationCode())
+                .remark(member.getRemark())
+                .build();
+
+        // 设置粉丝数
+        long countUserFollower = userFollowerService.countUserFollower(member.getId());
+        build.setFollowerNum(countUserFollower);
+
+        // 设置关注数
+        long countUserAttention = userFollowerService.countUserAttention(member.getId());
+        build.setAttentionNum(countUserAttention);
+
+        // 设置是否关注该创作者
+        if (ObjectUtil.isNotNull(userId) && !Objects.equals(member.getId(), userId)) {
+            boolean isAttention = userFollowerService.checkedAttentionUser(userId, member.getId());
+            build.setIsAttention(isAttention);
+        }
+
+        try {
+            // 设置作品数
+            ApiResult<Long> galleryApiResult = userGalleryProvider.countUserGallery(member.getId());
+            if (galleryApiResult != null && galleryApiResult.successful()) {
+                build.setGalleryNum(galleryApiResult.getData());
+            }
+        } catch (Exception ignored) {
+        }
+
+        return build;
     }
 }
 

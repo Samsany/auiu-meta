@@ -172,7 +172,28 @@ public class OssTemplate implements InitializingBean {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
         // 上传
         return amazonS3.putObject(bucketName, objectName, byteArrayInputStream, objectMetadata);
+    }
 
+    /**
+     * 上传文件
+     *
+     * @param bucketName  bucket名称
+     * @param objectName  文件名称
+     * @param bytes      文件流
+     * @param contextType 类型
+     * @throws Exception
+     * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS
+     * API Documentation</a>
+     */
+    public PutObjectResult putObject(String bucketName, String objectName, byte[] bytes,
+                                     String contextType) throws Exception {
+        // String fileName = getFileName(objectName);
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(bytes.length);
+        objectMetadata.setContentType(contextType);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        // 上传
+        return amazonS3.putObject(bucketName, objectName, byteArrayInputStream, objectMetadata);
     }
 
     /**

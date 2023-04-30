@@ -1,7 +1,10 @@
 package com.auiucloud.component.oss.service.impl;
 
+import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
+import com.auiucloud.auth.dto.DouyinContentCheckDTO;
+import com.auiucloud.auth.feign.IDouyinProvider;
 import com.auiucloud.component.oss.domain.SysAttachment;
 import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
@@ -10,9 +13,13 @@ import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.FileUtil;
+import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.common.utils.StringPool;
+import com.auiucloud.core.common.utils.ThumbUtil;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.oss.core.OssTemplate;
@@ -21,19 +28,17 @@ import com.auiucloud.core.web.utils.OssUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -43,6 +48,7 @@ import java.util.UUID;
  * @description 针对表【sys_attachment(附件表)】的数据库操作Service实现
  * @createDate 2023-03-14 12:47:40
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, SysAttachment>
@@ -51,6 +57,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     private final OssTemplate ossTemplate;
     private final ISysConfigService configService;
     private final ISysAttachmentGroupService sysAttachmentGroupService;
+    private final IDouyinProvider douyinProvider;
 
     /**
      * 分页查询附件
@@ -77,65 +84,89 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      * 附件上传
      *
      * @param file 上传文件
-     * @return ApiResult<?>
+     * @return Map<String, Object>
      */
     @Transactional
     @Override
     public Map<String, Object> upload(MultipartFile file) {
-        return this.upload(file, 0L, null);
+        return this.upload(file, 0L, null, false, false);
     }
 
     @Transactional
     @Override
     public Map<String, Object> upload(MultipartFile file, Long groupId) {
-        return this.upload(file, groupId, null);
+        return this.upload(file, groupId, null, false, false);
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Map<String, Object> upload(MultipartFile file, Long groupId, boolean thumb, boolean checkImg) {
+        return this.upload(file, groupId, null, thumb, checkImg);
     }
 
     /**
      * @param file     文件
      * @param groupId  文件分组 默认 0(根目录)
      * @param filename 自定义上传文件名
+     * @param thumb 是否压缩原图
+     * @param checkImg 是否进行图片内容安全检测
      * @return Map<String, Object>
      */
     @Transactional
     @Override
-    public Map<String, Object> upload(MultipartFile file, Long groupId, String filename) {
-        OssProperties ossProperties = getOssProperties();
-        SysAttachmentGroup group = sysAttachmentGroupService.getUploadGroupById(groupId);
-        if (StrUtil.isBlank(filename)) {
-            filename = UUID.randomUUID().toString().replace("-", "")
-                    + StringPool.DOT + FilenameUtils.getExtension(file.getOriginalFilename());
-        }
-
-        String bizPath = group.getBizPath();
-        String filePath = StrUtil.isNotBlank(bizPath) ? bizPath.concat(StringPool.SLASH + filename) : filename;
-        Map<String, Object> uMap = new HashMap<>();
+    public Map<String, Object> upload(MultipartFile file, Long groupId, String filename, boolean thumb, boolean checkImg) {
         try {
+            if (checkImg) {
+                // 图片内容安全检测
+                uploadImageCheck(file);
+            }
+
+            OssProperties ossProperties = getOssProperties();
+            SysAttachmentGroup group = sysAttachmentGroupService.getUploadGroupById(groupId);
+
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            if (StrUtil.isBlank(filename)) {
+                filename = UUID.randomUUID().toString().replace("-", "")
+                        + StringPool.DOT + extension;
+            }
+
+            String bizPath = group.getBizPath();
+            String filePath = StrUtil.isNotBlank(bizPath) ? bizPath.concat(StringPool.SLASH + filename) : filename;
+            Map<String, Object> uMap = new HashMap<>();
             //上传文件
             assert ossProperties != null;
             ossTemplate.putObject(ossProperties.getBucketName(), filePath, file.getInputStream(), file.getSize(), file.getContentType());
-
-            //生成URL
             String url = ossProperties.getCustomDomain() + StringPool.SLASH + filePath;
-
             //自定义返回报文
             uMap.put("bucketName", ossProperties.getBucketName());
             uMap.put("fileName", filename);
             uMap.put("url", url);
             // 文件大小 单位kb
             uMap.put("size", file.getSize() / 1024);
+
+            String thumbUrl = null;
+            // 上传缩略图
+            if (thumb) {
+                String thumbFilePath = StringPool.SLASH + filename + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
+                ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
+                thumbUrl = ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath;
+                uMap.put("thumbUrl", thumbUrl);
+            }
+
             if (FileUtil.getFileType(FileUtil.getExtensionName(filename)).equals("pic")) {
                 BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
                 uMap.put("width", bufferedImage.getWidth());
                 uMap.put("height", bufferedImage.getHeight());
             }
             //上传成功后记录入库
-            this.attachmentLog(file, url, groupId, filename);
+            this.attachmentLog(file, url, thumbUrl, groupId, filename);
+            return uMap;
         } catch (Exception e) {
             log.error("上传失败", e);
             throw new ApiException(e.getMessage());
         }
-        return uMap;
     }
 
     @Override
@@ -168,6 +199,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      *
      * @param file     　文件
      * @param url      　返回的URL
+     * @param thumbUrl 　返回的缩略图URL
      * @param groupId  附件分组
      * @param filename 新文件名
      * @return boolean
@@ -175,18 +207,53 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     @Override
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
-    public boolean attachmentLog(MultipartFile file, String url, Long groupId, String filename) {
+    public boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename) {
         SysAttachment sysAttachment = new SysAttachment();
-
         String original = file.getOriginalFilename();
 
         sysAttachment.setAttachmentGroupId(groupId);
         sysAttachment.setName(FilenameUtils.getName(original));
         sysAttachment.setUrl(url);
+        // 缩略图
+        sysAttachment.setThumbUrl(thumbUrl);
         sysAttachment.setFileName(filename);
         sysAttachment.setSize(file.getSize());
         sysAttachment.setFileType(OssUtil.getFileType(original));
         return this.save(sysAttachment);
+    }
+
+    /**
+     * 图片安全检测
+     *
+     * @param file 上传文件
+     */
+    private void uploadImageCheck(MultipartFile file) {
+        byte[] bytes = new byte[0];
+        try {
+            bytes = ThumbUtil.compressPicForScale(file.getBytes(), 50);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage());
+        }
+        String base64Img = Base64Encoder.encode(bytes);
+        log.info("图片长度：{}", base64Img.length());
+        String appId = RequestHolder.getHttpServletRequestHeader("appId");
+        Integer loginType = SecurityUtil.getUser().getLoginType();
+        // 抖音内容安全检测
+        if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
+            ApiResult<String> stringApiResult = douyinProvider.checkImageData(DouyinContentCheckDTO.builder()
+                    .appId(appId)
+                    .imageData(base64Img)
+                    .build());
+            if (stringApiResult.successful()) {
+                if (StrUtil.isNotBlank(stringApiResult.getData())) {
+                    log.error("内容安全检测: {}", stringApiResult.getData());
+                    // return ApiResult.fail("图片违规,请重新上传");
+                    throw new ApiException("图片违规,请重新上传");
+                }
+            } else {
+                throw new ApiException(stringApiResult.getMessage());
+            }
+        }
     }
 
     /**

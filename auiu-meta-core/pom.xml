@@ -217,7 +217,7 @@
                 <config.prefix>auiu-meta-cloud</config.prefix>
                 <discovery.server-addr>127.0.0.1:8848</discovery.server-addr>
                 <sentinel.port>8719</sentinel.port>
-                <sentinel.dashboard>139.196.120.28:8858</sentinel.dashboard>
+                <sentinel.dashboard>127.0.0.1:8858</sentinel.dashboard>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>

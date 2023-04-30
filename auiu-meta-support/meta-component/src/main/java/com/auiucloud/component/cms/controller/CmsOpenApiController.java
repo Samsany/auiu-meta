@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author dries
  **/
-@Tag(name = "内容管理API")
+@Tag(name = "内容管理开放API")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/open-api/cms")
@@ -71,6 +71,16 @@ public class CmsOpenApiController extends BaseController {
     })
     public ApiResult<?> picTagCommonList(@Parameter(hidden = true) Integer type) {
         return ApiResult.data(picTagService.selectCommonPicTagList(type));
+    }
+
+    /**
+     * 查询作品推荐列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/gallery/recommend/list")
+    @Operation(summary = "查询作品推荐列表")
+    public ApiResult<?> galleryReCommendList() {
+        return ApiResult.data(galleryService.selectGalleryReCommendList());
     }
 
     /**

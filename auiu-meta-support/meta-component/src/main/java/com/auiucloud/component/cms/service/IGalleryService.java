@@ -2,6 +2,7 @@ package com.auiucloud.component.cms.service;
 
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
+import com.auiucloud.component.cms.vo.GalleryPublishVO;
 import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
@@ -23,6 +24,8 @@ public interface IGalleryService extends IService<Gallery> {
 
     List<GalleryVO> selectGalleryListByCId2Limit(Long cId, Integer limit);
 
+    List<GalleryVO> selectGalleryReCommendList();
+
     PageUtils selectCommonGalleryPage(Search search, Gallery gallery);
 
     GalleryVO selectGalleryInfoById(Long galleryId);
@@ -30,6 +33,7 @@ public interface IGalleryService extends IService<Gallery> {
     ApiResult<?> upload(MultipartFile file, Long cId);
 
     PageUtils selectGalleryPage(Search search, Gallery gallery);
+    PageUtils galleryNoCollectionPage(Search search, Gallery gallery);
 
     boolean joinGalleryCollection(JoinGalleryCollectionDTO joinGalleryCollectionDTO);
 
@@ -46,4 +50,19 @@ public interface IGalleryService extends IService<Gallery> {
      */
     boolean likeGallery(Long postId, Integer type);
 
+    /**
+     * 发布作品
+     *
+     * @param gallery 作品
+     * @return ApiResult<?>
+     */
+    ApiResult<?> publishGallery(GalleryPublishVO gallery);
+
+    /**
+     * 统计用户已发布作品数量
+     *
+     * @param userId 用户ID
+     * @return Long
+     */
+    Long countUserGalleryByUId(Long userId);
 }

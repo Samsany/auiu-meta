@@ -87,6 +87,19 @@ public class SecurityUtil {
     }
 
     /**
+     * 获取用户ID 默认返回NULL
+     *
+     * @return ID
+     */
+    public static Long getUserIdOrDefault() {
+        try {
+            return getJwtPayload().getLong(Oauth2Constant.META_USER_ID);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
      * 获取用户账户
      *
      * @return 账户

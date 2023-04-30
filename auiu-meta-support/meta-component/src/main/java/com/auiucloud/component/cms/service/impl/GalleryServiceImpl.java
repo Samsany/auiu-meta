@@ -2,6 +2,8 @@ package com.auiucloud.component.cms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.auiucloud.auth.dto.DouyinContentCheckDTO;
+import com.auiucloud.auth.feign.IDouyinProvider;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.UserGalleryLike;
@@ -12,23 +14,29 @@ import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.component.cms.service.IUserGalleryLikeService;
+import com.auiucloud.component.cms.vo.GalleryPublishVO;
 import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.component.cms.vo.UserGalleryLikeVO;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeanUtils;
@@ -38,6 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,6 +55,7 @@ import java.util.stream.Collectors;
  * @description 针对表【cms_gallery(作品表)】的数据库操作Service实现
  * @createDate 2023-04-16 20:56:41
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
@@ -58,6 +68,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     private final IMemberProvider memberProvider;
     private final IPicTagService picTagService;
     private final IUserGalleryLikeService userGalleryLikeService;
+    private final IDouyinProvider douyinProvider;
 
     @Override
     public List<GalleryVO> selectGalleryListByCId(Long cId) {
@@ -78,6 +89,11 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.orderByDesc(Gallery::getCreateTime);
         queryWrapper.last(limit != null, "limit " + limit);
         return getGalleryVOS(queryWrapper);
+    }
+
+    @Override
+    public List<GalleryVO> selectGalleryReCommendList() {
+        return baseMapper.selectGalleryReCommendList();
     }
 
     @Override
@@ -134,25 +150,31 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         return getGalleryVO(galleryVO);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public ApiResult<?> upload(MultipartFile file, Long cId) {
-        Map<String, Object> upload = sysAttachmentService.upload(file, 1001L);
-        Gallery gallery = Gallery.builder()
-                .uId(SecurityUtil.getUserId())
-                .collectionId(cId)
-                .pic((String) upload.getOrDefault("url", ""))
-                .width((Integer) upload.getOrDefault("width", CommonConstant.STATUS_NORMAL_VALUE))
-                .height((Integer) upload.getOrDefault("height", CommonConstant.STATUS_NORMAL_VALUE))
-                .size((Long) upload.getOrDefault("size", CommonConstant.ROOT_NODE_ID))
-                .type(GalleryEnums.GalleryType.WALLPAPER.getValue())
-                .approvalStatus(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
-                .build();
-        boolean result = this.save(gallery);
-        if (result) {
-            return ApiResult.data(gallery);
+        try {
+            Map<String, Object> upload = sysAttachmentService.upload(file, 1001L, true, true);
+            Gallery gallery = Gallery.builder()
+                    .uId(SecurityUtil.getUserId())
+                    .collectionId(cId)
+                    .pic((String) upload.getOrDefault("url", ""))
+                    .thumbUrl((String) upload.getOrDefault("thumbUrl", ""))
+                    .width((Integer) upload.getOrDefault("width", CommonConstant.STATUS_NORMAL_VALUE))
+                    .height((Integer) upload.getOrDefault("height", CommonConstant.STATUS_NORMAL_VALUE))
+                    .size((Long) upload.getOrDefault("size", CommonConstant.ROOT_NODE_ID))
+                    .type(GalleryEnums.GalleryType.WALLPAPER.getValue())
+                    .isPublished(GalleryEnums.GalleryIsPublished.NO.getValue())
+                    .joinCollectionTime(ObjectUtil.isNotNull(cId) ? LocalDateTime.now() : null)
+                    .build();
+            boolean result = this.save(gallery);
+            if (result) {
+                return ApiResult.data(gallery);
+            }
+            return ApiResult.fail(ResultCode.USER_ERROR_A0500);
+        } catch (Exception e) {
+            throw new ApiException(ResultCode.USER_ERROR_A0500);
         }
-        throw new ApiException(ResultCode.USER_ERROR_A0500);
     }
 
     @Override
@@ -162,19 +184,81 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.eq(ObjectUtil.isNotNull(gallery.getCollectionId()), Gallery::getCollectionId, gallery.getCollectionId());
         queryWrapper.orderByDesc(Gallery::getIsTop);
         queryWrapper.orderByDesc(Gallery::getSort);
+        queryWrapper.orderByDesc(ObjectUtil.isNotNull(gallery.getCollectionId()), Gallery::getJoinCollectionTime);
         queryWrapper.orderByDesc(Gallery::getCreateTime);
-        PageUtils.startPage(search);
-        List<Gallery> list = this.list(queryWrapper);
-        PageUtils pageUtils = new PageUtils(list);
-        List<GalleryVO> collect = Optional.ofNullable(list).orElse(Collections.emptyList())
-                .stream().map(it -> {
-                    GalleryVO galleryVO = new GalleryVO();
-                    BeanUtils.copyProperties(it, galleryVO);
-                    return galleryVO;
-                })
-                .toList();
-        pageUtils.setList(collect);
-        return pageUtils;
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils galleryNoCollectionPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getUId, SecurityUtil.getUserId());
+        queryWrapper.isNull(Gallery::getCollectionId);
+        queryWrapper.orderByDesc(Gallery::getIsTop);
+        queryWrapper.orderByDesc(Gallery::getSort);
+        queryWrapper.orderByDesc(Gallery::getCreateTime);
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ApiResult<?> publishGallery(GalleryPublishVO galleryVO) {
+        Gallery gallery = this.getById(galleryVO.getId());
+        if (!gallery.getUId().equals(SecurityUtil.getUserId())) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+        if (gallery.getIsPublished().equals(CommonConstant.STATUS_DISABLE_VALUE)) {
+            return ApiResult.fail("作品已发布，请勿重复操作");
+        }
+        if (ObjectUtil.isNotNull(gallery.getApprovalStatus()) && gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
+            return ApiResult.fail("作品已提交，等待审核中");
+        }
+
+        try {
+            String appId = RequestHolder.getHttpServletRequestHeader("appId");
+            Integer loginType = SecurityUtil.getUser().getLoginType();
+            if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
+                ApiResult<List<Integer>> listApiResult = douyinProvider.checkTextList(DouyinContentCheckDTO.builder()
+                        .appId(appId)
+                        .contents(List.of(
+                                galleryVO.getTitle(),
+                                galleryVO.getPrompt(),
+                                galleryVO.getRemark()
+                        ))
+                        .build());
+                if (listApiResult.successful()) {
+                    if (listApiResult.getData().size() > 0) {
+                        return ApiResult.fail("内容存在违规信息, 请重新输入");
+                    }
+                } else {
+                    return listApiResult;
+                }
+            }
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+
+        LambdaUpdateWrapper<Gallery> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.set(Gallery::getTitle, galleryVO.getTitle());
+        updateWrapper.set(Gallery::getRemark, galleryVO.getRemark());
+        updateWrapper.set(Gallery::getPrompt, galleryVO.getPrompt());
+        updateWrapper.set(Gallery::getTagId, galleryVO.getTagId());
+        updateWrapper.set(Gallery::getPublishedTime, new Date());
+        updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.AWAIT.getValue());
+        updateWrapper.eq(Gallery::getId, gallery.getId());
+        return ApiResult.condition(this.update(updateWrapper));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -193,6 +277,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                             .collectionId(collection.getId())
                             .tagId(collection.getTagId())
                             .id(it.getId())
+                            .joinCollectionTime(LocalDateTime.now())
                             .build()).collect(Collectors.toList());
             return this.updateBatchById(galleryList);
         }
@@ -229,6 +314,14 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             }
         }
         return userGalleryLikeService.saveOrUpdate(userGalleryLike);
+    }
+
+    @Override
+    public Long countUserGalleryByUId(Long userId) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getUId, userId);
+        queryWrapper.eq(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
+        return this.count(queryWrapper);
     }
 
     @Transactional(rollbackFor = Exception.class)

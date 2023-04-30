@@ -42,9 +42,14 @@ public class Gallery extends BaseEntity {
     private String title;
 
     /**
-     * 图片
+     * 原图
      */
     private String pic;
+
+    /**
+     * 缩略图
+     */
+    private String thumbUrl;
 
     /**
      * 画面描述
@@ -155,6 +160,11 @@ public class Gallery extends BaseEntity {
      * 发布时间
      */
     private LocalDateTime publishedTime;
+
+    /**
+     * 加入合集时间
+     */
+    private LocalDateTime joinCollectionTime;
 
     /**
      * 租户ID

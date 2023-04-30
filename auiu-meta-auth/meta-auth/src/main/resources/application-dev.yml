@@ -36,6 +36,10 @@ meta:
           aesKey:  # 微信小程序消息服务器配置的EncodingAESKey
           msgDataFormat: JSON
 
+  seata:
+    application-id: ${spring.application.name}
+    tx-service-group: default_tx_group
+
 justauth:
   enabled: true
   cache:

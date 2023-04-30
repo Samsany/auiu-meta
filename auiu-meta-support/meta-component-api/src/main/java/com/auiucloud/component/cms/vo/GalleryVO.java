@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -48,9 +49,14 @@ public class GalleryVO implements Serializable {
     private String title;
 
     /**
-     * 图片
+     * 原图
      */
     private String pic;
+
+    /**
+     * 缩略图
+     */
+    private String thumbUrl;
 
     /**
      * 画面描述
@@ -113,7 +119,7 @@ public class GalleryVO implements Serializable {
     private Long tagId;
 
     /**
-     * 标签ID
+     * 标签
      */
     private String tag;
 

@@ -1,16 +1,16 @@
 package com.auiucloud.component.cms.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.StopWatch;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
+import com.auiucloud.component.cms.vo.GalleryPublishVO;
+import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
-import com.auiucloud.core.common.context.UserContext;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -140,15 +140,15 @@ public class GalleryApiController extends BaseController {
     @Log(value = "作品")
     @Operation(summary = "上传作品")
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
-    public ApiResult<?> upload(@RequestParam("file") MultipartFile file, @RequestParam(required = false)  Long cId) {
+    public ApiResult<?> upload(@RequestParam("file") MultipartFile file, @RequestParam(required = false) Long cId) {
         return galleryService.upload(file, cId);
     }
 
     /**
-     * 查询作品列表
+     * 分页查询作品列表
      */
     @Log(value = "作品")
-    @GetMapping("/list")
+    @GetMapping("/page")
     @Operation(summary = "查询作品列表")
     @Parameters({
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
@@ -156,6 +156,20 @@ public class GalleryApiController extends BaseController {
     })
     public ApiResult<?> galleryPage(Search search, @Parameter(hidden = true) Gallery gallery) {
         return ApiResult.data(galleryService.selectGalleryPage(search, gallery));
+    }
+
+    /**
+     * 分页查询未加入合集的作品列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/no-collection/page")
+    @Operation(summary = "查询作品列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> galleryNoCollectionPage(Search search, @Parameter(hidden = true) Gallery gallery) {
+        return ApiResult.data(galleryService.galleryNoCollectionPage(search, gallery));
     }
 
     /**
@@ -169,6 +183,19 @@ public class GalleryApiController extends BaseController {
     })
     public ApiResult<?> galleryInfo(@PathVariable Long galleryId) {
         return ApiResult.data(galleryService.selectGalleryInfoById(galleryId));
+    }
+
+    /**
+     * 发布作品
+     */
+    @Log(value = "作品")
+    @PutMapping("/publish")
+    @Operation(summary = "发布作品")
+    @Parameters({
+            @Parameter(name = "appId", description = "appId", in = ParameterIn.HEADER),
+    })
+    public ApiResult<?> publishGallery(@Validated @RequestBody GalleryPublishVO gallery) {
+        return galleryService.publishGallery(gallery);
     }
 
     /**

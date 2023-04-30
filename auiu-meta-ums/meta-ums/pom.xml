@@ -27,6 +27,10 @@
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
+            <artifactId>meta-component-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-cloud</artifactId>
         </dependency>
         <dependency>
