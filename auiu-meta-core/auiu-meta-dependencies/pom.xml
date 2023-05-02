@@ -177,7 +177,7 @@
             <!-- 微服务应用包 -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>meta-auth-api</artifactId>
+                <artifactId>meta-uaa-api</artifactId>
                 <version>${auiu-meta.core.version}</version>
             </dependency>
             <dependency>

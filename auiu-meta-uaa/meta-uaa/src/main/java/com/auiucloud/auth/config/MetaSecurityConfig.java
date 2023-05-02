@@ -41,7 +41,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 @RequiredArgsConstructor
 public class MetaSecurityConfig {
 
-//    private final UserDetailsService userDetailsService;
+    //    private final UserDetailsService userDetailsService;
     private final SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
     private final SocialAuthenticationSecurityConfig socialAuthenticationSecurityConfig;
     private final DouyinAuthenticationSecurityConfig douyinAuthenticationSecurityConfig;

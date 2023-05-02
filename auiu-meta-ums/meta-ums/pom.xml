@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
-            <artifactId>meta-auth-api</artifactId>
+            <artifactId>meta-uaa-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>

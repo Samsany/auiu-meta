@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.auiucloud</groupId>
-        <artifactId>auiu-meta-auth</artifactId>
+        <artifactId>auiu-meta-uaa</artifactId>
         <version>1.0.1</version>
     </parent>
 
-    <artifactId>meta-auth</artifactId>
+    <artifactId>meta-uaa</artifactId>
     <name>meta-auth</name>
     <description>meta-auth</description>
     <properties>
@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.auiucloud</groupId>
-            <artifactId>meta-auth-api</artifactId>
+            <artifactId>meta-uaa-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>

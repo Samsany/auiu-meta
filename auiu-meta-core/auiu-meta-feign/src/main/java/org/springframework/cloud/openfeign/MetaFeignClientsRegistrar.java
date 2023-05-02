@@ -9,6 +9,7 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.boot.context.annotation.ImportCandidates;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -19,6 +20,7 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,129 +46,72 @@ public class MetaFeignClientsRegistrar implements ImportBeanDefinitionRegistrar,
     }
 
     private void registerFeignClients(BeanDefinitionRegistry registry) {
-        List<?> feignClients = SpringFactoriesLoader.loadFactories(getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());
+        List<String> feignClients = new ArrayList<>(
+                SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader()));
+        // 支持 springboot 2.7 + 最新版本的配置方式
+        ImportCandidates.load(FeignClient.class, getBeanClassLoader()).forEach(feignClients::add);
+        // 如果 spring.factories 里为空
         if (feignClients.isEmpty()) {
             return;
         }
+        for (String className : feignClients) {
+            try {
+                Class<?> clazz = beanClassLoader.loadClass(className);
+                AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, FeignClient.class);
+                if (attributes == null) {
+                    continue;
+                }
+                // 如果已经存在该 bean，支持原生的 Feign
+                if (registry.containsBeanDefinition(className)) {
+                    continue;
+                }
+                registerClientConfiguration(registry, getClientName(attributes), attributes.get("configuration"));
 
-        for (Object feignClient : feignClients) {
-            Class<?> clazz = feignClient.getClass();
-            AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, FeignClient.class);
-            if (attributes == null) {
-                continue;
+                validate(attributes);
+                BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(FeignClientFactoryBean.class);
+                definition.addPropertyValue("url", getUrl(attributes));
+                definition.addPropertyValue("path", getPath(attributes));
+                String name = getName(attributes);
+                definition.addPropertyValue("name", name);
+
+                // 兼容最新版本的 spring-cloud-openfeign，尚未发布
+                StringBuilder aliasBuilder = new StringBuilder(18);
+                if (attributes.containsKey("contextId")) {
+                    String contextId = getContextId(attributes);
+                    aliasBuilder.append(contextId);
+                    definition.addPropertyValue("contextId", contextId);
+                } else {
+                    aliasBuilder.append(name);
+                }
+
+                definition.addPropertyValue("type", className);
+                definition.addPropertyValue("decode404", attributes.get("decode404"));
+                definition.addPropertyValue("fallback", attributes.get("fallback"));
+                definition.addPropertyValue("fallbackFactory", attributes.get("fallbackFactory"));
+                definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
+
+                AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
+
+                // alias
+                String alias = aliasBuilder.append("FeignClient").toString();
+
+                // has a default, won't be null
+                boolean primary = (Boolean) attributes.get("primary");
+
+                beanDefinition.setPrimary(primary);
+
+                String qualifier = getQualifier(attributes);
+                if (StringUtils.hasText(qualifier)) {
+                    alias = qualifier;
+                }
+
+                BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className, new String[]{alias});
+                BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-            // 如果已经存在该 bean，支持原生的 Feign
-            if (registry.containsBeanDefinition(clazz.getName())) {
-                continue;
-            }
-            registerClientConfiguration(registry, getClientName(attributes), attributes.get("configuration"));
-
-            validate(attributes);
-            BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(FeignClientFactoryBean.class);
-            definition.addPropertyValue("url", getUrl(attributes));
-            definition.addPropertyValue("path", getPath(attributes));
-            String name = getName(attributes);
-            definition.addPropertyValue("name", name);
-
-            // 兼容最新版本的 spring-cloud-openfeign，尚未发布
-            StringBuilder aliasBuilder = new StringBuilder(18);
-            if (attributes.containsKey("contextId")) {
-                String contextId = getContextId(attributes);
-                aliasBuilder.append(contextId);
-                definition.addPropertyValue("contextId", contextId);
-            } else {
-                aliasBuilder.append(name);
-            }
-
-            definition.addPropertyValue("type", clazz.getName());
-            definition.addPropertyValue("decode404", attributes.get("decode404"));
-            definition.addPropertyValue("fallback", attributes.get("fallback"));
-            definition.addPropertyValue("fallbackFactory", attributes.get("fallbackFactory"));
-            definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
-
-            AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
-
-            // alias
-            String alias = aliasBuilder.append("FeignClient").toString();
-
-            // has a default, won't be null
-            boolean primary = (Boolean) attributes.get("primary");
-
-            beanDefinition.setPrimary(primary);
-
-            String qualifier = getQualifier(attributes);
-            if (StringUtils.hasText(qualifier)) {
-                alias = qualifier;
-            }
-
-            BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, clazz.getName(), new String[]{alias});
-            BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
-
         }
-
-//        List<String> feignClients = SpringFactoriesLoader.loadFactoryNames(getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());
-//        // 如果 spring.factories 里为空
-//        if (feignClients.isEmpty()) {
-//            return;
-//        }
-//        for (String className : feignClients) {
-//            try {
-//                Class<?> clazz = beanClassLoader.loadClass(className);
-//                AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, FeignClient.class);
-//                if (attributes == null) {
-//                    continue;
-//                }
-//                // 如果已经存在该 bean，支持原生的 Feign
-//                if (registry.containsBeanDefinition(className)) {
-//                    continue;
-//                }
-//                registerClientConfiguration(registry, getClientName(attributes), attributes.get("configuration"));
-//
-//                validate(attributes);
-//                BeanDefinitionBuilder definition = BeanDefinitionBuilder.genericBeanDefinition(FeignClientFactoryBean.class);
-//                definition.addPropertyValue("url", getUrl(attributes));
-//                definition.addPropertyValue("path", getPath(attributes));
-//                String name = getName(attributes);
-//                definition.addPropertyValue("name", name);
-//
-//                // 兼容最新版本的 spring-cloud-openfeign，尚未发布
-//                StringBuilder aliasBuilder = new StringBuilder(18);
-//                if (attributes.containsKey("contextId")) {
-//                    String contextId = getContextId(attributes);
-//                    aliasBuilder.append(contextId);
-//                    definition.addPropertyValue("contextId", contextId);
-//                } else {
-//                    aliasBuilder.append(name);
-//                }
-//
-//                definition.addPropertyValue("type", className);
-//                definition.addPropertyValue("decode404", attributes.get("decode404"));
-//                definition.addPropertyValue("fallback", attributes.get("fallback"));
-//                definition.addPropertyValue("fallbackFactory", attributes.get("fallbackFactory"));
-//                definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
-//
-//                AbstractBeanDefinition beanDefinition = definition.getBeanDefinition();
-//
-//                // alias
-//                String alias = aliasBuilder.append("FeignClient").toString();
-//
-//                // has a default, won't be null
-//                boolean primary = (Boolean) attributes.get("primary");
-//
-//                beanDefinition.setPrimary(primary);
-//
-//                String qualifier = getQualifier(attributes);
-//                if (StringUtils.hasText(qualifier)) {
-//                    alias = qualifier;
-//                }
-//
-//                BeanDefinitionHolder holder = new BeanDefinitionHolder(beanDefinition, className, new String[]{alias});
-//                BeanDefinitionReaderUtils.registerBeanDefinition(holder, registry);
-//
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     /**

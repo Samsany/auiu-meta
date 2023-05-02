@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.auiucloud</groupId>
-        <artifactId>auiu-meta-auth</artifactId>
+        <artifactId>auiu-meta-uaa</artifactId>
         <version>1.0.1</version>
     </parent>
 
-    <artifactId>meta-auth-api</artifactId>
+    <artifactId>meta-uaa-api</artifactId>
     <name>meta-auth-api</name>
     <description>meta-auth-api</description>
     <properties>

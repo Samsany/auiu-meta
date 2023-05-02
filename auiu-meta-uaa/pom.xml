@@ -9,7 +9,7 @@
         <version>1.0.1</version>
     </parent>
 
-    <artifactId>auiu-meta-auth</artifactId>
+    <artifactId>auiu-meta-uaa</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -17,8 +17,8 @@
     </properties>
 
     <modules>
-        <module>meta-auth-api</module>
-        <module>meta-auth</module>
+        <module>meta-uaa-api</module>
+        <module>meta-uaa</module>
     </modules>
 
 </project>
