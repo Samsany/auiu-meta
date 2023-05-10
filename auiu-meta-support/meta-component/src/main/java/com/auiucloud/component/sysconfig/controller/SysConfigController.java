@@ -4,6 +4,7 @@ import com.auiucloud.component.sysconfig.domain.SysConfig;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.enums.QueryModeEnum;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
@@ -57,14 +58,16 @@ public class SysConfigController {
     public ApiResult<?> list(Search search, @Parameter(hidden = true) SysConfig config) {
         QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());
         switch (mode) {
-            case LIST:
+            case LIST -> {
                 return ApiResult.data(configService.selectConfigList(config));
-            case TREE:
+            }
+            case TREE -> {
                 return ApiResult.data(configService.selectConfigTreeList(config));
-            case PAGE:
-            default:
+            }
+            default -> {
                 PageUtils list = configService.listPage(search, config);
                 return ApiResult.data(list);
+            }
         }
     }
 
@@ -98,7 +101,7 @@ public class SysConfigController {
     }
 
     /**
-     * 新增会员
+     * 新增系统参数配置
      */
     @Log(value = "系统参数配置")
     @PostMapping
@@ -108,13 +111,23 @@ public class SysConfigController {
     }
 
     /**
-     * 修改会员
+     * 修改系统参数配置
      */
     @Log(value = "系统参数配置")
     @PutMapping
     @Operation(summary = "修改系统参数配置")
     public ApiResult<?> edit(@RequestBody SysConfig config) {
         return ApiResult.condition(configService.updateSysConfig(config));
+    }
+
+    /**
+     * 设置客户端状态
+     */
+    @Log(value = "客户端", exception = "修改客户端请求异常")
+    @PutMapping("/setStatus")
+    @Operation(summary = "修改客户端状态")
+    public ApiResult<?> setSysConfigStatus(@Validated @RequestBody UpdateStatusDTO statusDTO) {
+        return ApiResult.condition(configService.setSysConfigStatus(statusDTO));
     }
 
 }

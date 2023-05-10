@@ -2,6 +2,7 @@ package com.auiucloud.component.sysconfig.service;
 
 import com.auiucloud.component.sysconfig.domain.SysConfig;
 import com.auiucloud.component.sysconfig.vo.SysConfigTreeVO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.oss.props.OssProperties;
@@ -89,4 +90,6 @@ public interface ISysConfigService extends IService<SysConfig> {
     boolean saveSysConfig(SysConfig config);
 
     boolean updateSysConfig(SysConfig config);
+
+    boolean setSysConfigStatus(UpdateStatusDTO statusDTO);
 }

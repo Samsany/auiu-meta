@@ -5,6 +5,7 @@ import com.alibaba.csp.sentinel.adapter.spring.webflux.callback.BlockRequestHand
 import com.alibaba.csp.sentinel.adapter.spring.webmvc.callback.BlockExceptionHandler;
 import com.alibaba.fastjson.JSONObject;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.sentinel.feign.MetaFeignSentinel;
 import feign.Feign;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -33,7 +34,7 @@ public class SentinelConfiguration {
     @ConditionalOnMissingBean
     @ConditionalOnProperty(name = "feign.sentinel.enabled")
     public Feign.Builder feignSentinelBuilder() {
-        return new Feign.Builder();
+        return new MetaFeignSentinel.Builder();
     }
 
     /**

@@ -5,22 +5,23 @@
 <mapper namespace="com.auiucloud.component.cms.mapper.UserGalleryLikeMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.UserGalleryLike">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="postId" column="post_id" jdbcType="BIGINT"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="postId" column="post_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,post_id,
+        id
+        ,u_id,post_id,
         type,status,create_time,
         update_time
     </sql>
 
-    <select id="selectGalleryLikeVOListByGalleryId"
+    <select id="selectGalleryLikeVOListByPostId2Type"
             resultType="com.auiucloud.component.cms.vo.UserGalleryLikeVO">
         select uugl.id,
                uugl.u_id,
@@ -32,12 +33,14 @@
                uugl.create_time,
                uugl.update_time
         from ums_user_gallery_like uugl
-                 left join ums_user u2 on u2.id = uugl.u_id and u2.is_deleted = 0
+                 left join ums_user u2 on u2.id = uugl.u_id
         where uugl.status = 0
-          and uugl.post_id = #{galleryId}
+          and u2.is_deleted = 0
+          and uugl.type = #{type}
+          and uugl.post_id = #{postId}
     </select>
 
-    <select id="selectGalleryLikeVOListByGalleryIds"
+    <select id="selectGalleryLikeVOListByPostIds2Type"
             resultType="com.auiucloud.component.cms.vo.UserGalleryLikeVO">
         select uugl.id,
         uugl.u_id,
@@ -49,10 +52,22 @@
         uugl.create_time,
         uugl.update_time
         from ums_user_gallery_like uugl
-        left join ums_user u2 on u2.id = uugl.u_id and u2.is_deleted = 0
-        where uugl.status = 0 and uugl.post_id in
-        <foreach collection="list" open="(" close=")" separator="," item="item" index="index">
+        left join ums_user u2 on u2.id = uugl.u_id
+        where uugl.status = 0
+        and uugl.type = #{type}
+        and u2.is_deleted = 0
+        and uugl.post_id in
+        <foreach collection="postIds" open="(" close=")" separator="," item="item" index="index">
             #{item}
         </foreach>
+    </select>
+
+    <select id="countUserReceivedLikeNum" resultType="java.lang.Long">
+        select count(*)
+        from ums_user_gallery_like uugl
+                 left join cms_gallery cg on uugl.post_id = cg.id and cg.is_deleted = 0
+        where cg.u_id = #{userId}
+          and cg.is_published = 1
+          and uugl.status = 0;
     </select>
 </mapper>

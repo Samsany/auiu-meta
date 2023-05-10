@@ -20,13 +20,21 @@ import java.util.List;
 */
 public interface IGalleryService extends IService<Gallery> {
 
+    List<GalleryVO> listGalleryVOByGalleryIds(List<Long> galleryIds);
+
     List<GalleryVO> selectGalleryListByCId(Long cId);
 
     List<GalleryVO> selectGalleryListByCId2Limit(Long cId, Integer limit);
 
     List<GalleryVO> selectGalleryReCommendList();
 
-    PageUtils selectCommonGalleryPage(Search search, Gallery gallery);
+    PageUtils selectSquareGalleryVOPage(Search search, Gallery gallery);
+
+    PageUtils selectGalleryUserHomePage(Search search, Gallery gallery);
+
+    PageUtils selectMyLikeGalleryPage(Search search);
+
+    PageUtils selectMyFavoriteGalleryPage(Search search);
 
     GalleryVO selectGalleryInfoById(Long galleryId);
 
@@ -51,6 +59,15 @@ public interface IGalleryService extends IService<Gallery> {
     boolean likeGallery(Long postId, Integer type);
 
     /**
+     * 收藏/取消收藏 帖子
+     *
+     * @param postId 帖子ID
+     * @param type 帖子类型
+     * @return boolean
+     */
+    boolean favoriteGallery(Long postId, Integer type);
+
+    /**
      * 发布作品
      *
      * @param gallery 作品
@@ -64,5 +81,11 @@ public interface IGalleryService extends IService<Gallery> {
      * @param userId 用户ID
      * @return Long
      */
-    Long countUserGalleryByUId(Long userId);
+    Long countPublishUserGalleryByUId(Long userId);
+
+    Long countUserReceivedLikeNum(Long userId);
+
+    Long countGalleryNumByCId(Long id);
+    Long countPublishedGalleryNumByCId(Long id);
+
 }

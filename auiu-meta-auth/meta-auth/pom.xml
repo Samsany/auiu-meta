@@ -43,7 +43,10 @@
         <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-web</artifactId>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-applet</artifactId>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
@@ -68,10 +71,6 @@
         <dependency>
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.binarywang</groupId>
-            <artifactId>weixin-java-miniapp</artifactId>
         </dependency>
     </dependencies>
 

@@ -4,13 +4,18 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author dries
  **/
 @Data
-public class UserGalleryLikeVO {
+public class UserGalleryLikeVO implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 8594546323960069549L;
 
     /**
      * 主键标识

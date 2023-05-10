@@ -1,0 +1,21 @@
+spring:
+  ##Kafka??
+  cloud:
+    stream:
+      bindings:
+        log-in-0:
+          destination: meta-log
+          #          producer:
+          #            headerMode: none
+          content-type: text/plain
+        log-out-0:
+          destination: meta-log
+          #          consumer:
+          #            headerMode: none
+          content-type: application/json
+      #      default-binder: kafka
+      kafka:
+        binder:
+          brokers: localhost:9092
+          zk-nodes: localhost:2181
+          auto-create-topics: true

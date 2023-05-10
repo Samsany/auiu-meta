@@ -41,11 +41,14 @@
         <module>auiu-meta-security</module>
         <module>auiu-meta-validator</module>
         <module>auiu-meta-oss</module>
+        <module>auiu-meta-applet</module>
         <module>auiu-meta-file</module>
         <module>auiu-meta-sms</module>
         <module>auiu-meta-rule</module>
         <module>auiu-meta-redis</module>
+        <module>auiu-meta-kafka</module>
         <module>auiu-meta-rabbit</module>
+        <module>auiu-meta-rocketmq</module>
         <module>auiu-meta-web</module>
         <module>auiu-meta-cloud</module>
         <module>auiu-meta-seata</module>

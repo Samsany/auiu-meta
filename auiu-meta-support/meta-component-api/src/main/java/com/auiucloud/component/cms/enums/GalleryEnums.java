@@ -3,7 +3,6 @@ package com.auiucloud.component.cms.enums;
 import com.auiucloud.core.common.enums.IBaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @author dries
@@ -61,7 +60,19 @@ public class GalleryEnums {
 
     @Getter
     @AllArgsConstructor
-    public enum GalleryLikeType implements IBaseEnum<Integer> {
+    public enum GalleryCollectionStatus implements IBaseEnum<Integer> {
+
+        YOURSELF_VISIBLE(0, "自己可见"),
+        SQUARE_VISIBLE(1, "广场可见"),
+        ;
+
+        private final Integer value;
+        private final String label;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum GalleryPageType implements IBaseEnum<Integer> {
 
         GALLERY(0, "作品"),
         GALLERY_COLLECTION(1, "合集")

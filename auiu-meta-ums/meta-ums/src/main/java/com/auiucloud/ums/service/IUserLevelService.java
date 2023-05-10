@@ -10,4 +10,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface IUserLevelService extends IService<UserLevelRecord> {
 
+    UserLevelRecord selectUserLevelRecordByUId(Long uId);
+
 }

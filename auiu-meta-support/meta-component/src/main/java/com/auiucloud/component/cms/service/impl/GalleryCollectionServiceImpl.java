@@ -5,12 +5,13 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.PicTag;
+import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.GalleryCollectionMapper;
-import com.auiucloud.component.cms.service.IGalleryCollectionService;
-import com.auiucloud.component.cms.service.IGalleryService;
-import com.auiucloud.component.cms.service.IPicTagService;
+import com.auiucloud.component.cms.service.*;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.component.cms.vo.GalleryVO;
+import com.auiucloud.component.cms.vo.UserGalleryFavoriteVO;
+import com.auiucloud.component.cms.vo.UserGalleryLikeVO;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
@@ -32,6 +33,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author dries
@@ -46,8 +48,28 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Lazy
     @Resource
     private IGalleryService galleryService;
+    @Lazy
+    @Resource
+    private IUserGalleryLikeService userGalleryLikeService;
+    @Lazy
+    @Resource
+    private IUserGalleryCollectionService userGalleryCollectionService;
 
     private final IPicTagService picTagService;
+
+    @Override
+    public List<GalleryCollectionVO> listGalleryCollectionVOByCIds(List<Long> cIds) {
+        if (CollUtil.isNotEmpty(cIds)) {
+            List<GalleryCollectionVO> galleryCollections = Optional.ofNullable(baseMapper.selectGalleryCollectionVOByCIds(cIds)).orElse(Collections.emptyList());
+            List<Long> ids = galleryCollections.parallelStream().map(GalleryCollectionVO::getId).collect(Collectors.toList());
+            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByCIds(ids);
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByCIds(ids);
+            galleryCollections.parallelStream().forEach(it -> buildGalleryCollectionAdditionalVO(SecurityUtil.getUserIdOrDefault(), it, userGalleryLikeVOS, userGalleryFavoriteVOS));
+            return galleryCollections;
+        }
+
+        return Collections.emptyList();
+    }
 
     @Override
     public List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection) {
@@ -56,7 +78,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         queryWrapper.orderByDesc(GalleryCollection::getIsTop);
         queryWrapper.orderByDesc(GalleryCollection::getSort);
         queryWrapper.orderByDesc(GalleryCollection::getCreateTime);
-        return this.list(queryWrapper);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @Override
@@ -73,6 +95,114 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         List<GalleryCollectionVO> galleryCollectionVOS = list.stream().map(it -> getGalleryCollectionVO(it, tagIds)).toList();
         pageUtils.setList(galleryCollectionVOS);
         return pageUtils;
+    }
+
+    @Override
+    public PageUtils selectGalleryCollectionUserHomePage(Search search, GalleryCollection galleryCollection) {
+        // 查询总条数
+        Long total = baseMapper.countUserHomeGalleryCollectionTotal(SecurityUtil.getUserIdOrDefault(), search, galleryCollection);
+        Search s = PageUtils.buildPage(search, Math.toIntExact(total));
+        List<GalleryCollectionVO> list = Optional.ofNullable(
+                baseMapper.selectUserHomeGalleryCollectionPage(
+                        SecurityUtil.getUserIdOrDefault(),
+                        s,
+                        galleryCollection)
+        ).orElse(Collections.emptyList());
+
+        Long userId = SecurityUtil.getUserIdOrDefault();
+        List<Long> ids = list.parallelStream().map(GalleryCollectionVO::getId).collect(Collectors.toList());
+        List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByCIds(ids);
+        List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByCIds(ids);
+
+        list.parallelStream().forEach(it -> buildGalleryCollectionAdditionalVO(userId, it, userGalleryLikeVOS, userGalleryFavoriteVOS));
+        return new PageUtils(total, search, list);
+    }
+
+    @Override
+    public GalleryCollectionVO selectGalleryCollectionById(Long cId) {
+        GalleryCollectionVO galleryCollectionVO = baseMapper.selectGalleryCollectionVOById(cId);
+        if (ObjectUtil.isNotNull(galleryCollectionVO)) {
+            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByCId(cId);
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByCId(cId);
+            Long userId = SecurityUtil.getUserIdOrDefault();
+            buildGalleryCollectionAdditionalVO(userId, galleryCollectionVO, userGalleryLikeVOS, userGalleryFavoriteVOS);
+        }
+        return galleryCollectionVO;
+    }
+
+    private void buildGalleryCollectionAdditionalVO(Long userId, GalleryCollectionVO galleryCollectionVO, List<UserGalleryLikeVO> userGalleryLikeVOS, List<UserGalleryFavoriteVO> userGalleryFavoriteVOS) {
+        // 设置点赞信息
+        setGalleryCollectionLike(userId, galleryCollectionVO, userGalleryLikeVOS);
+
+        // 设置收藏信息
+        setGalleryCollectionFavorite(userId, galleryCollectionVO, userGalleryFavoriteVOS);
+
+        // 设置封面信息
+        setGalleryCollectionCover(galleryCollectionVO);
+
+        // 设置作品数量
+        setGalleryTotal(userId, galleryCollectionVO);
+    }
+
+    private void setGalleryTotal(Long userId, GalleryCollectionVO galleryCollectionVO) {
+        Long total;
+        if (userId.equals(galleryCollectionVO.getUId())) {
+            total = galleryService.countGalleryNumByCId(galleryCollectionVO.getId());
+        } else {
+            total = galleryService.countPublishedGalleryNumByCId(galleryCollectionVO.getId());
+        }
+        galleryCollectionVO.setGalleryNum(Math.toIntExact(total));
+    }
+
+    private void setGalleryCollectionCover(GalleryCollectionVO galleryCollectionVO) {
+        List<GalleryVO> galleries = galleryService.selectGalleryListByCId2Limit(galleryCollectionVO.getId(), 4);
+        if (CollUtil.isNotEmpty(galleries)) {
+            // 组装封面图
+            List<String> covers = galleries.stream()
+                    .map(GalleryVO::getPic)
+                    .toList();
+            galleryCollectionVO.setCovers(covers);
+        }
+    }
+
+    private void setGalleryCollectionFavorite(Long userId, GalleryCollectionVO galleryCollectionVO, List<UserGalleryFavoriteVO> userGalleryFavoriteVOS) {
+        // 组装收藏信息
+        List<UserGalleryFavoriteVO> favoriteList = userGalleryFavoriteVOS.parallelStream()
+                .filter(favoriteVO -> favoriteVO.getPostId().equals(galleryCollectionVO.getId())
+                        && favoriteVO.getType().equals(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue()))
+                .collect(Collectors.toList());
+        galleryCollectionVO.setFavoriteList(favoriteList);
+        galleryCollectionVO.setFavoriteNum(favoriteList.size());
+        galleryCollectionVO.setIsFavorite(Boolean.FALSE);
+
+        if (ObjectUtil.isNotNull(userId)) {
+            favoriteList.parallelStream()
+                    .filter(it -> it.getUId().equals(userId))
+                    .findAny()
+                    .ifPresent(it -> {
+                        galleryCollectionVO.setIsFavorite(Boolean.TRUE);
+                    });
+        }
+    }
+
+    private void setGalleryCollectionLike(Long userId, GalleryCollectionVO galleryCollectionVO, List<UserGalleryLikeVO> userGalleryLikeVOS) {
+        List<UserGalleryLikeVO> likeList = userGalleryLikeVOS.parallelStream()
+                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryCollectionVO.getId())
+                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue()))
+                .collect(Collectors.toList());
+        galleryCollectionVO.setLikeList(likeList);
+        galleryCollectionVO.setLikeNum(likeList.size());
+        galleryCollectionVO.setIsLike(Boolean.FALSE);
+
+        if (ObjectUtil.isNotNull(userId)) {
+            likeList.parallelStream()
+                    .filter(it -> it.getUId().equals(userId))
+                    .findAny()
+                    .ifPresent(it -> {
+                        galleryCollectionVO.setIsLike(Boolean.TRUE);
+                    });
+        }
+
     }
 
     @Override
@@ -108,13 +238,15 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         GalleryCollectionVO galleryCollectionVO = new GalleryCollectionVO();
         BeanUtils.copyProperties(galleryCollection, galleryCollectionVO);
         // 查询作品
-        List<GalleryVO> galleries = galleryService.selectGalleryListByCId(galleryCollection.getId());
-        galleryCollectionVO.setGalleryList(galleries);
-        galleryCollectionVO.setGalleryNum(galleries.size());
+        // List<GalleryVO> galleries = galleryService.selectGalleryListByCId(galleryCollection.getId());
+        List<GalleryVO> galleries = galleryService.selectGalleryListByCId2Limit(galleryCollection.getId(), 4);
+        Long galleryNum = galleryService.countGalleryNumByCId(galleryCollection.getId());
+        // galleryCollectionVO.setGalleryList(galleries);
+        galleryCollectionVO.setGalleryNum(Math.toIntExact(galleryNum));
         if (StrUtil.isBlank(galleryCollection.getCover())) {
             // 组装封面图
             List<String> covers = galleries.stream()
-                    .limit(4)
+                    // .limit(4)
                     .map(GalleryVO::getPic)
                     .toList();
             galleryCollectionVO.setCovers(covers);

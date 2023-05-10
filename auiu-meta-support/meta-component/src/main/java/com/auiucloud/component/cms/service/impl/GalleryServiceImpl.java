@@ -2,21 +2,15 @@ package com.auiucloud.component.cms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.auiucloud.auth.dto.DouyinContentCheckDTO;
-import com.auiucloud.auth.feign.IDouyinProvider;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
+import com.auiucloud.component.cms.domain.UserGalleryCollection;
 import com.auiucloud.component.cms.domain.UserGalleryLike;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.GalleryMapper;
-import com.auiucloud.component.cms.service.IGalleryCollectionService;
-import com.auiucloud.component.cms.service.IGalleryService;
-import com.auiucloud.component.cms.service.IPicTagService;
-import com.auiucloud.component.cms.service.IUserGalleryLikeService;
-import com.auiucloud.component.cms.vo.GalleryPublishVO;
-import com.auiucloud.component.cms.vo.GalleryVO;
-import com.auiucloud.component.cms.vo.UserGalleryLikeVO;
+import com.auiucloud.component.cms.service.*;
+import com.auiucloud.component.cms.vo.*;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
@@ -28,6 +22,8 @@ import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
+import com.auiucloud.core.douyin.config.AppletsConfiguration;
+import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -38,7 +34,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -68,7 +63,21 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     private final IMemberProvider memberProvider;
     private final IPicTagService picTagService;
     private final IUserGalleryLikeService userGalleryLikeService;
-    private final IDouyinProvider douyinProvider;
+    private final IUserGalleryCollectionService userGalleryCollectionService;
+
+    @Override
+    public List<GalleryVO> listGalleryVOByGalleryIds(List<Long> galleryIds) {
+        if (CollUtil.isNotEmpty(galleryIds)) {
+            List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectGalleryVOListByIds(galleryIds)).orElse(Collections.emptyList());
+            List<Long> gIds = galleryVOS.parallelStream().map(GalleryVO::getId).toList();
+            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGIds(gIds);
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByGalleryIds(gIds);
+            galleryVOS.parallelStream().forEach(it -> buildUserGalleryAdditionalVO(null, it, userGalleryLikeVOS, userGalleryFavoriteVOS));
+            return galleryVOS;
+        }
+
+        return Collections.emptyList();
+    }
 
     @Override
     public List<GalleryVO> selectGalleryListByCId(Long cId) {
@@ -97,56 +106,134 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     }
 
     @Override
-    public PageUtils selectCommonGalleryPage(Search search, Gallery gallery) {
-        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+    public PageUtils selectSquareGalleryVOPage(Search search, Gallery gallery) {
 
-        // 查询全部
-        if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
-            queryWrapper.orderByDesc(Gallery::getCreateTime);
-        } else if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
+        if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.COLLECTION.getValue())) {
             // todo 查询合集
+            return new PageUtils(Collections.emptyList());
         } else {
-            queryWrapper.eq(Gallery::getTagId, gallery.getTagId());
-            // queryWrapper.orderByDesc(Gallery::getDownloadTimes);
-            // queryWrapper.orderByDesc(Gallery::getSort);
-            queryWrapper.orderByDesc(Gallery::getCreateTime);
+            // 查询全部
+            if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
+                search.setOrder("cg.sort desc, cg.create_time desc");
+            } else {
+                search.setOrder("cg.sort desc, cg.download_times desc, cg.create_time desc");
+            }
+
+            Long total = baseMapper.countSquareGalleryVOTotal(search, gallery);
+            Search s = PageUtils.buildPage(search, Math.toIntExact(total));
+            List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectSquareGalleryVOPage(s, gallery)).orElse(Collections.emptyList());
+
+            List<Long> galleryIds = galleryVOS.parallelStream().map(GalleryVO::getId).collect(Collectors.toList());
+            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGIds(galleryIds);
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOs = userGalleryCollectionService.selectGalleryFavoriteVOListByGalleryIds(galleryIds);
+
+            Long userId = SecurityUtil.getUserIdOrDefault();
+            galleryVOS.parallelStream().forEach(it -> buildUserGalleryAdditionalVO(userId, it, userGalleryLikeVOS, userGalleryFavoriteVOs));
+
+            return new PageUtils(total, search, galleryVOS);
+        }
+    }
+
+    @Override
+    public PageUtils selectGalleryUserHomePage(Search search, Gallery gallery) {
+        search.setOrder("cg.is_top desc, cg.download_times desc, cg.create_time desc");
+        Long userId = SecurityUtil.getUserIdOrDefault();
+        Long total = baseMapper.countUserHomeGalleryVONum(userId, search, gallery);
+        Search s = PageUtils.buildPage(search, Math.toIntExact(total));
+        List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectUserHomeGalleryVOPage(userId, s, gallery)).orElse(Collections.emptyList());
+
+        List<Long> galleryIds = galleryVOS.parallelStream().map(GalleryVO::getId).collect(Collectors.toList());
+        List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGIds(galleryIds);
+        List<UserGalleryFavoriteVO> userGalleryFavoriteVOs = userGalleryCollectionService.selectGalleryFavoriteVOListByGalleryIds(galleryIds);
+        galleryVOS.parallelStream().forEach(it -> buildUserGalleryAdditionalVO(userId, it, userGalleryLikeVOS, userGalleryFavoriteVOs));
+
+        return new PageUtils(total, search, galleryVOS);
+    }
+
+    @Override
+    public PageUtils selectMyLikeGalleryPage(Search search) {
+        // 查询我的点赞列表
+        LambdaQueryWrapper<UserGalleryLike> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserGalleryLike::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
+        queryWrapper.eq(UserGalleryLike::getUId, SecurityUtil.getUserId());
+        IPage<UserGalleryLike> page = userGalleryLikeService.page(PageUtils.getPage(search), queryWrapper);
+        if (page.getRecords().size() > 0) {
+            // 分别取出作品 和 合集
+            Map<Integer, List<UserGalleryLike>> map = page.getRecords().parallelStream()
+                    .filter(it -> it.getType() != null)
+                    .collect(Collectors.groupingBy(UserGalleryLike::getType));
+
+            // 作品
+            List<UserGalleryLike> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
+            List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryLike::getPostId).toList();
+            List<GalleryVO> galleryList = this.listGalleryVOByGalleryIds(galleryIds);
+
+            // 合集
+            List<UserGalleryLike> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
+            List<Long> cIds = userGalleryCollectionLikes.parallelStream().map(UserGalleryLike::getPostId).toList();
+            List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
+
+            page.convert(it -> {
+                UserGalleryLike2FavoriteVO build = UserGalleryLike2FavoriteVO.builder()
+                        .id(it.getId())
+                        .uId(it.getUId())
+                        .postId(it.getPostId())
+                        .status(it.getStatus())
+                        .type(it.getType())
+                        .createTime(it.getCreateTime())
+                        .build();
+                // 组装额外的信息
+                buildUserGalleryLike2FavoriteAdditionalVO(build, galleryList, galleryCollections);
+                return build;
+            });
         }
 
-        PageUtils.startPage(search);
-        List<Gallery> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
-        PageUtils pageUtils = new PageUtils(list);
+        return new PageUtils(page);
+    }
+    @Override
+    public PageUtils selectMyFavoriteGalleryPage(Search search) {
+        // 查询我的点赞列表
+        LambdaQueryWrapper<UserGalleryCollection> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserGalleryCollection::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
+        queryWrapper.eq(UserGalleryCollection::getUId, SecurityUtil.getUserId());
+        IPage<UserGalleryCollection> page = userGalleryCollectionService.page(PageUtils.getPage(search), queryWrapper);
+        if (page.getRecords().size() > 0) {
+            // 分别取出作品 和 合集
+            Map<Integer, List<UserGalleryCollection>> map = page.getRecords().parallelStream()
+                    .filter(it -> it.getType() != null)
+                    .collect(Collectors.groupingBy(UserGalleryCollection::getType));
 
-        List<Long> userIds = list.parallelStream().map(Gallery::getUId).toList();
-        List<MemberInfoVO> memberInfoVOS = getMemberInfoVOS(userIds);
+            // 作品
+            List<UserGalleryCollection> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
+            List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryCollection::getPostId).toList();
+            List<GalleryVO> galleryList = this.listGalleryVOByGalleryIds(galleryIds);
 
-        List<Long> galleryIds = list.parallelStream().map(Gallery::getId).toList();
-        List<UserGalleryLikeVO> userGalleryLikeVOS = new ArrayList<>();
-        if (CollUtil.isNotEmpty(galleryIds)) {
-            userGalleryLikeVOS.addAll(userGalleryLikeService.selectGalleryLikeVOListByGalleryIds(galleryIds));
+            // 合集
+            List<UserGalleryCollection> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
+            List<Long> cIds = userGalleryCollectionLikes.parallelStream().map(UserGalleryCollection::getPostId).toList();
+            List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
+
+            page.convert(it -> {
+                UserGalleryLike2FavoriteVO build = UserGalleryLike2FavoriteVO.builder()
+                        .id(it.getId())
+                        .uId(it.getUId())
+                        .postId(it.getPostId())
+                        .status(it.getStatus())
+                        .type(it.getType())
+                        .createTime(it.getCreateTime())
+                        .build();
+                // 组装额外的信息
+                buildUserGalleryLike2FavoriteAdditionalVO(build, galleryList, galleryCollections);
+                return build;
+            });
         }
 
-        List<GalleryVO> collect = list
-                .stream().map(it -> {
-                    GalleryVO galleryVO = new GalleryVO();
-                    BeanUtils.copyProperties(it, galleryVO);
-
-                    buildUserGalleryLikeVO(galleryVO, userGalleryLikeVOS);
-                    buildGalleryUserVO(galleryVO, memberInfoVOS);
-                    return galleryVO;
-                })
-                .toList();
-        pageUtils.setList(collect);
-        return pageUtils;
+        return new PageUtils(page);
     }
 
     @Override
     public GalleryVO selectGalleryInfoById(Long galleryId) {
         GalleryVO galleryVO = baseMapper.selectGalleryVOById(galleryId);
-
-        // 组装点赞信息
-        List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGalleryId(galleryId);
-        buildUserGalleryLikeVO(galleryVO, userGalleryLikeVOS);
-        // todo 组装下载记录
         return getGalleryVO(galleryVO);
     }
 
@@ -230,20 +317,14 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             String appId = RequestHolder.getHttpServletRequestHeader("appId");
             Integer loginType = SecurityUtil.getUser().getLoginType();
             if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
-                ApiResult<List<Integer>> listApiResult = douyinProvider.checkTextList(DouyinContentCheckDTO.builder()
-                        .appId(appId)
-                        .contents(List.of(
-                                galleryVO.getTitle(),
-                                galleryVO.getPrompt(),
-                                galleryVO.getRemark()
-                        ))
-                        .build());
-                if (listApiResult.successful()) {
-                    if (listApiResult.getData().size() > 0) {
-                        return ApiResult.fail("内容存在违规信息, 请重新输入");
-                    }
-                } else {
-                    return listApiResult;
+                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+                List<Integer> resultList = douyinAppletService.checkTextList(List.of(
+                        galleryVO.getTitle(),
+                        galleryVO.getPrompt(),
+                        galleryVO.getRemark()
+                ));
+                if (resultList.size() > 0) {
+                    return ApiResult.fail("内容违规, 请重新输入");
                 }
             }
         } catch (Exception e) {
@@ -316,10 +397,59 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         return userGalleryLikeService.saveOrUpdate(userGalleryLike);
     }
 
+    /**
+     * 收藏/取消收藏 帖子
+     *
+     * @param postId 帖子ID
+     * @param type   帖子类型
+     * @return boolean
+     */
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public Long countUserGalleryByUId(Long userId) {
+    public boolean favoriteGallery(Long postId, Integer type) {
+        Long userId = SecurityUtil.getUserId();
+        UserGalleryCollection userGalleryCollection = userGalleryCollectionService.selectGalleryFavoriteByUserId2GalleryId(userId, postId, type);
+        if (ObjectUtil.isNull(userGalleryCollection)) {
+            userGalleryCollection = UserGalleryCollection.builder()
+                    .uId(userId)
+                    .postId(postId)
+                    .type(type)
+                    .status(CommonConstant.STATUS_NORMAL_VALUE)
+                    .build();
+        } else {
+            if (userGalleryCollection.getStatus().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                userGalleryCollection.setStatus(CommonConstant.STATUS_DISABLE_VALUE);
+            } else {
+                userGalleryCollection.setStatus(CommonConstant.STATUS_NORMAL_VALUE);
+            }
+        }
+        return userGalleryCollectionService.saveOrUpdate(userGalleryCollection);
+    }
+
+    @Override
+    public Long countPublishUserGalleryByUId(Long userId) {
         LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(Gallery::getUId, userId);
+        queryWrapper.eq(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
+        return this.count(queryWrapper);
+    }
+
+    @Override
+    public Long countUserReceivedLikeNum(Long userId) {
+        return userGalleryLikeService.countUserReceivedLikeNum(userId);
+    }
+
+    @Override
+    public Long countGalleryNumByCId(Long cId) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getCollectionId, cId);
+        return this.count(queryWrapper);
+    }
+
+    @Override
+    public Long countPublishedGalleryNumByCId(Long cId) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getCollectionId, cId);
         queryWrapper.eq(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
         return this.count(queryWrapper);
     }
@@ -344,6 +474,86 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         return this.removeBatchByIds(ids);
     }
 
+    // 组装作品信息
+    @NotNull
+    private GalleryVO getGalleryVO(GalleryVO galleryVO) {
+        Long userId = SecurityUtil.getUserIdOrDefault();
+        List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGId(galleryVO.getId());
+        List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByGalleryId(galleryVO.getId());
+        buildUserGalleryAdditionalVO(userId, galleryVO, userGalleryLikeVOS, userGalleryFavoriteVOS);
+        return galleryVO;
+    }
+
+    // 组装作品附加信息
+    private void buildUserGalleryAdditionalVO(
+            Long userId,
+            GalleryVO galleryVO,
+            List<UserGalleryLikeVO> userGalleryLikeVOS,
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS) {
+
+        // 设置点赞信息
+        setGalleryLike(userId, galleryVO, userGalleryLikeVOS);
+
+        // 设置收藏信息
+        setGalleryFavorite(userId, galleryVO, userGalleryFavoriteVOS);
+
+        // todo 组装下载记录
+    }
+
+    // 设置点赞信息
+    private void setGalleryLike(Long userId, GalleryVO galleryVO, List<UserGalleryLikeVO> userGalleryLikeVOS) {
+        List<UserGalleryLikeVO> likeList = userGalleryLikeVOS.parallelStream()
+                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryVO.getId())
+                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryPageType.GALLERY.getValue()))
+                .collect(Collectors.toList());
+        galleryVO.setLikeList(likeList);
+        galleryVO.setLikeNum(likeList.size());
+        galleryVO.setIsLike(Boolean.FALSE);
+
+        if (ObjectUtil.isNotNull(userId)) {
+            likeList.parallelStream()
+                    .filter(it -> it.getUId().equals(userId))
+                    .findAny()
+                    .ifPresent(it -> {
+                        galleryVO.setIsLike(Boolean.TRUE);
+                    });
+        }
+    }
+
+    // 设置收藏信息
+    private void setGalleryFavorite(Long userId, GalleryVO galleryVO, List<UserGalleryFavoriteVO> userGalleryFavoriteVOS) {
+        // 组装收藏信息
+        List<UserGalleryFavoriteVO> favoriteList = userGalleryFavoriteVOS.parallelStream()
+                .filter(favoriteVO -> favoriteVO.getPostId().equals(galleryVO.getId())
+                        && favoriteVO.getType().equals(GalleryEnums.GalleryPageType.GALLERY.getValue()))
+                .collect(Collectors.toList());
+        galleryVO.setFavoriteList(favoriteList);
+        galleryVO.setFavoriteNum(favoriteList.size());
+        galleryVO.setIsFavorite(Boolean.FALSE);
+        if (ObjectUtil.isNotNull(userId)) {
+            favoriteList.parallelStream()
+                    .filter(it -> it.getUId().equals(userId))
+                    .findAny()
+                    .ifPresent(it -> {
+                        galleryVO.setIsFavorite(Boolean.TRUE);
+                    });
+        }
+
+    }
+
+    // 设置创作者信息
+    private void setGalleryCreator(GalleryVO galleryVO, List<MemberInfoVO> memberInfoVOS) {
+        if (CollUtil.isNotEmpty(memberInfoVOS)) {
+            memberInfoVOS.parallelStream()
+                    .filter(it -> it.getUserId().equals(galleryVO.getUId()))
+                    .findAny()
+                    .ifPresent(memberInfo -> {
+                        galleryVO.setNickname(memberInfo.getNickname());
+                        galleryVO.setAvatar(memberInfo.getAvatar());
+                    });
+        }
+    }
+
     @NotNull
     private List<GalleryVO> getGalleryVOS(LambdaQueryWrapper<Gallery> queryWrapper) {
         List<Gallery> galleryList = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
@@ -356,60 +566,39 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                 .toList();
     }
 
-    // 组装作品信息
-    @Nullable
-    private GalleryVO getGalleryVO(GalleryVO galleryVO) {
-        try {
-            ApiResult<MemberInfoVO> getUserResult = memberProvider.getUserByUsername(galleryVO.getCreateBy());
-            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful() && ObjectUtil.isNotNull(getUserResult.getData())) {
-                MemberInfoVO memberInfo = getUserResult.getData();
-                galleryVO.setNickname(memberInfo.getNickname());
-                galleryVO.setAvatar(memberInfo.getAvatar());
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-        }
-        return galleryVO;
-    }
+    private void buildUserGalleryLike2FavoriteAdditionalVO(UserGalleryLike2FavoriteVO ugl,
+                                                           List<GalleryVO> galleryList,
+                                                           List<GalleryCollectionVO> galleryCollections) {
 
-    // 组装作品用户信息
-    private void buildGalleryUserVO(GalleryVO galleryVO, List<MemberInfoVO> memberInfoVOS) {
-        if (CollUtil.isNotEmpty(memberInfoVOS)) {
-            memberInfoVOS.parallelStream()
-                    .filter(it -> it.getUserId().equals(galleryVO.getUId()))
-                    .findAny()
-                    .ifPresent(memberInfo -> {
-                        galleryVO.setNickname(memberInfo.getNickname());
-                        galleryVO.setAvatar(memberInfo.getAvatar());
+        if (ugl.getType().equals(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())) {
+            // 组装合集信息
+            galleryCollections.parallelStream()
+                    .filter(it -> it.getId().equals(ugl.getPostId()))
+                    .findAny().ifPresent(collectionVO -> {
+                        ugl.setAvatar(collectionVO.getAvatar());
+                        ugl.setNickname(collectionVO.getNickname());
+                        ugl.setTitle(collectionVO.getTitle());
+                        ugl.setLikeNum(collectionVO.getLikeNum());
+                        ugl.setFavoriteNum(collectionVO.getFavoriteNum());
+                        ugl.setCovers(collectionVO.getCovers());
                     });
+        } else {
+            // 组装作品信息
+            galleryList.parallelStream()
+                    .filter(it -> it.getId().equals(ugl.getPostId()))
+                    .findAny().ifPresent(galleryVO -> {
+                        ugl.setAvatar(galleryVO.getAvatar());
+                        ugl.setNickname(galleryVO.getNickname());
+                        ugl.setTitle(galleryVO.getTitle());
+                        ugl.setLikeNum(galleryVO.getLikeNum());
+                        ugl.setFavoriteNum(galleryVO.getFavoriteNum());
+                        ugl.setCovers(List.of(galleryVO.getThumbUrl()));
+                    });
+
         }
+
     }
 
-    private void buildUserGalleryLikeVO(GalleryVO galleryVO, List<UserGalleryLikeVO> userGalleryLikeVOS) {
-        List<UserGalleryLikeVO> likeList = userGalleryLikeVOS.parallelStream()
-                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryVO.getId())
-                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryLikeType.GALLERY.getValue()))
-                .collect(Collectors.toList());
-        galleryVO.setLikeList(likeList);
-        galleryVO.setLikeNum(likeList.size());
-
-        // 组装收藏信息
-        List<UserGalleryLikeVO> favoriteList = userGalleryLikeVOS.parallelStream()
-                .filter(galleryLikeVO -> galleryLikeVO.getPostId().equals(galleryVO.getId())
-                        && galleryLikeVO.getType().equals(GalleryEnums.GalleryLikeType.GALLERY_COLLECTION.getValue()))
-                .collect(Collectors.toList());
-        galleryVO.setFavoriteList(favoriteList);
-        galleryVO.setFavoriteNum(favoriteList.size());
-        try {
-            Long userId = SecurityUtil.getUserId();
-            List<Long> likeUserIds = likeList.parallelStream().map(UserGalleryLikeVO::getUId).toList();
-            List<Long> favoriteUserIds = favoriteList.parallelStream().map(UserGalleryLikeVO::getUId).toList();
-
-            galleryVO.setIsLike(likeUserIds.contains(userId));
-            galleryVO.setIsFavorite(favoriteUserIds.contains(userId));
-        } catch (Exception ignored) {
-        }
-    }
 
     // 获取用户信息
     @NotNull
@@ -417,7 +606,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         List<MemberInfoVO> memberInfoVOS = new ArrayList<>();
         try {
             ApiResult<List<MemberInfoVO>> getUserResult = memberProvider.getUserListByIds(userIds);
-            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful() && CollUtil.isNotEmpty(getUserResult.getData())) {
+            if (ObjectUtil.isNotNull(getUserResult) && getUserResult.successful()) {
                 List<MemberInfoVO> memberInfos = getUserResult.getData();
                 memberInfoVOS.addAll(memberInfos);
             }

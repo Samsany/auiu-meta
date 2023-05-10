@@ -6,6 +6,8 @@ seata:
   config:
     type: nacos
     nacos:
+      username: nacos
+      password: Zxx131013@nacos
       group: SEATA_GROUP
       namespace: 748f991c-6cb6-4bb0-8ffc-f9586f1dce99 # Nacos 命名空间
       server-addr: ${spring.cloud.nacos.discovery.server-addr} # Nacos 服务地址
@@ -18,6 +20,8 @@ seata:
   registry:
     type: nacos # 注册中心类型，默认为 file
     nacos:
+      username: nacos
+      password: Zxx131013@nacos
       group: SEATA_GROUP
       cluster: default # 使用的 Seata 分组
       namespace: 748f991c-6cb6-4bb0-8ffc-f9586f1dce99 # Nacos 命名空间

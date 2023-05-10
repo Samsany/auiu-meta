@@ -1,8 +1,8 @@
 package com.auiucloud.auth.service;
 
 import com.auiucloud.auth.domain.SocialUser;
-import com.auiucloud.auth.model.AppletAuthCallback;
-import com.auiucloud.auth.model.AppletUserInfo;
+import com.auiucloud.core.douyin.model.AppletAuthCallback;
+import com.auiucloud.core.douyin.model.AppletUserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

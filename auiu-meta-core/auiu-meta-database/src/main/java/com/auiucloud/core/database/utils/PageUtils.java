@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -123,6 +124,40 @@ public class PageUtils {
     /**
      * 手工分页
      *
+     * @param list   列表数据
+     * @param search 查询参数
+     */
+    public PageUtils(Long total, Search search, List<?> list) {
+        int pageNum = 1;
+        int pageSize = 10;
+        if (search.getPageNum() != null) {
+            pageNum = search.getPageNum();
+        }
+        if (search.getPageSize() != null) {
+            pageSize = search.getPageSize();
+        }
+
+        if (CollUtil.isNotEmpty(list)) {
+            this.totalCount = Math.toIntExact(total);
+            this.pageSize = pageSize;
+            this.pageNum = Math.max(pageNum, 1);
+            this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
+            this.hasNextPage = pageNum < this.totalPage;
+
+            this.list = list;
+        } else {
+            this.totalCount = 0;
+            this.pageSize = pageSize;
+            this.pageNum = pageNum;
+            this.totalPage = 0;
+            this.list = Collections.emptyList();
+            this.hasNextPage = false;
+        }
+    }
+
+    /**
+     * 手工分页
+     *
      * @param list     列表数据
      * @param pageSize 每页记录数
      * @param pageNum  当前页数
@@ -191,4 +226,31 @@ public class PageUtils {
         }
     }
 
+    public static Search buildPage(Search search, int total) {
+        Search build = new Search();
+        BeanUtils.copyProperties(search, build);
+        int pageNum = 1;
+        int pageSize = 10;
+        if (search.getPageNum() != null) {
+            pageNum = search.getPageNum();
+        }
+        if (search.getPageSize() != null) {
+            pageSize = search.getPageSize();
+        }
+
+        int pageCount = total / pageSize;
+        int fromIndex = (pageNum - 1) * pageSize;
+        //        int toIndex = fromIndex + pageSize;
+        //        if (toIndex >= total) {
+        //            toIndex = total;
+        //        }
+        if (pageNum > pageCount + 1) {
+            fromIndex = 0;
+            //            toIndex = 0;
+        }
+
+        build.setPageNum(fromIndex);
+        build.setPageSize(pageSize);
+        return build;
+    }
 }

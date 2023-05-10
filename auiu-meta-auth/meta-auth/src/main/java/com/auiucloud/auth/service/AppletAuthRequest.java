@@ -4,20 +4,13 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.WxMaUserService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import cn.hutool.core.date.TimeInterval;
-import cn.hutool.core.lang.ObjectId;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.admin.feign.ISysUserProvider;
-import com.auiucloud.admin.vo.UserInfoVO;
-import com.auiucloud.auth.config.DouyinAppletsConfiguration;
-import com.auiucloud.auth.config.WechatAppletsConfiguration;
+import com.auiucloud.admin.modules.system.vo.UserInfoVO;
 import com.auiucloud.auth.domain.MetaClientDetails;
 import com.auiucloud.auth.enums.Oauth2ClientTypeEnum;
-import com.auiucloud.auth.model.AppletAuthCallback;
-import com.auiucloud.auth.model.AppletCode2Session;
-import com.auiucloud.auth.model.AppletUserInfo;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
@@ -25,12 +18,15 @@ import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.AuthException;
 import com.auiucloud.core.common.utils.StringPool;
+import com.auiucloud.core.douyin.config.AppletsConfiguration;
+import com.auiucloud.core.douyin.model.AppletAuthCallback;
+import com.auiucloud.core.douyin.model.AppletUserInfo;
+import com.auiucloud.core.douyin.model.DyAppletCode2Session;
+import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.core.redis.core.RedisService;
-import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
@@ -69,8 +65,8 @@ public class AppletAuthRequest {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 String clientId = authentication.getName();
                 // 获取Service
-                DouyinAppletsService douyinAppletService = DouyinAppletsConfiguration.getDouyinAppletService(callback.getAppId());
-                AppletCode2Session code2Session = null;
+                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(callback.getAppId());
+                DyAppletCode2Session code2Session = null;
                 if (StrUtil.isBlank(callback.getOpenId())) {
                     // 获取openid unionid
                     code2Session = douyinAppletService.getCode2Session(callback.getCode());
@@ -137,7 +133,7 @@ public class AppletAuthRequest {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 String clientId = authentication.getName();
                 // 获取Service
-                WxMaService wxMaService = WechatAppletsConfiguration.getWechatAppletsService(callback.getAppId());
+                WxMaService wxMaService = AppletsConfiguration.getWechatAppletsService(callback.getAppId());
                 WxMaUserService userService = wxMaService.getUserService();
                 WxMaJscode2SessionResult session = null;
                 if (StrUtil.isBlank(callback.getOpenId())) {

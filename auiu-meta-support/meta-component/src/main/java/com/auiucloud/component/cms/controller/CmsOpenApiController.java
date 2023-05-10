@@ -5,13 +5,16 @@ package com.auiucloud.component.cms.controller;
  **/
 
 import com.auiucloud.component.cms.domain.Gallery;
+import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.SwiperAdv;
+import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.component.cms.service.ISwiperAdvService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
+import com.auiucloud.core.rocketmq.constant.MessageConstant;
 import com.auiucloud.core.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,6 +22,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +39,21 @@ public class CmsOpenApiController extends BaseController {
 
     private final IPicTagService picTagService;
     private final ISwiperAdvService swiperAdvService;
+    private final IGalleryCollectionService galleryCollectionService;
     private final IGalleryService galleryService;
+
+    private final StreamBridge streamBridge;
+
+    /**
+     * 查询轮播广告列表
+     */
+    @Log(value = "发送信息")
+    @GetMapping("/send/message")
+    @Operation(summary = "发送信息")
+    public ApiResult<?> sendTestMessage(String message) {
+        streamBridge.send(MessageConstant.SMS_MESSAGE_OUTPUT, message);
+        return ApiResult.success();
+    }
 
     /**
      * 查询轮播广告列表
@@ -95,7 +113,50 @@ public class CmsOpenApiController extends BaseController {
             @Parameter(name = "tagId", description = "作品标签", in = ParameterIn.QUERY),
     })
     public ApiResult<?> galleryCommonPage(Search search, @Parameter(hidden = true) Gallery gallery) {
-        return ApiResult.data(galleryService.selectCommonGalleryPage(search, gallery));
+        return ApiResult.data(galleryService.selectSquareGalleryVOPage(search, gallery));
+    }
+
+    /**
+     * 分页查询作品合集列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/gallery-collection/user/home/page")
+    @Operation(summary = "分页查询用户作品合集列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "tagId", description = "作品标签", in = ParameterIn.QUERY),
+            @Parameter(name = "uId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> collectionPage(@Parameter(hidden = true) Search search, @Parameter(hidden = true) GalleryCollection galleryCollection) {
+        return ApiResult.data(galleryCollectionService.selectGalleryCollectionUserHomePage(search, galleryCollection));
+    }
+
+    /**
+     * 查询作品合集详情
+     */
+    @Log(value = "作品")
+    @GetMapping("/gallery-collection/info/{cId}")
+    @Operation(summary = "查询作品合集详情")
+    public ApiResult<?> getGalleryCollection(@PathVariable Long cId) {
+        return ApiResult.data(galleryCollectionService.selectGalleryCollectionById(cId));
+    }
+
+
+    /**
+     * 分页查询作品列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/gallery/user/home/page")
+    @Operation(summary = "查询作品列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "tagId", description = "作品标签", in = ParameterIn.QUERY),
+            @Parameter(name = "uId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> galleryUserHomePage(Search search, @Parameter(hidden = true) Gallery gallery) {
+        return ApiResult.data(galleryService.selectGalleryUserHomePage(search, gallery));
     }
 
     /**

@@ -20,4 +20,45 @@
         type,status,create_time,
         update_time
     </sql>
+
+    <select id="selectGalleryFavoriteVOListByPostId2Type"
+            resultType="com.auiucloud.component.cms.vo.UserGalleryFavoriteVO">
+        select uugc.id,
+               uugc.u_id,
+               u2.avatar,
+               u2.nickname,
+               uugc.post_id,
+               uugc.type,
+               uugc.status,
+               uugc.create_time,
+               uugc.update_time
+        from ums_user_gallery_collection uugc
+                 left join ums_user u2 on u2.id = uugc.u_id
+        where uugc.status = 0
+          and u2.is_deleted = 0
+          and uugc.post_id = #{postId}
+          and uugc.type = #{type}
+    </select>
+
+    <select id="selectGalleryFavoriteVOListByPostIds2Type"
+            resultType="com.auiucloud.component.cms.vo.UserGalleryFavoriteVO">
+        select uugc.id,
+        uugc.u_id,
+        u2.avatar,
+        u2.nickname,
+        uugc.post_id,
+        uugc.type,
+        uugc.status,
+        uugc.create_time,
+        uugc.update_time
+        from ums_user_gallery_collection uugc
+        left join ums_user u2 on u2.id = uugc.u_id
+        where uugc.status = 0
+        and u2.is_deleted = 0
+        and uugc.type = #{type}
+        and uugc.post_id in
+        <foreach collection="postIds" open="(" close=")" separator="," item="item" index="index">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

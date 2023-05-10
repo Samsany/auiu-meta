@@ -1,10 +1,10 @@
 package com.auiucloud.admin.utils;
 
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.admin.domain.SysMenu;
-import com.auiucloud.admin.enums.MenuOpenTypeEnum;
-import com.auiucloud.admin.vo.RouteVO;
-import com.auiucloud.admin.vo.SysMenuTreeVO;
+import com.auiucloud.admin.modules.system.domain.SysMenu;
+import com.auiucloud.admin.modules.system.enums.MenuOpenTypeEnum;
+import com.auiucloud.admin.modules.system.vo.RouteVO;
+import com.auiucloud.admin.modules.system.vo.SysMenuTreeVO;
 import com.auiucloud.core.common.constant.CommonConstant;
 import org.springframework.beans.BeanUtils;
 

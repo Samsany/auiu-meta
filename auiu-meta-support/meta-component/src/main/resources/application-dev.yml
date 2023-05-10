@@ -11,6 +11,12 @@ spring:
     password: ${meta.datasource.password}
     driver-class-name: ${meta.datasource.driver-class-name}
 
+  cloud:
+    stream:
+      rocketmq:
+        binder:
+          name-server: 127.0.0.1:9876
+
 ## 配置日志显示在spring boot admin
 #logging:
 #  file:

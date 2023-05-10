@@ -27,6 +27,14 @@
             <artifactId>auiu-meta-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-job</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-log</artifactId>
         </dependency>

@@ -102,7 +102,7 @@
     <logger name="com.auiucloud.core.log.utils" level="debug" addtivity="false">
         <appender-ref ref="track_log_async"/>
     </logger>
-    <logger name="com.auiucloud.admin.service.impl.SysLogServiceImpl" level="debug" addtivity="false">
+    <logger name="com.auiucloud.admin.modules.system.impl.service.SysLogServiceImpl" level="debug" addtivity="false">
         <appender-ref ref="audit_log_async"/>
     </logger>
 

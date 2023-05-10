@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 public class MetaAuthApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MetaAuthApplication.class, args);
     }

@@ -1,5 +1,6 @@
 package com.auiucloud.ums.service;
 
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
@@ -7,6 +8,7 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
+import com.auiucloud.ums.dto.UpdateUserInfoDTO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -33,6 +35,9 @@ public interface IMemberService extends IService<Member> {
     List<UserInfoVO> userRecommendList();
 
     UserInfoVO getUserInfoVOById(Long userId);
+    UserInfoVO queryUserInfoVOByInvitationCode(String invitationCode);
+
+    Member getMemberInfoById(Long id);
 
     /**
      * 根据用户username 查询会员信息
@@ -51,8 +56,6 @@ public interface IMemberService extends IService<Member> {
      */
     MemberInfoVO getMemberByOpenId2Source(String uuid, String source);
 
-    boolean saveMember(RegisterMemberDTO member);
-
     /**
      *
      * 用户注册
@@ -62,9 +65,11 @@ public interface IMemberService extends IService<Member> {
      */
     MemberInfoDTO registerMemberByApplet(MemberInfoDTO memberInfoDTO);
 
-    Member getMemberInfoById(Long id);
+    boolean saveMember(RegisterMemberDTO member);
 
     boolean updateMemberById(Member member);
+
+    ApiResult<?> updateAppletUserInfo(UpdateUserInfoDTO userInfoDTO);
 
     boolean setUserStatus(UpdateStatusDTO updateStatusDTO);
 

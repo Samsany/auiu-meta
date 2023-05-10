@@ -35,7 +35,20 @@
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-rocketmq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-oss</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-applet</artifactId>
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>

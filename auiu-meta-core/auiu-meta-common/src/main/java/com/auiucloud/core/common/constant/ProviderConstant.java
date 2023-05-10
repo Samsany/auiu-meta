@@ -75,5 +75,9 @@ public class ProviderConstant {
      * 根据用户ID查询作品数量
      */
     public final String PROVIDER_USER_GALLERY_NUM = PROVIDER + "/user/gallery/count";
+    /**
+     * 根据用户ID查询作品收到的赞数量
+     */
+    public final String PROVIDER_USER_GALLERY_LIKE_NUM = PROVIDER + "/user/gallery-like/count";
 
 }

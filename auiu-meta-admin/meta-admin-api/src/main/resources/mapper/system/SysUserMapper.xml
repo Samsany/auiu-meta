@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auiucloud.admin.modules.system.mapper.SysUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.auiucloud.admin.modules.system.domain.SysUser">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="BIGINT"/>
+        <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="gender" column="gender" jdbcType="TINYINT"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="builtIn" column="built_in" jdbcType="TINYINT"/>
+        <result property="loginDate" column="login_date" jdbcType="TIMESTAMP"/>
+        <result property="loginIp" column="login_ip" jdbcType="VARCHAR"/>
+        <result property="registerIp" column="register_ip" jdbcType="VARCHAR"/>
+        <result property="registerAddress" column="register_address" jdbcType="VARCHAR"/>
+        <result property="registerSource" column="register_source" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        select u.id,
+               u.account,
+               u.dept_id,
+               u.real_name,
+               u.nickname,
+               u.avatar,
+               u.mobile,
+               u.email,
+               u.password,
+               u.gender,
+               u.birthday,
+               u.status,
+               u.built_in,
+               u.login_date,
+               u.login_ip,
+               u.register_ip,
+               u.register_address,
+               u.register_source,
+               u.create_time,
+               u.update_time,
+               u.create_by,
+               u.update_by,
+               u.remark,
+               u.is_deleted
+        from sys_user u
+                 left join social_user_auth sua on sua.user_id = u.id
+                 left join social_user su on su.id = sua.social_user_id
+    </sql>
+
+    <select id="getSysUserByOpenId2Source" resultType="com.auiucloud.admin.modules.system.domain.SysUser">
+        <include refid="Base_Column_List"/>
+        where u.is_deleted = 0 and su.open_id = #{openId} and su.source = #{source}
+    </select>
+
+</mapper>

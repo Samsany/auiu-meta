@@ -1,7 +1,11 @@
 package com.auiucloud.component.cms.mapper;
 
 import com.auiucloud.component.cms.domain.UserGalleryCollection;
+import com.auiucloud.component.cms.vo.UserGalleryFavoriteVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author dries
@@ -10,6 +14,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.auiucloud.component.cms.domain.UserGalleryCollection
 */
 public interface UserGalleryCollectionMapper extends BaseMapper<UserGalleryCollection> {
+
+    List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByPostId2Type(@Param("postId") Long postId, @Param("type") Integer type);
+    List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByPostIds2Type(@Param("postIds") List<Long> postIds, @Param("type") Integer type);
 
 }
 

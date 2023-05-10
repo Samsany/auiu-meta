@@ -1,17 +1,16 @@
 package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.lang.ObjectId;
-import cn.hutool.core.util.RandomUtil;
 import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.auth.domain.SocialUserAuth;
 import com.auiucloud.auth.mapper.SocialUserMapper;
-import com.auiucloud.auth.model.AppletAuthCallback;
-import com.auiucloud.auth.model.AppletUserInfo;
 import com.auiucloud.auth.service.ISocialUserAuthService;
 import com.auiucloud.auth.service.ISocialUserService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.AuthException;
+import com.auiucloud.core.douyin.model.AppletAuthCallback;
+import com.auiucloud.core.douyin.model.AppletUserInfo;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

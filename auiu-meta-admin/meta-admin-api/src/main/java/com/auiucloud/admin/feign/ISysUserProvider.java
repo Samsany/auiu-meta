@@ -1,6 +1,6 @@
 package com.auiucloud.admin.feign;
 
-import com.auiucloud.admin.vo.UserInfoVO;
+import com.auiucloud.admin.modules.system.vo.UserInfoVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;

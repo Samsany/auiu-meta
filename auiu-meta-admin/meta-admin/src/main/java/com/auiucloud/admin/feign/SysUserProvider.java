@@ -1,7 +1,7 @@
 package com.auiucloud.admin.feign;
 
-import com.auiucloud.admin.vo.UserInfoVO;
-import com.auiucloud.admin.service.ISysUserService;
+import com.auiucloud.admin.modules.system.vo.UserInfoVO;
+import com.auiucloud.admin.modules.system.service.ISysUserService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.log.annotation.Log;

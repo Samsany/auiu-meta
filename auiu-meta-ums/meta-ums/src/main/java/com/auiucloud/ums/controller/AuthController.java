@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Tag(name = "认证管理")
 @RequiredArgsConstructor
-@RequestMapping("/auth")
+@RequestMapping("/ums/auth")
 public class AuthController {
 
     private final RedisService redisService;

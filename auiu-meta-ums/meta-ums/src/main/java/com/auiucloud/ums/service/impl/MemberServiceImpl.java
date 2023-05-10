@@ -1,14 +1,15 @@
 package com.auiucloud.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.auiucloud.auth.feign.ISocialProvider;
 import com.auiucloud.component.feign.IUserGalleryProvider;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.AuthException;
 import com.auiucloud.core.common.model.IpAddress;
@@ -16,14 +17,20 @@ import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.IPUtil;
 import com.auiucloud.core.common.utils.SecurityUtil;
+import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
+import com.auiucloud.core.douyin.config.AppletsConfiguration;
+import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.ums.domain.Member;
+import com.auiucloud.ums.domain.UserLevelRecord;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
+import com.auiucloud.ums.dto.UpdateUserInfoDTO;
 import com.auiucloud.ums.mapper.MemberMapper;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.service.IUserFollowerService;
+import com.auiucloud.ums.service.IUserLevelService;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -37,10 +44,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,9 +59,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         implements IMemberService {
 
     private final PasswordEncoder passwordEncoder;
-    private final ISocialProvider socialProvider;
     private final IUserFollowerService userFollowerService;
     private final IUserGalleryProvider userGalleryProvider;
+    private final IUserLevelService userLevelService;
 
     /**
      * 会员分页列表
@@ -110,6 +115,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     public UserInfoVO getUserInfoVOById(Long userId) {
         Member member = this.getById(userId);
         return getUserInfoVO(userId, member);
+    }
+
+    @Override
+    public UserInfoVO queryUserInfoVOByInvitationCode(String invitationCode) {
+        Member member = this.getOne(Wrappers.<Member>lambdaQuery().eq(Member::getInvitationCode, invitationCode));
+        return getUserInfoVO(SecurityUtil.getUserId(), member);
     }
 
     @Override
@@ -270,6 +281,37 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     }
 
     @Override
+    public ApiResult<?> updateAppletUserInfo(UpdateUserInfoDTO userInfoDTO) {
+
+        // 文字内容安全效验
+        try {
+            String appId = RequestHolder.getHttpServletRequestHeader("appId");
+            Integer loginType = SecurityUtil.getUser().getLoginType();
+            if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
+                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+                List<Integer> resultList = douyinAppletService.checkTextList(List.of(
+                        userInfoDTO.getNickname(),
+                        userInfoDTO.getRemark()
+                ));
+                if (resultList.size() > 0) {
+                    return ApiResult.fail("内容违规, 请重新输入");
+                }
+            }
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+
+        LambdaUpdateWrapper<Member> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Member::getId, SecurityUtil.getUserId());
+        updateWrapper.set(Member::getAvatar, userInfoDTO.getAvatar());
+        updateWrapper.set(Member::getBgImg, userInfoDTO.getBgImg());
+        updateWrapper.set(Member::getNickname, userInfoDTO.getNickname());
+        updateWrapper.set(Member::getGender, userInfoDTO.getGender());
+        updateWrapper.set(Member::getRemark, userInfoDTO.getRemark());
+        return ApiResult.condition(this.update(updateWrapper));
+    }
+
+    @Override
     public boolean setUserStatus(UpdateStatusDTO updateStatusDTO) {
         LambdaUpdateWrapper<Member> updateWrapper = Wrappers.lambdaUpdate();
         updateWrapper.set(Member::getStatus, updateStatusDTO.getStatus());
@@ -368,40 +410,49 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     }
 
     public UserInfoVO getUserInfoVO(Long userId, Member member) {
-        UserInfoVO build = UserInfoVO.builder()
-                .id(member.getId())
-                .account(member.getAccount())
-                .nickname(member.getNickname())
-                .avatar(member.getAvatar())
-                .bgImg(member.getBgImg())
-                .invitationCode(member.getInvitationCode())
-                .remark(member.getRemark())
-                .build();
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(member, userInfoVO);
+
+        // 判断是否为付费会员
+        UserLevelRecord userLevelRecord = userLevelService.selectUserLevelRecordByUId(member.getId());
+        userInfoVO.setIsPaidMember(Boolean.FALSE);
+        if (userLevelRecord != null) {
+            if (userLevelRecord.getExpiredTime().isAfter(LocalDateTime.now())) {
+                userInfoVO.setIsPaidMember(Boolean.TRUE);
+            }
+            userInfoVO.setMemberExpiredTime(userLevelRecord.getExpiredTime());
+        }
 
         // 设置粉丝数
         long countUserFollower = userFollowerService.countUserFollower(member.getId());
-        build.setFollowerNum(countUserFollower);
+        userInfoVO.setFollowerNum(countUserFollower);
 
         // 设置关注数
         long countUserAttention = userFollowerService.countUserAttention(member.getId());
-        build.setAttentionNum(countUserAttention);
+        userInfoVO.setAttentionNum(countUserAttention);
 
         // 设置是否关注该创作者
         if (ObjectUtil.isNotNull(userId) && !Objects.equals(member.getId(), userId)) {
             boolean isAttention = userFollowerService.checkedAttentionUser(userId, member.getId());
-            build.setIsAttention(isAttention);
+            userInfoVO.setIsAttention(isAttention);
         }
 
         try {
+            // 设置获赞数
+            ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(userId);
+            if (countUserLikeResult != null && countUserLikeResult.successful()) {
+                userInfoVO.setReceivedLikeNum(countUserLikeResult.getData());
+            }
+
             // 设置作品数
-            ApiResult<Long> galleryApiResult = userGalleryProvider.countUserGallery(member.getId());
+            ApiResult<Long> galleryApiResult = userGalleryProvider.countPublishUserGallery(userId);
             if (galleryApiResult != null && galleryApiResult.successful()) {
-                build.setGalleryNum(galleryApiResult.getData());
+                userInfoVO.setGalleryNum(galleryApiResult.getData());
             }
         } catch (Exception ignored) {
         }
 
-        return build;
+        return userInfoVO;
     }
 }
 

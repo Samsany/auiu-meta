@@ -55,6 +55,21 @@ public class SysConfig extends BaseEntity {
     private Integer builtIn;
 
     /**
+     * 是否显示(0-显示 1-隐藏)
+     */
+    private Integer status;
+
+    /**
+     * 输入类型
+     */
+    private String inputType;
+
+    /**
+     * 扩展样式
+     */
+    private String cssClass;
+
+    /**
      * 排序
      */
     private Integer sort;

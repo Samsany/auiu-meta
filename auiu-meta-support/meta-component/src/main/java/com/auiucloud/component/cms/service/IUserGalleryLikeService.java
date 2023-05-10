@@ -13,6 +13,14 @@ import java.util.List;
 */
 public interface IUserGalleryLikeService extends IService<UserGalleryLike> {
 
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByGId(Long galleryId);
+
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByGIds(List<Long> galleryIds);
+
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByCId(Long cId);
+
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByCIds(List<Long> cIds);
+
     /**
      *
      * @param userId 用户
@@ -22,8 +30,5 @@ public interface IUserGalleryLikeService extends IService<UserGalleryLike> {
      */
     UserGalleryLike selectGalleryLikeByUserId2GalleryId(Long userId, Long postId, Integer type);
 
-    List<UserGalleryLikeVO> selectGalleryLikeVOListByGalleryId(Long galleryId);
-
-    List<UserGalleryLikeVO> selectGalleryLikeVOListByGalleryIds(List<Long> galleryIds);
-
+    Long countUserReceivedLikeNum(Long userId);
 }

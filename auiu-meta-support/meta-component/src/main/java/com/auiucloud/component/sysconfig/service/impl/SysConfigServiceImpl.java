@@ -11,6 +11,7 @@ import com.auiucloud.component.sysconfig.vo.SysConfigTreeVO;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.ComponentConstant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -50,6 +51,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public List<SysConfig> selectDefaultConfigList() {
         LambdaQueryWrapper<SysConfig> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SysConfig::getParentId, CommonConstant.ROOT_NODE_ID);
+        queryWrapper.eq(SysConfig::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
         queryWrapper.orderByDesc(SysConfig::getSort);
         return this.list(queryWrapper);
     }
@@ -127,6 +129,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     public boolean updateSysConfig(SysConfig config) {
         return this.updateById(config);
+    }
+
+    @Override
+    public boolean setSysConfigStatus(UpdateStatusDTO statusDTO) {
+        LambdaUpdateWrapper<SysConfig> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(SysConfig::getStatus, statusDTO.getStatus());
+        updateWrapper.eq(SysConfig::getId, statusDTO.getId());
+
+        return update(updateWrapper);
     }
 
     /**
@@ -321,6 +332,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         queryWrapper.like(StrUtil.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName());
         queryWrapper.eq(ObjectUtil.isNotNull(config.getParentId()), SysConfig::getParentId, config.getParentId());
         queryWrapper.eq(ObjectUtil.isNotNull(config.getConfigType()), SysConfig::getConfigType, config.getConfigType());
+        queryWrapper.eq(ObjectUtil.isNotNull(config.getStatus()), SysConfig::getStatus, config.getStatus());
         queryWrapper.eq(StrUtil.isNotBlank(config.getConfigKey()), SysConfig::getConfigName, config.getConfigKey());
         queryWrapper.orderByDesc(SysConfig::getSort);
 

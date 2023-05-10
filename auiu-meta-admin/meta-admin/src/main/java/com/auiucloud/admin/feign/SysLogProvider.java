@@ -1,7 +1,7 @@
 package com.auiucloud.admin.feign;
 
-import com.auiucloud.admin.domain.SysLog;
-import com.auiucloud.admin.service.ISysLogService;
+import com.auiucloud.admin.modules.system.domain.SysLog;
+import com.auiucloud.admin.modules.system.service.ISysLogService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.common.model.CommonLog;

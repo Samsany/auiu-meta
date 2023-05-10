@@ -5,41 +5,42 @@
 <mapper namespace="com.auiucloud.component.cms.mapper.GalleryMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.Gallery">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="prompt" column="prompt" jdbcType="VARCHAR"/>
-            <result property="negativePrompt" column="negative_prompt" jdbcType="VARCHAR"/>
-            <result property="width" column="width" jdbcType="INTEGER"/>
-            <result property="height" column="height" jdbcType="INTEGER"/>
-            <result property="seed" column="seed" jdbcType="VARCHAR"/>
-            <result property="model" column="model" jdbcType="VARCHAR"/>
-            <result property="fusionModel" column="fusion_model" jdbcType="VARCHAR"/>
-            <result property="steps" column="steps" jdbcType="INTEGER"/>
-            <result property="sampler" column="sampler" jdbcType="VARCHAR"/>
-            <result property="cfgScale" column="cfg_scale" jdbcType="INTEGER"/>
-            <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
-            <result property="collectionId" column="collection_id" jdbcType="BIGINT"/>
-            <result property="isPublished" column="is_published" jdbcType="TINYINT"/>
-            <result property="isTop" column="is_top" jdbcType="TINYINT"/>
-            <result property="downloadIntegral" column="download_integral" jdbcType="INTEGER"/>
-            <result property="downloadTimes" column="download_times" jdbcType="VARCHAR"/>
-            <result property="views" column="views" jdbcType="VARCHAR"/>
-            <result property="sort" column="sort" jdbcType="INTEGER"/>
-            <result property="approvalStatus" column="approval_status" jdbcType="INTEGER"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="publishedTime" column="published_time" jdbcType="TIMESTAMP"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="tenantId" column="tenant_id" jdbcType="BIGINT"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="prompt" column="prompt" jdbcType="VARCHAR"/>
+        <result property="negativePrompt" column="negative_prompt" jdbcType="VARCHAR"/>
+        <result property="width" column="width" jdbcType="INTEGER"/>
+        <result property="height" column="height" jdbcType="INTEGER"/>
+        <result property="seed" column="seed" jdbcType="VARCHAR"/>
+        <result property="model" column="model" jdbcType="VARCHAR"/>
+        <result property="fusionModel" column="fusion_model" jdbcType="VARCHAR"/>
+        <result property="steps" column="steps" jdbcType="INTEGER"/>
+        <result property="sampler" column="sampler" jdbcType="VARCHAR"/>
+        <result property="cfgScale" column="cfg_scale" jdbcType="INTEGER"/>
+        <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
+        <result property="collectionId" column="collection_id" jdbcType="BIGINT"/>
+        <result property="isPublished" column="is_published" jdbcType="TINYINT"/>
+        <result property="isTop" column="is_top" jdbcType="TINYINT"/>
+        <result property="downloadIntegral" column="download_integral" jdbcType="INTEGER"/>
+        <result property="downloadTimes" column="download_times" jdbcType="VARCHAR"/>
+        <result property="views" column="views" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="approvalStatus" column="approval_status" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="publishedTime" column="published_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="tenantId" column="tenant_id" jdbcType="BIGINT"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,title,
+        id
+        ,u_id,title,
         prompt,negative_prompt,width,
         height,seed,model,
         fusion_model,steps,sampler,
@@ -52,89 +53,141 @@
         is_deleted
     </sql>
 
-    <select id="selectGalleryVOById" resultType="com.auiucloud.component.cms.vo.GalleryVO">
-        select g.id,
-               g.u_id,
-               g.title,
-               g.pic,
-               g.thumb_url,
-               g.prompt,
-               g.negative_prompt,
-               g.width,
-               g.height,
-               g.size,
-               g.seed,
-               g.model,
-               g.fusion_model,
-               g.steps,
-               g.sampler,
-               g.cfg_scale,
-               g.tag_id,
-               g.collection_id,
-               g.is_published,
-               g.is_top,
-               g.download_integral,
-               g.download_times,
-               g.views,
-               g.sort,
-               g.approval_status,
-               g.type,
-               g.published_time,
-               g.create_time,
-               g.update_time,
-               g.create_by,
-               g.update_by,
-               g.remark,
-               g.tenant_id,
-               g.is_deleted,
+    <sql id="Base_GalleryVO_Column_List">
+        select cg.id,
+               cg.u_id,
+               u2.nickname,
+               u2.avatar,
+               cg.title,
+               cg.pic,
+               cg.thumb_url,
+               cg.prompt,
+               cg.negative_prompt,
+               cg.width,
+               cg.height,
+               cg.size,
+               cg.seed,
+               cg.model,
+               cg.fusion_model,
+               cg.steps,
+               cg.sampler,
+               cg.cfg_scale,
+               cg.tag_id,
+               cg.collection_id,
+               cg.is_published,
+               cg.is_top,
+               cg.download_integral,
+               cg.download_times,
+               cg.views,
+               cg.sort,
+               cg.approval_status,
+               cg.type,
+               cg.published_time,
+               cg.create_time,
+               cg.update_time,
+               cg.create_by,
+               cg.update_by,
+               cg.remark,
+               cg.tenant_id,
+               cg.is_deleted,
                cgc.title collection,
                cpt.name  tag
-        from cms_gallery g
-                 left join cms_gallery_collection cgc on g.collection_id = cgc.id and cgc.is_deleted = 0
-                 left join cms_pic_tag cpt on g.tag_id = cpt.id and cpt.is_deleted = 0
-        where g.is_deleted = 0
-          and g.id = #{galleryId}
+        from cms_gallery cg
+                 inner join ums_user u2 on u2.id = cg.u_id and u2.is_deleted = 0
+                 left join cms_gallery_collection cgc on cg.collection_id = cgc.id and cgc.is_deleted = 0
+                 left join cms_pic_tag cpt on cg.tag_id = cpt.id and cpt.is_deleted = 0
+    </sql>
+
+    <select id="selectGalleryVOListByIds" resultType="com.auiucloud.component.cms.vo.GalleryVO">
+        <include refid="Base_GalleryVO_Column_List"/>
+        where
+        cg.is_deleted = 0
+        and cg.is_published = 1
+        and cg.approval_status = 1
+        and cg.id in
+        <foreach collection="list" open="(" close=")" separator="," item="item" index="index">
+            #{item}
+        </foreach>
     </select>
+
+    <select id="selectGalleryVOById" resultType="com.auiucloud.component.cms.vo.GalleryVO">
+        <include refid="Base_GalleryVO_Column_List"/>
+        where cg.is_deleted = 0 and cg.id = #{galleryId}
+    </select>
+
     <select id="selectGalleryReCommendList" resultType="com.auiucloud.component.cms.vo.GalleryVO">
-        select g.id,
-               g.u_id,
-               g.title,
-               g.pic,
-               g.thumb_url,
-               g.prompt,
-               g.negative_prompt,
-               g.width,
-               g.height,
-               g.size,
-               g.seed,
-               g.model,
-               g.fusion_model,
-               g.steps,
-               g.sampler,
-               g.cfg_scale,
-               g.tag_id,
-               g.collection_id,
-               g.is_published,
-               g.is_top,
-               g.download_integral,
-               g.download_times,
-               g.views,
-               g.sort,
-               g.approval_status,
-               g.type,
-               g.published_time,
-               g.create_time,
-               g.update_time,
-               g.create_by,
-               g.update_by,
-               g.remark,
-               g.tenant_id,
-               g.is_deleted,
-               cgc.title collection,
-               cpt.name  tag
-        from cms_gallery g
-                 left join cms_gallery_collection cgc on g.collection_id = cgc.id and cgc.is_deleted = 0
-                 left join cms_pic_tag cpt on g.tag_id = cpt.id and cpt.is_deleted = 0
-        where g.is_deleted = 0 order by rand() limit 9
+        <include refid="Base_GalleryVO_Column_List"/>
+        where cg.is_deleted = 0
+          and cg.is_published = 1
+          and cg.approval_status = 1
+        order by rand() limit 9
+    </select>
+
+    <select id="countSquareGalleryVOTotal" resultType="java.lang.Long">
+        select count(*)
+        from cms_gallery cg
+        inner join ums_user u2
+        on u2.id = cg.u_id and u2.is_deleted = 0
+        <where>
+            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1
+            <if test="gallery.tagId != null and gallery.tagId != 0 ">
+                and cg.tag_id = #{gallery.tagId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSquareGalleryVOPage" resultType="com.auiucloud.component.cms.vo.GalleryVO">
+        <include refid="Base_GalleryVO_Column_List"/>
+        <where>
+            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1
+            <if test="gallery.tagId != null and gallery.tagId != 0 ">
+                and cg.tag_id = #{gallery.tagId}
+            </if>
+            order by ${search.order}
+            limit #{search.pageNum}, #{search.pageSize};
+        </where>
+    </select>
+
+    <select id="countUserHomeGalleryVONum" resultType="java.lang.Long">
+        select count(*)
+        from cms_gallery cg
+        inner join ums_user u2
+        on u2.id = cg.u_id and u2.is_deleted = 0
+        <where>
+            cg.is_deleted = 0
+            <if test="userId != null">
+                and cg.u_id = #{gallery.uId}
+            </if>
+            <if test="gallery.tagId != null">
+                and cg.tag_id = #{gallery.tagId}
+            </if>
+            <if test="gallery.collectionId != null">
+                and cg.collection_id = #{gallery.collectionId}
+            </if>
+            <if test="userId != null and userId != gallery.uId">
+                and cg.is_published = 1 and cg.approval_status = 1
+            </if>
+        </where>
+    </select>
+
+    <select id="selectUserHomeGalleryVOPage" resultType="com.auiucloud.component.cms.vo.GalleryVO">
+        <include refid="Base_GalleryVO_Column_List"/>
+        <where>
+            cg.is_deleted = 0
+            <if test="userId != null">
+                and cg.u_id = #{gallery.uId}
+            </if>
+            <if test="gallery.tagId != null">
+                and cg.tag_id = #{gallery.tagId}
+            </if>
+            <if test="gallery.collectionId != null">
+                and cg.collection_id = #{gallery.collectionId}
+            </if>
+            <if test="userId != null and userId != gallery.uId">
+                and cg.is_published = 1 and cg.approval_status = 1
+            </if>
+            order by ${search.order}
+            limit #{search.pageNum}, #{search.pageSize};
+        </where>
     </select>
 </mapper>

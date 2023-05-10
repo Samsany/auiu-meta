@@ -23,5 +23,4 @@ public interface IUserFollowerService extends IService<UserFollower> {
 
     boolean checkedAttentionUser(Long userId, Long creatorId);
 
-
 }

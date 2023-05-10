@@ -3,15 +3,12 @@ package com.auiucloud.component.oss.service.impl;
 import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.auiucloud.auth.dto.DouyinContentCheckDTO;
-import com.auiucloud.auth.feign.IDouyinProvider;
 import com.auiucloud.component.oss.domain.SysAttachment;
 import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
-import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.ApiException;
@@ -22,6 +19,8 @@ import com.auiucloud.core.common.utils.ThumbUtil;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
+import com.auiucloud.core.douyin.config.AppletsConfiguration;
+import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.core.oss.core.OssTemplate;
 import com.auiucloud.core.oss.props.OssProperties;
 import com.auiucloud.core.web.utils.OssUtil;
@@ -57,7 +56,6 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     private final OssTemplate ossTemplate;
     private final ISysConfigService configService;
     private final ISysAttachmentGroupService sysAttachmentGroupService;
-    private final IDouyinProvider douyinProvider;
 
     /**
      * 分页查询附件
@@ -116,8 +114,13 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     @Transactional
     @Override
     public Map<String, Object> upload(MultipartFile file, Long groupId, String filename, boolean thumb, boolean checkImg) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        String fileType = FileUtil.getFileType(extension);
         try {
             if (checkImg) {
+                if (!fileType.equals("pic")) {
+                    throw new ApiException("文件类型不匹配");
+                }
                 // 图片内容安全检测
                 uploadImageCheck(file);
             }
@@ -125,7 +128,6 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             OssProperties ossProperties = getOssProperties();
             SysAttachmentGroup group = sysAttachmentGroupService.getUploadGroupById(groupId);
 
-            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
             if (StrUtil.isBlank(filename)) {
                 filename = UUID.randomUUID().toString().replace("-", "")
                         + StringPool.DOT + extension;
@@ -148,7 +150,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             String thumbUrl = null;
             // 上传缩略图
             if (thumb) {
-                String thumbFilePath = StringPool.SLASH + filename + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                String thumbFilePath = filename + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
                 byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
                 ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
                 thumbUrl = ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath;
@@ -228,7 +230,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      * @param file 上传文件
      */
     private void uploadImageCheck(MultipartFile file) {
-        byte[] bytes = new byte[0];
+        byte[] bytes;
         try {
             bytes = ThumbUtil.compressPicForScale(file.getBytes(), 50);
         } catch (IOException e) {
@@ -240,18 +242,12 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         Integer loginType = SecurityUtil.getUser().getLoginType();
         // 抖音内容安全检测
         if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
-            ApiResult<String> stringApiResult = douyinProvider.checkImageData(DouyinContentCheckDTO.builder()
-                    .appId(appId)
-                    .imageData(base64Img)
-                    .build());
-            if (stringApiResult.successful()) {
-                if (StrUtil.isNotBlank(stringApiResult.getData())) {
-                    log.error("内容安全检测: {}", stringApiResult.getData());
-                    // return ApiResult.fail("图片违规,请重新上传");
-                    throw new ApiException("图片违规,请重新上传");
-                }
-            } else {
-                throw new ApiException(stringApiResult.getMessage());
+            DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+            String result = douyinAppletService.checkImageData(base64Img);
+            if (StrUtil.isNotBlank(result)) {
+                log.error("内容安全检测: {}", result);
+                // return ApiResult.fail("图片违规,请重新上传");
+                throw new ApiException("图片违规,请重新上传");
             }
         }
     }

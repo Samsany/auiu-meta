@@ -25,7 +25,18 @@ public class UserGalleryProvider implements IUserGalleryProvider{
      * @return ApiResult
      */
     @Override
-    public ApiResult<Long> countUserGallery(Long userId) {
-        return ApiResult.data(galleryService.countUserGalleryByUId(userId));
+    public ApiResult<Long> countPublishUserGallery(Long userId) {
+        return ApiResult.data(galleryService.countPublishUserGalleryByUId(userId));
+    }
+
+    /**
+     * 获取用户作品数量
+     *
+     * @param userId 用户ID
+     * @return ApiResult
+     */
+    @Override
+    public ApiResult<Long> countUserReceivedLikeNum(Long userId) {
+        return ApiResult.data(galleryService.countUserReceivedLikeNum(userId));
     }
 }

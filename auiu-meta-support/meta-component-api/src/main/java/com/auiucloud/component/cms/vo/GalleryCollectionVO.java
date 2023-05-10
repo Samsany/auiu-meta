@@ -37,6 +37,14 @@ public class GalleryCollectionVO implements Serializable {
      * 创建人ID
      */
     private Long uId;
+    /**
+     * 创建人昵称
+     */
+    private String nickname;
+    /**
+     * 创建人头像
+     */
+    private String avatar;
 
     /**
      * 标题
@@ -90,11 +98,41 @@ public class GalleryCollectionVO implements Serializable {
      * 备注
      */
     @Xss(message = "描述不能包含脚本字符")
-    @Size(min = 0, max = 500, message = "描述长度在0~500个字符之间")
+    @Size(min = 0, max = 150, message = "描述长度在0~150个字符之间")
     private String remark;
 
     /**
      * 是否选中，默认 false
      */
+    @Builder.Default
     private Boolean checked = false;
+
+    /**
+     * 是否收藏，默认false
+     */
+    @Builder.Default
+    private Boolean isFavorite = false;
+    /**
+     * 收藏数
+     */
+    private Integer favoriteNum = 0;
+    /**
+     * 收藏列表
+     */
+    private List<UserGalleryFavoriteVO> favoriteList;
+
+    /**
+     * 是否点赞，默认false
+     */
+    @Builder.Default
+    private Boolean isLike = false;
+    /**
+     * 点赞数
+     */
+    @Builder.Default
+    private Integer likeNum = 0;
+    /**
+     * 点赞列表
+     */
+    private List<UserGalleryLikeVO> likeList;
 }

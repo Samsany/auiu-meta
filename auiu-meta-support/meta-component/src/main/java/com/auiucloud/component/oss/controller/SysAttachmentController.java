@@ -43,11 +43,21 @@ public class SysAttachmentController {
     @Operation(summary = "附件上传")
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
     public ApiResult<?> upload(@RequestParam("file") MultipartFile file,
-                               @RequestParam(required = false, defaultValue = "0") Long groupId,
+                               @RequestParam(required = false, defaultValue = "1000") Long groupId,
                                @RequestParam(required = false) String filename
 
     ) {
         return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, false, false));
+    }
+
+    @Log(value = "图片上传")
+    @Operation(summary = "图片上传")
+    @PostMapping(value = "/upload/image", consumes = {"multipart/form-data"})
+    public ApiResult<?> uploadImage(@RequestParam("file") MultipartFile file,
+                                    @RequestParam(required = false, defaultValue = "1000") Long groupId,
+                                    @RequestParam(required = false) String filename,
+                                    @RequestParam(required = false, defaultValue = "false") Boolean thumb) {
+        return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, thumb, true));
     }
 
     @Log(value = "删除文件")

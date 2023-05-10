@@ -1,0 +1,94 @@
+server:
+  port: 24000
+  servlet:
+    context-path: /meta-job-admin
+
+spring:
+  application:
+    name: ${artifactId}
+
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+  #数据源配置
+  datasource:
+    url: jdbc:mysql://124.71.153.222:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
+    username: ${meta.datasource.username}
+    password: ${meta.datasource.password}
+    driver-class-name: ${meta.datasource.driver-class-name}
+    ### datasource-pool
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 10000
+      idle-timeout: 30000
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      minimum-idle: 10
+      pool-name: HikariCP
+      validation-timeout: 1000
+
+  #邮箱配置
+  mail:
+    host: smtp.qq.com
+    from: xxx@qq.com
+    username: 1451691457@qq.com
+    password: gfwgshbqdhalhfeb
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+          # 表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误
+          debug: true
+          starttls:
+            enable: true
+            required: true
+
+  #freemarker配置
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+
+### actuator
+management:
+  health:
+    mail:
+      enabled: false
+  server:
+    base-path: /actuator
+### mybatis
+mybatis:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+
+#XXL-job配置
+xxl:
+  job:
+    login:
+      username: admin
+      password: 123456
+    accessToken:
+    i18n: zh_CN
+    #触发池
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100
+    logretentiondays: 30
+
+## 配置日志显示在spring boot admin
+#logging:
+#  file:
+#    name: logs/app/auiu-meta-admin/auiu-meta-admin.log

@@ -1,11 +1,11 @@
 package com.auiucloud.auth.extension.wechat;
 
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.auth.model.AppletAuthCallback;
-import com.auiucloud.auth.model.AppletUserInfo;
 import com.auiucloud.auth.service.AppletAuthRequest;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
+import com.auiucloud.core.douyin.model.AppletAuthCallback;
+import com.auiucloud.core.douyin.model.AppletUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;

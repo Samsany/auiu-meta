@@ -1,20 +1,15 @@
 package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.lang.ObjectId;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
-import com.auiucloud.admin.domain.SysUser;
+import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.feign.ISysUserProvider;
-import com.auiucloud.admin.vo.UserInfoVO;
+import com.auiucloud.admin.modules.system.vo.UserInfoVO;
 import com.auiucloud.auth.domain.MetaClientDetails;
 import com.auiucloud.auth.enums.Oauth2ClientTypeEnum;
-import com.auiucloud.auth.model.AppletUserInfo;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.enums.IBaseEnum;
@@ -22,12 +17,10 @@ import com.auiucloud.core.common.exception.TokenException;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.security.model.MetaUser;
 import com.auiucloud.core.security.service.MetaUserDetailService;
-import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -36,7 +29,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 

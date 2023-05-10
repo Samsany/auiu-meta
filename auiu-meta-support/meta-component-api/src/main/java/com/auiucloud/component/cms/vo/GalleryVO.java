@@ -226,5 +226,5 @@ public class GalleryVO implements Serializable {
     /**
      * 收藏列表
      */
-    private List<UserGalleryLikeVO> favoriteList;
+    private List<UserGalleryFavoriteVO> favoriteList;
 }

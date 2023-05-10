@@ -92,6 +92,7 @@
         <aws-java-sdk-s3.version>1.12.423</aws-java-sdk-s3.version>
         <weixin-java-miniapp.version>4.4.0</weixin-java-miniapp.version>
         <thumbnailator.version>0.4.19</thumbnailator.version>
+        <xxl-job.version>2.3.1</xxl-job.version>
     </properties>
 
     <dependencyManagement>
@@ -129,12 +130,22 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-applet</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-file</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-rule</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-job</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
@@ -150,6 +161,16 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>auiu-meta-rabbit</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-rocketmq</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-kafka</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
             <dependency>
@@ -423,6 +444,12 @@
                 <groupId>net.coobird</groupId>
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
+            </dependency>
+            <!--xxl job-->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
             </dependency>
 
             <dependency>

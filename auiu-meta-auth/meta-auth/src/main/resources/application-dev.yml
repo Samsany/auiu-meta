@@ -19,23 +19,6 @@ meta:
       - "/oauth/token"
       - "/login/*"
 
-  applets:
-    douyin:
-      configs:
-        - appId: tt04fc72419bc33a4701
-          secret: 4e051869e9a20a0c5396bbd115648400ba136925  # 抖音小程序的Secret
-          token:  # 微信小程序消息服务器配置的token
-          aesKey:  # 微信小程序消息服务器配置的EncodingAESKey
-          msgDataFormat: JSON
-
-    wechat:
-      configs:
-        - appId: wxc8882dc3a955e7fe
-          secret: aad2693eb292fe9bd476a9f6e7345fb8  # 微信小程序的Secret
-          token:  # 微信小程序消息服务器配置的token
-          aesKey:  # 微信小程序消息服务器配置的EncodingAESKey
-          msgDataFormat: JSON
-
   seata:
     application-id: ${spring.application.name}
     tx-service-group: default_tx_group

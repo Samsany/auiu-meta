@@ -16,10 +16,14 @@ import java.util.List;
 */
 public interface IGalleryCollectionService extends IService<GalleryCollection> {
 
+    List<GalleryCollectionVO> listGalleryCollectionVOByCIds(List<Long> cIds);
+
     List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection);
 
     PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection);
+    PageUtils selectGalleryCollectionUserHomePage(Search search, GalleryCollection galleryCollection);
 
+    GalleryCollectionVO selectGalleryCollectionById(Long cId);
     GalleryCollectionVO getGalleryCollect(Long collectId);
 
     boolean checkGalleryCollectNameExist(GalleryCollection galleryCollection);

@@ -15,9 +15,11 @@ import java.util.List;
 */
 public interface UserGalleryLikeMapper extends BaseMapper<UserGalleryLike> {
 
-    List<UserGalleryLikeVO> selectGalleryLikeVOListByGalleryIds(List<Long> galleryIds);
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByPostIds2Type(@Param("postIds") List<Long> postIds, @Param("type") Integer type);
 
-    List<UserGalleryLikeVO> selectGalleryLikeVOListByGalleryId(@Param("galleryId") Long galleryId);
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByPostId2Type(@Param("postId") Long postId, @Param("type") Integer type);
+
+    Long countUserReceivedLikeNum(@Param("userId") Long userId);
 }
 
 

@@ -54,7 +54,7 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
         LambdaQueryWrapper<PicTag> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(PicTag::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
         queryWrapper.orderByDesc(PicTag::getSort);
-        queryWrapper.orderByDesc(PicTag::getCreateTime);
+        queryWrapper.orderByAsc(PicTag::getCreateTime);
         List<PicTag> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
 
         if (type.equals(CommonConstant.STATUS_DISABLE_VALUE)) {

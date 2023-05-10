@@ -210,6 +210,34 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
+     * 查询我的点赞列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/my-like/page")
+    @Operation(summary = "查询我的点赞列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> myLikeGalleryPage(Search search) {
+        return ApiResult.data(galleryService.selectMyLikeGalleryPage(search));
+    }
+
+    /**
+     * 查询我的收藏列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/my-favorite/page")
+    @Operation(summary = "查询我的收藏列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> myFavoriteGalleryPage(Search search) {
+        return ApiResult.data(galleryService.selectMyFavoriteGalleryPage(search));
+    }
+
+    /**
      * 点赞/取消点赞 作品/合集
      */
     @Log(value = "作品")
@@ -217,10 +245,24 @@ public class GalleryApiController extends BaseController {
     @Operation(summary = "点赞/取消点赞")
     @Parameters({
             @Parameter(name = "postId", description = "帖子ID", in = ParameterIn.PATH, required = true),
-            @Parameter(name = "type", description = "帖子类型", in = ParameterIn.QUERY, required = true),
+            @Parameter(name = "type", description = "帖子类型 0-作品 1-合集", in = ParameterIn.QUERY, required = true),
     })
     public ApiResult<?> likeGallery(@PathVariable Long postId, @RequestParam Integer type) {
         return ApiResult.condition(galleryService.likeGallery(postId, type));
+    }
+
+    /**
+     * 收藏/取消收藏 作品/合集
+     */
+    @Log(value = "作品")
+    @GetMapping("/favorite/{postId}")
+    @Operation(summary = "收藏/取消收藏")
+    @Parameters({
+            @Parameter(name = "postId", description = "帖子ID", in = ParameterIn.PATH, required = true),
+            @Parameter(name = "type", description = "帖子类型 0-作品 1-合集", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> favoriteGallery(@PathVariable Long postId, @RequestParam Integer type) {
+        return ApiResult.condition(galleryService.favoriteGallery(postId, type));
     }
 
     /**

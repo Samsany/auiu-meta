@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      * @param ex 自定义BaseException异常类型
      * @return Result
      */
-    @ExceptionHandler
+    @ExceptionHandler(ApiException.class)
     // @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResult<?> handleException(ApiException ex) {
         log.error("程序异常：" + ex.toString());
@@ -54,7 +54,22 @@ public class GlobalExceptionHandler {
     public ApiResult<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("MethodArgumentNotValidException:", e);
         List<FieldError> allErrors = e.getBindingResult().getFieldErrors();
-        String message = allErrors.stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(";"));
+        String message = allErrors.parallelStream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(";"));
+        return ApiResult.fail(ResultCode.USER_ERROR_A0421.getCode(), message);
+    }
+
+    /**
+     * 方法参数校验 (以form-data形式传参)
+     */
+    @ExceptionHandler(BindException.class)
+    public ApiResult<?> bindExceptionHandler(BindException e) {
+        log.error("MethodArgumentNotValidException:", e);
+        List<FieldError> allErrors = e.getBindingResult().getFieldErrors();
+        String message = allErrors.parallelStream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .collect(Collectors.joining(";"));
         return ApiResult.fail(ResultCode.USER_ERROR_A0421.getCode(), message);
     }
 
@@ -64,7 +79,7 @@ public class GlobalExceptionHandler {
      * @param ex 自定义TokenException异常类型
      * @return Result
      */
-    @ExceptionHandler
+    @ExceptionHandler(TokenException.class)
     // @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiResult<?> handleException(TokenException ex) {
         log.error("程序异常==>errorCode:{}, exception:{}", HttpStatus.UNAUTHORIZED.value(), ex.getMessage());

@@ -61,15 +61,6 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean
-    @ConditionalOnProperty(value = "spring.cloud.nacos.discovery.watch.enabled", matchIfMissing = true)
-    public NacosWatch nacosWatch(NacosServiceManager nacosServiceManager,
-                                 NacosDiscoveryProperties properties,
-                                 ObjectProvider<ThreadPoolTaskScheduler> taskScheduler) {
-        return new NacosWatch(nacosServiceManager, properties, taskScheduler);
-    }
-
-    @Bean
     public CorsWebFilter corsFilter() {
 
         // 1.添加CORS配置信息
