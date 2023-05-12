@@ -198,6 +198,11 @@
                 <artifactId>auiu-meta-feign</artifactId>
                 <version>${auiumeta.core.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>auiu-meta-idempotent</artifactId>
+                <version>${auiumeta.core.version}</version>
+            </dependency>
 
             <!-- 微服务应用包 -->
             <dependency>

@@ -28,6 +28,23 @@ public class UserTaskEnums {
     }
 
     /**
+     * 指定用户类型
+     */
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public enum UserTaskUserTypeEnum implements IBaseEnum<Integer> {
+
+        ALL(-1, "不限"),
+        ORDINARY_USER(0, "普通用户"),
+        MEMBER_USER(1, "会员用户"),
+        ;
+
+        private Integer value;
+        private String label;
+    }
+
+    /**
      * 任务标识
      */
     @Getter
@@ -36,6 +53,7 @@ public class UserTaskEnums {
     public enum UserTaskTagEnum implements IBaseEnum<String> {
 
         WATCH_MOTIVATIONAL_VIDEO("100001", "观看激励视频"),
+        USER_SIGN("100002", "签到"),
         ;
 
         private String value;

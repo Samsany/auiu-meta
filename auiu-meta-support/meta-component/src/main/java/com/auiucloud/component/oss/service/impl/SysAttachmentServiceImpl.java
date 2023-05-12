@@ -9,6 +9,7 @@ import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
+import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.exception.ApiException;
@@ -247,7 +248,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             if (StrUtil.isNotBlank(result)) {
                 log.error("内容安全检测: {}", result);
                 // return ApiResult.fail("图片违规,请重新上传");
-                throw new ApiException("图片违规,请重新上传");
+                throw new ApiException(ResultCode.USER_ERROR_A0432);
             }
         }
     }

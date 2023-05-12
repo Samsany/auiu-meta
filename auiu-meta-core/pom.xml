@@ -55,6 +55,7 @@
         <module>auiu-meta-sentinel</module>
         <module>auiu-meta-feign</module>
         <module>auiu-meta-log</module>
+        <module>auiu-meta-idempotent</module>
     </modules>
 
     <properties>

@@ -2,6 +2,7 @@ package com.auiucloud.ums.service;
 
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.ums.domain.UserTask;
+import com.auiucloud.ums.dto.UserTaskCompleteDTO;
 import com.auiucloud.ums.vo.UserTaskVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -17,4 +18,10 @@ public interface IUserTaskService extends IService<UserTask> {
     List<UserTask> slelectUserTaskList(Search search, UserTask userTask);
 
     List<UserTaskVO> listUserTask(UserTask userTask);
+
+    UserTaskVO getUserTaskById(Long taskId);
+
+    boolean completeUserTask(UserTaskCompleteDTO taskDTO);
+
+    boolean completeUserTask(Long taskId);
 }

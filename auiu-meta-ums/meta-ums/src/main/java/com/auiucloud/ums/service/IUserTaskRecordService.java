@@ -26,4 +26,6 @@ public interface IUserTaskRecordService extends IService<UserTaskRecord> {
     List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId2Year(Long taskId, Long userId);
 
     List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId(Long taskId, Long userId);
+
+    List<UserTaskRecord> selectUserTaskRecordListByTaskId2UserId2Daily(Long taskId, Long userId, String taskCycle);
 }

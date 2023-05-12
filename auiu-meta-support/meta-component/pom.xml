@@ -52,6 +52,10 @@
         </dependency>
         <dependency>
             <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-seata</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-log</artifactId>
         </dependency>
         <dependency>

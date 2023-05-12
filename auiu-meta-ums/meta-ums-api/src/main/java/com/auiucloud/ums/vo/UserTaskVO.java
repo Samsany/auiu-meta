@@ -44,9 +44,19 @@ public class UserTaskVO implements Serializable {
     private String path;
 
     /**
+     * 操作按钮文字
+     */
+    private String btnText;
+
+    /**
      * 任务类型(0-新手任务；1-日常任务 2-活动任务 3-会员专享任务)
      */
     private Integer type;
+
+    /**
+     * 操作类型
+     */
+    private Integer actionType;
 
     /**
      * 指定用户等级
@@ -69,9 +79,14 @@ public class UserTaskVO implements Serializable {
     private Integer num;
 
     /**
-     * 任务达成次数
+     * 任务需完成次数
      */
     private Integer finishNum;
+
+    /**
+     * 任务完成次数
+     */
+    private Integer successNum;
 
     /**
      * 任务标识

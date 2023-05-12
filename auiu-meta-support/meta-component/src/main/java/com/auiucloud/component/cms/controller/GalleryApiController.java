@@ -278,4 +278,24 @@ public class GalleryApiController extends BaseController {
         return ApiResult.data(galleryService.removeGalleryByIds(ids));
     }
 
+    @Log(value = "用户")
+    @GetMapping("/check-user-point-quantity")
+    @Operation(summary = "校验用户下载作品积分")
+    @Parameters({
+            @Parameter(name = "id", description = "作品ID", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> checkUserPointQuantity(@RequestParam Long id) {
+        return ApiResult.data(galleryService.checkUserPointQuantity(id));
+    }
+
+    @Log(value = "用户")
+    @GetMapping("/download")
+    @Operation(summary = "下载作品")
+    @Parameters({
+            @Parameter(name = "id", description = "作品ID", in = ParameterIn.QUERY, required = true),
+    })
+    public ApiResult<?> downLoadUserGallery(@RequestParam Long id) {
+        return galleryService.downLoadUserGallery(id);
+    }
+
 }

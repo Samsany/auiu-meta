@@ -141,16 +141,14 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
                 if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
                     List<DouyinTextAntidirtResult.Predicts> predicts = datum.getPredicts();
                     for (DouyinTextAntidirtResult.Predicts predict : predicts) {
-                        if (predict.getHit()) {
-                            return false;
-                        }
+                        return predict.getHit();
                     }
                 }
             }
         } catch (RestClientException e) {
             throw new ApiException("抖音内容安全检测接口异常，验证失败");
         }
-        return true;
+        return false;
     }
 
     @Override

@@ -25,14 +25,24 @@ public class ProviderConstant {
      * 远程调用公共前缀
      */
     public final String PROVIDER = "/provider";
+
     /**
-     * 根据username查询用户信息
+     * 日志配置
+     */
+    public final String PROVIDER_LOG_SET = PROVIDER + "/log/set";
+
+    /**
+     * 根据用户ID列表 查询用户信息
      */
     public final String PROVIDER_USER_LIST = PROVIDER + "/user/list";
     /**
      * 根据username查询用户信息
      */
     public final String PROVIDER_USER_USERNAME = PROVIDER + "/user/username";
+    /**
+     * 根据userId查询用户信息
+     */
+    public final String PROVIDER_SIMPLE_USER_ID = PROVIDER + "/user/simple/userid";
     /**
      * 根据手机号查询用户信息
      */
@@ -45,16 +55,12 @@ public class ProviderConstant {
      * 根据uuid + source查询用户信息
      */
     public final String PROVIDER_USER_SOCIAL = PROVIDER + "/user/social";
-
-    /**
-     * 日志配置
-     */
-    public final String PROVIDER_LOG_SET = PROVIDER + "/log/set";
-
     /**
      * 第三方用户注册
      */
     public final String PROVIDER_USER_REGISTER_SOCIAL = PROVIDER + "/user/register/social";
+    // 用户积分扣减
+    public final String PROVIDER_USER_DECREASE_POINT = PROVIDER + "/user/point/decrease";
 
     /**
      * 抖音内容安全检测

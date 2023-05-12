@@ -88,4 +88,7 @@ public interface IGalleryService extends IService<Gallery> {
     Long countGalleryNumByCId(Long id);
     Long countPublishedGalleryNumByCId(Long id);
 
+    boolean checkUserPointQuantity(Long id);
+
+    ApiResult<?> downLoadUserGallery(Long id);
 }

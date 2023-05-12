@@ -8,9 +8,8 @@ import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.ums.domain.UserTask;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
-import com.auiucloud.ums.service.IMemberService;
-import com.auiucloud.ums.service.IUserFollowerService;
-import com.auiucloud.ums.service.IUserTaskService;
+import com.auiucloud.ums.service.*;
+import com.auiucloud.ums.vo.UserFeedbackVO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -36,6 +35,8 @@ public class MemberApiController extends BaseController {
     private final IMemberService memberService;
     private final IUserFollowerService userFollowerService;
     private final IUserTaskService userTaskService;
+    private final IUserIntegralRecordService userIntegralRecordService;
+    private final IUserFeedbackService userFeedbackService;
 
     /**
      * 通过邀请码查询用户详情
@@ -107,7 +108,39 @@ public class MemberApiController extends BaseController {
     @Log(value = "用户")
     @GetMapping("/task/list")
     @Operation(summary = "查询任务列表")
-    public ApiResult<?> listUserTask(@RequestParam UserTask userTask) {
+    public ApiResult<?> listUserTask(UserTask userTask) {
         return ApiResult.data(userTaskService.listUserTask(userTask));
+    }
+
+    /**
+     * 完成任务
+     */
+    @Log(value = "用户")
+    @GetMapping("/task/complete/{taskId}")
+    @Operation(summary = "完成任务")
+    public ApiResult<?> completeUserTask(@PathVariable Long taskId) {
+        return ApiResult.condition(userTaskService.completeUserTask(taskId));
+    }
+
+    @Log(value = "用户")
+    @GetMapping("/point/receive/page")
+    @Operation(summary = "我的积分领取列表")
+    public ApiResult<?> userPointReceivePage(Search search) {
+        return ApiResult.data(userIntegralRecordService.selectUserPointReceivePage(search));
+    }
+
+    @Log(value = "用户")
+    @GetMapping("/point/consumption/page")
+    @Operation(summary = "我的积分消耗列表")
+    public ApiResult<?> userPointConsumptionPage(Search search) {
+        return ApiResult.data(userIntegralRecordService.selectUserPointConsumptionPage(search));
+    }
+
+
+    @Log(value = "用户")
+    @PostMapping("/submit/feedback")
+    @Operation(summary = "用户提交使用反馈")
+    public ApiResult<?> userSubmitFeedback(@Validated @RequestBody UserFeedbackVO feedbackVO) {
+        return ApiResult.condition(userFeedbackService.submitFeedback(feedbackVO));
     }
 }

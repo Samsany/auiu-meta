@@ -2,10 +2,7 @@ package com.auiucloud.component.cms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.auiucloud.component.cms.domain.Gallery;
-import com.auiucloud.component.cms.domain.GalleryCollection;
-import com.auiucloud.component.cms.domain.UserGalleryCollection;
-import com.auiucloud.component.cms.domain.UserGalleryLike;
+import com.auiucloud.component.cms.domain.*;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.GalleryMapper;
@@ -24,13 +21,17 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.douyin.config.AppletsConfiguration;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
+import com.auiucloud.ums.dto.UserPointChangeDTO;
+import com.auiucloud.ums.enums.UserPointEnums;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -55,6 +56,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         implements IGalleryService {
+
+    private final IGalleryDownloadRecordService galleryDownloadRecordService;
 
     @Lazy
     @Resource
@@ -190,6 +193,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
 
         return new PageUtils(page);
     }
+
     @Override
     public PageUtils selectMyFavoriteGalleryPage(Search search) {
         // 查询我的点赞列表
@@ -324,7 +328,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                         galleryVO.getRemark()
                 ));
                 if (resultList.size() > 0) {
-                    return ApiResult.fail("内容违规, 请重新输入");
+                    return ApiResult.fail(ResultCode.USER_ERROR_A0431);
                 }
             }
         } catch (Exception e) {
@@ -452,6 +456,52 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.eq(Gallery::getCollectionId, cId);
         queryWrapper.eq(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
         return this.count(queryWrapper);
+    }
+
+    @GlobalTransactional
+    @Override
+    public ApiResult<?> downLoadUserGallery(Long id) {
+        Long userId = SecurityUtil.getUserId();
+        // 扣减用户积分
+        Gallery gallery = this.getById(id);
+        ApiResult<Boolean> apiResult = memberProvider.decreaseUserPoint(UserPointChangeDTO.builder()
+                .userId(userId)
+                .integral(gallery.getDownloadIntegral())
+                .changeType(UserPointEnums.ChangeTypeEnum.DECREASE.getValue())
+                .build());
+        if (apiResult.successful() && apiResult.getData()) {
+            // 增加作品下载次数
+            Long downloadTimes = gallery.getDownloadTimes();
+            gallery.setDownloadTimes(++downloadTimes);
+            this.update(Wrappers.<Gallery>lambdaUpdate()
+                    .set(Gallery::getDownloadTimes, downloadTimes)
+                    .eq(Gallery::getId, gallery.getId()));
+
+            // 构建用户下载记录
+            galleryDownloadRecordService.save(GalleryDownloadRecord.builder()
+                            .uId(userId)
+                            .gId(gallery.getId())
+                            .downloadIntegral(gallery.getDownloadIntegral())
+                    .build());
+        }
+
+        return apiResult;
+    }
+
+    @Override
+    public boolean checkUserPointQuantity(Long id) {
+        Gallery gallery = this.getById(id);
+        if (ObjectUtil.isNotNull(gallery)) {
+            // 获取用户信息
+            ApiResult<UserInfoVO> simpleUser = memberProvider.getSimpleUserById(SecurityUtil.getUserId());
+            if (simpleUser.successful() && simpleUser.getData() != null) {
+                UserInfoVO data = simpleUser.getData();
+                return data.getIntegral() >= gallery.getDownloadIntegral();
+            }
+            throw new ApiException(ResultCode.USER_ERROR_A0230);
+        }
+
+        throw new ApiException(ResultCode.USER_ERROR_A0500);
     }
 
     @Transactional(rollbackFor = Exception.class)

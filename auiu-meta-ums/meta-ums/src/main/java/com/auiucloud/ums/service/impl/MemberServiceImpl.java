@@ -1,7 +1,6 @@
 package com.auiucloud.ums.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -23,13 +22,17 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.douyin.config.AppletsConfiguration;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.ums.domain.Member;
+import com.auiucloud.ums.domain.UserIntegralRecord;
 import com.auiucloud.ums.domain.UserLevelRecord;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
+import com.auiucloud.ums.dto.UserPointChangeDTO;
+import com.auiucloud.ums.enums.UserPointEnums;
 import com.auiucloud.ums.mapper.MemberMapper;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.service.IUserFollowerService;
+import com.auiucloud.ums.service.IUserIntegralRecordService;
 import com.auiucloud.ums.service.IUserLevelService;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
@@ -62,6 +65,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     private final IUserFollowerService userFollowerService;
     private final IUserGalleryProvider userGalleryProvider;
     private final IUserLevelService userLevelService;
+    private final IUserIntegralRecordService userIntegralRecordService;
 
     /**
      * 会员分页列表
@@ -109,6 +113,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         }
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public UserInfoVO getSimpleUserById(Long userId) {
+        Member member = this.getById(userId);
+        UserInfoVO userInfoVO = new UserInfoVO();
+        BeanUtils.copyProperties(member, userInfoVO);
+
+        return userInfoVO;
     }
 
     @Override
@@ -294,7 +307,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
                         userInfoDTO.getRemark()
                 ));
                 if (resultList.size() > 0) {
-                    return ApiResult.fail("内容违规, 请重新输入");
+                    return ApiResult.fail(ResultCode.USER_ERROR_A0431);
                 }
             }
         } catch (Exception e) {
@@ -325,6 +338,47 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         queryWrapper.set(Member::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
         queryWrapper.eq(Member::getId, updatePasswordDTO.getId());
         return this.update(queryWrapper);
+    }
+
+    @Override
+    public boolean increaseUserPoint(Long userId, Integer integration) {
+        return baseMapper.increaseUserPoint(userId, integration) > 0;
+    }
+
+    @Override
+    public boolean decreaseUserPoint(UserPointChangeDTO pointChangeDTO) {
+        // 获取用户信息
+        Long userId = pointChangeDTO.getUserId();
+        Integer integral = pointChangeDTO.getIntegral();
+        Member member = this.getById(userId);
+        Integer oldIntegral = member.getIntegral();
+        if (integral > oldIntegral) {
+            throw new ApiException("用户积分不足");
+        }
+        int i = baseMapper.decreaseUserPoint(userId, integral);
+        if (i > 0) {
+            // 保存用户积分使用记录
+            UserIntegralRecord build = UserIntegralRecord.builder()
+                    .uId(userId)
+                    .title(UserPointEnums.ConsumptionEnum.DOWNLOAD_GALLERY.getLabel())
+                    .integral(integral)
+                    .balance(oldIntegral + integral)
+                    .type(UserPointEnums.ChangeTypeEnum.DECREASE.getValue())
+                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                    .frozenTime(0)
+                    .thawTime(LocalDateTime.now())
+                    .build();
+            userIntegralRecordService.save(build);
+        }
+
+        return i > 0;
+    }
+
+    @Override
+    public boolean checkUserPointQuantity(Integer point) {
+        Member member = this.getById(SecurityUtil.getUserId());
+        Integer integral = member.getIntegral();
+        return integral >= point;
     }
 
     @Override

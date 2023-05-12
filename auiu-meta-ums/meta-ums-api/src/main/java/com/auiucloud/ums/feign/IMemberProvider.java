@@ -4,7 +4,9 @@ import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
 import com.auiucloud.ums.dto.MemberInfoDTO;
+import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.vo.MemberInfoVO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +42,15 @@ public interface IMemberProvider {
     ApiResult<MemberInfoVO> getUserByUsername(@RequestParam String username);
 
     /**
+     * 根据用户Id查询
+     *
+     * @param userId 用户ID
+     * @return ApiResult
+     */
+    @GetMapping(ProviderConstant.PROVIDER_SIMPLE_USER_ID)
+    ApiResult<UserInfoVO> getSimpleUserById(@RequestParam Long userId);
+
+    /**
      * 根据用户名查询
      *
      * @param openId 用户唯一标识
@@ -58,4 +69,12 @@ public interface IMemberProvider {
     @PostMapping(ProviderConstant.PROVIDER_USER_REGISTER_SOCIAL)
     ApiResult<MemberInfoDTO> registerMemberBySocial(@RequestBody MemberInfoDTO memberInfoDTO);
 
+    /**
+     * 用户积分扣减
+     *
+     * @param userPointChangeDTO 用户信息
+     * @return ApiResult
+     */
+    @PostMapping(ProviderConstant.PROVIDER_USER_DECREASE_POINT)
+    ApiResult<Boolean> decreaseUserPoint(@RequestBody UserPointChangeDTO userPointChangeDTO);
 }

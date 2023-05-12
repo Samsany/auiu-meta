@@ -30,18 +30,12 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
         List<UserTaskRecord> userTaskRecords = new ArrayList<>();
         UserTaskEnums.UserTaskTypeEnum enumByValue = IBaseEnum.getEnumByValue(task.getType(), UserTaskEnums.UserTaskTypeEnum.class);
         switch (enumByValue) {
-            case NEW_USER_TASK -> {
-                // 新用户任务
-                userTaskRecords = this.selectUserTaskRecordListByTaskId2UserId(task.getId(), userId);
-            }
-            case DAY_TASK -> {
-                // 日常任务
-                this.selectUserTaskRecordListByTaskId2UserId2Daily(userTaskRecords, task.getId(), userId, task.getTaskCycle());
-            }
-            case ACTIVITY_TASK -> {
-                // 活动任务
-                userTaskRecords = selectUserTaskRecordListByTaskId2UserId(task.getId(), userId);
-            }
+            case NEW_USER_TASK -> // 新用户任务
+                    userTaskRecords = this.selectUserTaskRecordListByTaskId2UserId(task.getId(), userId);
+            case DAY_TASK -> // 日常任务
+                    userTaskRecords = this.selectUserTaskRecordListByTaskId2UserId2Daily(task.getId(), userId, task.getTaskCycle());
+            case ACTIVITY_TASK -> // 活动任务
+                    userTaskRecords = selectUserTaskRecordListByTaskId2UserId(task.getId(), userId);
         }
 
         return userTaskRecords;
@@ -50,8 +44,10 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     @Override
     public List<UserTaskRecord> selectUserTaskRecordListByTaskId2UserId(Long taskId, Long userId) {
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
-                .eq(UserTaskRecord::getTaskId, taskId))).orElse(Collections.emptyList());
+                        .eq(UserTaskRecord::getUId, userId)
+                        .eq(UserTaskRecord::getTaskId, taskId)
+                        .orderByDesc(UserTaskRecord::getCreateBy)
+                )).orElse(Collections.emptyList());
     }
 
     @Override
@@ -61,6 +57,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
+                .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
     }
 
@@ -71,6 +68,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
+                .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
     }
 
@@ -81,6 +79,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("YEARWEEK(date_format(create_time,'%Y-%m-%d'))=YEARWEEK(now())")
+                .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
     }
 
@@ -91,6 +90,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("and YEAR(create_time)=YEAR(now())")
+                .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
     }
 
@@ -100,11 +100,14 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
                 .eq(UserTaskRecord::getUId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
+                .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
     }
 
-    private void selectUserTaskRecordListByTaskId2UserId2Daily(List<UserTaskRecord> userTaskRecords, Long taskId, Long userId, String taskCycle) {
+    @Override
+    public List<UserTaskRecord> selectUserTaskRecordListByTaskId2UserId2Daily(Long taskId, Long userId, String taskCycle) {
 
+        List<UserTaskRecord> userTaskRecords = new ArrayList<>();
         UserTaskEnums.UserTaskCycleEnum enumByValue = IBaseEnum.getEnumByValue(taskCycle, UserTaskEnums.UserTaskCycleEnum.class);
         switch (enumByValue) {
             case DAY -> {
@@ -132,6 +135,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 userTaskRecords.addAll(userTaskRecordList);
             }
         }
+
+        return userTaskRecords;
     }
 }
 

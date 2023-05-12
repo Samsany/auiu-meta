@@ -1,7 +1,11 @@
 package com.auiucloud.core.redis.core.impl;
 
 import com.auiucloud.core.redis.core.RedisService;
+import com.auiucloud.core.redis.utils.RedisLockUtil;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -25,6 +29,9 @@ public class RedisServiceImpl implements RedisService {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Resource
+    private RedisLockUtil redisLockUtil;
 
     @Override
     public Boolean set(String key, Object value) {
@@ -248,4 +255,18 @@ public class RedisServiceImpl implements RedisService {
         return redisTemplate.boundHashOps(key);
     }
 
+    /**
+     * 分布式锁
+     *
+     * @param key        分布式锁key
+     * @param expireTime 持有锁的最长时间 (redis过期时间) 秒为单位
+     * @return 返回获取锁状态 成功失败
+     */
+    public boolean tryLock(String key, int expireTime) {
+        return redisLockUtil.tryLock(key, "", expireTime);
+    }
+
+    public void unLock(String key) {
+        redisLockUtil.releaseLock(key, "");
+    }
 }

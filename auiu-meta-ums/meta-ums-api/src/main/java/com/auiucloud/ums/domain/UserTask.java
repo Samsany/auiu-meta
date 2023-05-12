@@ -52,9 +52,19 @@ public class UserTask extends BaseEntity {
     private String path;
 
     /**
+     * 操作按钮文字
+     */
+    private String btnText;
+
+    /**
      * 任务类型(0-新手任务；1-日常任务 2-活动任务)
      */
     private Integer type;
+
+    /**
+     * 操作类型
+     */
+    private Integer actionType;
 
     /**
      * 指定用户等级
@@ -62,7 +72,7 @@ public class UserTask extends BaseEntity {
     private Long userLevelId;
 
     /**
-     * 指定用户类型（0-普通用户 1-会员用户）
+     * 指定用户类型（-1-不限 0-普通用户 1-会员用户）
      */
     private Integer userType;
 

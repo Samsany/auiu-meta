@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auiucloud.ums.mapper.UserFeedbackMapper">
+
+    <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserFeedback">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="uId" column="u_id" jdbcType="BIGINT"/>
+            <result property="contactInformation" column="contact_information" jdbcType="VARCHAR"/>
+            <result property="feedType" column="feed_type" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="picUrls" column="pic_urls" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,u_id,contact_information,
+        feed_type,content,status,
+        pic_urls,create_time,update_time,
+        create_by,update_by,remark,
+        is_deleted
+    </sql>
+</mapper>

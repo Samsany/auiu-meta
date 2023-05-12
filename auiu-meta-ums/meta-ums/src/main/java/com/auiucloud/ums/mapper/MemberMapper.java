@@ -4,6 +4,7 @@ import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -22,6 +23,13 @@ public interface MemberMapper extends BaseMapper<Member> {
     List<UserInfoVO> selectUserAttentionList(@Param("userId") Long userId);
 
     List<UserInfoVO> selectUserFollowerList(@Param("userId") Long userId);
+
+    @Update("update ums_user set integral = integral + #{integral} where id = #{userId}")
+    int increaseUserPoint(@Param("userId") Long userId, @Param("integral") Integer integral);
+
+    @Update("update ums_user set integral = integral - #{integral} where id = #{userId}")
+    int decreaseUserPoint(@Param("userId") Long userId, @Param("integral") Integer integral);
+
 }
 
 

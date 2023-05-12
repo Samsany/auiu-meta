@@ -9,6 +9,7 @@ import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
+import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -34,6 +35,7 @@ public interface IMemberService extends IService<Member> {
 
     List<UserInfoVO> userRecommendList();
 
+    UserInfoVO getSimpleUserById(Long userId);
     UserInfoVO getUserInfoVOById(Long userId);
     UserInfoVO queryUserInfoVOByInvitationCode(String invitationCode);
 
@@ -84,4 +86,18 @@ public interface IMemberService extends IService<Member> {
     boolean checkHasUserByLevelId(Long levelId);
 
     boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
+
+    /**
+     * 增加积分
+     *
+     * @param userId 用户ID
+     * @param integration 增加的积分
+     * @return
+     */
+    boolean increaseUserPoint(Long userId, Integer integration);
+
+    boolean decreaseUserPoint(UserPointChangeDTO pointChangeDTO);
+
+    boolean checkUserPointQuantity(Integer point);
+
 }

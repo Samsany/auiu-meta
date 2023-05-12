@@ -210,4 +210,8 @@ public interface RedisService {
      * 批处理hash结构
      */
     BoundHashOperations<String, Object, Object> boundHashOps(String key);
+
+    boolean tryLock(String key, int lockWaitTime);
+
+    void unLock(String key);
 }
