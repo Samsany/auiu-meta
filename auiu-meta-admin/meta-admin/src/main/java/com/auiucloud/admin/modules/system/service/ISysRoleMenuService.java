@@ -20,6 +20,7 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @return List<SysRoleMenu>
      */
     List<SysRoleMenu> getRoleMenusByRoleId(Long roleId);
+
     /**
      * 根据角色ID查询菜单列表
      *

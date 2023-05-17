@@ -19,21 +19,21 @@ public class ImageCodeProcessor extends AbstractValidateCodeProcessor<Captcha> {
      */
     @Override
     protected void send(Captcha captcha) {
-//        if (response != null) {
-//            try {
-//                // 过滤 code expireTime
-//                captcha.setCode(null);
-//                captcha.setExpireTime(null);
-//                ResponseUtil.responseWriter(
-//                        response,
-//                        MediaType.APPLICATION_JSON_VALUE,
-//                        HttpStatus.OK.value(),
-//                        ApiResult.data(captcha)
-//                );
-//            } catch (IOException e) {
-//                throw new CaptchaException("验证码获取异常");
-//            }
-//        }
+        //        if (response != null) {
+        //            try {
+        //                // 过滤 code expireTime
+        //                captcha.setCode(null);
+        //                captcha.setExpireTime(null);
+        //                ResponseUtil.responseWriter(
+        //                        response,
+        //                        MediaType.APPLICATION_JSON_VALUE,
+        //                        HttpStatus.OK.value(),
+        //                        ApiResult.data(captcha)
+        //                );
+        //            } catch (IOException e) {
+        //                throw new CaptchaException("验证码获取异常");
+        //            }
+        //        }
     }
 
 }

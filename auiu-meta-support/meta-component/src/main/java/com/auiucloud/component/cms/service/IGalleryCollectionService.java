@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【cms_gallery_collection(作品合集表)】的数据库操作Service
-* @createDate 2023-04-16 20:56:41
-*/
+ * @author dries
+ * @description 针对表【cms_gallery_collection(作品合集表)】的数据库操作Service
+ * @createDate 2023-04-16 20:56:41
+ */
 public interface IGalleryCollectionService extends IService<GalleryCollection> {
 
     List<GalleryCollectionVO> listGalleryCollectionVOByCIds(List<Long> cIds);
@@ -21,9 +21,11 @@ public interface IGalleryCollectionService extends IService<GalleryCollection> {
     List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection);
 
     PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection);
+
     PageUtils selectGalleryCollectionUserHomePage(Search search, GalleryCollection galleryCollection);
 
     GalleryCollectionVO selectGalleryCollectionById(Long cId);
+
     GalleryCollectionVO getGalleryCollect(Long collectId);
 
     boolean checkGalleryCollectNameExist(GalleryCollection galleryCollection);

@@ -18,7 +18,7 @@ public class TraceUtil {
      * 从header和参数中获取traceId
      * 从前端传入数据
      *
-     * @param request　HttpServletRequest
+     * @param request 　HttpServletRequest
      * @return traceId
      */
     public static String getTraceId(HttpServletRequest request) {
@@ -31,9 +31,10 @@ public class TraceUtil {
 
     /**
      * 传递traceId至MDC
-     * @param traceId　跟踪ID
+     *
+     * @param traceId 　跟踪ID
      */
-    public static void mdcTraceId (String traceId) {
+    public static void mdcTraceId(String traceId) {
         if (StrUtil.isNotBlank(traceId)) {
             MDC.put(MetaConstant.LOG_TRACE_ID, traceId);
         }

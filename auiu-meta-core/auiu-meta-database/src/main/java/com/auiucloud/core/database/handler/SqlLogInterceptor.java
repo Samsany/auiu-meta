@@ -53,7 +53,7 @@ public class SqlLogInterceptor implements Interceptor {
             // do nothing
         }
         if (stmtMetaObj.hasGetter("delegate")) {
-            //Hikari
+            // Hikari
             try {
                 statement = (Statement) stmtMetaObj.getValue("delegate");
             } catch (Exception ignored) {
@@ -88,7 +88,7 @@ public class SqlLogInterceptor implements Interceptor {
                     Class<?> clazz = Class.forName(stmtClassName);
                     oracleGetOriginalSqlMethod = getMethodRegular(clazz, "getOriginalSql");
                     if (oracleGetOriginalSqlMethod != null) {
-                        //OraclePreparedStatementWrapper is not a public class, need set this.
+                        // OraclePreparedStatementWrapper is not a public class, need set this.
                         oracleGetOriginalSqlMethod.setAccessible(true);
                         if (null != oracleGetOriginalSqlMethod) {
                             Object stmtSql = oracleGetOriginalSqlMethod.invoke(statement);
@@ -99,7 +99,7 @@ public class SqlLogInterceptor implements Interceptor {
                     }
                 }
             } catch (Exception e) {
-                //ignore
+                // ignore
             }
         }
         if (originalSql == null) {

@@ -2,10 +2,7 @@ package com.auiucloud.core.redis.core.impl;
 
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.redis.utils.RedisLockUtil;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;

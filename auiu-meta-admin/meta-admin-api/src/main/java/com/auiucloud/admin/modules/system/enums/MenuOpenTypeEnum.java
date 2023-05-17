@@ -26,8 +26,7 @@ public enum MenuOpenTypeEnum implements IBaseEnum<Integer> {
     /**
      * 外链
      */
-    LINK(3, "外链")
-    ;
+    LINK(3, "外链");
 
     private final Integer value;
     private final String label;

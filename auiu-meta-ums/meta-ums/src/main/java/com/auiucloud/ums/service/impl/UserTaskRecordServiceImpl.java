@@ -44,10 +44,10 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     @Override
     public List<UserTaskRecord> selectUserTaskRecordListByTaskId2UserId(Long taskId, Long userId) {
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                        .eq(UserTaskRecord::getUId, userId)
-                        .eq(UserTaskRecord::getTaskId, taskId)
-                        .orderByDesc(UserTaskRecord::getCreateBy)
-                )).orElse(Collections.emptyList());
+                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getTaskId, taskId)
+                .orderByDesc(UserTaskRecord::getCreateBy)
+        )).orElse(Collections.emptyList());
     }
 
     @Override

@@ -13,19 +13,19 @@ import java.util.UUID;
 
 /**
  * 重写 DefaultTokenServices，实现登录同应用同账号互踢
+ *
  * @author dries
  * @date 2022/3/1
  */
 public class SingleLoginTokenServices extends DefaultTokenServices {
 
 
-    private TokenStore tokenStore;
-    private TokenEnhancer accessTokenEnhancer;
-
     /**
      * 是否登录同应用同账号互踢
      */
     private final boolean singleLogin;
+    private TokenStore tokenStore;
+    private TokenEnhancer accessTokenEnhancer;
 
     public SingleLoginTokenServices(boolean isSingleLogin) {
         this.singleLogin = isSingleLogin;
@@ -51,8 +51,7 @@ public class SingleLoginTokenServices extends DefaultTokenServices {
                     tokenStore.removeRefreshToken(refreshToken);
                 }
                 tokenStore.removeAccessToken(existingAccessToken);
-            }
-            else {
+            } else {
                 // Re-store the access token in case the authentication has changed
                 tokenStore.storeAccessToken(existingAccessToken, authentication);
                 return existingAccessToken;

@@ -1,8 +1,9 @@
 package com.auiucloud.component.cms.service.impl;
 
-import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.component.cms.domain.PicTag;
+import com.auiucloud.component.cms.domain.SwiperAdv;
+import com.auiucloud.component.cms.mapper.SwiperAdvMapper;
+import com.auiucloud.component.cms.service.ISwiperAdvService;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
@@ -11,21 +12,18 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.auiucloud.component.cms.domain.SwiperAdv;
-import com.auiucloud.component.cms.service.ISwiperAdvService;
-import com.auiucloud.component.cms.mapper.SwiperAdvMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【cms_swiper_adv(轮播广告表)】的数据库操作Service实现
-* @createDate 2023-04-11 16:03:44
-*/
+ * @author dries
+ * @description 针对表【cms_swiper_adv(轮播广告表)】的数据库操作Service实现
+ * @createDate 2023-04-11 16:03:44
+ */
 @Service
 public class SwiperAdvServiceImpl extends ServiceImpl<SwiperAdvMapper, SwiperAdv>
-    implements ISwiperAdvService {
+        implements ISwiperAdvService {
 
     @Override
     public PageUtils listPage(Search search, SwiperAdv swiperAdv) {

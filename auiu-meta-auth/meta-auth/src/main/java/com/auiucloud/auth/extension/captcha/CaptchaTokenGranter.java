@@ -81,7 +81,7 @@ public class CaptchaTokenGranter extends AbstractTokenGranter {
         try {
             userAuth = authenticationManager.authenticate(userAuth);
         } catch (AccountStatusException | BadCredentialsException ase) {
-            //covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
+            // covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
             throw new InvalidGrantException(ase.getMessage());
         }
         // If the username/password are wrong the spec says we should send 400/invalid grant

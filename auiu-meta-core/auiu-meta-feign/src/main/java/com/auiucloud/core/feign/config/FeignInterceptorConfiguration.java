@@ -28,7 +28,7 @@ public class FeignInterceptorConfiguration {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            //传递日志traceId
+            // 传递日志traceId
             String traceId = MDC.get(MetaConstant.LOG_TRACE_ID);
             if (StrUtil.isBlank(traceId)) {
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

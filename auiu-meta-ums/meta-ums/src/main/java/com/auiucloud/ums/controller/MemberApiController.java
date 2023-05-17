@@ -1,6 +1,5 @@
 package com.auiucloud.ums.controller;
 
-import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
@@ -10,7 +9,6 @@ import com.auiucloud.ums.domain.UserTask;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
 import com.auiucloud.ums.service.*;
 import com.auiucloud.ums.vo.UserFeedbackVO;
-import com.auiucloud.ums.vo.UserInfoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -19,9 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Map;
 
 /**
  * @author dries

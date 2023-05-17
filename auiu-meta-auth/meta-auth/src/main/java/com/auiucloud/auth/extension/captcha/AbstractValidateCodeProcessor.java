@@ -6,7 +6,6 @@ import com.auiucloud.auth.enums.ValidateCodeTypeEnum;
 import com.auiucloud.auth.service.CaptchaService;
 import com.auiucloud.auth.service.ValidateCodeService;
 import com.auiucloud.core.common.constant.Oauth2Constant;
-import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.exception.CaptchaException;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import lombok.extern.slf4j.Slf4j;

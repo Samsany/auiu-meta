@@ -179,7 +179,7 @@ public class OssTemplate implements InitializingBean {
      *
      * @param bucketName  bucket名称
      * @param objectName  文件名称
-     * @param bytes      文件流
+     * @param bytes       文件流
      * @param contextType 类型
      * @throws Exception
      * @see <a href="http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject">AWS

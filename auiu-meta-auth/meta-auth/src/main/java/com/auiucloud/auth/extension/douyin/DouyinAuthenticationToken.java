@@ -1,6 +1,5 @@
 package com.auiucloud.auth.extension.douyin;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

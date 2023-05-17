@@ -1,13 +1,7 @@
 package com.auiucloud.component.cms.vo;
 
-import com.auiucloud.component.cms.domain.UserGalleryLike;
-import com.auiucloud.ums.domain.UserFollower;
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;

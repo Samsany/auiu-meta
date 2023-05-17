@@ -1,7 +1,6 @@
 package com.auiucloud.component.oss.service;
 
-import com.auiucloud.component.oss.domain.SysAttachment;
-import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.component.sysconfig.domain.SysAttachment;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -38,11 +37,10 @@ public interface ISysAttachmentService extends IService<SysAttachment> {
     Map<String, Object> upload(MultipartFile file, Long groupId, boolean thumb, boolean checkImg);
 
     /**
-     *
-     * @param file 上传文件
-     * @param groupId 文件分组
+     * @param file     上传文件
+     * @param groupId  文件分组
      * @param filename 自定义文件名
-     * @param thumb 是否压缩
+     * @param thumb    是否压缩
      * @param checkImg 是否安全检测
      * @return Map<String, Object>
      */
@@ -63,7 +61,7 @@ public interface ISysAttachmentService extends IService<SysAttachment> {
      *
      * @param file     文件
      * @param url      返回的URL
-     * @param thumbUrl  缩略图URL
+     * @param thumbUrl 缩略图URL
      * @param groupId  分类ID
      * @param filename 新文件名
      * @return boolean

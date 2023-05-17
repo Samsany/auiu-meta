@@ -7,7 +7,9 @@ import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +31,7 @@ public interface IMemberProvider {
      * @param userIds 用户名
      * @return ApiResult
      */
-    @PostMapping(ProviderConstant.PROVIDER_USER_USERNAME)
+    @PostMapping(ProviderConstant.PROVIDER_USER_LIST_BY_IDS)
     ApiResult<List<MemberInfoVO>> getUserListByIds(@RequestBody List<Long> userIds);
 
     /**
@@ -39,7 +41,7 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
-    ApiResult<MemberInfoVO> getUserByUsername(@RequestParam String username);
+    ApiResult<MemberInfoVO> getUserByUsername(@RequestParam("username") String username);
 
     /**
      * 根据用户Id查询
@@ -48,7 +50,7 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_SIMPLE_USER_ID)
-    ApiResult<UserInfoVO> getSimpleUserById(@RequestParam Long userId);
+    ApiResult<UserInfoVO> getSimpleUserById(@RequestParam("openId") Long userId);
 
     /**
      * 根据用户名查询
@@ -58,7 +60,7 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_OPENID)
-    ApiResult<MemberInfoVO> getMemberByOpenId2Source(@RequestParam String openId, @RequestParam String source);
+    ApiResult<MemberInfoVO> getMemberByOpenId2Source(@RequestParam("openId") String openId, @RequestParam("source") String source);
 
     /**
      * 注册新会员

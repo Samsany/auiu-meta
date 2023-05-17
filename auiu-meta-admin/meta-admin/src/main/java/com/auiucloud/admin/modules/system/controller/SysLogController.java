@@ -104,7 +104,7 @@ public class SysLogController extends BaseController {
     public void export(Search search, SysLog sysLog, HttpServletResponse response) {
         List<SysLog> list = sysLogService.selectSysLogList(search, sysLog);
         String fileName = "系统日志" + System.currentTimeMillis();
-        ExcelUtil.exportExcel(list, "sheet1", SysLog. class, fileName, response);
+        ExcelUtil.exportExcel(list, "sheet1", SysLog.class, fileName, response);
     }
 
 }

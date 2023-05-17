@@ -5,9 +5,7 @@ import com.auiucloud.core.rule.constant.RuleConstant;
 import com.auiucloud.core.rule.model.BlackList;
 import com.auiucloud.core.rule.service.IRuleCacheService;
 import com.google.gson.Gson;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -10,7 +10,6 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.ums.domain.UserNormalLevel;
-import com.auiucloud.ums.domain.UserNormalLevel;
 import com.auiucloud.ums.service.IUserNormalLevelService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -82,7 +81,7 @@ public class UserNormalLevelController extends BaseController {
     public ApiResult<?> add(@RequestBody UserNormalLevel level) {
         if (userNormalLevelService.checkLevelNameExist(level)) {
             throw new ApiException("【" + level.getName() + "】已存在");
-        } else if(userNormalLevelService.checkLevelGradeExist(level)) {
+        } else if (userNormalLevelService.checkLevelGradeExist(level)) {
             throw new ApiException("【等级】已存在");
         } else if (userNormalLevelService.checkLevelExperienceExist(level)) {
             throw new ApiException("【经验值要求】已存在");
@@ -99,7 +98,7 @@ public class UserNormalLevelController extends BaseController {
     public ApiResult<?> edit(@RequestBody UserNormalLevel level) {
         if (userNormalLevelService.checkLevelNameExist(level)) {
             throw new ApiException("【" + level.getName() + "】已存在");
-        } else if(userNormalLevelService.checkLevelGradeExist(level)) {
+        } else if (userNormalLevelService.checkLevelGradeExist(level)) {
             throw new ApiException("【等级】已存在");
         } else if (userNormalLevelService.checkLevelExperienceExist(level)) {
             throw new ApiException("【经验值要求】已存在");

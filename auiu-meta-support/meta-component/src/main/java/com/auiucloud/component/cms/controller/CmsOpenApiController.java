@@ -14,7 +14,6 @@ import com.auiucloud.component.cms.service.ISwiperAdvService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.rocketmq.constant.MessageConstant;
 import com.auiucloud.core.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,7 +21,6 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,18 +40,15 @@ public class CmsOpenApiController extends BaseController {
     private final IGalleryCollectionService galleryCollectionService;
     private final IGalleryService galleryService;
 
-    private final StreamBridge streamBridge;
+    //    private final StreamBridge streamBridge;
 
-    /**
-     * 查询轮播广告列表
-     */
-    @Log(value = "发送信息")
-    @GetMapping("/send/message")
-    @Operation(summary = "发送信息")
-    public ApiResult<?> sendTestMessage(String message) {
-        streamBridge.send(MessageConstant.SMS_MESSAGE_OUTPUT, message);
-        return ApiResult.success();
-    }
+    //    @Log(value = "发送信息")
+    //    @GetMapping("/send/message")
+    //    @Operation(summary = "发送信息")
+    //    public ApiResult<?> sendTestMessage(String message) {
+    //        streamBridge.send(MessageConstant.SMS_MESSAGE_OUTPUT, message);
+    //        return ApiResult.success();
+    //    }
 
     /**
      * 查询轮播广告列表

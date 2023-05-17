@@ -5,23 +5,23 @@
 <mapper namespace="com.auiucloud.ums.mapper.UserExperienceRecordMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserExperienceRecord">
-            <id property="id" column="id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="linkId" column="link_id" jdbcType="BIGINT"/>
-            <result property="linkType" column="link_type" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="INTEGER"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="experience" column="experience" jdbcType="INTEGER"/>
-            <result property="balance" column="balance" jdbcType="INTEGER"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="frozenTime" column="frozen_time" jdbcType="INTEGER"/>
-            <result property="thawTime" column="thaw_time" jdbcType="TIMESTAMP"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <result property="linkId" column="link_id" jdbcType="BIGINT"/>
+        <result property="linkType" column="link_type" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="experience" column="experience" jdbcType="INTEGER"/>
+        <result property="balance" column="balance" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="frozenTime" column="frozen_time" jdbcType="INTEGER"/>
+        <result property="thawTime" column="thaw_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

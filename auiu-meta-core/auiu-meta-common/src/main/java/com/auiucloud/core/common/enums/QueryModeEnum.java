@@ -3,8 +3,6 @@ package com.auiucloud.core.common.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
-
 @Getter
 @AllArgsConstructor
 public enum QueryModeEnum implements IBaseEnum<String> {

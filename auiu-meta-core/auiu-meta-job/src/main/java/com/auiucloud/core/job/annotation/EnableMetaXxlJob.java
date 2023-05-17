@@ -10,10 +10,10 @@ import java.lang.annotation.*;
  *
  * @author dries
  **/
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import({ XxlJobAutoConfiguration.class })
+@Import({XxlJobAutoConfiguration.class})
 public @interface EnableMetaXxlJob {
 }

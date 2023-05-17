@@ -32,7 +32,7 @@ public class SysDataSourceController {
 
     private final ISysDataSourceService dataSourceService;
 
-    @Operation(summary ="数据源列表")
+    @Operation(summary = "数据源列表")
     @Log(value = "数据源管理", exception = "数据源列表请求异常")
     @Parameters({
             @Parameter(name = "pageNum", value = "当前页码", in = ParameterIn.QUERY),
@@ -48,7 +48,7 @@ public class SysDataSourceController {
     /**
      * 数据源连接测试
      */
-    @Operation(summary ="数据源连接测试")
+    @Operation(summary = "数据源连接测试")
     @Log(value = "数据源管理", exception = "数据源连接测试请求异常")
     @PostMapping("/connect")
     public ApiResult<?> connectTest(@Validated @RequestBody DataSourceConnectDTO dataSource) {
@@ -58,7 +58,7 @@ public class SysDataSourceController {
     /**
      * 查询数据源详情
      */
-    @Operation(summary ="数据源详情")
+    @Operation(summary = "数据源详情")
     @Log(value = "数据源管理", exception = "数据源详情请求异常")
     @Parameter(name = "id", value = "数据源ID", in = ParameterIn.PATH)
     @GetMapping("/{id}")
@@ -70,7 +70,7 @@ public class SysDataSourceController {
     /**
      * 新增数据源
      */
-    @Operation(summary ="新增数据源")
+    @Operation(summary = "新增数据源")
     @Log(value = "数据源管理", exception = "新增数据源请求异常")
     @PostMapping
     public ApiResult<?> add(@Validated @RequestBody SysDataSource dataSource) {
@@ -80,7 +80,7 @@ public class SysDataSourceController {
     /**
      * 修改数据源
      */
-    @Operation(summary ="修改数据源")
+    @Operation(summary = "修改数据源")
     @Log(value = "数据源管理", exception = "修改数据源请求异常")
     @PutMapping
     public ApiResult<?> edit(@Validated @RequestBody SysDataSource dataSource) {
@@ -90,7 +90,7 @@ public class SysDataSourceController {
     /**
      * 删除数据源
      */
-    @Operation(summary ="删除数据源")
+    @Operation(summary = "删除数据源")
     @Log(value = "数据源管理", exception = "删除数据源请求异常")
     @Parameters({
             @Parameter(name = "ids", value = "数据源编号", paramType = "body"),

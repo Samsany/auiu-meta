@@ -57,19 +57,20 @@ import java.util.stream.Collectors;
 public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         implements IGalleryService {
 
-    private final IGalleryDownloadRecordService galleryDownloadRecordService;
-
-    @Lazy
-    @Resource
-    private ISysAttachmentService sysAttachmentService;
+    private final IUserGalleryDownloadService galleryDownloadRecordService;
     private final IGalleryCollectionService galleryCollectionService;
-    private final IMemberProvider memberProvider;
     private final IPicTagService picTagService;
     private final IUserGalleryLikeService userGalleryLikeService;
     private final IUserGalleryCollectionService userGalleryCollectionService;
+    private final IUserGalleryDownloadService userGalleryDownloadService;
+    @Lazy
+    @Resource
+    private ISysAttachmentService sysAttachmentService;
+    @Resource
+    private IMemberProvider memberProvider;
 
     @Override
-    public List<GalleryVO> listGalleryVOByGalleryIds(List<Long> galleryIds) {
+    public List<GalleryVO> listGalleryVOByGIds(List<Long> galleryIds) {
         if (CollUtil.isNotEmpty(galleryIds)) {
             List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectGalleryVOListByIds(galleryIds)).orElse(Collections.emptyList());
             List<Long> gIds = galleryVOS.parallelStream().map(GalleryVO::getId).toList();
@@ -169,7 +170,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             // 作品
             List<UserGalleryLike> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
             List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryLike::getPostId).toList();
-            List<GalleryVO> galleryList = this.listGalleryVOByGalleryIds(galleryIds);
+            List<GalleryVO> galleryList = this.listGalleryVOByGIds(galleryIds);
 
             // 合集
             List<UserGalleryLike> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
@@ -177,7 +178,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
 
             page.convert(it -> {
-                UserGalleryLike2FavoriteVO build = UserGalleryLike2FavoriteVO.builder()
+                UserGallerySimpleVO build = UserGallerySimpleVO.builder()
                         .id(it.getId())
                         .uId(it.getUId())
                         .postId(it.getPostId())
@@ -186,7 +187,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                         .createTime(it.getCreateTime())
                         .build();
                 // 组装额外的信息
-                buildUserGalleryLike2FavoriteAdditionalVO(build, galleryList, galleryCollections);
+                buildSimpleUserGalleryAdditional(build, galleryList, galleryCollections);
                 return build;
             });
         }
@@ -210,7 +211,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             // 作品
             List<UserGalleryCollection> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
             List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryCollection::getPostId).toList();
-            List<GalleryVO> galleryList = this.listGalleryVOByGalleryIds(galleryIds);
+            List<GalleryVO> galleryList = this.listGalleryVOByGIds(galleryIds);
 
             // 合集
             List<UserGalleryCollection> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
@@ -218,7 +219,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
 
             page.convert(it -> {
-                UserGalleryLike2FavoriteVO build = UserGalleryLike2FavoriteVO.builder()
+                UserGallerySimpleVO build = UserGallerySimpleVO.builder()
                         .id(it.getId())
                         .uId(it.getUId())
                         .postId(it.getPostId())
@@ -227,7 +228,37 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                         .createTime(it.getCreateTime())
                         .build();
                 // 组装额外的信息
-                buildUserGalleryLike2FavoriteAdditionalVO(build, galleryList, galleryCollections);
+                buildSimpleUserGalleryAdditional(build, galleryList, galleryCollections);
+                return build;
+            });
+        }
+
+        return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils selectMyDownloadGalleryPage(Search search) {
+        // 查询我的下载列表
+        LambdaQueryWrapper<UserGalleryDownload> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(UserGalleryDownload::getUId, SecurityUtil.getUserId());
+        IPage<UserGalleryDownload> page = userGalleryDownloadService.page(PageUtils.getPage(search), queryWrapper);
+        if (page.getRecords().size() > 0) {
+            List<Long> gIds = page.getRecords()
+                    .stream()
+                    .map(UserGalleryDownload::getGId)
+                    .toList();
+
+            List<GalleryVO> galleryList = this.listGalleryVOByGIds(gIds);
+            page.convert(it -> {
+                UserGallerySimpleVO build = UserGallerySimpleVO.builder()
+                        .id(it.getId())
+                        .uId(it.getUId())
+                        .postId(it.getGId())
+                        .type(GalleryEnums.GalleryPageType.GALLERY.getValue())
+                        .createTime(it.getCreateTime())
+                        .build();
+                // 组装额外的信息
+                buildSimpleUserGalleryAdditional(build, galleryList);
                 return build;
             });
         }
@@ -313,7 +344,8 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         if (gallery.getIsPublished().equals(CommonConstant.STATUS_DISABLE_VALUE)) {
             return ApiResult.fail("作品已发布，请勿重复操作");
         }
-        if (ObjectUtil.isNotNull(gallery.getApprovalStatus()) && gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
+        if (ObjectUtil.isNotNull(gallery.getApprovalStatus())
+                && gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
             return ApiResult.fail("作品已提交，等待审核中");
         }
 
@@ -341,7 +373,10 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         updateWrapper.set(Gallery::getPrompt, galleryVO.getPrompt());
         updateWrapper.set(Gallery::getTagId, galleryVO.getTagId());
         updateWrapper.set(Gallery::getPublishedTime, new Date());
-        updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.AWAIT.getValue());
+        // 默认已发布，无需审核
+        // updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.AWAIT.getValue());
+        updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.RESOLVE.getValue());
+        updateWrapper.set(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
         updateWrapper.eq(Gallery::getId, gallery.getId());
         return ApiResult.condition(this.update(updateWrapper));
     }
@@ -478,10 +513,10 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .eq(Gallery::getId, gallery.getId()));
 
             // 构建用户下载记录
-            galleryDownloadRecordService.save(GalleryDownloadRecord.builder()
-                            .uId(userId)
-                            .gId(gallery.getId())
-                            .downloadIntegral(gallery.getDownloadIntegral())
+            galleryDownloadRecordService.save(UserGalleryDownload.builder()
+                    .uId(userId)
+                    .gId(gallery.getId())
+                    .downloadIntegral(gallery.getDownloadIntegral())
                     .build());
         }
 
@@ -616,37 +651,37 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                 .toList();
     }
 
-    private void buildUserGalleryLike2FavoriteAdditionalVO(UserGalleryLike2FavoriteVO ugl,
-                                                           List<GalleryVO> galleryList,
-                                                           List<GalleryCollectionVO> galleryCollections) {
+    private void buildSimpleUserGalleryAdditional(UserGallerySimpleVO ugl, List<GalleryVO> galleryList, List<GalleryCollectionVO> galleryCollections) {
+        buildSimpleUserGalleryAdditional(ugl, galleryList);
+        buildSimpleUserGalleryCollectionAdditional(ugl, galleryCollections);
+    }
 
-        if (ugl.getType().equals(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())) {
-            // 组装合集信息
-            galleryCollections.parallelStream()
-                    .filter(it -> it.getId().equals(ugl.getPostId()))
-                    .findAny().ifPresent(collectionVO -> {
-                        ugl.setAvatar(collectionVO.getAvatar());
-                        ugl.setNickname(collectionVO.getNickname());
-                        ugl.setTitle(collectionVO.getTitle());
-                        ugl.setLikeNum(collectionVO.getLikeNum());
-                        ugl.setFavoriteNum(collectionVO.getFavoriteNum());
-                        ugl.setCovers(collectionVO.getCovers());
-                    });
-        } else {
-            // 组装作品信息
-            galleryList.parallelStream()
-                    .filter(it -> it.getId().equals(ugl.getPostId()))
-                    .findAny().ifPresent(galleryVO -> {
-                        ugl.setAvatar(galleryVO.getAvatar());
-                        ugl.setNickname(galleryVO.getNickname());
-                        ugl.setTitle(galleryVO.getTitle());
-                        ugl.setLikeNum(galleryVO.getLikeNum());
-                        ugl.setFavoriteNum(galleryVO.getFavoriteNum());
-                        ugl.setCovers(List.of(galleryVO.getThumbUrl()));
-                    });
+    private void buildSimpleUserGalleryAdditional(UserGallerySimpleVO ugl, List<GalleryVO> galleryList) {
+        // 组装作品信息
+        galleryList.parallelStream()
+                .filter(it -> it.getId().equals(ugl.getPostId()))
+                .findAny().ifPresent(galleryVO -> {
+                    ugl.setAvatar(galleryVO.getAvatar());
+                    ugl.setNickname(galleryVO.getNickname());
+                    ugl.setTitle(galleryVO.getTitle());
+                    ugl.setLikeNum(galleryVO.getLikeNum());
+                    ugl.setFavoriteNum(galleryVO.getFavoriteNum());
+                    ugl.setCovers(List.of(galleryVO.getThumbUrl()));
+                });
+    }
 
-        }
-
+    private void buildSimpleUserGalleryCollectionAdditional(UserGallerySimpleVO ugl, List<GalleryCollectionVO> galleryCollections) {
+        // 组装合集信息
+        galleryCollections.parallelStream()
+                .filter(it -> it.getId().equals(ugl.getPostId()))
+                .findAny().ifPresent(collectionVO -> {
+                    ugl.setAvatar(collectionVO.getAvatar());
+                    ugl.setNickname(collectionVO.getNickname());
+                    ugl.setTitle(collectionVO.getTitle());
+                    ugl.setLikeNum(collectionVO.getLikeNum());
+                    ugl.setFavoriteNum(collectionVO.getFavoriteNum());
+                    ugl.setCovers(collectionVO.getCovers());
+                });
     }
 
 

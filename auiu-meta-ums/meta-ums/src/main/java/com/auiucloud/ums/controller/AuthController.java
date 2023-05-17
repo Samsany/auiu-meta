@@ -5,7 +5,6 @@ import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.ums.service.IMemberService;
-import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

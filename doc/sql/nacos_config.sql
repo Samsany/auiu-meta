@@ -930,7 +930,8 @@ INSERT INTO `tenant_info` (`id`, `kp`, `tenant_id`, `tenant_name`, `tenant_desc`
 VALUES (9, '1', '2294c22a-2d50-4267-9d97-0656425645af', 'dev', '测试环境', 'nacos', 1623130291392, 1623130291392);
 INSERT INTO `tenant_info` (`id`, `kp`, `tenant_id`, `tenant_name`, `tenant_desc`, `create_source`, `gmt_create`,
                            `gmt_modified`)
-VALUES (14, '1', '20219151-84fc-4c8d-a94a-633dbd709dc0', 'seta', 'seataio分布式事务', 'nacos', 1624955120383, 1624955120383);
+VALUES (14, '1', '20219151-84fc-4c8d-a94a-633dbd709dc0', 'seta', 'seataio分布式事务', 'nacos', 1624955120383,
+        1624955120383);
 INSERT INTO `tenant_info` (`id`, `kp`, `tenant_id`, `tenant_name`, `tenant_desc`, `create_source`, `gmt_create`,
                            `gmt_modified`)
 VALUES (15, '1', '4af1f54f-5abf-4ec8-a8b0-20d50885d42b', 'auiu-cloud', '微服务基本配置', 'nacos', 1640744969964,

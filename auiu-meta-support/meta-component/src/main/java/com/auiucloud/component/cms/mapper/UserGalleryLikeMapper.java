@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【ums_user_gallery_like(我的点赞表)】的数据库操作Mapper
-* @createDate 2023-04-24 10:09:18
-* @Entity com.auiucloud.component.cms.domain.UserGalleryLike
-*/
+ * @author dries
+ * @description 针对表【ums_user_gallery_like(我的点赞表)】的数据库操作Mapper
+ * @createDate 2023-04-24 10:09:18
+ * @Entity com.auiucloud.component.cms.domain.UserGalleryLike
+ */
 public interface UserGalleryLikeMapper extends BaseMapper<UserGalleryLike> {
 
     List<UserGalleryLikeVO> selectGalleryLikeVOListByPostIds2Type(@Param("postIds") List<Long> postIds, @Param("type") Integer type);

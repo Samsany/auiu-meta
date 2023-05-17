@@ -5,19 +5,19 @@
 <mapper namespace="com.auiucloud.ums.mapper.UserRechargeMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserRecharge">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
-            <result property="price" column="price" jdbcType="DECIMAL"/>
-            <result property="otPrice" column="ot_price" jdbcType="DECIMAL"/>
-            <result property="givePrice" column="give_price" jdbcType="DECIMAL"/>
-            <result property="rechargeType" column="recharge_type" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="DECIMAL"/>
+        <result property="otPrice" column="ot_price" jdbcType="DECIMAL"/>
+        <result property="givePrice" column="give_price" jdbcType="DECIMAL"/>
+        <result property="rechargeType" column="recharge_type" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

@@ -5,12 +5,12 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.admin.modules.system.domain.SysMenu;
 import com.auiucloud.admin.modules.system.domain.SysUserRole;
+import com.auiucloud.admin.modules.system.enums.MenuTypeEnum;
+import com.auiucloud.admin.modules.system.mapper.SysMenuMapper;
 import com.auiucloud.admin.modules.system.service.ISysMenuService;
 import com.auiucloud.admin.modules.system.service.ISysRoleMenuService;
 import com.auiucloud.admin.modules.system.service.ISysUserRoleService;
 import com.auiucloud.admin.modules.system.vo.SysMenuVO;
-import com.auiucloud.admin.modules.system.enums.MenuTypeEnum;
-import com.auiucloud.admin.modules.system.mapper.SysMenuMapper;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
@@ -40,6 +40,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     private final ISysUserRoleService sysUserRoleService;
     private final ISysRoleMenuService roleMenuService;
+
+    @NotNull
+    private static LambdaQueryWrapper<SysMenu> buildSearchParams(Search search) {
+        LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
+        if (StrUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.and(i -> i
+                    .or().like(SysMenu::getTitle, search.getKeyword())
+                    .or().like(SysMenu::getName, search.getKeyword()));
+        }
+        if (ObjectUtil.isNotNull(search.getStatus())) {
+            queryWrapper.eq(SysMenu::getStatus, search.getStatus());
+        }
+        queryWrapper.orderByAsc(SysMenu::getSort).orderByDesc(SysMenu::getCreateTime);
+        return queryWrapper;
+    }
 
     @Override
     public List<SysMenu> routes() {
@@ -79,21 +94,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<SysMenu> dbList = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
         list.addAll(dbList);
         return list;
-    }
-
-    @NotNull
-    private static LambdaQueryWrapper<SysMenu> buildSearchParams(Search search) {
-        LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
-        if (StrUtil.isNotBlank(search.getKeyword())) {
-            queryWrapper.and(i -> i
-                    .or().like(SysMenu::getTitle, search.getKeyword())
-                    .or().like(SysMenu::getName, search.getKeyword()));
-        }
-        if (ObjectUtil.isNotNull(search.getStatus())) {
-            queryWrapper.eq(SysMenu::getStatus, search.getStatus());
-        }
-        queryWrapper.orderByAsc(SysMenu::getSort).orderByDesc(SysMenu::getCreateTime);
-        return queryWrapper;
     }
 
     @Override
@@ -170,7 +170,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<String> getSysMenuPermissionById(List<Long> menuIds) {
         if (CollUtil.isNotEmpty(menuIds)) {
-            //3.根据menuId查询所有的满足条件的菜单列表,其中type=2为按钮
+            // 3.根据menuId查询所有的满足条件的菜单列表,其中type=2为按钮
             LambdaQueryWrapper<SysMenu> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(SysMenu::getType, MenuTypeEnum.BUTTON.getCode());
             queryWrapper.in(SysMenu::getId, menuIds);

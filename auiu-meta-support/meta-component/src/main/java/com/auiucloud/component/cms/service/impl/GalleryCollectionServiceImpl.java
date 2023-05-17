@@ -45,6 +45,7 @@ import java.util.stream.Collectors;
 public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionMapper, GalleryCollection>
         implements IGalleryCollectionService {
 
+    private final IPicTagService picTagService;
     @Lazy
     @Resource
     private IGalleryService galleryService;
@@ -54,8 +55,6 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Lazy
     @Resource
     private IUserGalleryCollectionService userGalleryCollectionService;
-
-    private final IPicTagService picTagService;
 
     @Override
     public List<GalleryCollectionVO> listGalleryCollectionVOByCIds(List<Long> cIds) {

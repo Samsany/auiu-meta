@@ -12,18 +12,18 @@ import org.quartz.JobExecutionException;
 @Slf4j
 public class SampleParamJob implements Job {
 
-	/**
-	 * 若参数变量名修改 QuartzJobController中也需对应修改
-	 */
-	private String parameter;
+    /**
+     * 若参数变量名修改 QuartzJobController中也需对应修改
+     */
+    private String parameter;
 
-	public void setParameter(String parameter) {
-		this.parameter = parameter;
-	}
+    public void setParameter(String parameter) {
+        this.parameter = parameter;
+    }
 
-	@Override
-	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-		log.info(" Job Execution key："+jobExecutionContext.getJobDetail().getKey());
-		log.info( String.format("welcome %s! Meta-Admin 带参数定时任务 SampleParamJob !   时间:" + DateUtil.now(), this.parameter));
-	}
+    @Override
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        log.info(" Job Execution key：" + jobExecutionContext.getJobDetail().getKey());
+        log.info(String.format("welcome %s! Meta-Admin 带参数定时任务 SampleParamJob !   时间:" + DateUtil.now(), this.parameter));
+    }
 }

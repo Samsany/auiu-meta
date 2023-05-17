@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -21,16 +21,31 @@
     </modules>
 
     <properties>
+        <spring.boot.version>2.7.11</spring.boot.version>
         <auiumeta.core.version>1.0.1</auiumeta.core.version>
 
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.boot.version>2.7.3</spring.boot.version>
 
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-        <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+
+        <!-- 推荐使用Harbor -->
+        <docker.plugin.version>0.42.1</docker.plugin.version>
+        <docker-maven-plugin.version>1.2.2</docker-maven-plugin.version>
+        <docker.host>http://192.168.0.111:2375</docker.host>
+        <docker.registry>139.196.120.28:8100</docker.registry>
+        <docker.namespace>youtuku</docker.namespace>
+        <docker.username>admin</docker.username>
+        <docker.password>Zxx131013@Harbor</docker.password>
+        <git.commit.plugin>4.9.9</git.commit.plugin>
+        <spring.checkstyle.plugin>0.0.34</spring.checkstyle.plugin>
+
+        <sonar.exclusions>meta-admin/**/*, meta-core/**/*</sonar.exclusions>
     </properties>
 
     <dependencyManagement>
@@ -49,6 +64,13 @@
     </dependencies>
 
     <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -56,8 +78,11 @@
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.version}</version>
                     <configuration>
-                        <fork>true</fork>
+                        <!--<fork>true</fork>-->
                         <finalName>${project.build.finalName}</finalName>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
                     </configuration>
                     <executions>
                         <execution>
@@ -70,7 +95,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>${maven-antrun-plugin.version}</version>
+                    <!--<version>${maven-antrun-plugin.version}</version>-->
                     <executions>
                         <execution>
                             <phase>package</phase>
@@ -88,24 +113,104 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                    <!--<executions>-->
+                    <!--    <execution>-->
+                    <!--        <phase>package</phase>-->
+                    <!--        <goals>-->
+                    <!--            <goal>run</goal>-->
+                    <!--        </goals>-->
+                    <!--    </execution>-->
+                    <!--</executions>-->
+                    <configuration>
+                        <!-- Docker Remote Api-->
+                        <dockerHost>${docker.host}</dockerHost>
+                        <!-- Docker 镜像私服-->
+                        <registry>${docker.registry}</registry>
+                        <!-- 认证信息-->
+                        <authConfig>
+                            <push>
+                                <username>${docker.username}</username>
+                                <password>${docker.password}</password>
+                            </push>
+                        </authConfig>
+                        <images>
+                            <image>
+                                <!-- 镜像名称： 172.17.0.111/library/meta-gateway:1.0.0-->
+                                <name>${docker.namespace}/${project.name}:${project.version}</name>
+                                <!--registry地址,用于推送,拉取镜像-->
+                                <registry>${docker.registry}</registry>
+                                <build>
+                                    <dockerFile>${project.basedir}/Dockerfile</dockerFile>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+            <!--    <groupId>org.springframework.boot</groupId>-->
+            <!--    <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+            <!--    <groupId>io.fabric8</groupId>-->
+            <!--    <artifactId>docker-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+            <!--    <groupId>org.apache.maven.plugins</groupId>-->
+            <!--    <artifactId>maven-antrun-plugin</artifactId>-->
+            <!--</plugin>-->
+
+            <!--打包jar 与git commit 关联插件-->
+            <!--<plugin>-->
+            <!--    <groupId>io.github.git-commit-id</groupId>-->
+            <!--    <artifactId>git-commit-id-maven-plugin</artifactId>-->
+            <!--    <version>${git.commit.plugin}</version>-->
+            <!--    <executions>-->
+            <!--        <execution>-->
+            <!--            <id>get-the-git-infos</id>-->
+            <!--            <goals>-->
+            <!--                <goal>revision</goal>-->
+            <!--            </goals>-->
+            <!--            <phase>initialize</phase>-->
+            <!--        </execution>-->
+            <!--    </executions>-->
+            <!--    <configuration>-->
+            <!--        <failOnNoGitDirectory>false</failOnNoGitDirectory>-->
+            <!--        <generateGitPropertiesFile>true</generateGitPropertiesFile>-->
+            <!--        &lt;!&ndash;因为项目定制了jackson的日期时间序列化/反序列化格式，因此这里要进行配置,不然通过management.info.git.mode=full进行完整git信息监控时会存在问题&ndash;&gt;-->
+            <!--        <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>-->
+            <!--        <includeOnlyProperties>-->
+            <!--            <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>-->
+            <!--            <includeOnlyProperty>^git.commit.(id|message|time).*$</includeOnlyProperty>-->
+            <!--        </includeOnlyProperties>-->
+            <!--    </configuration>-->
+            <!--</plugin>-->
+            <!--
+            	代码格式插件，默认使用spring 规则，可运行命令进行项目格式化：./mvnw spring-javaformat:apply 或 mvn spring-javaformat:apply，
+            	可在IDEA中安装插件以下插件进行自动格式化：
+            	https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin
+            -->
+            <!--<plugin>-->
+            <!--    <groupId>io.spring.javaformat</groupId>-->
+            <!--    <artifactId>spring-javaformat-maven-plugin</artifactId>-->
+            <!--    <version>${spring.checkstyle.plugin}</version>-->
+            <!--    <executions>-->
+            <!--        <execution>-->
+            <!--            <phase>validate</phase>-->
+            <!--            <inherited>true</inherited>-->
+            <!--            <goals>-->
+            <!--                <goal>validate</goal>-->
+            <!--            </goals>-->
+            <!--        </execution>-->
+            <!--    </executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
-
 
 </project>

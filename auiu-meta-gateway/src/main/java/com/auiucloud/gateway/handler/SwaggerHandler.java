@@ -1,21 +1,21 @@
-//package com.auiucloud.gateway.handler;
+// package com.auiucloud.gateway.handler;
 //
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//import reactor.core.publisher.Mono;
-//import springfox.documentation.swagger.web.*;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.ResponseEntity;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.RestController;
+// import reactor.core.publisher.Mono;
+// import springfox.documentation.swagger.web.*;
 //
-//import java.util.Optional;
+// import java.util.Optional;
 //
 ///**
 // * @author dries
 // * @date 2021/12/27
 // */
 //@RestController
-//public class SwaggerHandler {
+// public class SwaggerHandler {
 //
 //    private final SwaggerResourcesProvider swaggerResources;
 //    @Autowired(required = false)

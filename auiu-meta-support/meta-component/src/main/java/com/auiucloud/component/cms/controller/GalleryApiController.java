@@ -8,7 +8,6 @@ import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.component.cms.vo.GalleryPublishVO;
-import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.exception.ApiException;
@@ -235,6 +234,20 @@ public class GalleryApiController extends BaseController {
     })
     public ApiResult<?> myFavoriteGalleryPage(Search search) {
         return ApiResult.data(galleryService.selectMyFavoriteGalleryPage(search));
+    }
+
+    /**
+     * 查询我的下载列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/my-download/page")
+    @Operation(summary = "查询我的下载列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> myDownloadGalleryPage(Search search) {
+        return ApiResult.data(galleryService.selectMyDownloadGalleryPage(search));
     }
 
     /**

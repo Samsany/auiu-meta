@@ -17,7 +17,7 @@ public class AuthSignUtil {
      * thirdparty_id 代小程序进行该笔交易调用的第三方平台服务商id
      * sign 签名
      * other_settle_params 其他分账方参数
-     *
+     * <p>
      * Guaranteed payment requests do not participate in signature parameters
      * app_id Applets appID
      * thirdparty_id The id of the third-party platform service provider that calls the transaction on behalf of the Applets
@@ -28,18 +28,17 @@ public class AuthSignUtil {
 
     /**
      * 支付密钥值，需要替换为自己的密钥(完成进件后，开发者可在字节开放平台-【某小程序】-【功能】-【支付】-【担保交易设置】中查看支付系统秘钥 SALT)
-     *
+     * <p>
      * Payment key value, you need to replace it with your own key
      */
     private static final String SALT = "your_payment_salt";
 
     /**
      * RequestSign 担保支付请求签名算法
-     * @param paramsMap {@code Map<String, Object>} 所有的请求参数
-     * @return：签名字符串
      *
-     * RequestSign Guaranteed payment request signature algorithm
+     * @param paramsMap {@code Map<String, Object>} 所有的请求参数
      * @param paramsMap {@code Map<String, Object>} all request parameters
+     * @return：签名字符串 RequestSign Guaranteed payment request signature algorithm
      * @return: Signature string
      */
     public static String requestSign(Map<String, Object> paramsMap) {
@@ -74,11 +73,10 @@ public class AuthSignUtil {
 
     /**
      * CallbackSign 担保支付回调签名算法
-     * @param params {@code List<String>} 所有字段（验证时注意不包含 sign 签名本身，不包含空字段与 type 常量字段）内容与平台上配置的 token
-     * @return：签名字符串
      *
-     * CallbackSign Guaranteed payment callback signature algorithm
+     * @param params {@code List<String>} 所有字段（验证时注意不包含 sign 签名本身，不包含空字段与 type 常量字段）内容与平台上配置的 token
      * @param params {@code List<String>} The content of all fields (note that the sign signature itself is not included during verification, and does not include empty fields and type constant fields) content and the token configured on the platform
+     * @return：签名字符串 CallbackSign Guaranteed payment callback signature algorithm
      * @return: signature string
      */
     public static String callbackSign(List<String> params) {
@@ -100,11 +98,10 @@ public class AuthSignUtil {
 
     /**
      * md5FromStr md5算法对该字符串计算摘要
-     * @param inStr {@code String} 需要签名的字符串
-     * @return：签名字符串
      *
-     * md5FromStr The md5 algorithm computes a digest of the string
+     * @param inStr {@code String} 需要签名的字符串
      * @param inStr {@code String} String to be signed
+     * @return：签名字符串 md5FromStr The md5 algorithm computes a digest of the string
      * @return: signature string
      */
     private static String md5FromStr(String inStr) {

@@ -3,8 +3,10 @@ package com.auiucloud.component.sysconfig.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.component.oss.enums.ConfigTypeEnum;
+import com.auiucloud.component.sysconfig.domain.AppletConfigProperties;
 import com.auiucloud.component.sysconfig.domain.SysConfig;
+import com.auiucloud.component.sysconfig.domain.UserConfigProperties;
+import com.auiucloud.component.sysconfig.enums.SysConfigConstants;
 import com.auiucloud.component.sysconfig.mapper.SysConfigMapper;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.component.sysconfig.vo.SysConfigTreeVO;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -148,7 +151,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public SysConfig getSystemDefaultSysConfig() {
         // 获取默认SYSTEM配置信息
         LambdaQueryWrapper<SysConfig> queryWrapper = Wrappers.<SysConfig>query().lambda()
-                .eq(SysConfig::getConfigCode, ConfigTypeEnum.BASE_SETTING.getValue());
+                .eq(SysConfig::getConfigCode, SysConfigConstants.SettingEnum.BASE_SETTING.getValue());
         return this.getOne(queryWrapper);
     }
 
@@ -160,9 +163,9 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     public OssProperties getOssProperties() {
         OssProperties oss = new OssProperties();
-        //获取默认的code值
+        // 获取默认的code值
         String code = getOSSDefaultSysConfig().getConfigValue();
-        //读取默认code的配置参数
+        // 读取默认code的配置参数
         LambdaQueryWrapper<SysConfig> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysConfig::getConfigCode, code);
         List<SysConfig> sysConfigList = this.list(queryWrapper);
@@ -225,7 +228,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                 .eq(SysConfig::getConfigKey, ComponentConstant.OSS_ACCESS_KEY);
         this.update(lsc);
 
-        //如果key包括*号，则表示未有更新，则忽略更新该数据
+        // 如果key包括*号，则表示未有更新，则忽略更新该数据
         if (!ossProperties.getSecretKey().contains(StringPool.ASTERISK)) {
             lsc = Wrappers.<SysConfig>update().lambda()
                     .set(SysConfig::getConfigValue, ossProperties.getSecretKey())
@@ -338,7 +341,155 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
         return queryWrapper;
     }
+
+    // 清理小程序配置缓存
+    @Override
+    public void clearAppletConfig(String appId) {
+        redisService.del(RedisKeyConstant.cacheAppletConfigKey(appId));
+    }
+
+    @Override
+    public AppletConfigProperties getAppletConfigProperties(String appId) {
+        AppletConfigProperties applet = (AppletConfigProperties) redisService.get(RedisKeyConstant.cacheAppletConfigKey(appId));
+        if (ObjectUtil.isNotNull(applet)) {
+            return applet;
+        }
+
+        AtomicReference<AppletConfigProperties> appletConfigProperties = new AtomicReference<>(new AppletConfigProperties());
+        // 查询小程序配置列表
+        List<SysConfig> list = Optional.ofNullable(this.list(
+                Wrappers.<SysConfig>lambdaQuery()
+                        .eq(SysConfig::getConfigCode, SysConfigConstants.SettingEnum.APPLET_SETTING.getValue())
+                        .eq(SysConfig::getConfigType, SysConfigConstants.SettingTypeEnum.SETTING.getValue())
+                        .ne(SysConfig::getParentId, CommonConstant.ROOT_NODE_ID)
+        )).orElse(Collections.emptyList());
+
+        Map<String, Object> map = new HashMap<>();
+        // 获取小程序配置项
+        listToProps(list, map);
+        applet = (AppletConfigProperties) map.get(appId);
+        redisService.set(RedisKeyConstant.cacheAppletConfigKey(appId), applet);
+        return applet;
+    }
+
+    /**
+     * 将list转换为AppletProperties
+     *
+     * @param sysConfigList List列表
+     */
+    public void listToProps(List<SysConfig> sysConfigList, Map<String, Object> appletMap) {
+        sysConfigList.parallelStream().forEach(config -> {
+            if (config.getConfigType().equals(SysConfigConstants.SettingTypeEnum.SETTING.getValue())) {
+                List<SysConfig> children = Optional.ofNullable(this.list(Wrappers.<SysConfig>lambdaQuery()
+                        .eq(SysConfig::getParentId, config.getId())
+                )).orElse(Collections.emptyList());
+                listToProps(children, appletMap);
+            } else {
+                AppletConfigProperties applet = new AppletConfigProperties();
+                switch (config.getConfigKey()) {
+                    case SysConfigConstants.APP_ID -> applet.setAppId(config.getConfigValue());
+                    case SysConfigConstants.APP_SECRET -> applet.setAppSecret(config.getConfigValue());
+                    case SysConfigConstants.APPLET_NAME -> applet.setAppletName(config.getConfigValue());
+                    case SysConfigConstants.IS_ENABLE_VIDEO_AD ->
+                            applet.setIsEnableVideoAd(Objects.equals(config.getConfigValue(), "0"));
+                    case SysConfigConstants.IS_ENABLE_INTERSTITIAL_AD ->
+                            applet.setIsEnableInterstitialAd(Objects.equals(config.getConfigValue(), "0"));
+                    case SysConfigConstants.REWARDED_VIDEO_AD -> applet.setRewardedVideoAd(config.getConfigValue());
+                    case SysConfigConstants.INTERSTITIAL_AD -> applet.setInterstitialAd(config.getConfigValue());
+                }
+                appletMap.put(applet.getAppId(), applet);
+            }
+
+        });
+
+    }
+
+    @Override
+    public UserConfigProperties getUserConfigProperties() {
+        UserConfigProperties userConfigProperties = (UserConfigProperties) redisService.get(RedisKeyConstant.USER_CONFIG);
+        if (ObjectUtil.isNotNull(userConfigProperties)) {
+            return userConfigProperties;
+        } else {
+            userConfigProperties = new UserConfigProperties();
+        }
+
+        // 查询用户配置列表
+        List<SysConfig> list = Optional.ofNullable(this.list(
+                Wrappers.<SysConfig>lambdaQuery()
+                        .in(SysConfig::getConfigCode, List.of(
+                                SysConfigConstants.SettingEnum.USER_SETTING.getValue(),
+                                SysConfigConstants.SettingEnum.FENXIAO_SETTING.getValue()
+                        ))
+                        .eq(SysConfig::getConfigType, SysConfigConstants.SettingTypeEnum.SETTING.getValue())
+                        .ne(SysConfig::getParentId, CommonConstant.ROOT_NODE_ID)
+        )).orElse(Collections.emptyList());
+        listToUserConfigProps(list, userConfigProperties);
+        redisService.set(RedisKeyConstant.USER_CONFIG, userConfigProperties);
+        return userConfigProperties;
+    }
+
+    /**
+     * 将list转换为UserConfigProperties
+     *
+     * @param sysConfigList List列表
+     */
+    private void listToUserConfigProps(List<SysConfig> sysConfigList, UserConfigProperties userConfig) {
+        sysConfigList.parallelStream().forEach(config -> {
+            if (config.getConfigType().equals(SysConfigConstants.SettingTypeEnum.SETTING.getValue())) {
+                // 查询子集
+                List<SysConfig> children = Optional.ofNullable(this.list(Wrappers.<SysConfig>lambdaQuery()
+                        .eq(SysConfig::getParentId, config.getId())
+                )).orElse(Collections.emptyList());
+                listToUserConfigProps(children, userConfig);
+            } else {
+                switch (config.getConfigKey()) {
+                    case SysConfigConstants.USER_DEFAULT_AVATAR ->
+                            userConfig.setUserDefaultAvatar(config.getConfigValue());
+                    case SysConfigConstants.USER_DEFAULT_BG_IMAGES ->
+                            userConfig.setUserDefaultBgImages(config.getConfigValue());
+                    case SysConfigConstants.IS_ENABLE_PAID_MEMBER ->
+                            userConfig.setIsEnablePaidMember(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.IS_ENABLE_POINT_RECHARGE ->
+                            userConfig.setIsEnablePointRecharge(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.POINT_RECHARGE_DESC ->
+                            userConfig.setPointRechargeDesc(config.getConfigValue());
+                    case SysConfigConstants.USER_STORAGE_LIMIT ->
+                            userConfig.setUserStorageLimit(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.MEMBER_STORAGE_LIMIT ->
+                            userConfig.setMemberStorageLimit(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.AD_REDEEM_POINT ->
+                            userConfig.setAdRedeemPoint(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.POINT_REDEMPTION_RATIO ->
+                            userConfig.setPointRedemptionRatio(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.IS_ENABLE_SELF_PURCHASED_REBATE ->
+                            userConfig.setIsEnableSelfPurchasedRebate(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.IS_ENABLE_BUY_PAID_MEMBER_REBATE ->
+                            userConfig.setIsEnableBuyPaidMemberRebate(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.IS_ENABLE_PROMOTE_USER_REBATE ->
+                            userConfig.setIsEnablePromoteUserRebate(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.PROMOTE_USER_AMOUNT ->
+                            userConfig.setPromoteUserAmount(config.getConfigValue());
+                    case SysConfigConstants.IS_ENABLE_DOWNLOAD_WORK_REBATE ->
+                            userConfig.setIsEnableDownloadWorkRebate(Boolean.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.DOWNLOAD_WORK_AMOUNT ->
+                            userConfig.setDownloadWorkAmount(config.getConfigValue());
+                    case SysConfigConstants.FIRST_REBATE_RATIO ->
+                            userConfig.setFirstRebateRatio(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.SECOND_REBATE_RATIO ->
+                            userConfig.setSecondRebateRatio(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.FREEZE_TIME ->
+                            userConfig.setFreezeTime(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.USER_EXTRACT_TYPE -> userConfig.setUserExtractType(config.getConfigValue());
+                    case SysConfigConstants.USER_EXTRACT_MIN_PRICE ->
+                            userConfig.setUserExtractMinPrice(Integer.valueOf(config.getConfigValue()));
+                    case SysConfigConstants.MEMBER_EXTRACT_MIN_PRICE ->
+                            userConfig.setMemberExtractMinPrice(Integer.valueOf(config.getConfigValue()));
+                }
+            }
+        });
+    }
 }
+
 
 
 

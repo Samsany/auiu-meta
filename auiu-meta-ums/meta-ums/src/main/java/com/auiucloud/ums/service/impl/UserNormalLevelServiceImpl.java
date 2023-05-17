@@ -5,27 +5,26 @@ import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
-import com.auiucloud.ums.domain.UserGroup;
+import com.auiucloud.ums.domain.UserNormalLevel;
+import com.auiucloud.ums.mapper.UserNormalLevelMapper;
 import com.auiucloud.ums.service.IMemberService;
+import com.auiucloud.ums.service.IUserNormalLevelService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.auiucloud.ums.domain.UserNormalLevel;
-import com.auiucloud.ums.service.IUserNormalLevelService;
-import com.auiucloud.ums.mapper.UserNormalLevelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* @author dries
-* @description 针对表【ums_user_normal_level(普通会员等级表)】的数据库操作Service实现
-* @createDate 2023-04-03 22:22:38
-*/
+ * @author dries
+ * @description 针对表【ums_user_normal_level(普通会员等级表)】的数据库操作Service实现
+ * @createDate 2023-04-03 22:22:38
+ */
 @Service
 @RequiredArgsConstructor
 public class UserNormalLevelServiceImpl extends ServiceImpl<UserNormalLevelMapper, UserNormalLevel>
-    implements IUserNormalLevelService {
+        implements IUserNormalLevelService {
 
     private final IMemberService memberService;
 

@@ -36,7 +36,7 @@ public class SysDictDataController extends BaseController {
     private final ISysDictTypeService dictTypeService;
     private final ISysDictDataService dictDataService;
 
-    @Operation(summary ="字典数据列表")
+    @Operation(summary = "字典数据列表")
     @Parameters({
             @Parameter(name = "pageNum", description = "当前页码", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "显示条数", in = ParameterIn.QUERY),
@@ -52,7 +52,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 查询字典数据详细
      */
-    @Operation(summary ="字典数据详情")
+    @Operation(summary = "字典数据详情")
     @GetMapping("/{dictId}")
     public ApiResult<?> getInfo(@PathVariable Long dictId) {
         return ApiResult.data(dictDataService.getById(dictId));
@@ -61,7 +61,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 根据字典类型查询字典数据信息
      */
-    @Operation(summary ="根据字典类型查询字典信息")
+    @Operation(summary = "根据字典类型查询字典信息")
     @GetMapping(value = "/type/{dictType}")
     public ApiResult<?> dictType(@PathVariable String dictType) {
         SysDictVO data = dictTypeService.selectDictInfoByType(dictType);
@@ -71,7 +71,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 新增字典类型
      */
-    @Operation(summary ="新增字典数据")
+    @Operation(summary = "新增字典数据")
     @Log("字典数据")
     @PostMapping
     public ApiResult<?> add(@Validated @RequestBody SysDictData dictData) {
@@ -88,7 +88,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 修改字典数据
      */
-    @Operation(summary ="修改字典数据")
+    @Operation(summary = "修改字典数据")
     @Log("字典数据")
     @PutMapping
     public ApiResult<?> edit(@Validated @RequestBody SysDictData dictData) {
@@ -104,7 +104,7 @@ public class SysDictDataController extends BaseController {
     /**
      * 删除字典数据
      */
-    @Operation(summary ="删除字典数据")
+    @Operation(summary = "删除字典数据")
     @Log("字典数据")
     @DeleteMapping("/{dictCodes}")
     public ApiResult<?> remove(@PathVariable Long[] dictCodes) {

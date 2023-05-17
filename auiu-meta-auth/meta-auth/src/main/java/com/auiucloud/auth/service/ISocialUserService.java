@@ -6,10 +6,10 @@ import com.auiucloud.core.douyin.model.AppletUserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
-* @author dries
-* @description 针对表【social_user(第三方用户表)】的数据库操作Service
-* @createDate 2023-02-26 22:46:21
-*/
+ * @author dries
+ * @description 针对表【social_user(第三方用户表)】的数据库操作Service
+ * @createDate 2023-02-26 22:46:21
+ */
 public interface ISocialUserService extends IService<SocialUser> {
 
     Boolean bindMember2Social(Long userId, SocialUser socialUser);

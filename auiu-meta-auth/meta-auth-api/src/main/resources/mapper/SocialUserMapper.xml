@@ -5,24 +5,24 @@
 <mapper namespace="com.auiucloud.auth.mapper.SocialUserMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.auth.domain.SocialUser">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
-            <result property="source" column="source" jdbcType="VARCHAR"/>
-            <result property="accessToken" column="access_token" jdbcType="VARCHAR"/>
-            <result property="expireIn" column="expire_in" jdbcType="INTEGER"/>
-            <result property="refreshToken" column="refresh_token" jdbcType="VARCHAR"/>
-            <result property="openId" column="open_id" jdbcType="VARCHAR"/>
-            <result property="uid" column="uid" jdbcType="VARCHAR"/>
-            <result property="accessCode" column="access_code" jdbcType="VARCHAR"/>
-            <result property="unionId" column="union_id" jdbcType="VARCHAR"/>
-            <result property="scope" column="scope" jdbcType="VARCHAR"/>
-            <result property="tokenType" column="token_type" jdbcType="VARCHAR"/>
-            <result property="idToken" column="id_token" jdbcType="VARCHAR"/>
-            <result property="macAlgorithm" column="mac_algorithm" jdbcType="VARCHAR"/>
-            <result property="macKey" column="mac_key" jdbcType="VARCHAR"/>
-            <result property="code" column="code" jdbcType="VARCHAR"/>
-            <result property="oauthToken" column="oauth_token" jdbcType="VARCHAR"/>
-            <result property="oauthTokenSecret" column="oauth_token_secret" jdbcType="VARCHAR"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="source" column="source" jdbcType="VARCHAR"/>
+        <result property="accessToken" column="access_token" jdbcType="VARCHAR"/>
+        <result property="expireIn" column="expire_in" jdbcType="INTEGER"/>
+        <result property="refreshToken" column="refresh_token" jdbcType="VARCHAR"/>
+        <result property="openId" column="open_id" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="accessCode" column="access_code" jdbcType="VARCHAR"/>
+        <result property="unionId" column="union_id" jdbcType="VARCHAR"/>
+        <result property="scope" column="scope" jdbcType="VARCHAR"/>
+        <result property="tokenType" column="token_type" jdbcType="VARCHAR"/>
+        <result property="idToken" column="id_token" jdbcType="VARCHAR"/>
+        <result property="macAlgorithm" column="mac_algorithm" jdbcType="VARCHAR"/>
+        <result property="macKey" column="mac_key" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="oauthToken" column="oauth_token" jdbcType="VARCHAR"/>
+        <result property="oauthTokenSecret" column="oauth_token_secret" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">

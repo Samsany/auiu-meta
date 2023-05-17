@@ -2,11 +2,11 @@ package com.auiucloud.admin.modules.system.controller;
 
 import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.modules.system.dto.SysUserDTO;
-import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.service.ISysUserService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -49,9 +49,9 @@ public class SysUserController extends BaseController {
     @Parameters({
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
-            @Parameter(name = "account",  description = "账户", in = ParameterIn.QUERY),
-            @Parameter(name = "nickname",  description = "昵称", in = ParameterIn.QUERY),
-            @Parameter(name = "deptId",  description = "部门", in = ParameterIn.QUERY),
+            @Parameter(name = "account", description = "账户", in = ParameterIn.QUERY),
+            @Parameter(name = "nickname", description = "昵称", in = ParameterIn.QUERY),
+            @Parameter(name = "deptId", description = "部门", in = ParameterIn.QUERY),
     })
     public ApiResult<?> list(Search search, SysUser sysUser) {
         PageUtils list = sysUserService.listPage(search, sysUser);
@@ -77,7 +77,7 @@ public class SysUserController extends BaseController {
     @Log(value = "系统用户", exception = "新增系统用户请求异常")
     @PostMapping
     @Operation(summary = "新增系统用户")
-    public ApiResult<?> add(@Validated({InsertGroup.class})  @RequestBody SysUserDTO sysUser) {
+    public ApiResult<?> add(@Validated({InsertGroup.class}) @RequestBody SysUserDTO sysUser) {
         return ApiResult.condition(sysUserService.saveSysUserVO(sysUser));
     }
 

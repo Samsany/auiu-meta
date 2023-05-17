@@ -23,6 +23,7 @@ public class OssAutoConfiguration {
 
     /**
      * OSS操作模板
+     *
      * @return OSS操作模板
      */
     @Bean
@@ -34,6 +35,7 @@ public class OssAutoConfiguration {
 
     /**
      * OSS端点信息
+     *
      * @param ossTemplate oss操作模版
      * @return oss远程服务端点
      */
@@ -45,7 +47,7 @@ public class OssAutoConfiguration {
 
     @Bean
     @RefreshScope
-    public OssProperties ossProperties(RedisService redisService){
+    public OssProperties ossProperties(RedisService redisService) {
         return (OssProperties) redisService.get(RedisKeyConstant.OSS_DEFAULT_CONFIG);
     }
 

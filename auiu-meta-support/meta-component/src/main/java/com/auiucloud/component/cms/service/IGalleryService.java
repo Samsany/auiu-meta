@@ -14,13 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【cms_gallery(作品表)】的数据库操作Service
-* @createDate 2023-04-16 20:56:41
-*/
+ * @author dries
+ * @description 针对表【cms_gallery(作品表)】的数据库操作Service
+ * @createDate 2023-04-16 20:56:41
+ */
 public interface IGalleryService extends IService<Gallery> {
 
-    List<GalleryVO> listGalleryVOByGalleryIds(List<Long> galleryIds);
+    List<GalleryVO> listGalleryVOByGIds(List<Long> galleryIds);
 
     List<GalleryVO> selectGalleryListByCId(Long cId);
 
@@ -36,11 +36,14 @@ public interface IGalleryService extends IService<Gallery> {
 
     PageUtils selectMyFavoriteGalleryPage(Search search);
 
+    PageUtils selectMyDownloadGalleryPage(Search search);
+
     GalleryVO selectGalleryInfoById(Long galleryId);
 
     ApiResult<?> upload(MultipartFile file, Long cId);
 
     PageUtils selectGalleryPage(Search search, Gallery gallery);
+
     PageUtils galleryNoCollectionPage(Search search, Gallery gallery);
 
     boolean joinGalleryCollection(JoinGalleryCollectionDTO joinGalleryCollectionDTO);
@@ -53,7 +56,7 @@ public interface IGalleryService extends IService<Gallery> {
      * 点赞/取消点赞帖子
      *
      * @param postId 帖子ID
-     * @param type 帖子类型
+     * @param type   帖子类型
      * @return boolean
      */
     boolean likeGallery(Long postId, Integer type);
@@ -62,7 +65,7 @@ public interface IGalleryService extends IService<Gallery> {
      * 收藏/取消收藏 帖子
      *
      * @param postId 帖子ID
-     * @param type 帖子类型
+     * @param type   帖子类型
      * @return boolean
      */
     boolean favoriteGallery(Long postId, Integer type);
@@ -86,9 +89,11 @@ public interface IGalleryService extends IService<Gallery> {
     Long countUserReceivedLikeNum(Long userId);
 
     Long countGalleryNumByCId(Long id);
+
     Long countPublishedGalleryNumByCId(Long id);
 
     boolean checkUserPointQuantity(Long id);
 
     ApiResult<?> downLoadUserGallery(Long id);
+
 }

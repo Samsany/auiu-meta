@@ -1,6 +1,5 @@
 package com.auiucloud.auth.extension.captcha;
 
-import com.auiucloud.auth.domain.Captcha;
 import com.auiucloud.auth.enums.ValidateCodeTypeEnum;
 import com.auiucloud.auth.service.CaptchaService;
 import com.auiucloud.core.common.constant.Oauth2Constant;
@@ -21,6 +20,10 @@ public class ValidateCodeProcessorHolder {
     @Resource
     private Map<String, CaptchaService> validateCodeProcessorMap;
 
+    private static String buildKey(String type) {
+        return type.toLowerCase() + Oauth2Constant.CAPTCHA_PROCESSOR_SEPARATOR;
+    }
+
     public CaptchaService findValidateCodeProcessor(ValidateCodeTypeEnum codeType) {
         return findValidateCodeProcessor(codeType.toString().toLowerCase());
     }
@@ -33,10 +36,6 @@ public class ValidateCodeProcessorHolder {
             throw new CaptchaException("验证码处理器" + name + "不存在");
         }
         return processor;
-    }
-
-    private static String buildKey(String type) {
-        return type.toLowerCase() + Oauth2Constant.CAPTCHA_PROCESSOR_SEPARATOR;
     }
 
 }

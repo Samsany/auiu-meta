@@ -5,13 +5,13 @@
 <mapper namespace="com.auiucloud.component.cms.mapper.UserGalleryCollectionMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.UserGalleryCollection">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="postId" column="post_id" jdbcType="BIGINT"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="postId" column="post_id" jdbcType="BIGINT"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">

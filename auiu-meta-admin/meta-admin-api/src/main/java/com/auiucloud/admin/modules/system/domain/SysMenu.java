@@ -1,7 +1,6 @@
 package com.auiucloud.admin.modules.system.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;

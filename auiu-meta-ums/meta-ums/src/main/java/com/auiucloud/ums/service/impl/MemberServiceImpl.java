@@ -47,8 +47,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -63,9 +67,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
 
     private final PasswordEncoder passwordEncoder;
     private final IUserFollowerService userFollowerService;
-    private final IUserGalleryProvider userGalleryProvider;
     private final IUserLevelService userLevelService;
     private final IUserIntegralRecordService userIntegralRecordService;
+
+    @Resource
+    private IUserGalleryProvider userGalleryProvider;
 
     /**
      * 会员分页列表

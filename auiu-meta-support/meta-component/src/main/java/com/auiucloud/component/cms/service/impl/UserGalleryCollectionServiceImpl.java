@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* @author dries
-* @description 针对表【ums_user_gallery_collection(我的收藏表)】的数据库操作Service实现
-* @createDate 2023-04-24 10:09:18
-*/
+ * @author dries
+ * @description 针对表【ums_user_gallery_collection(我的收藏表)】的数据库操作Service实现
+ * @createDate 2023-04-24 10:09:18
+ */
 @Service
 public class UserGalleryCollectionServiceImpl extends ServiceImpl<UserGalleryCollectionMapper, UserGalleryCollection>
-    implements IUserGalleryCollectionService {
+        implements IUserGalleryCollectionService {
 
     @Override
     public List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByGalleryIds(List<Long> galleryIds) {

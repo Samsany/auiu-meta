@@ -33,6 +33,22 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
 
     private final ISysDictDataService dictDataService;
 
+    private static LambdaQueryWrapper<SysDictType> buildSearchParams(SysDictType dictType) {
+        LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
+        if (StrUtil.isNotBlank(dictType.getDictName())) {
+            queryWrapper.like(SysDictType::getDictName, dictType.getDictName());
+        }
+        if (StrUtil.isNotBlank(dictType.getDictType())) {
+            queryWrapper.eq(SysDictType::getDictType, dictType.getDictType());
+        }
+        if (ObjectUtil.isNotNull(dictType.getStatus())) {
+            queryWrapper.eq(SysDictType::getStatus, dictType.getStatus());
+        }
+
+        queryWrapper.orderByDesc(SysDictType::getCreateTime);
+        return queryWrapper;
+    }
+
     /**
      * 查询字典类型列表
      *
@@ -73,22 +89,6 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
                 .collect(Collectors.toList());
         sysDictVO.setDictDataList(dictDataVOS);
         return sysDictVO;
-    }
-
-    private static LambdaQueryWrapper<SysDictType> buildSearchParams(SysDictType dictType) {
-        LambdaQueryWrapper<SysDictType> queryWrapper = new LambdaQueryWrapper<>();
-        if (StrUtil.isNotBlank(dictType.getDictName())) {
-            queryWrapper.like(SysDictType::getDictName, dictType.getDictName());
-        }
-        if (StrUtil.isNotBlank(dictType.getDictType())) {
-            queryWrapper.eq(SysDictType::getDictType, dictType.getDictType());
-        }
-        if (ObjectUtil.isNotNull(dictType.getStatus())) {
-            queryWrapper.eq(SysDictType::getStatus, dictType.getStatus());
-        }
-
-        queryWrapper.orderByDesc(SysDictType::getCreateTime);
-        return queryWrapper;
     }
 
     @Override

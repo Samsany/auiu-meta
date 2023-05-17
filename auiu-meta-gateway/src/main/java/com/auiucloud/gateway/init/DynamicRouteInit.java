@@ -58,6 +58,7 @@ public class DynamicRouteInit {
                     updateRoute(configInfo);
                     log.info("更新网关路由完成");
                 }
+
                 @Override
                 public Executor getExecutor() {
                     return null;

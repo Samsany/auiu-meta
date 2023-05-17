@@ -1,0 +1,34 @@
+server:
+  port: 88
+spring:
+  application:
+    name: meta-gateway
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  # 配置RSA的公钥访问地址
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:${server.port}/meta-auth/rsa/publicKey'
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+    loadbalancer:
+      retry:
+        enabled: true
+
+meta:
+  # MetaRequestProperties配置
+  request:
+    #traceId跟踪
+    trace: true
+    #获取IP
+    ip: true
+    #黑名单增强模式启动
+    enhance: true

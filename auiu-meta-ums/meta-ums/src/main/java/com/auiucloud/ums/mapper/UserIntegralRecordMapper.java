@@ -4,11 +4,11 @@ import com.auiucloud.ums.domain.UserIntegralRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
-* @author dries
-* @description 针对表【ums_user_integral_record(用户积分记录表)】的数据库操作Mapper
-* @createDate 2023-05-10 18:01:35
-* @Entity com.auiucloud.ums.domain.UserIntegralRecord
-*/
+ * @author dries
+ * @description 针对表【ums_user_integral_record(用户积分记录表)】的数据库操作Mapper
+ * @createDate 2023-05-10 18:01:35
+ * @Entity com.auiucloud.ums.domain.UserIntegralRecord
+ */
 public interface UserIntegralRecordMapper extends BaseMapper<UserIntegralRecord> {
 
 }

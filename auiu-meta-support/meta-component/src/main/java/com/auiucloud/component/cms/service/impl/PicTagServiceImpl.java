@@ -64,11 +64,11 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
                     .build();
             picTagList.add(allPicTag);
 
-//            PicTag collectionPicTag = PicTag.builder()
-//                    .id(GalleryEnums.GalleryTagType.COLLECTION.getValue())
-//                    .name(GalleryEnums.GalleryTagType.COLLECTION.getLabel())
-//                    .build();
-//            picTagList.add(collectionPicTag);
+            //            PicTag collectionPicTag = PicTag.builder()
+            //                    .id(GalleryEnums.GalleryTagType.COLLECTION.getValue())
+            //                    .name(GalleryEnums.GalleryTagType.COLLECTION.getLabel())
+            //                    .build();
+            //            picTagList.add(collectionPicTag);
         }
         picTagList.addAll(list);
 

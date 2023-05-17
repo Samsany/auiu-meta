@@ -34,7 +34,7 @@ public class ProviderConstant {
     /**
      * 根据用户ID列表 查询用户信息
      */
-    public final String PROVIDER_USER_LIST = PROVIDER + "/user/list";
+    public final String PROVIDER_USER_LIST_BY_IDS = PROVIDER + "/user/list-by-ids";
     /**
      * 根据username查询用户信息
      */

@@ -208,11 +208,11 @@ public class MetaAuthServerConfig extends AuthorizationServerConfigurerAdapter {
      * 构建用户服务
      */
     private void addUserDetailsService(DefaultTokenServices tokenServices) {
-         if (userDetailsService != null) {
-             PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-             provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
-             tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
-         }
+        if (userDetailsService != null) {
+            PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+            provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService));
+            tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
+        }
     }
 
 }

@@ -229,8 +229,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
 
 
     /**
-     *
-     * @param userId 用户ID
+     * @param userId   用户ID
      * @param userType 任务指定的用户类型
      * @return boolean
      */

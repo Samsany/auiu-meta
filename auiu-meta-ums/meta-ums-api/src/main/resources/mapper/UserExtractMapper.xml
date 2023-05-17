@@ -5,25 +5,25 @@
 <mapper namespace="com.auiucloud.ums.mapper.UserExtractMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserExtract">
-            <id property="id" column="id" jdbcType="OTHER"/>
+        <id property="id" column="id" jdbcType="OTHER"/>
         <result property="uId" column="u_id" jdbcType="BIGINT"/>
-            <result property="realName" column="real_name" jdbcType="VARCHAR"/>
-            <result property="extractType" column="extract_type" jdbcType="VARCHAR"/>
-            <result property="bankCode" column="bank_code" jdbcType="VARCHAR"/>
-            <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
-            <result property="bankAddress" column="bank_address" jdbcType="VARCHAR"/>
-            <result property="alipayCode" column="alipay_code" jdbcType="VARCHAR"/>
-            <result property="wechatCode" column="wechat_code" jdbcType="VARCHAR"/>
-            <result property="extractPrice" column="extract_price" jdbcType="DECIMAL"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="cashConfigId" column="cash_config_id" jdbcType="INTEGER"/>
-            <result property="refuseReason" column="refuse_reason" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+        <result property="extractType" column="extract_type" jdbcType="VARCHAR"/>
+        <result property="bankCode" column="bank_code" jdbcType="VARCHAR"/>
+        <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
+        <result property="bankAddress" column="bank_address" jdbcType="VARCHAR"/>
+        <result property="alipayCode" column="alipay_code" jdbcType="VARCHAR"/>
+        <result property="wechatCode" column="wechat_code" jdbcType="VARCHAR"/>
+        <result property="extractPrice" column="extract_price" jdbcType="DECIMAL"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="cashConfigId" column="cash_config_id" jdbcType="INTEGER"/>
+        <result property="refuseReason" column="refuse_reason" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

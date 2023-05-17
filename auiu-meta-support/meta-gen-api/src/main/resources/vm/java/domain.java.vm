@@ -43,32 +43,32 @@ public class ${ClassName} extends BaseEntity{
 #else
 public class ${ClassName} implements Serializable{
 #end
-    private static final long serialVersionUID=1L;
+private static final long serialVersionUID=1L;
 
 ## ----------  START 字段循环遍历  ----------
 #foreach ($column in $columns)
     #if(${superEntityClass})
-    #if(!${column.superColumn})
-    #if("$column.columnComment" != "")
-    /**
-     * ${column.columnComment}
-     */
-    #if(${enableSwagger})
-    @Schema(description = "${column.columnComment}")
-    #end
-    #end
-    private $column.javaType $column.javaField;
+        #if(!${column.superColumn})
+            #if("$column.columnComment" != "")
+            /**
+             * ${column.columnComment}
+             */
+                #if(${enableSwagger})
+                @Schema(description = "${column.columnComment}")
+                #end
+            #end
+        private $column.javaType $column.javaField;
 
-    #end
+        #end
     #else
-    #if("$column.columnComment" != "")
-    /**
-     * ${column.columnComment}
-     */
-    #if(${enableSwagger})
-    @Schema(description = "${column.columnComment}")
-    #end
-    #end
+        #if("$column.columnComment" != "")
+        /**
+         * ${column.columnComment}
+         */
+            #if(${enableSwagger})
+            @Schema(description = "${column.columnComment}")
+            #end
+        #end
     private $column.javaType $column.javaField;
 
     #end

@@ -72,7 +72,7 @@ public class DouyinTokenGranter extends AbstractTokenGranter {
             parameters.remove("iv");
             parameters.remove("userInfo");
 
-            if (StrUtil.isBlank(code) ) {
+            if (StrUtil.isBlank(code)) {
                 throw new UserDeniedAuthorizationException("未传入请求参数");
             }
 

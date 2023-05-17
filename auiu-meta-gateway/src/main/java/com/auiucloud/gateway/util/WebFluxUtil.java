@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- *
  * @author : dries
  */
 public class WebFluxUtil {
@@ -96,7 +95,7 @@ public class WebFluxUtil {
      * @return 请求体
      */
     public static String getRequestBody(ServerHttpRequest serverHttpRequest) {
-        //获取请求体
+        // 获取请求体
         Flux<DataBuffer> body = serverHttpRequest.getBody();
         AtomicReference<String> bodyReference = new AtomicReference<>();
         body.subscribe(buffer -> {
@@ -104,7 +103,7 @@ public class WebFluxUtil {
             DataBufferUtils.release(buffer);
             bodyReference.set(charBuffer.toString());
         });
-        //获取request body
+        // 获取request body
         return bodyReference.get();
     }
 

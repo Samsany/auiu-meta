@@ -34,7 +34,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         return this.list(build${ClassName}Search(search, ${className}));
     }
 
-     /**
+    /**
      * 组装查询参数
      *
      * @param search        查询参数
@@ -42,47 +42,48 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @return LambdaQueryWrapper<${ClassName}>
      */
     private LambdaQueryWrapper<${ClassName}> build${ClassName}Search(Search search, ${ClassName} ${className}) {
-            LambdaQueryWrapper<${ClassName}> queryWrapper = new LambdaQueryWrapper<>();
-            if (StringUtil.isNotBlank(search.getStartDate())) {
-                queryWrapper.between(${ClassName}::getCreateTime, search.getStartDate(), search.getEndDate());
-            }
-            if (StringUtil.isNotBlank(search.getKeyword())) {
-                queryWrapper.like(${ClassName}::getId, search.getKeyword());
-            }
-#foreach ($column in $columns)
-    #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-        #set($AttrName=$column.javaField)
-    #else
-        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-    #end
-    #if($column.isQuery == 1)
-        #if($column.javaType == "String")
-            if (StringUtil.isNotBlank(${className}.get${AttrName}())) {
-        #else
-            if (ObjectUtil.isNotNull(${className}.get${AttrName}())) {
-        #end
-            #if($column.queryType == "EQ")
-                queryWrapper.eq(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "NE")
-                queryWrapper.ne(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "GT")
-                queryWrapper.gt(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "LT")
-                queryWrapper.lt(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "GTE")
-                queryWrapper.ge(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "LTE")
-                queryWrapper.le(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "LIKE")
-                queryWrapper.like(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
-            #elseif($column.queryType == "BETWEEN")
-                queryWrapper.between(${ClassName}::get${AttrName}, ${className}.get${AttrName}(), ${className}.get${AttrName}());
+        LambdaQueryWrapper<${ClassName}> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(search.getStartDate())) {
+            queryWrapper.between(${ClassName}::getCreateTime, search.getStartDate(), search.getEndDate());
+        }
+        if (StringUtil.isNotBlank(search.getKeyword())) {
+            queryWrapper.like(${ClassName}::getId, search.getKeyword());
+        }
+        #foreach ($column in $columns)
+            #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+                #set($AttrName=$column.javaField)
+            #else
+                #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
             #end
+            #if($column.isQuery == 1)
+                #if($column.javaType == "String")
+                    if (StringUtil.isNotBlank(${className}.get${AttrName}())) {
+                #else
+                    if (ObjectUtil.isNotNull(${className}.get${AttrName}())) {
+                #end
+                #if($column.queryType == "EQ")
+                    queryWrapper.eq(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "NE")
+                    queryWrapper.ne(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "GT")
+                    queryWrapper.gt(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "LT")
+                    queryWrapper.lt(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "GTE")
+                    queryWrapper.ge(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "LTE")
+                    queryWrapper.le(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "LIKE")
+                    queryWrapper.like(${ClassName}::get${AttrName}, ${className}.get${AttrName}());
+                #elseif($column.queryType == "BETWEEN")
+                    queryWrapper.between(${ClassName}::get${AttrName}, ${className}.get${AttrName}(), ${className}.
+                    get${AttrName}());
+                #end
             }
-    #end
-#end
+            #end
+        #end
         queryWrapper.orderByDesc(${ClassName}::getCreateTime);
         return queryWrapper;
     }
 
-}
+    }

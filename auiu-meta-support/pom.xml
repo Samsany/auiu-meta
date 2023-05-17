@@ -20,10 +20,8 @@
         <module>meta-component</module>
         <module>meta-component-api</module>
 
-        <module>meta-gen</module>
-        <module>meta-gen-api</module>
-
         <module>meta-monitor</module>
+        <module>meta-job-admin</module>
     </modules>
 
 </project>

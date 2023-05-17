@@ -1,8 +1,8 @@
 package com.auiucloud.component.oss.controller;
 
-import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
+import com.auiucloud.component.sysconfig.domain.SysAttachmentGroup;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;

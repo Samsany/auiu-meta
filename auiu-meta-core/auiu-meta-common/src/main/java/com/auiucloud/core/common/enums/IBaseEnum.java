@@ -2,7 +2,6 @@ package com.auiucloud.core.common.enums;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.EnumSet;
 import java.util.Objects;
@@ -13,10 +12,6 @@ import java.util.Objects;
  * @author dries
  **/
 public interface IBaseEnum<T> {
-
-    T getValue();
-
-    String getLabel();
 
     /**
      * 根据值获取枚举
@@ -77,7 +72,6 @@ public interface IBaseEnum<T> {
         return label;
     }
 
-
     /**
      * 根据文本标签获取值
      *
@@ -101,5 +95,9 @@ public interface IBaseEnum<T> {
         }
         return value;
     }
+
+    T getValue();
+
+    String getLabel();
 
 }

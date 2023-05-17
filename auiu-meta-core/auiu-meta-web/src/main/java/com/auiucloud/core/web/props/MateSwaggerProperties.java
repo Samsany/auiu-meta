@@ -1,11 +1,11 @@
-//package com.auiucloud.core.web.props;
+// package com.auiucloud.core.web.props;
 //
-//import lombok.Data;
-//import org.springframework.boot.context.properties.ConfigurationProperties;
-//import org.springframework.cloud.context.config.annotation.RefreshScope;
+// import lombok.Data;
+// import org.springframework.boot.context.properties.ConfigurationProperties;
+// import org.springframework.cloud.context.config.annotation.RefreshScope;
 //
-//import java.util.ArrayList;
-//import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 //
 ///**
 // * Swagger配置属性
@@ -16,7 +16,7 @@
 //@Data
 //@RefreshScope
 //@ConfigurationProperties(prefix = "meta.swagger")
-//public class MateSwaggerProperties {
+// public class MateSwaggerProperties {
 //
 //    /*** 是否开启swagger */
 //    private boolean enabled = true;

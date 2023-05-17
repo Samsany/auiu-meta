@@ -28,8 +28,6 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import javax.annotation.Resource;
-
 /**
  * 安全配置中心
  *

@@ -9,9 +9,10 @@ import java.io.Serial;
 
 /**
  * 部门表
+ *
  * @TableName sys_dept
  */
-@TableName(value ="sys_dept")
+@TableName(value = "sys_dept")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SysDept extends BaseEntity {

@@ -26,9 +26,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class SwaggerConfig {
 
+    private static final String API_URI = "/v3/api-docs";
     private final RouteDefinitionLocator routeDefinitionLocator;
     private final SwaggerUiConfigProperties swaggerUiConfigProperties;
-    private static final String API_URI = "/v3/api-docs";
 
     @Bean
     public OpenAPI customOpenAPI() {

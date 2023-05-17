@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
-import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.domain.UserGroup;
 import com.auiucloud.ums.mapper.UserGroupMapper;
 import com.auiucloud.ums.service.IMemberService;

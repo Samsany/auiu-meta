@@ -1,0 +1,51 @@
+version: '3'
+services:
+  meta-gateway:
+    build:
+      context: ./auiu-meta-gateway
+    restart: always
+    container_name: meta-gateway
+    image: meta-gateway
+    hostname: meta-gateway
+    ports:
+      - "88:88"
+
+  meta-auth:
+    build:
+      context: ./meta-auth
+    restart: always
+    container_name: meta-auth
+    image: meta-auth
+    hostname: meta-auth
+    ports:
+      - "20000:20000"
+
+  meta-admin:
+    build:
+      context: ./meta-admin
+    restart: always
+    container_name: meta-admin
+    image: meta-admin
+    hostname: meta-admin
+    ports:
+      - "21000:21000"
+
+  meta-ums:
+    build:
+      context: ./meta-ums
+    restart: always
+    container_name: meta-ums
+    image: meta-ums
+    hostname: meta-ums
+    ports:
+      - "22000:22000"
+
+  meta-component:
+    build:
+      context: ./meta-component
+    restart: always
+    container_name: meta-component
+    image: meta-component
+    hostname: meta-gateway
+    ports:
+      - "23000:23000"

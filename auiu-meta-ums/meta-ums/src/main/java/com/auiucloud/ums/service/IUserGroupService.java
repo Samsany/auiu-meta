@@ -6,10 +6,10 @@ import com.auiucloud.ums.domain.UserGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
-* @author dries
-* @description 针对表【ums_user_group(用户分组表)】的数据库操作Service
-* @createDate 2023-04-03 22:21:29
-*/
+ * @author dries
+ * @description 针对表【ums_user_group(用户分组表)】的数据库操作Service
+ * @createDate 2023-04-03 22:21:29
+ */
 public interface IUserGroupService extends IService<UserGroup> {
 
     PageUtils listPage(Search search, UserGroup userGroup);

@@ -5,9 +5,9 @@
 <mapper namespace="com.auiucloud.auth.mapper.SocialUserAuthMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.auth.domain.SocialUserAuth">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="socialUserId" column="social_user_id" jdbcType="BIGINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="socialUserId" column="social_user_id" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

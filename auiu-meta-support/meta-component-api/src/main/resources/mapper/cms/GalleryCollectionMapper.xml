@@ -56,7 +56,7 @@
     <select id="selectGalleryCollectionVOById" resultType="com.auiucloud.component.cms.vo.GalleryCollectionVO">
         <include refid="GalleryCollectionVO_Column_List"/>
         where cgc.is_deleted = 0
-          and cgc.id = #{cId}
+        and cgc.id = #{cId}
     </select>
 
 

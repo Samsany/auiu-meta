@@ -3,8 +3,6 @@ package com.auiucloud.auth.feign;
 import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.auth.service.ISocialUserService;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.log.annotation.Log;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

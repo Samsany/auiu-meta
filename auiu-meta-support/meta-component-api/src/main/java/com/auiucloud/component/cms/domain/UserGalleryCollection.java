@@ -1,26 +1,25 @@
 package com.auiucloud.component.cms.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
  * 我的收藏表
+ *
  * @TableName ums_user_gallery_collection
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value ="ums_user_gallery_collection")
+@TableName(value = "ums_user_gallery_collection")
 public class UserGalleryCollection implements Serializable {
 
     @Serial

@@ -10,23 +10,25 @@ import com.auiucloud.ums.dto.MemberInfoDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
 import com.auiucloud.ums.dto.UserPointChangeDTO;
-import com.auiucloud.ums.vo.UserInfoVO;
 import com.auiucloud.ums.vo.MemberInfoVO;
+import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【ums_member(会员表)】的数据库操作Service
-* @createDate 2023-03-28 10:11:41
-*/
+ * @author dries
+ * @description 针对表【ums_member(会员表)】的数据库操作Service
+ * @createDate 2023-03-28 10:11:41
+ */
 public interface IMemberService extends IService<Member> {
 
     PageUtils listPage(Search search, Member member);
 
     PageUtils selectOpenApiUserPage(Search search);
+
     PageUtils selectUserAttentionPage(Search search);
+
     PageUtils selectUserFollowerPage(Search search);
 
     List<Member> selectMemberList(Search search, Member member);
@@ -36,7 +38,9 @@ public interface IMemberService extends IService<Member> {
     List<UserInfoVO> userRecommendList();
 
     UserInfoVO getSimpleUserById(Long userId);
+
     UserInfoVO getUserInfoVOById(Long userId);
+
     UserInfoVO queryUserInfoVOByInvitationCode(String invitationCode);
 
     Member getMemberInfoById(Long id);
@@ -52,14 +56,13 @@ public interface IMemberService extends IService<Member> {
     /**
      * 根据用户openId 查询会员信息
      *
-     * @param uuid 用户唯一标识
+     * @param uuid   用户唯一标识
      * @param source 第三方系统标识
      * @return MemberInfoVO
      */
     MemberInfoVO getMemberByOpenId2Source(String uuid, String source);
 
     /**
-     *
      * 用户注册
      *
      * @param memberInfoDTO 用户信息
@@ -90,7 +93,7 @@ public interface IMemberService extends IService<Member> {
     /**
      * 增加积分
      *
-     * @param userId 用户ID
+     * @param userId      用户ID
      * @param integration 增加的积分
      * @return
      */

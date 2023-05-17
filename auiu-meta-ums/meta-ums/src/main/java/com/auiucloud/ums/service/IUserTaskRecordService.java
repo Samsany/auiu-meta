@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【ums_user_task_record(用户任务记录表)】的数据库操作Service
-* @createDate 2023-05-09 17:30:38
-*/
+ * @author dries
+ * @description 针对表【ums_user_task_record(用户任务记录表)】的数据库操作Service
+ * @createDate 2023-05-09 17:30:38
+ */
 public interface IUserTaskRecordService extends IService<UserTaskRecord> {
 
     List<UserTaskRecord> selectUserTaskRecordListByTask2UserId(UserTask task, Long userId);

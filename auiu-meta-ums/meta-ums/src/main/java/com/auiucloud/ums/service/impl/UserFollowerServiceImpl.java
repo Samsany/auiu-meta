@@ -71,6 +71,7 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
 
     /**
      * 查询粉丝数
+     *
      * @param uId 用户ID
      * @return long
      */
@@ -84,6 +85,7 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
 
     /**
      * 查询我的关注数
+     *
      * @param uId 用户ID
      * @return long
      */

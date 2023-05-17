@@ -15,6 +15,7 @@ import java.util.List;
 public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
 
     List<SysDictVO> selectDictTypeList(SysDictType dictType);
+
     SysDictVO selectDictInfoByType(String dictType);
 
 }

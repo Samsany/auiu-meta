@@ -36,7 +36,7 @@ public class SysDictTypeController extends BaseController {
 
     private final ISysDictTypeService dictTypeService;
 
-    @Operation(summary ="字典列表")
+    @Operation(summary = "字典列表")
     @Parameters({
             @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
             @Parameter(name = "pageNum", description = "当前页码", in = ParameterIn.QUERY),
@@ -62,9 +62,9 @@ public class SysDictTypeController extends BaseController {
     @Log("字典类型")
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysDictType dictType) {
-//        List<SysDictType> list = dictTypeService.list(new LambdaQueryWrapper<SysDictType>().setEntity(dictType));
-//        ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
-//        util.exportExcel(response, list, "字典类型");
+        //        List<SysDictType> list = dictTypeService.list(new LambdaQueryWrapper<SysDictType>().setEntity(dictType));
+        //        ExcelUtil<SysDictType> util = new ExcelUtil<SysDictType>(SysDictType.class);
+        //        util.exportExcel(response, list, "字典类型");
     }
 
     /**
@@ -127,35 +127,35 @@ public class SysDictTypeController extends BaseController {
         return ApiResult.data(dictTypes);
     }
 
-//
-//    /**
-//     * 刷新字典缓存
-//     */
-//    @PreAuthorize("@ss.hasPermi('system:dict:remove')")
-//    @Log(title = "字典类型", businessType = BusinessType.CLEAN)
-//    @DeleteMapping("/refreshCache")
-//    public AjaxResult refreshCache() {
-//        dictTypeService.resetDictCache();
-//        return AjaxResult.success();
-//    }
-//
+    //
+    //    /**
+    //     * 刷新字典缓存
+    //     */
+    //    @PreAuthorize("@ss.hasPermi('system:dict:remove')")
+    //    @Log(title = "字典类型", businessType = BusinessType.CLEAN)
+    //    @DeleteMapping("/refreshCache")
+    //    public AjaxResult refreshCache() {
+    //        dictTypeService.resetDictCache();
+    //        return AjaxResult.success();
+    //    }
+    //
 
-//
-//    @Log(title = "字典类型", businessType = BusinessType.IMPORT)
-//    @PreAuthorize("@ss.hasPermi('system:dict:import')")
-//    @PostMapping("/importData")
-//    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-//        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
-//        List<SysDictType> dictTypeList = util.importExcel(file.getInputStream());
-//        String operName = getUsername();
-//        String message = dictTypeService.importDictType(dictTypeList, updateSupport, operName);
-//        return AjaxResult.success(message);
-//    }
-//
-//    @PostMapping("/importTemplate")
-//    public void importTemplate(HttpServletResponse response) {
-//        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
-//        util.importTemplateExcel(response, "字典数据");
-//    }
+    //
+    //    @Log(title = "字典类型", businessType = BusinessType.IMPORT)
+    //    @PreAuthorize("@ss.hasPermi('system:dict:import')")
+    //    @PostMapping("/importData")
+    //    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
+    //        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
+    //        List<SysDictType> dictTypeList = util.importExcel(file.getInputStream());
+    //        String operName = getUsername();
+    //        String message = dictTypeService.importDictType(dictTypeList, updateSupport, operName);
+    //        return AjaxResult.success(message);
+    //    }
+    //
+    //    @PostMapping("/importTemplate")
+    //    public void importTemplate(HttpServletResponse response) {
+    //        ExcelUtil<SysDictType> util = new ExcelUtil<>(SysDictType.class);
+    //        util.importTemplateExcel(response, "字典数据");
+    //    }
 
 }

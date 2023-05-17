@@ -1,14 +1,11 @@
 package com.auiucloud.component.cms.controller;
 
 import com.auiucloud.component.cms.domain.SwiperAdv;
-import com.auiucloud.component.cms.domain.SwiperAdv;
 import com.auiucloud.component.cms.service.ISwiperAdvService;
-import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.oss.core.OssTemplate;
 import com.auiucloud.core.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

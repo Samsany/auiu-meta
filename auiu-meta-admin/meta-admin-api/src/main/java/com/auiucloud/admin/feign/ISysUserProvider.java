@@ -4,7 +4,10 @@ import com.auiucloud.admin.modules.system.vo.UserInfoVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author dries
  * @date 2022/2/10
  */
+@Component
 @FeignClient(value = FeignConstant.META_CLOUD_ADMIN)
 public interface ISysUserProvider {
 
@@ -24,8 +28,8 @@ public interface ISysUserProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
-    ApiResult<UserInfoVO> getUserByUsername(@RequestParam String username);
+    ApiResult<UserInfoVO> getUserByUsername(@RequestParam("username") String username);
 
     @GetMapping(ProviderConstant.PROVIDER_USER_OPENID)
-    ApiResult<UserInfoVO> getSysUserByOpenId2Source(@RequestParam String openId, @RequestParam String source);
+    ApiResult<UserInfoVO> getSysUserByOpenId2Source(@RequestParam("openId") String openId, @RequestParam("source") String source);
 }

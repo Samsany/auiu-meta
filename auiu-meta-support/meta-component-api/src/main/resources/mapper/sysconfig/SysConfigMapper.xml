@@ -5,24 +5,24 @@
 <mapper namespace="com.auiucloud.component.sysconfig.mapper.SysConfigMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.sysconfig.domain.SysConfig">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
-            <result property="configName" column="config_name" jdbcType="BIGINT"/>
-            <result property="configCode" column="config_code" jdbcType="VARCHAR"/>
-            <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
-            <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
-            <result property="configType" column="config_type" jdbcType="TINYINT"/>
-            <result property="builtIn" column="built_in" jdbcType="TINYINT"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="inputType" column="input_type" jdbcType="VARCHAR"/>
-            <result property="cssClass" column="css_class" jdbcType="VARCHAR"/>
-            <result property="sort" column="sort" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="configName" column="config_name" jdbcType="BIGINT"/>
+        <result property="configCode" column="config_code" jdbcType="VARCHAR"/>
+        <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
+        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+        <result property="configType" column="config_type" jdbcType="TINYINT"/>
+        <result property="builtIn" column="built_in" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="inputType" column="input_type" jdbcType="VARCHAR"/>
+        <result property="cssClass" column="css_class" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 </mapper>

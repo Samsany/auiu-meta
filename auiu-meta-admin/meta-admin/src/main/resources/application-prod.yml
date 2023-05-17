@@ -1,0 +1,12 @@
+server:
+  port: 21000
+spring:
+  application:
+    name: ${artifactId}
+
+  #数据源配置
+  datasource:
+    url: ${meta.datasource.url}
+    username: ${meta.datasource.username}
+    password: ${meta.datasource.password}
+    driver-class-name: ${meta.datasource.driver-class-name}

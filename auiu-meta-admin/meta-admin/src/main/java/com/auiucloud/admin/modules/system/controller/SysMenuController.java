@@ -1,10 +1,10 @@
 package com.auiucloud.admin.modules.system.controller;
 
 import com.auiucloud.admin.modules.system.domain.SysMenu;
-import com.auiucloud.admin.modules.system.vo.SysMenuVO;
 import com.auiucloud.admin.modules.system.service.ISysMenuService;
-import com.auiucloud.admin.utils.TreeUtil;
 import com.auiucloud.admin.modules.system.vo.SysMenuTreeVO;
+import com.auiucloud.admin.modules.system.vo.SysMenuVO;
+import com.auiucloud.admin.utils.TreeUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
@@ -46,7 +46,7 @@ public class SysMenuController extends BaseController {
         return ApiResult.data(ForestNodeMerger.merge(TreeUtil.buildRouteTree(list)));
     }
 
-    @Operation(summary ="菜单分页列表")
+    @Operation(summary = "菜单分页列表")
     @Parameters({
             @Parameter(name = "pageNum", description = "当前页码", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "显示条数", in = ParameterIn.QUERY),
@@ -58,7 +58,7 @@ public class SysMenuController extends BaseController {
         return ApiResult.data(sysMenuService.listPage(search));
     }
 
-    @Operation(summary ="菜单树列表")
+    @Operation(summary = "菜单树列表")
     @Parameters({
             @Parameter(name = "keyword", description = "模糊查询关键词", in = ParameterIn.QUERY),
             @Parameter(name = "status", description = "状态(1-禁用 0-启用)", in = ParameterIn.QUERY)
@@ -75,7 +75,7 @@ public class SysMenuController extends BaseController {
         ));
     }
 
-    @Operation(summary ="菜单详情")
+    @Operation(summary = "菜单详情")
     @Parameter(name = "menuId", description = "菜单ID", in = ParameterIn.PATH)
     @GetMapping("/{menuId}")
     public ApiResult<?> getInfo(@PathVariable("menuId") Long menuId) {
@@ -83,21 +83,21 @@ public class SysMenuController extends BaseController {
         return ApiResult.data(menu);
     }
 
-    @Operation(summary ="新增菜单")
+    @Operation(summary = "新增菜单")
     @PostMapping
     public ApiResult<?> add(@RequestBody SysMenuVO menu) {
         boolean status = sysMenuService.createMenu(menu);
         return ApiResult.condition(status);
     }
 
-    @Operation(summary ="修改菜单")
+    @Operation(summary = "修改菜单")
     @PutMapping
     public ApiResult<?> update(@RequestBody SysMenuVO menu) {
         boolean status = sysMenuService.updateMenuById(menu);
         return ApiResult.condition(status);
     }
 
-    @Operation(summary ="删除菜单")
+    @Operation(summary = "删除菜单")
     @DeleteMapping("/delete")
     public ApiResult<?> delete(@RequestBody Long[] ids) {
         String msg = sysMenuService.deleteMenuByIds(ids);

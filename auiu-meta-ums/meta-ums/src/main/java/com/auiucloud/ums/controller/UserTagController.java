@@ -6,8 +6,6 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.ums.domain.UserTag;
-import com.auiucloud.ums.domain.UserTag;
-import com.auiucloud.ums.service.IUserTagService;
 import com.auiucloud.ums.service.IUserTagService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -40,7 +38,7 @@ public class UserTagController extends BaseController {
             @Parameter(name = "groupId", required = true, description = "标签分组ID", in = ParameterIn.QUERY),
             @Parameter(name = "name", description = "标签名称", in = ParameterIn.QUERY)
     })
-    public ApiResult<?> list(Search search, @Parameter(hidden = true)  UserTag userTag) {
+    public ApiResult<?> list(Search search, @Parameter(hidden = true) UserTag userTag) {
         PageUtils list = userTagService.listPage(search, userTag);
         return ApiResult.data(list);
     }

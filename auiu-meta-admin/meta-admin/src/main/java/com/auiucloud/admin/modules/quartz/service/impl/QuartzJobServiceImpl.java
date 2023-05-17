@@ -25,12 +25,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob> implements IQuartzJobService {
 
-    private final Scheduler scheduler;
-
     /**
      * 立即执行的任务分组
      */
     private static final String JOB_TEST_GROUP = "test_group";
+    private final Scheduler scheduler;
+
+    private static Job getClass(String classname) throws Exception {
+        Class<?> class1 = Class.forName(classname);
+        return (Job) class1.newInstance();
+    }
 
     @Override
     public List<QuartzJob> findByJobClassName(String jobClassName) {
@@ -91,7 +95,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteAndStopJob(QuartzJob job) {
         schedulerDelete(job.getId());
-		return this.removeById(job.getId());
+        return this.removeById(job.getId());
     }
 
     @Override
@@ -100,7 +104,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
         Date startDate = new Date();
         String ymd = DateUtil.format(startDate, DatePattern.PURE_DATETIME_PATTERN);
         String identity = jobName + ymd;
-        //3秒后执行 只执行一次
+        // 3秒后执行 只执行一次
         // update-begin--author:sunjianlei ---- date:20210511--- for：定时任务立即执行，延迟3秒改成0.1秒-------
         startDate.setTime(startDate.getTime() + 100L);
         // update-end--author:sunjianlei ---- date:20210511--- for：定时任务立即执行，延迟3秒改成0.1秒-------
@@ -173,11 +177,6 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
             log.error(e.getMessage(), e);
             throw new ApiException("删除定时任务失败");
         }
-    }
-
-    private static Job getClass(String classname) throws Exception {
-        Class<?> class1 = Class.forName(classname);
-        return (Job) class1.newInstance();
     }
 
 }

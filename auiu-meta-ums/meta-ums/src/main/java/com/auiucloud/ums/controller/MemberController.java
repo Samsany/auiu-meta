@@ -1,6 +1,5 @@
 package com.auiucloud.ums.controller;
 
-import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
@@ -24,7 +23,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -130,26 +128,26 @@ public class MemberController extends BaseController {
         return ApiResult.condition(memberService.setUserStatus(updateStatusDTO));
     }
 
-//    /**
-//     * 修改会员密码
-//     */
-//    @Log(value = "会员", exception = "修改会员请求异常")
-//    @PutMapping("/setNewPassword")
-//    @Operation(summary = "修改会员密码")
-//    public ApiResult<?> setNewPassword(@Validated({UpdatePasswordDTO.SetPasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
-//        return ApiResult.condition(memberService.setNewPassword(updatePasswordDTO));
-//    }
+    //    /**
+    //     * 修改会员密码
+    //     */
+    //    @Log(value = "会员", exception = "修改会员请求异常")
+    //    @PutMapping("/setNewPassword")
+    //    @Operation(summary = "修改会员密码")
+    //    public ApiResult<?> setNewPassword(@Validated({UpdatePasswordDTO.SetPasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+    //        return ApiResult.condition(memberService.setNewPassword(updatePasswordDTO));
+    //    }
 
     /**
      * 删除会员
      */
-//    @Log(value = "会员", exception = "删除会员请求异常")
-//    @DeleteMapping
-//    @Operation(summary = "删除会员")
-//    public ApiResult<?> remove(@RequestBody Long[] ids) {
-//        String msg = memberService.deleteMemberByIds(Arrays.asList(ids));
-//        return ApiResult.success(msg);
-//    }
+    //    @Log(value = "会员", exception = "删除会员请求异常")
+    //    @DeleteMapping
+    //    @Operation(summary = "删除会员")
+    //    public ApiResult<?> remove(@RequestBody Long[] ids) {
+    //        String msg = memberService.deleteMemberByIds(Arrays.asList(ids));
+    //        return ApiResult.success(msg);
+    //    }
 
     /**
      * 导出会员

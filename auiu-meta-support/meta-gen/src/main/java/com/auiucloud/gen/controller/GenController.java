@@ -43,7 +43,7 @@ public class GenController extends BaseController {
     private final IGenTableService genTableService;
     private final IGenTableColumnService genTableColumnService;
 
-    @Operation(summary ="代码生成列表")
+    @Operation(summary = "代码生成列表")
     @Log(value = "代码管理", exception = "数据源库表信息请求异常")
     @Parameters({
             @Parameter(name = "keyword", value = "数据源名称", in = ParameterIn.PATH),
@@ -58,7 +58,7 @@ public class GenController extends BaseController {
     }
 
 
-    @Operation(summary ="数据库列表")
+    @Operation(summary = "数据库列表")
     @Log(value = "代码管理", exception = "数据源库表信息请求异常")
     @Parameters({
             @Parameter(name = "keyword", value = "数据源名称", in = ParameterIn.PATH, required = true),
@@ -101,7 +101,7 @@ public class GenController extends BaseController {
         return ApiResult.condition(genTableService.editGenTableById(genTableDTO));
     }
 
-    @Operation(summary ="导入表结构（保存）")
+    @Operation(summary = "导入表结构（保存）")
     @Log(value = "代码管理", exception = "导入表结构（保存）请求异常")
     @Parameters({
             @Parameter(name = "dsName", value = "数据源名称", in = ParameterIn.PATH, required = true),
@@ -115,7 +115,7 @@ public class GenController extends BaseController {
         return ApiResult.success();
     }
 
-    @Operation(summary ="预览代码")
+    @Operation(summary = "预览代码")
     @Log(value = "代码管理", exception = "预览代码请求异常")
     @Parameters({
             @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
@@ -126,7 +126,7 @@ public class GenController extends BaseController {
         return ApiResult.data(map);
     }
 
-    @Operation(summary ="代码生成（下载方式）")
+    @Operation(summary = "代码生成（下载方式）")
     @Log(value = "代码管理", exception = "代码生成（下载方式）请求异常")
     @Parameters({
             @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
@@ -138,7 +138,7 @@ public class GenController extends BaseController {
         FileUtil.downloadFile(response, bytes, "code_" + System.currentTimeMillis() + ".zip");
     }
 
-    @Operation(summary ="代码生成（自定义路径）")
+    @Operation(summary = "代码生成（自定义路径）")
     @Log(value = "代码管理", exception = "代码生成请求异常")
     @Parameters({
             @Parameter(name = "tableId", value = "数据表ID", in = ParameterIn.PATH, required = true)
@@ -149,7 +149,7 @@ public class GenController extends BaseController {
         return ApiResult.success();
     }
 
-    @Operation(summary ="代码批量生成")
+    @Operation(summary = "代码批量生成")
     @Log(value = "代码管理", exception = "代码生成请求异常")
     @Parameters({
             @Parameter(name = "tableIds", value = "数据表ID", paramType = "body", required = true)
@@ -164,7 +164,7 @@ public class GenController extends BaseController {
     /**
      * 删除代码生成
      */
-    @Operation(summary ="删除代码生成")
+    @Operation(summary = "删除代码生成")
     @Log(value = "代码管理", exception = "删除代码生成请求异常")
     @Parameters({
             @Parameter(name = "ids", value = "数据表ID", paramType = "body"),

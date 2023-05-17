@@ -2,10 +2,6 @@ package com.auiucloud.auth.service;
 
 import com.auiucloud.auth.domain.Captcha;
 import com.auiucloud.auth.enums.ValidateCodeTypeEnum;
-import com.auiucloud.core.common.exception.CaptchaException;
-import org.springframework.web.context.request.ServletWebRequest;
-
-import javax.naming.AuthenticationException;
 
 /**
  * @author dries

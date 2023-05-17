@@ -66,15 +66,15 @@ public class PageUtils {
     /**
      * pageHelper分页
      */
-     public PageUtils(List<?> list) {
-         PageInfo<?> pageInfo = new PageInfo<>(list);
-         this.list = pageInfo.getList();
-         this.totalCount = Math.toIntExact(pageInfo.getTotal());
-         this.pageSize = pageInfo.getPageSize();
-         this.pageNum = pageInfo.getPageNum();
-         this.totalPage = pageInfo.getPages();
-         this.hasNextPage = pageInfo.isHasNextPage();
-     }
+    public PageUtils(List<?> list) {
+        PageInfo<?> pageInfo = new PageInfo<>(list);
+        this.list = pageInfo.getList();
+        this.totalCount = Math.toIntExact(pageInfo.getTotal());
+        this.pageSize = pageInfo.getPageSize();
+        this.pageNum = pageInfo.getPageNum();
+        this.totalPage = pageInfo.getPages();
+        this.hasNextPage = pageInfo.isHasNextPage();
+    }
 
     /**
      * 手工分页

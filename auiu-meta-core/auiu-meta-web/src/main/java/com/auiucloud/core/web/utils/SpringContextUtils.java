@@ -60,7 +60,7 @@ public class SpringContextUtils implements ApplicationContextAware {
      * @return Bean
      */
     public static <T> T getBean(String name) {
-        //noinspection unchecked
+        // noinspection unchecked
         return (T) applicationContext.getBean(name);
     }
 

@@ -1,8 +1,5 @@
 package com.auiucloud.core.web.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.http.*;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
@@ -24,16 +21,9 @@ import java.util.Map;
 @Component
 public class RestTemplateUtil {
 
+    private static RestTemplateUtil restTemplateUtil;
     @Resource
     private RestTemplate restTemplate;
-
-    private static RestTemplateUtil restTemplateUtil;
-
-    @PostConstruct
-    public void init(){
-        restTemplateUtil = this;
-        restTemplateUtil.restTemplate = this.restTemplate;
-    }
 
     /**
      * get请求（超时设置）
@@ -42,11 +32,11 @@ public class RestTemplateUtil {
      * @return
      */
     public static Map httpGetRequestFactoryToMap(String url) {
-        //超时处理设置
+        // 超时处理设置
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setConnectTimeout(1000);
         requestFactory.setReadTimeout(1000);
-        //应用超时设置
+        // 应用超时设置
         RestTemplate restTemplate = new RestTemplate(requestFactory);
         return restTemplateUtil.restTemplate.getForObject(url, Map.class);
     }
@@ -71,7 +61,6 @@ public class RestTemplateUtil {
         return restTemplateUtil.restTemplate.getForObject(url, String.class);
     }
 
-
     /**
      * get请求 并添加消息头
      */
@@ -93,16 +82,14 @@ public class RestTemplateUtil {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
-        //设置header
+        // 设置header
         headers.setContentType(type);
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-        //执行请求
+        // 执行请求
         ResponseEntity<String> resp = restTemplate.postForEntity(url, request, String.class);
         return resp.getBody();
     }
-
-    // ----------------------------------GET-------------------------------------------------------
 
     /**
      * GET请求调用方式
@@ -114,6 +101,8 @@ public class RestTemplateUtil {
     public static <T> ResponseEntity<T> get(String url, Class<T> responseType) throws RestClientException {
         return restTemplateUtil.restTemplate.getForEntity(url, responseType);
     }
+
+    // ----------------------------------GET-------------------------------------------------------
 
     /**
      * GET请求调用方式
@@ -151,7 +140,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> get(String url, Map<String, String> headers, Class<T> responseType,
-                                     Object... uriVariables) throws RestClientException {
+                                            Object... uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return get(url, httpHeaders, responseType, uriVariables);
@@ -182,7 +171,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> get(String url, Map<String, String> headers, Class<T> responseType,
-                                     Map<String, ?> uriVariables) throws RestClientException {
+                                            Map<String, ?> uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return get(url, httpHeaders, responseType, uriVariables);
@@ -198,12 +187,10 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> get(String url, HttpHeaders headers, Class<T> responseType,
-                                     Map<String, ?> uriVariables) throws RestClientException {
+                                            Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<?> requestEntity = new HttpEntity<>(headers);
         return exchange(url, HttpMethod.GET, requestEntity, responseType, uriVariables);
     }
-
-    // ----------------------------------POST-------------------------------------------------------
 
     /**
      * POST请求调用方式
@@ -215,6 +202,8 @@ public class RestTemplateUtil {
     public static <T> ResponseEntity<T> post(String url, Class<T> responseType) throws RestClientException {
         return restTemplateUtil.restTemplate.postForEntity(url, HttpEntity.EMPTY, responseType);
     }
+
+    // ----------------------------------POST-------------------------------------------------------
 
     /**
      * POST请求调用方式
@@ -253,7 +242,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, Object requestBody, Class<T> responseType,
-                                      Map<String, ?> uriVariables) throws RestClientException {
+                                             Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.postForEntity(url, requestBody, responseType, uriVariables);
     }
 
@@ -268,7 +257,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, Map<String, String> headers, Object requestBody,
-                                      Class<T> responseType, Object... uriVariables) throws RestClientException {
+                                             Class<T> responseType, Object... uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return post(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -285,7 +274,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                      Object... uriVariables) throws RestClientException {
+                                             Object... uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return post(url, requestEntity, responseType, uriVariables);
     }
@@ -301,7 +290,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, Map<String, String> headers, Object requestBody,
-                                      Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
+                                             Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return post(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -318,7 +307,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                      Map<String, ?> uriVariables) throws RestClientException {
+                                             Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return post(url, requestEntity, responseType, uriVariables);
     }
@@ -332,7 +321,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> T postObject(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                             Object... uriVariables) throws RestClientException {
+                                   Object... uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.postForObject(url, requestEntity, responseType, uriVariables);
     }
 
@@ -346,7 +335,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                      Object... uriVariables) throws RestClientException {
+                                             Object... uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType, uriVariables);
     }
 
@@ -360,11 +349,9 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> post(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                      Map<String, ?> uriVariables) throws RestClientException {
+                                             Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType, uriVariables);
     }
-
-    // ----------------------------------PUT-------------------------------------------------------
 
     /**
      * PUT请求调用方式
@@ -378,6 +365,8 @@ public class RestTemplateUtil {
             throws RestClientException {
         return put(url, HttpEntity.EMPTY, responseType, uriVariables);
     }
+
+    // ----------------------------------PUT-------------------------------------------------------
 
     /**
      * PUT请求调用方式
@@ -420,7 +409,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, Map<String, String> headers, Object requestBody, Class<T> responseType,
-                                     Object... uriVariables) throws RestClientException {
+                                            Object... uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return put(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -437,7 +426,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                     Object... uriVariables) throws RestClientException {
+                                            Object... uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return put(url, requestEntity, responseType, uriVariables);
     }
@@ -453,7 +442,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, Map<String, String> headers, Object requestBody, Class<T> responseType,
-                                     Map<String, ?> uriVariables) throws RestClientException {
+                                            Map<String, ?> uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return put(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -470,7 +459,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                     Map<String, ?> uriVariables) throws RestClientException {
+                                            Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return put(url, requestEntity, responseType, uriVariables);
     }
@@ -485,7 +474,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                     Object... uriVariables) throws RestClientException {
+                                            Object... uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.PUT, requestEntity, responseType, uriVariables);
     }
 
@@ -499,11 +488,9 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> put(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                     Map<String, ?> uriVariables) throws RestClientException {
+                                            Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.PUT, requestEntity, responseType, uriVariables);
     }
-
-    // ----------------------------------DELETE-------------------------------------------------------
 
     /**
      * DELETE请求调用方式
@@ -517,6 +504,8 @@ public class RestTemplateUtil {
             throws RestClientException {
         return delete(url, HttpEntity.EMPTY, responseType, uriVariables);
     }
+
+    // ----------------------------------DELETE-------------------------------------------------------
 
     /**
      * DELETE请求调用方式
@@ -556,7 +545,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, Object requestBody, Class<T> responseType,
-                                        Map<String, ?> uriVariables) throws RestClientException {
+                                               Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody);
         return delete(url, requestEntity, responseType, uriVariables);
     }
@@ -571,7 +560,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, Map<String, String> headers, Class<T> responseType,
-                                        Object... uriVariables) throws RestClientException {
+                                               Object... uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return delete(url, httpHeaders, responseType, uriVariables);
@@ -602,7 +591,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, Map<String, String> headers, Class<T> responseType,
-                                        Map<String, ?> uriVariables) throws RestClientException {
+                                               Map<String, ?> uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return delete(url, httpHeaders, responseType, uriVariables);
@@ -618,7 +607,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, HttpHeaders headers, Class<T> responseType,
-                                        Map<String, ?> uriVariables) throws RestClientException {
+                                               Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(headers);
         return delete(url, requestEntity, responseType, uriVariables);
     }
@@ -634,7 +623,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, Map<String, String> headers, Object requestBody,
-                                        Class<T> responseType, Object... uriVariables) throws RestClientException {
+                                               Class<T> responseType, Object... uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return delete(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -651,7 +640,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                        Object... uriVariables) throws RestClientException {
+                                               Object... uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return delete(url, requestEntity, responseType, uriVariables);
     }
@@ -667,7 +656,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, Map<String, String> headers, Object requestBody,
-                                        Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
+                                               Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setAll(headers);
         return delete(url, httpHeaders, requestBody, responseType, uriVariables);
@@ -684,7 +673,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
-                                        Map<String, ?> uriVariables) throws RestClientException {
+                                               Map<String, ?> uriVariables) throws RestClientException {
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
         return delete(url, requestEntity, responseType, uriVariables);
     }
@@ -699,7 +688,7 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                        Object... uriVariables) throws RestClientException {
+                                               Object... uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, responseType, uriVariables);
     }
 
@@ -713,11 +702,9 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> delete(String url, HttpEntity<?> requestEntity, Class<T> responseType,
-                                        Map<String, ?> uriVariables) throws RestClientException {
+                                               Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, responseType, uriVariables);
     }
-
-    // ----------------------------------通用方法-------------------------------------------------------
 
     /**
      * 通用调用方式
@@ -730,9 +717,11 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> exchange(String url, HttpMethod method, HttpEntity<?> requestEntity,
-                                          Class<T> responseType, Object... uriVariables) throws RestClientException {
+                                                 Class<T> responseType, Object... uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, method, requestEntity, responseType, uriVariables);
     }
+
+    // ----------------------------------通用方法-------------------------------------------------------
 
     /**
      * 通用调用方式
@@ -745,8 +734,14 @@ public class RestTemplateUtil {
      * @return ResponseEntity 响应对象封装类
      */
     public static <T> ResponseEntity<T> exchange(String url, HttpMethod method, HttpEntity<?> requestEntity,
-                                          Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
+                                                 Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, method, requestEntity, responseType, uriVariables);
+    }
+
+    @PostConstruct
+    public void init() {
+        restTemplateUtil = this;
+        restTemplateUtil.restTemplate = this.restTemplate;
     }
 
 }

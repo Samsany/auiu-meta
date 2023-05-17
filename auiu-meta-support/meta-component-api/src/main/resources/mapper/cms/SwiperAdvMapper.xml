@@ -5,21 +5,21 @@
 <mapper namespace="com.auiucloud.component.cms.mapper.SwiperAdvMapper">
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.SwiperAdv">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="pic" column="pic" jdbcType="VARCHAR"/>
-            <result property="clickNum" column="click_num" jdbcType="OTHER"/>
-            <result property="type" column="type" jdbcType="INTEGER"/>
-            <result property="linkType" column="link_type" jdbcType="INTEGER"/>
-            <result property="link" column="link" jdbcType="VARCHAR"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
-            <result property="sort" column="sort" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
-            <result property="remark" column="remark" jdbcType="VARCHAR"/>
-            <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="pic" column="pic" jdbcType="VARCHAR"/>
+        <result property="clickNum" column="click_num" jdbcType="OTHER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="linkType" column="link_type" jdbcType="INTEGER"/>
+        <result property="link" column="link" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

@@ -2,23 +2,25 @@ package com.auiucloud.ums.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import lombok.*;
-import lombok.experimental.SuperBuilder;
 
 /**
  * 付费会员等级记录表
+ *
  * @TableName ums_user_level_record
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@TableName(value ="ums_user_level_record")
+@TableName(value = "ums_user_level_record")
 @EqualsAndHashCode(callSuper = true)
 public class UserLevelRecord extends BaseEntity {
 

@@ -1,12 +1,12 @@
 package com.auiucloud.admin.modules.system.controller;
 
 import com.auiucloud.admin.modules.system.domain.SysRole;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.service.ISysRoleService;
 import com.auiucloud.admin.modules.system.vo.SysRoleVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.controller.BaseController;
 import com.auiucloud.core.common.enums.QueryModeEnum;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -59,7 +59,7 @@ public class SysRoleController extends BaseController {
             @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
-            @Parameter(name = "keyword",  description = "模糊查询关键词", in = ParameterIn.QUERY),
+            @Parameter(name = "keyword", description = "模糊查询关键词", in = ParameterIn.QUERY),
             @Parameter(name = "startDate", description = "开始日期", in = ParameterIn.QUERY),
             @Parameter(name = "endDate", description = "结束日期", in = ParameterIn.QUERY),
     })

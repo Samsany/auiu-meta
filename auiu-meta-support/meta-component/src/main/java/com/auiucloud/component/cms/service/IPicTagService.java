@@ -9,10 +9,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【cms_pic_tag(图片标签表)】的数据库操作Service
-* @createDate 2023-04-11 16:03:44
-*/
+ * @author dries
+ * @description 针对表【cms_pic_tag(图片标签表)】的数据库操作Service
+ * @createDate 2023-04-11 16:03:44
+ */
 public interface IPicTagService extends IService<PicTag> {
 
     PageUtils listPage(Search search, PicTag picTag);

@@ -16,7 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
 
 /**
  * Security工具类
@@ -39,6 +40,7 @@ public class SecurityUtil {
         }
         return token;
     }
+
     /**
      * 从HttpServletRequest里获取access_token, 去除token前缀
      *
@@ -48,6 +50,7 @@ public class SecurityUtil {
         String token = getHeaderToken();
         return token.replace(Oauth2Constant.JWT_TOKEN_PREFIX, "");
     }
+
     /**
      * 从token中解析用户信息
      *
@@ -58,6 +61,7 @@ public class SecurityUtil {
         String realToken = getRealToken();
         return getJwtPayload(realToken);
     }
+
     /**
      * 从token中解析用户信息
      *
@@ -193,7 +197,7 @@ public class SecurityUtil {
         if (StrUtil.isNotBlank(basic) && basic.startsWith("Basic ")) {
             basic = basic.replace("Basic ", "");
             String basicPlainText = new String(Base64.getDecoder().decode(basic.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-            clientId = basicPlainText.split(":")[0]; //client:secret
+            clientId = basicPlainText.split(":")[0]; // client:secret
         }
         return clientId;
     }

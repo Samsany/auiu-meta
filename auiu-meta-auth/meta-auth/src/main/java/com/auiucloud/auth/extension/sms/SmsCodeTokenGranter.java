@@ -1,7 +1,6 @@
 package com.auiucloud.auth.extension.sms;
 
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.auth.extension.sms.SmsCodeAuthenticationToken;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.redis.core.RedisService;
@@ -76,7 +75,7 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
         try {
             userAuth = authenticationManager.authenticate(userAuth);
         } catch (AccountStatusException | BadCredentialsException ase) {
-            //covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
+            // covers expired, locked, disabled cases (mentioned in section 5.2, draft 31)
             throw new InvalidGrantException(ase.getMessage());
         }
         // If the username/password are wrong the spec says we should send 400/invalid grant

@@ -56,7 +56,8 @@ VALUES (1, 0, '启用', '1', 'sys_normal_disable', NULL, 'primary', 0, 1, '2022-
 INSERT INTO `sys_dict_data` (`id`, `sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`,
                              `is_default`, `status`, `create_time`, `update_time`, `create_by`, `update_by`, `remark`,
                              `is_deleted`)
-VALUES (2, 0, '禁用', '0', 'sys_normal_disable', NULL, 'danger', 0, 1, '2022-07-14 00:10:23', '2022-07-14 00:16:25', NULL,
+VALUES (2, 0, '禁用', '0', 'sys_normal_disable', NULL, 'danger', 0, 1, '2022-07-14 00:10:23', '2022-07-14 00:16:25',
+        NULL,
         NULL, NULL, 0);
 INSERT INTO `sys_dict_data` (`id`, `sort`, `dict_label`, `dict_value`, `dict_type`, `css_class`, `list_class`,
                              `is_default`, `status`, `create_time`, `update_time`, `create_by`, `update_by`, `remark`,
@@ -195,7 +196,8 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `title`, `component`, `icon`,
                         `status`, `is_always_show`, `is_affix`, `is_hidden`, `is_hide_header`, `is_keep_alive`,
                         `is_require_auth`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`, `remark`,
                         `is_deleted`)
-VALUES (3, 1, 'menuManagement', '菜单管理', 'system/menu/index', 'tree-table', 'menu', NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1,
+VALUES (3, 1, 'menuManagement', '菜单管理', 'system/menu/index', 'tree-table', 'menu', NULL, NULL, 1, 1, 0, 0, 0, 0, 0,
+        1,
         2, '2022-06-29 18:11:09', '2022-08-09 23:12:01', NULL, NULL, NULL, 0);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `title`, `component`, `icon`, `path`, `query`, `redirect`, `type`,
                         `status`, `is_always_show`, `is_affix`, `is_hidden`, `is_hide_header`, `is_keep_alive`,
@@ -213,7 +215,8 @@ INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `title`, `component`, `icon`,
                         `status`, `is_always_show`, `is_affix`, `is_hidden`, `is_hide_header`, `is_keep_alive`,
                         `is_require_auth`, `sort`, `create_time`, `update_time`, `create_by`, `update_by`, `remark`,
                         `is_deleted`)
-VALUES (7, 1, 'department', '部门管理', 'system/department', 'tree', 'department', NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1, 4,
+VALUES (7, 1, 'department', '部门管理', 'system/department', 'tree', 'department', NULL, NULL, 1, 1, 0, 0, 0, 0, 0, 1,
+        4,
         '2022-08-09 22:40:50', '2022-08-09 23:12:09', NULL, NULL, NULL, 0);
 INSERT INTO `sys_menu` (`id`, `parent_id`, `name`, `title`, `component`, `icon`, `path`, `query`, `redirect`, `type`,
                         `status`, `is_always_show`, `is_affix`, `is_hidden`, `is_hide_header`, `is_keep_alive`,
@@ -356,7 +359,8 @@ CREATE TABLE `sys_role`
 BEGIN;
 INSERT INTO `sys_role` (`id`, `role_name`, `role_code`, `admin_count`, `status`, `built_in`, `sort`, `create_time`,
                         `update_time`, `create_by`, `update_by`, `remark`, `is_deleted`)
-VALUES (1, '超级管理员', 'SUPER_ADMIN', 0, 1, 1, 0, '2022-05-30 19:05:42', '2022-05-30 19:06:19', NULL, NULL, '初始化角色', 0);
+VALUES (1, '超级管理员', 'SUPER_ADMIN', 0, 1, 1, 0, '2022-05-30 19:05:42', '2022-05-30 19:06:19', NULL, NULL,
+        '初始化角色', 0);
 INSERT INTO `sys_role` (`id`, `role_name`, `role_code`, `admin_count`, `status`, `built_in`, `sort`, `create_time`,
                         `update_time`, `create_by`, `update_by`, `remark`, `is_deleted`)
 VALUES (2, '管理员', 'ADMIN', 0, 1, 1, 0, '2022-06-14 17:28:37', '2022-06-14 17:28:41', NULL, NULL, NULL, 0);

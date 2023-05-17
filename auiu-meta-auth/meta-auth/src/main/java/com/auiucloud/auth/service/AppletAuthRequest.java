@@ -114,7 +114,7 @@ public class AppletAuthRequest {
                                 userInfo = AppletUserInfo.fromJson(rawUserInfo);
                             } else {
                                 userInfo = AppletUserInfo.builder()
-                                        .nickName(RandomUtil.randomString("#",6))
+                                        .nickName(RandomUtil.randomString("#", 6))
                                         .gender("2")
                                         .build();
                             }
@@ -192,7 +192,7 @@ public class AppletAuthRequest {
                                         .build();
                             }
 
-                            userInfo.setNickName(RandomUtil.randomString("#",6));
+                            userInfo.setNickName(RandomUtil.randomString("#", 6));
                             // 注册用户
                             callback.setSource(source);
                             userInfo = socialUserService.registerMemberBySocial(userInfo, callback);

@@ -1,8 +1,8 @@
 package com.auiucloud.admin.modules.system.service;
 
 import com.auiucloud.admin.modules.system.domain.SysOauthClient;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.dto.SysOauthClientDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,7 +19,7 @@ public interface ISysOauthClientService extends IService<SysOauthClient> {
     /**
      * 分页查询客户端
      *
-     * @param search 查询参数
+     * @param search      查询参数
      * @param oauthClient 查询参数
      * @return PageUtils
      */
@@ -35,12 +35,15 @@ public interface ISysOauthClientService extends IService<SysOauthClient> {
 
     /**
      * 新增客户端
+     *
      * @param oauthClient 参数
      * @return boolean
      */
     boolean saveSysOauthClient(SysOauthClientDTO oauthClient);
+
     /**
      * 编辑客户端
+     *
      * @param oauthClient 参数
      * @return boolean
      */
@@ -48,6 +51,7 @@ public interface ISysOauthClientService extends IService<SysOauthClient> {
 
     /**
      * 根据ID查询客户端详情
+     *
      * @param id 客户端ID
      * @return SysOauthClientDTO
      */

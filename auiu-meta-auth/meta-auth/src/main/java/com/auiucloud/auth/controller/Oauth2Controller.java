@@ -118,7 +118,7 @@ public class Oauth2Controller {
     public void callback(@PathVariable String oauthType, AuthCallback callback, HttpServletResponse httpServletResponse) throws IOException {
         String url = socialConfig.getUrl() + "?code=" + oauthType + "-" + callback.getCode() + "&state=" + callback.getState();
         log.debug("url:{}", url);
-        //跳转到指定页面
+        // 跳转到指定页面
         httpServletResponse.sendRedirect(url);
     }
 

@@ -29,6 +29,15 @@ public class RedisKeyConstant {
      * OSS默认配置
      */
     public static final String OSS_DEFAULT_CONFIG = ROOT_DIR + "system-config:oss";
+    /**
+     * 系统默认配置
+     */
+    public static final String SYSTEM_CONFIG = ROOT_DIR + "system-config:system";
+    /**
+     * 用户默认配置
+     */
+    public static final String USER_CONFIG = ROOT_DIR + "system-config:user";
+
 
     /**
      * ---- Redis缓存权限规则key 缓存相关 ----
@@ -45,5 +54,20 @@ public class RedisKeyConstant {
     public static String cacheClientKey(String clientId) {
         return ROOT_DIR + "auth-client:" + clientId;
     }
+
+    /**
+     * 协议缓存Key
+     */
+    public static String cacheProtocolConfigKey(String type) {
+        return ROOT_DIR + "system-config:protocol:" + type;
+    }
+
+    /**
+     * 小程序缓存Key
+     */
+    public static String cacheAppletConfigKey(String appId) {
+        return ROOT_DIR + "system-config:applet:" + appId;
+    }
+
 
 }

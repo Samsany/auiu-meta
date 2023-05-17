@@ -26,7 +26,7 @@ public interface ISysDictTypeService extends IService<SysDictType> {
     /**
      * 分页查询字典类型列表
      *
-     * @param search 查询参数
+     * @param search   查询参数
      * @param dictType 查询参数
      * @return PageUtils
      */

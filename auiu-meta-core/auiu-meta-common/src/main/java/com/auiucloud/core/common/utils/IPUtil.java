@@ -84,7 +84,7 @@ public class IPUtil {
             while ((read = in.readLine()) != null) {
                 inputLine.append(read).append("\r\n");
             }
-            //System.out.println(inputLine.toString());
+            // System.out.println(inputLine.toString());
         } catch (IOException e) {
             log.error("获取IP地址异常");
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class IPUtil {
         Matcher m = p.matcher(inputLine.toString());
         if (m.find()) {
             ip = m.group(1);
-            //System.out.println(ipstr);
+            // System.out.println(ipstr);
         }
         return ip;
     }

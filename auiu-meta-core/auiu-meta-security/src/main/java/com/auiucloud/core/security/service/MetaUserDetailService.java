@@ -25,7 +25,7 @@ public interface MetaUserDetailService extends UserDetailsService {
      * 根据社交账号登录
      *
      * @param username 第三方绑定的用户账户
-     * @param source 第三方
+     * @param source   第三方
      * @return UserDetails
      * @throws UsernameNotFoundException 用户不存在抛异常
      */

@@ -21,7 +21,7 @@
         <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
         <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
-        <collection property="dictDataList" javaType="java.util.List" resultMap="BaseDataResultMap" />
+        <collection property="dictDataList" javaType="java.util.List" resultMap="BaseDataResultMap"/>
     </resultMap>
 
     <resultMap id="BaseDataResultMap" type="com.auiucloud.admin.modules.system.vo.SysDictDataVO">
@@ -46,14 +46,14 @@
 #                t.create_by,
 #                t.update_by,
 #                t.remark,
-               d.id as d_id,
+               d.id        as d_id,
                d.dict_label,
                d.dict_value,
                d.dict_type as d_dict_type,
                d.css_class,
                d.list_class,
                d.is_default,
-               d.status as d_status,
+               d.status    as d_status,
                d.sort
 #                d.create_time,
 #                d.update_time,

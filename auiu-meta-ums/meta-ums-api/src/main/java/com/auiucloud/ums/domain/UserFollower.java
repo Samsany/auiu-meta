@@ -1,27 +1,25 @@
 package com.auiucloud.ums.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 我的关注粉丝表
+ *
  * @TableName ums_user_follower
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName(value ="ums_user_follower")
+@TableName(value = "ums_user_follower")
 public class UserFollower implements Serializable {
 
     @Serial

@@ -1,30 +1,24 @@
 package com.auiucloud.ums.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serial;
+
 /**
  * 用户意见反馈表
+ *
  * @TableName ums_user_feedback
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
-@TableName(value ="ums_user_feedback")
+@TableName(value = "ums_user_feedback")
 public class UserFeedback extends BaseEntity {
 
     @Serial

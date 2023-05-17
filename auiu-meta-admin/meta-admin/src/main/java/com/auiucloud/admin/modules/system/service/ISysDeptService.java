@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
-* @author dries
-* @description 针对表【sys_dept(部门表)】的数据库操作Service
-* @createDate 2022-12-08 14:26:31
-*/
+ * @author dries
+ * @description 针对表【sys_dept(部门表)】的数据库操作Service
+ * @createDate 2022-12-08 14:26:31
+ */
 public interface ISysDeptService extends IService<SysDept> {
 
     PageUtils listPage(Search search);

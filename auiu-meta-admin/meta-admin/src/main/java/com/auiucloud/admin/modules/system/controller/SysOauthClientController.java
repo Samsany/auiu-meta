@@ -1,11 +1,11 @@
 package com.auiucloud.admin.modules.system.controller;
 
 import com.auiucloud.admin.modules.system.domain.SysOauthClient;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
-import com.auiucloud.admin.modules.system.service.ISysOauthClientService;
 import com.auiucloud.admin.modules.system.dto.SysOauthClientDTO;
+import com.auiucloud.admin.modules.system.service.ISysOauthClientService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.enums.QueryModeEnum;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
@@ -45,7 +45,7 @@ public class SysOauthClientController {
             @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
-            @Parameter(name = "clientName",  description = "客户端名称", in = ParameterIn.QUERY)
+            @Parameter(name = "clientName", description = "客户端名称", in = ParameterIn.QUERY)
     })
     public ApiResult<?> list(Search search, SysOauthClient oauthClient) {
         QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());

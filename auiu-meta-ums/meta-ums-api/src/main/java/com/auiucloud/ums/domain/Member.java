@@ -1,23 +1,19 @@
 package com.auiucloud.ums.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Date;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serial;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
+
 /**
  * 会员表
+ *
  * @TableName ums_member
  */
 @Data
@@ -25,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="ums_user")
+@TableName(value = "ums_user")
 @Schema(name = "Member对象", description = "会员表")
 public class Member extends BaseEntity {
 

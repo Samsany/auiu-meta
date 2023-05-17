@@ -11,6 +11,7 @@ public interface ISafeRuleService {
 
     /**
      * 黑名单过滤
+     *
      * @param exchange
      * @return
      */

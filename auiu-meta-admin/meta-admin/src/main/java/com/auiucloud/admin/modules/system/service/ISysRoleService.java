@@ -1,8 +1,8 @@
 package com.auiucloud.admin.modules.system.service;
 
 import com.auiucloud.admin.modules.system.domain.SysRole;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.vo.SysRoleVO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,7 +19,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 查询系统角色分页列表
      *
-     * @param search 搜索参数
+     * @param search  搜索参数
      * @param sysRole 系统角色
      * @return PageUtils
      */
@@ -28,7 +28,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 查询系统角色列表
      *
-     * @param search 搜索参数
+     * @param search  搜索参数
      * @param sysRole 系统角色
      * @return List<SysRole>
      */
@@ -41,6 +41,7 @@ public interface ISysRoleService extends IService<SysRole> {
      * @return List<SysRole>
      */
     List<SysRole> getRoleListByIds(List<Long> roleIds);
+
     List<SysRoleVO> getSysRoleVOListByIds(List<Long> roleIds);
 
     /**

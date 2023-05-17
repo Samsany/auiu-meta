@@ -12,7 +12,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author dries
@@ -27,31 +29,31 @@ public class AuthController {
 
     private final ConsumerTokenServices consumerTokenServices;
 
-//    private final RedisService redisService;
-//    private final ISysUserProvider sysUserProvider;
-//
-//    @Log(value = "用户信息", exception = "用户信息请求异常")
-//    @Operation(summary = "用户信息", description = "用户信息")
-//    @GetMapping("/user/info")
-//    public ApiResult<?> getUser() {
-//
-//        // 获取当前登录用户信息
-//        LoginUser loginUser = SecurityUtil.getUser();
-//
-//        SysUserInfoDTO userInfo = sysUserProvider.getUserByUsername(loginUser.getAccount()).getData();
-//        Map<String, Object> data = new HashMap<>(7);
-//        data.put("username", loginUser.getAccount());
-//        data.put("realName", userInfo.getSysUser().getRealName());
-//        data.put("nickname", userInfo.getSysUser().getNickname());
-//        data.put("avatar", userInfo.getSysUser().getAvatar());
-//        data.put("departId", userInfo.getSysUser().getDeptId());
-//        data.put("tenantId", userInfo.getTenantId());
-//        data.put("roles", userInfo.getRoles());
-//        data.put("permissions", userInfo.getPermissions());
-//        // 存入redis,以用于查询权限使用
-//        redisService.set(RedisKeyConstant.META_PERMISSION_PREFIX + loginUser.getAccount(), data);
-//        return ApiResult.data(data);
-//    }
+    //    private final RedisService redisService;
+    //    private final ISysUserProvider sysUserProvider;
+    //
+    //    @Log(value = "用户信息", exception = "用户信息请求异常")
+    //    @Operation(summary = "用户信息", description = "用户信息")
+    //    @GetMapping("/user/info")
+    //    public ApiResult<?> getUser() {
+    //
+    //        // 获取当前登录用户信息
+    //        LoginUser loginUser = SecurityUtil.getUser();
+    //
+    //        SysUserInfoDTO userInfo = sysUserProvider.getUserByUsername(loginUser.getAccount()).getData();
+    //        Map<String, Object> data = new HashMap<>(7);
+    //        data.put("username", loginUser.getAccount());
+    //        data.put("realName", userInfo.getSysUser().getRealName());
+    //        data.put("nickname", userInfo.getSysUser().getNickname());
+    //        data.put("avatar", userInfo.getSysUser().getAvatar());
+    //        data.put("departId", userInfo.getSysUser().getDeptId());
+    //        data.put("tenantId", userInfo.getTenantId());
+    //        data.put("roles", userInfo.getRoles());
+    //        data.put("permissions", userInfo.getPermissions());
+    //        // 存入redis,以用于查询权限使用
+    //        redisService.set(RedisKeyConstant.META_PERMISSION_PREFIX + loginUser.getAccount(), data);
+    //        return ApiResult.data(data);
+    //    }
 
     @Log(value = "退出登录", exception = "退出登录请求异常")
     @GetMapping("/logout")

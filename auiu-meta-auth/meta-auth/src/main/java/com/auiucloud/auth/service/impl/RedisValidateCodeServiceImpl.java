@@ -1,14 +1,12 @@
 package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.auiucloud.auth.config.properties.ValidateCodeProperties;
 import com.auiucloud.auth.domain.Captcha;
 import com.auiucloud.auth.enums.ValidateCodeTypeEnum;
 import com.auiucloud.auth.service.ValidateCodeService;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.exception.CaptchaException;
-import com.auiucloud.core.common.utils.http.RequestHolder;
 import com.auiucloud.core.redis.core.RedisService;
 import lombok.RequiredArgsConstructor;
 

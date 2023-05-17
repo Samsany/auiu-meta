@@ -2,10 +2,10 @@ package com.auiucloud.admin.modules.system.service;
 
 import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.modules.system.dto.SysUserDTO;
-import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.vo.SysUserVO;
 import com.auiucloud.admin.modules.system.vo.UserInfoVO;
+import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -22,7 +22,7 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 查询系统用户列表
      *
-     * @param search 搜索参数
+     * @param search  搜索参数
      * @param sysUser 系统用户
      * @return List<SysUser>
      */
@@ -31,7 +31,7 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 查询系统用户分页列表
      *
-     * @param search 搜索参数
+     * @param search  搜索参数
      * @param sysUser 系统用户
      * @return PageUtils
      */
@@ -46,6 +46,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @return SysUser
      */
     SysUser getUserByUsername(String username);
+
     /**
      * 根据用户名查找用户
      *
@@ -56,6 +57,7 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 第三方用户查询
+     *
      * @param openId 用户标识
      * @param source 所属平台
      * @return
@@ -101,6 +103,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @return boolean
      */
     boolean setUserStatus(UpdateStatusDTO updateStatusDTO);
+
     /**
      * 根据用户ID修改用户密码
      *
@@ -132,6 +135,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @return boolean
      */
     boolean checkUsernameExist(SysUser sysUser);
+
     /**
      * 校验用户手机号是否重复
      *
@@ -139,6 +143,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @return boolean
      */
     boolean checkUserMobileExist(SysUser sysUser);
+
     /**
      * 校验用户邮箱是否重复
      *

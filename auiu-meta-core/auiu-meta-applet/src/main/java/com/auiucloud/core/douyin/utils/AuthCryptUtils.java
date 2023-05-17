@@ -26,7 +26,7 @@ public class AuthCryptUtils {
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, ivSpec);
             byte[] ret = cipher.doFinal(encryptedBytes);
             return new String(ret);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             throw new ApiException("AES解密失败！", e.getCause());
         }
     }

@@ -4,8 +4,10 @@ import com.auiucloud.auth.domain.SocialUser;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 社会化用户远程调用接口
@@ -22,6 +24,6 @@ public interface ISocialProvider {
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
-    ApiResult<SocialUser> getSocialUserByOpenId2Source(@RequestParam String openId, @RequestParam String source);
+    ApiResult<SocialUser> getSocialUserByOpenId2Source(@RequestParam("openId") String openId, @RequestParam("source") String source);
 
 }

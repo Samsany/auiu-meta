@@ -14,10 +14,10 @@ public class DouyinImgDetectionResult implements Serializable {
     @Serial
     private static final long serialVersionUID = -8651251633782467977L;
 
-    //检测结果-状态码 0-成功 1-参数有误 2-access_token 校验失败 3-图片下载失败 4-服务内部错误
+    // 检测结果-状态码 0-成功 1-参数有误 2-access_token 校验失败 3-图片下载失败 4-服务内部错误
     private Integer error;
 
-    //检测结果-消息
+    // 检测结果-消息
     private String message;
     // 检测结果-置信度-模型/标签
     private List<Predict> predicts;

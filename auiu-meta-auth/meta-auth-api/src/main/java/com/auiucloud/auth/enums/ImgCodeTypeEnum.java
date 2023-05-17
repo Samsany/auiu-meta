@@ -3,8 +3,6 @@ package com.auiucloud.auth.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
-
 /**
  * @author dries
  **/

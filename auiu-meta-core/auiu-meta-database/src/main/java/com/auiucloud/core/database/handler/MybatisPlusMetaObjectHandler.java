@@ -20,32 +20,13 @@ import java.time.LocalDateTime;
 @Slf4j
 @Component
 public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
-    @Override
-    public void insertFill(MetaObject metaObject) {
-        log.debug("mybatis plus start insert fill ....");
-
-        LocalDateTime now = LocalDateTime.now();
-        fillValIfNullByName("createTime", now, metaObject, false);
-        fillValIfNullByName("updateTime", now, metaObject, false);
-        fillValIfNullByName("createBy", getUserName(), metaObject, false);
-        fillValIfNullByName("updateBy", getUserName(), metaObject, false);
-    }
-
-
-
-    @Override
-    public void updateFill(MetaObject metaObject) {
-        log.debug("mybatis plus start update fill ....");
-        fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
-        fillValIfNullByName("updateBy", getUserName(), metaObject, true);
-    }
-
     /**
      * 填充值，先判断是否有手动设置，优先手动设置的值，例如：job必须手动设置
-     * @param fieldName 属性名
-     * @param fieldVal 属性值
+     *
+     * @param fieldName  属性名
+     * @param fieldVal   属性值
      * @param metaObject MetaObject
-     * @param isCover 是否覆盖原有值,避免更新操作手动入参
+     * @param isCover    是否覆盖原有值,避免更新操作手动入参
      */
     private static void fillValIfNullByName(String fieldName, Object fieldVal, MetaObject metaObject, boolean isCover) {
         // 1. 没有 get 方法
@@ -63,6 +44,24 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
         if (ClassUtils.isAssignableValue(getterType, fieldVal)) {
             metaObject.setValue(fieldName, fieldVal);
         }
+    }
+
+    @Override
+    public void insertFill(MetaObject metaObject) {
+        log.debug("mybatis plus start insert fill ....");
+
+        LocalDateTime now = LocalDateTime.now();
+        fillValIfNullByName("createTime", now, metaObject, false);
+        fillValIfNullByName("updateTime", now, metaObject, false);
+        fillValIfNullByName("createBy", getUserName(), metaObject, false);
+        fillValIfNullByName("updateBy", getUserName(), metaObject, false);
+    }
+
+    @Override
+    public void updateFill(MetaObject metaObject) {
+        log.debug("mybatis plus start update fill ....");
+        fillValIfNullByName("updateTime", LocalDateTime.now(), metaObject, true);
+        fillValIfNullByName("updateBy", getUserName(), metaObject, true);
     }
 
     private String getUserName() {

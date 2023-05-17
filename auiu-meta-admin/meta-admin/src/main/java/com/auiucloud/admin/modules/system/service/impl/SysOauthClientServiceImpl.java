@@ -4,10 +4,10 @@ import cn.hutool.core.collection.CollUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.modules.system.domain.SysOauthClient;
 import com.auiucloud.admin.modules.system.dto.SysOauthClientDTO;
-import com.auiucloud.admin.modules.system.service.ISysOauthClientService;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.mapper.SysOauthClientMapper;
+import com.auiucloud.admin.modules.system.service.ISysOauthClientService;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
@@ -41,6 +41,29 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
         implements ISysOauthClientService {
 
     private final RedisService redisService;
+
+    @NotNull
+    private static List<SysOauthClientDTO> convertSysOauthClientDTOList(List<SysOauthClient> oauthClients) {
+        return oauthClients.parallelStream().map(it -> {
+            SysOauthClientDTO sysOauthClientDTO = new SysOauthClientDTO();
+            BeanUtils.copyProperties(it, sysOauthClientDTO);
+            String authorizedGrantTypes = it.getAuthorizedGrantTypes();
+            if (StringUtil.isNotBlank(authorizedGrantTypes)) {
+                sysOauthClientDTO.setAuthorizedGrantTypes(Arrays.asList(authorizedGrantTypes.split(StringPool.COMMA)));
+            }
+            return sysOauthClientDTO;
+        }).collect(Collectors.toList());
+    }
+
+    @NotNull
+    private static LambdaQueryWrapper<SysOauthClient> buildSearchParams(SysOauthClient oauthClient) {
+        LambdaQueryWrapper<SysOauthClient> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtil.isNotBlank(oauthClient.getClientName())) {
+            queryWrapper.like(SysOauthClient::getClientName, oauthClient.getClientName());
+        }
+        queryWrapper.orderByDesc(SysOauthClient::getCreateTime);
+        return queryWrapper;
+    }
 
     /**
      * 分页查询客户端列表
@@ -167,29 +190,6 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
         }
 
         return true;
-    }
-
-    @NotNull
-    private static List<SysOauthClientDTO> convertSysOauthClientDTOList(List<SysOauthClient> oauthClients) {
-        return oauthClients.parallelStream().map(it -> {
-            SysOauthClientDTO sysOauthClientDTO = new SysOauthClientDTO();
-            BeanUtils.copyProperties(it, sysOauthClientDTO);
-            String authorizedGrantTypes = it.getAuthorizedGrantTypes();
-            if (StringUtil.isNotBlank(authorizedGrantTypes)) {
-                sysOauthClientDTO.setAuthorizedGrantTypes(Arrays.asList(authorizedGrantTypes.split(StringPool.COMMA)));
-            }
-            return sysOauthClientDTO;
-        }).collect(Collectors.toList());
-    }
-
-    @NotNull
-    private static LambdaQueryWrapper<SysOauthClient> buildSearchParams(SysOauthClient oauthClient) {
-        LambdaQueryWrapper<SysOauthClient> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(oauthClient.getClientName())) {
-            queryWrapper.like(SysOauthClient::getClientName, oauthClient.getClientName());
-        }
-        queryWrapper.orderByDesc(SysOauthClient::getCreateTime);
-        return queryWrapper;
     }
 }
 

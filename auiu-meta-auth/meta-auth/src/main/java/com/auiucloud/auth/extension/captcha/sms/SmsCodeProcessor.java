@@ -4,7 +4,6 @@ import cn.hutool.json.JSONObject;
 import com.auiucloud.auth.domain.Captcha;
 import com.auiucloud.auth.extension.captcha.AbstractValidateCodeProcessor;
 import com.auiucloud.core.common.constant.Oauth2Constant;
-import com.auiucloud.core.common.constant.RedisKeyConstant;
 import com.auiucloud.core.common.utils.http.RequestHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

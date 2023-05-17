@@ -2,9 +2,9 @@ package com.auiucloud.component.oss.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.mapper.SysAttachmentGroupMapper;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
+import com.auiucloud.component.sysconfig.domain.SysAttachmentGroup;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.database.model.Search;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;

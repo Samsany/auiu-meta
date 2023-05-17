@@ -12,13 +12,14 @@ import java.util.List;
  */
 public abstract class ExecutorRouter {
 
-	protected static Logger logger = LoggerFactory.getLogger(ExecutorRouter.class);
+    protected static Logger logger = LoggerFactory.getLogger(ExecutorRouter.class);
 
-	/**
-	 * route address
-	 * @param addressList
-	 * @return ReturnT.content=address
-	 */
-	public abstract ReturnT<String> route(TriggerParam triggerParam, List<String> addressList);
+    /**
+     * route address
+     *
+     * @param addressList
+     * @return ReturnT.content=address
+     */
+    public abstract ReturnT<String> route(TriggerParam triggerParam, List<String> addressList);
 
 }

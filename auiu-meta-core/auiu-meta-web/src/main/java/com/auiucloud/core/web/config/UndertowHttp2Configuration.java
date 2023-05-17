@@ -29,6 +29,7 @@ public class UndertowHttp2Configuration {
 
     /**
      * 实例化UndertowServerFactoryCustomizer，解决undertow启动提示warn的问题
+     *
      * @return UndertowServerFactoryCustomizer
      */
     @Bean

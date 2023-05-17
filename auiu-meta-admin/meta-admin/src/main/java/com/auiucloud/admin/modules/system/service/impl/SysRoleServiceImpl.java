@@ -6,11 +6,11 @@ import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.modules.system.domain.SysRole;
 import com.auiucloud.admin.modules.system.domain.SysRoleMenu;
 import com.auiucloud.admin.modules.system.dto.SysRoleMenuDTO;
-import com.auiucloud.admin.modules.system.service.ISysRoleMenuService;
-import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.admin.modules.system.mapper.SysRoleMapper;
+import com.auiucloud.admin.modules.system.service.ISysRoleMenuService;
 import com.auiucloud.admin.modules.system.service.ISysRoleService;
 import com.auiucloud.admin.modules.system.vo.SysRoleVO;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -37,12 +37,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     private final ISysRoleMenuService sysRoleMenuService;
 
-    @Override
-    public PageUtils listPage(Search search, SysRole sysRole) {
-        LambdaQueryWrapper<SysRole> queryWrapper = buildSearchParams(search, sysRole);
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
-    }
-
     @NotNull
     private static LambdaQueryWrapper<SysRole> buildSearchParams(Search search, SysRole sysRole) {
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
@@ -64,6 +58,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         queryWrapper.orderByAsc(SysRole::getSort);
         queryWrapper.orderByDesc(SysRole::getCreateTime);
         return queryWrapper;
+    }
+
+    @Override
+    public PageUtils listPage(Search search, SysRole sysRole) {
+        LambdaQueryWrapper<SysRole> queryWrapper = buildSearchParams(search, sysRole);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 
     @Override

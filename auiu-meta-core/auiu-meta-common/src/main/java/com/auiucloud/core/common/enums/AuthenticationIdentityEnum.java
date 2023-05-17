@@ -1,6 +1,5 @@
 package com.auiucloud.core.common.enums;
 
-import com.auiucloud.core.common.enums.IBaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

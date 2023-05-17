@@ -1,39 +1,39 @@
-//package com.auiucloud.core.web.config;
+// package com.auiucloud.core.web.config;
 //
-//import com.auiucloud.core.common.constant.MetaConstant;
-//import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
-//import com.auiucloud.core.database.model.Search;
-//import com.auiucloud.core.web.props.MateSwaggerProperties;
-//import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
-//import io.swagger.annotations.ApiOperation;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.boot.autoconfigure.AutoConfiguration;
-//import org.springframework.boot.context.properties.EnableConfigurationProperties;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Import;
-//import org.springframework.context.annotation.PropertySource;
-//import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
-//import springfox.documentation.PathProvider;
-//import springfox.documentation.annotations.ApiIgnore;
-//import springfox.documentation.builders.ApiInfoBuilder;
-//import springfox.documentation.builders.PathSelectors;
-//import springfox.documentation.builders.RequestHandlerSelectors;
-//import springfox.documentation.service.*;
-//import springfox.documentation.spi.DocumentationType;
-//import springfox.documentation.spi.service.contexts.SecurityContext;
-//import springfox.documentation.spring.web.paths.DefaultPathProvider;
-//import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
-//import springfox.documentation.spring.web.plugins.Docket;
+// import com.auiucloud.core.common.constant.MetaConstant;
+// import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
+// import com.auiucloud.core.database.model.Search;
+// import com.auiucloud.core.web.props.MateSwaggerProperties;
+// import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+// import io.swagger.annotations.ApiOperation;
+// import lombok.RequiredArgsConstructor;
+// import org.springframework.boot.autoconfigure.AutoConfiguration;
+// import org.springframework.boot.context.properties.EnableConfigurationProperties;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Import;
+// import org.springframework.context.annotation.PropertySource;
+// import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
+// import springfox.documentation.PathProvider;
+// import springfox.documentation.annotations.ApiIgnore;
+// import springfox.documentation.builders.ApiInfoBuilder;
+// import springfox.documentation.builders.PathSelectors;
+// import springfox.documentation.builders.RequestHandlerSelectors;
+// import springfox.documentation.service.*;
+// import springfox.documentation.spi.DocumentationType;
+// import springfox.documentation.spi.service.contexts.SecurityContext;
+// import springfox.documentation.spring.web.paths.DefaultPathProvider;
+// import springfox.documentation.spring.web.plugins.ApiSelectorBuilder;
+// import springfox.documentation.spring.web.plugins.Docket;
 //
-//import javax.servlet.ServletRequest;
-//import javax.servlet.ServletResponse;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-//import java.security.Principal;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
+// import javax.servlet.ServletRequest;
+// import javax.servlet.ServletResponse;
+// import javax.servlet.http.HttpServletRequest;
+// import javax.servlet.http.HttpServletResponse;
+// import javax.servlet.http.HttpSession;
+// import java.security.Principal;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Map;
 //
 ///**
 // * @author dries
@@ -45,7 +45,7 @@
 //@Import(BeanValidatorPluginsConfiguration.class)
 //@EnableConfigurationProperties(MateSwaggerProperties.class)
 //@PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:swagger.yml")
-//public class SwaggerConfiguration {
+// public class SwaggerConfiguration {
 //
 //    private final MateSwaggerProperties swaggerProperties;
 //    private final OpenApiExtensionResolver openApiExtensionResolver;

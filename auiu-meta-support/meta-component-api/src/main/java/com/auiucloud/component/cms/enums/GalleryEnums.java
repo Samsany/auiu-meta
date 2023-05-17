@@ -14,8 +14,7 @@ public class GalleryEnums {
     public enum GalleryTagType implements IBaseEnum<Long> {
 
         ALL(0L, "全部"),
-        COLLECTION(-1L, "合集")
-        ;
+        COLLECTION(-1L, "合集");
 
         private final Long value;
         private final String label;
@@ -26,8 +25,7 @@ public class GalleryEnums {
     public enum GalleryType implements IBaseEnum<Integer> {
 
         WALLPAPER(0, "壁纸"),
-        AI_WALLPAPER(1, "AI创作")
-        ;
+        AI_WALLPAPER(1, "AI创作");
 
         private final Integer value;
         private final String label;
@@ -75,8 +73,7 @@ public class GalleryEnums {
     public enum GalleryPageType implements IBaseEnum<Integer> {
 
         GALLERY(0, "作品"),
-        GALLERY_COLLECTION(1, "合集")
-        ;
+        GALLERY_COLLECTION(1, "合集");
 
         private final Integer value;
         private final String label;

@@ -2,9 +2,11 @@ package com.auiucloud.component.feign;
 
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.constant.ProviderConstant;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "作品接口调用")
-public class UserGalleryProvider implements IUserGalleryProvider{
+public class UserGalleryProvider implements IUserGalleryProvider {
 
     private final IGalleryService galleryService;
 
@@ -25,6 +27,7 @@ public class UserGalleryProvider implements IUserGalleryProvider{
      * @return ApiResult
      */
     @Override
+    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_NUM)
     public ApiResult<Long> countPublishUserGallery(Long userId) {
         return ApiResult.data(galleryService.countPublishUserGalleryByUId(userId));
     }
@@ -36,6 +39,7 @@ public class UserGalleryProvider implements IUserGalleryProvider{
      * @return ApiResult
      */
     @Override
+    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_LIKE_NUM)
     public ApiResult<Long> countUserReceivedLikeNum(Long userId) {
         return ApiResult.data(galleryService.countUserReceivedLikeNum(userId));
     }

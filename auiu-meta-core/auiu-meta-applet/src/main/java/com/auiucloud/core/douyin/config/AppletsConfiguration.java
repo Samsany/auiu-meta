@@ -9,9 +9,9 @@ import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
 import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
-import com.auiucloud.core.douyin.props.AppletsProperties;
 import com.auiucloud.core.douyin.enums.AppletTypeEnum;
 import com.auiucloud.core.douyin.model.AppletConfig;
+import com.auiucloud.core.douyin.props.AppletsProperties;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.core.douyin.service.impl.DouyinAppletsServiceImpl;
 import com.auiucloud.core.redis.core.RedisService;
@@ -39,14 +39,51 @@ import java.util.Map;
 @PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:applet.yml")
 public class AppletsConfiguration {
 
+    private static final Map<String, DouyinAppletsService> DOUYIN_APPLETS_SERVICES = new HashMap<>();
+    private static final Map<String, WxMaMessageRouter> ROUTERS = Maps.newHashMap();
+    private static final Map<String, WxMaService> MA_SERVICES = Maps.newHashMap();
+    private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) -> {
+        service.getMsgService().sendSubscribeMsg(WxMaSubscribeMessage.builder().templateId("XtxPB0QAWcWZP2iLosThiM4L6ahcjriFSZ06c-0dvjc")
+                // .data(Collections.singletonList(new WxMaSubscribeMessage.Data("", "")))
+                // 点击模板跳转页面
+                // .page()
+                .toUser(wxMessage.getFromUser()).build());
+        return null;
+    };
+    private final WxMaMessageHandler logHandler = (wxMessage, context, service, sessionManager) -> {
+        System.out.println("收到消息：" + wxMessage.toString());
+        service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("收到信息为：" + wxMessage.toJson()).toUser(wxMessage.getFromUser()).build());
+        return null;
+    };
+    private final WxMaMessageHandler textHandler = (wxMessage, context, service, sessionManager) -> {
+        service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("回复文本消息").toUser(wxMessage.getFromUser()).build());
+        return null;
+    };
+    private final WxMaMessageHandler picHandler = (wxMessage, context, service, sessionManager) -> {
+        try {
+            WxMediaUploadResult uploadResult = service.getMediaService().uploadMedia("image", "png", ClassLoader.getSystemResourceAsStream("tmp.png"));
+            service.getMsgService().sendKefuMsg(WxMaKefuMessage.newImageBuilder().mediaId(uploadResult.getMediaId()).toUser(wxMessage.getFromUser()).build());
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    };
+    private final WxMaMessageHandler qrcodeHandler = (wxMessage, context, service, sessionManager) -> {
+        try {
+            final File file = service.getQrcodeService().createQrcode("123", 430);
+            WxMediaUploadResult uploadResult = service.getMediaService().uploadMedia("image", file);
+            service.getMsgService().sendKefuMsg(WxMaKefuMessage.newImageBuilder().mediaId(uploadResult.getMediaId()).toUser(wxMessage.getFromUser()).build());
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    };
     @Resource
     private RedisService redisService;
     @Resource
     private AppletsProperties appletsProperties;
-
-    private static final Map<String, DouyinAppletsService> DOUYIN_APPLETS_SERVICES = new HashMap<>();
-    private static final Map<String, WxMaMessageRouter> ROUTERS = Maps.newHashMap();
-    private static final Map<String, WxMaService> MA_SERVICES = Maps.newHashMap();
 
     public static DouyinAppletsService getDouyinAppletService(String appId) {
         DouyinAppletsService douyinAppletsService = DOUYIN_APPLETS_SERVICES.get(appId);
@@ -98,49 +135,6 @@ public class AppletsConfiguration {
         router.rule().handler(logHandler).next().rule().async(false).content("模板").handler(templateMsgHandler).end().rule().async(false).content("文本").handler(textHandler).end().rule().async(false).content("图片").handler(picHandler).end().rule().async(false).content("二维码").handler(qrcodeHandler).end();
         return router;
     }
-
-    private final WxMaMessageHandler templateMsgHandler = (wxMessage, context, service, sessionManager) -> {
-        service.getMsgService().sendSubscribeMsg(WxMaSubscribeMessage.builder().templateId("XtxPB0QAWcWZP2iLosThiM4L6ahcjriFSZ06c-0dvjc")
-                // .data(Collections.singletonList(new WxMaSubscribeMessage.Data("", "")))
-                // 点击模板跳转页面
-                // .page()
-                .toUser(wxMessage.getFromUser()).build());
-        return null;
-    };
-
-    private final WxMaMessageHandler logHandler = (wxMessage, context, service, sessionManager) -> {
-        System.out.println("收到消息：" + wxMessage.toString());
-        service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("收到信息为：" + wxMessage.toJson()).toUser(wxMessage.getFromUser()).build());
-        return null;
-    };
-
-    private final WxMaMessageHandler textHandler = (wxMessage, context, service, sessionManager) -> {
-        service.getMsgService().sendKefuMsg(WxMaKefuMessage.newTextBuilder().content("回复文本消息").toUser(wxMessage.getFromUser()).build());
-        return null;
-    };
-
-    private final WxMaMessageHandler picHandler = (wxMessage, context, service, sessionManager) -> {
-        try {
-            WxMediaUploadResult uploadResult = service.getMediaService().uploadMedia("image", "png", ClassLoader.getSystemResourceAsStream("tmp.png"));
-            service.getMsgService().sendKefuMsg(WxMaKefuMessage.newImageBuilder().mediaId(uploadResult.getMediaId()).toUser(wxMessage.getFromUser()).build());
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    };
-
-    private final WxMaMessageHandler qrcodeHandler = (wxMessage, context, service, sessionManager) -> {
-        try {
-            final File file = service.getQrcodeService().createQrcode("123", 430);
-            WxMediaUploadResult uploadResult = service.getMediaService().uploadMedia("image", file);
-            service.getMsgService().sendKefuMsg(WxMaKefuMessage.newImageBuilder().mediaId(uploadResult.getMediaId()).toUser(wxMessage.getFromUser()).build());
-        } catch (WxErrorException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    };
 
 
 }

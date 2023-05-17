@@ -1,7 +1,5 @@
 package com.auiucloud.gateway.filter;
 
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.constant.MetaConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

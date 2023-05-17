@@ -3,9 +3,11 @@ package com.auiucloud.component.feign;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 作品远程调用接口
@@ -21,8 +23,8 @@ public interface IUserGalleryProvider {
      * @param userId 用户ID
      * @return ApiResult
      */
-    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_NUM + "/{userId}")
-    ApiResult<Long> countPublishUserGallery(@PathVariable Long userId);
+    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_NUM)
+    ApiResult<Long> countPublishUserGallery(@RequestParam("userId") Long userId);
 
     /**
      * 获取用户作品数量
@@ -30,6 +32,6 @@ public interface IUserGalleryProvider {
      * @param userId 用户ID
      * @return ApiResult
      */
-    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_LIKE_NUM + "/{userId}")
-    ApiResult<Long> countUserReceivedLikeNum(@PathVariable Long userId);
+    @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_LIKE_NUM)
+    ApiResult<Long> countUserReceivedLikeNum(@RequestParam("userId") Long userId);
 }

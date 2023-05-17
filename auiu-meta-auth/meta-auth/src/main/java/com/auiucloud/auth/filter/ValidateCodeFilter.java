@@ -79,7 +79,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
 
-
     /**
      * 将系统中配置的需要校验验证码的URL根据校验的类型放入map
      */

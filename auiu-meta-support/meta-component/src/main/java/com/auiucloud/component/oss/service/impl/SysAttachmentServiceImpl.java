@@ -3,11 +3,11 @@ package com.auiucloud.component.oss.service.impl;
 import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
-import com.auiucloud.component.oss.domain.SysAttachment;
-import com.auiucloud.component.oss.domain.SysAttachmentGroup;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
+import com.auiucloud.component.sysconfig.domain.SysAttachment;
+import com.auiucloud.component.sysconfig.domain.SysAttachmentGroup;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
@@ -108,7 +108,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      * @param file     文件
      * @param groupId  文件分组 默认 0(根目录)
      * @param filename 自定义上传文件名
-     * @param thumb 是否压缩原图
+     * @param thumb    是否压缩原图
      * @param checkImg 是否进行图片内容安全检测
      * @return Map<String, Object>
      */
@@ -137,11 +137,11 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             String bizPath = group.getBizPath();
             String filePath = StrUtil.isNotBlank(bizPath) ? bizPath.concat(StringPool.SLASH + filename) : filename;
             Map<String, Object> uMap = new HashMap<>();
-            //上传文件
+            // 上传文件
             assert ossProperties != null;
             ossTemplate.putObject(ossProperties.getBucketName(), filePath, file.getInputStream(), file.getSize(), file.getContentType());
             String url = ossProperties.getCustomDomain() + StringPool.SLASH + filePath;
-            //自定义返回报文
+            // 自定义返回报文
             uMap.put("bucketName", ossProperties.getBucketName());
             uMap.put("fileName", filename);
             uMap.put("url", url);
@@ -163,7 +163,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
                 uMap.put("width", bufferedImage.getWidth());
                 uMap.put("height", bufferedImage.getHeight());
             }
-            //上传成功后记录入库
+            // 上传成功后记录入库
             this.attachmentLog(file, url, thumbUrl, groupId, filename);
             return uMap;
         } catch (Exception e) {

@@ -2,8 +2,8 @@ package com.auiucloud.auth.service.impl;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
-import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.feign.ISysUserProvider;
+import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.modules.system.vo.UserInfoVO;
 import com.auiucloud.auth.domain.MetaClientDetails;
 import com.auiucloud.auth.enums.Oauth2ClientTypeEnum;
@@ -29,6 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 
@@ -41,8 +42,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MetaUserDetailsServiceImpl implements MetaUserDetailService {
 
-    private final ISysUserProvider sysUserProvider;
-    private final IMemberProvider memberProvider;
+    @Resource
+    private ISysUserProvider sysUserProvider;
+    @Resource
+    private IMemberProvider memberProvider;
     private final RedisService redisService;
 
     @Override

@@ -50,7 +50,7 @@ public class GsonUtil {
     public static <T> T fromJson(String gsonString, Class<T> cls) {
         T t = null;
         if (gson != null) {
-            //传入json对象和对象类型,将json转成对象
+            // 传入json对象和对象类型,将json转成对象
             t = gson.fromJson(gsonString, cls);
         }
         return t;
@@ -66,7 +66,7 @@ public class GsonUtil {
     public static <T> List<T> fromGsonList(String gsonString, Class<T> cls) {
         List<T> list = null;
         if (gson != null) {
-            //根据泛型返回解析指定的类型,TypeToken<List<T>>{}.getType()获取返回类型
+            // 根据泛型返回解析指定的类型,TypeToken<List<T>>{}.getType()获取返回类型
             list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
             }.getType());
         }

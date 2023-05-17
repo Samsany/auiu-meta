@@ -12,9 +12,9 @@ import org.quartz.JobExecutionException;
 @Slf4j
 public class SampleJob implements Job {
 
-	@Override
-	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-		log.info(" Job Execution key："+jobExecutionContext.getJobDetail().getKey());
-		log.info(String.format(" Meta-Admin 普通定时任务 SampleJob !  时间:" + DateUtil.getTimestamp()));
-	}
+    @Override
+    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        log.info(" Job Execution key：" + jobExecutionContext.getJobDetail().getKey());
+        log.info(String.format(" Meta-Admin 普通定时任务 SampleJob !  时间:" + DateUtil.getTimestamp()));
+    }
 }

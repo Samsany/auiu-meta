@@ -69,8 +69,8 @@
     <select id="routes" resultMap="BaseResultMap">
         <include refid="Base_Column_List"/>
         WHERE is_deleted = 0 AND status = 1
-            AND `type` != 2
-            AND id IN (
+        AND `type` != 2
+        AND id IN (
         SELECT menu_id FROM sys_role_menu WHERE role_id IN
         <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
             #{id}

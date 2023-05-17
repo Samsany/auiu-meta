@@ -1,23 +1,18 @@
 package com.auiucloud.component.cms.domain;
 
 import com.auiucloud.core.database.model.BaseEntity;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serial;
+
 /**
  * 作品合集表
+ *
  * @TableName cms_gallery_collection
  */
 @Data
@@ -25,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="cms_gallery_collection")
+@TableName(value = "cms_gallery_collection")
 public class GalleryCollection extends BaseEntity {
 
     @Serial

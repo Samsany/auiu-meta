@@ -118,8 +118,8 @@
     <select id="selectGalleryReCommendList" resultType="com.auiucloud.component.cms.vo.GalleryVO">
         <include refid="Base_GalleryVO_Column_List"/>
         where cg.is_deleted = 0
-          and cg.is_published = 1
-          and cg.approval_status = 1
+        and cg.is_published = 1
+        and cg.approval_status = 1
         order by rand() limit 9
     </select>
 

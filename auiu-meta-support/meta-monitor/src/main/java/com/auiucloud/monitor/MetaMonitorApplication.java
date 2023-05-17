@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MetaMonitorApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MetaMonitorApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MetaMonitorApplication.class, args);
+    }
 
 }

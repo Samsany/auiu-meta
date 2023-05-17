@@ -1,6 +1,5 @@
 package com.auiucloud.auth.domain;
 
-import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

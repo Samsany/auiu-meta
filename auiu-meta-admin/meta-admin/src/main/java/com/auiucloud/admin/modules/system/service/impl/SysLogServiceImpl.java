@@ -34,7 +34,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     /**
      * 组装查询参数
      *
-     * @param search        查询参数
+     * @param search 查询参数
      * @param sysLog 系统日志
      * @return LambdaQueryWrapper<SysLog>
      */

@@ -1,7 +1,6 @@
 package com.auiucloud.core.security.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

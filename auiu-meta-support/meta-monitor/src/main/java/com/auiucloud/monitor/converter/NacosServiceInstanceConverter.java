@@ -18,12 +18,12 @@ import static java.util.Collections.emptyMap;
 @Configuration(proxyBeanMethods = false)
 public class NacosServiceInstanceConverter extends DefaultServiceInstanceConverter {
 
-	@Override
-	protected Map<String, String> getMetadata(ServiceInstance instance) {
-		return (instance.getMetadata() != null)
-				? instance.getMetadata().entrySet().stream().filter((e) -> e.getKey() != null && e.getValue() != null)
-						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-				: emptyMap();
-	}
+    @Override
+    protected Map<String, String> getMetadata(ServiceInstance instance) {
+        return (instance.getMetadata() != null)
+                ? instance.getMetadata().entrySet().stream().filter((e) -> e.getKey() != null && e.getValue() != null)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
+                : emptyMap();
+    }
 
 }

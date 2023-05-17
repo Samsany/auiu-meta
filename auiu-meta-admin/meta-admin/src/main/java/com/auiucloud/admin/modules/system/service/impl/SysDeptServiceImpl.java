@@ -39,18 +39,6 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
         implements ISysDeptService {
 
-    @Override
-    public PageUtils listPage(Search search) {
-        LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
-        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
-    }
-
-    @Override
-    public List<SysDept> selectSysDeptList(Search search) {
-        LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
-        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
-    }
-
     @NotNull
     private static LambdaQueryWrapper<SysDept> buildSearchParams(Search search) {
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
@@ -66,6 +54,18 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
         queryWrapper.orderByAsc(SysDept::getSort);
         queryWrapper.orderByDesc(SysDept::getCreateTime);
         return queryWrapper;
+    }
+
+    @Override
+    public PageUtils listPage(Search search) {
+        LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
+        return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    @Override
+    public List<SysDept> selectSysDeptList(Search search) {
+        LambdaQueryWrapper<SysDept> queryWrapper = buildSearchParams(search);
+        return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @Override

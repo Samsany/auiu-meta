@@ -48,10 +48,6 @@ public class LogAspect {
 
     private final ApplicationContext applicationContext;
 
-    @Pointcut("@annotation(com.auiucloud.core.log.annotation.Log)")
-    public void logPointCut() {
-    }
-
     /**
      * 获取方法参数信息
      *
@@ -63,6 +59,10 @@ public class LogAspect {
         MethodParameter methodParameter = new SynthesizingMethodParameter(method, parameterIndex);
         methodParameter.initParameterNameDiscovery(PARAMETER_NAME_DISCOVERER);
         return methodParameter;
+    }
+
+    @Pointcut("@annotation(com.auiucloud.core.log.annotation.Log)")
+    public void logPointCut() {
     }
 
     /**

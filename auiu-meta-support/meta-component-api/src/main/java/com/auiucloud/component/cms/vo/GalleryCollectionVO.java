@@ -2,7 +2,6 @@ package com.auiucloud.component.cms.vo;
 
 import com.auiucloud.core.validator.UpdateGroup;
 import com.auiucloud.core.validator.Xss;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.auiucloud.component.oss.controller;
 
-import com.auiucloud.component.oss.domain.SysAttachment;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
+import com.auiucloud.component.sysconfig.domain.SysAttachment;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
@@ -35,7 +35,7 @@ public class SysAttachmentController {
             @Parameter(name = "fileType", required = true, description = "文件类型", in = ParameterIn.DEFAULT),
             @Parameter(name = "attachmentGroupId", required = true, description = "附件分组", in = ParameterIn.DEFAULT)
     })
-    public ApiResult<?> list(Search search,  @Parameter(hidden = true) SysAttachment attachment) {
+    public ApiResult<?> list(Search search, @Parameter(hidden = true) SysAttachment attachment) {
         return ApiResult.data(sysAttachmentService.listPage(search, attachment));
     }
 

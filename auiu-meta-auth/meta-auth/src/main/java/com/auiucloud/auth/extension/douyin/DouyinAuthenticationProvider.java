@@ -1,6 +1,5 @@
 package com.auiucloud.auth.extension.douyin;
 
-import com.auiucloud.auth.extension.social.SocialAuthenticationToken;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.security.service.MetaUserDetailService;
 import lombok.RequiredArgsConstructor;

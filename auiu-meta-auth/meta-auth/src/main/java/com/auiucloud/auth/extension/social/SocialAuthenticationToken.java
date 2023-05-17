@@ -1,6 +1,5 @@
 package com.auiucloud.auth.extension.social;
 
-import lombok.Getter;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +9,7 @@ import java.util.Collection;
 
 /**
  * 生成社交验证Token
+ *
  * @author dries
  **/
 public class SocialAuthenticationToken extends AbstractAuthenticationToken {

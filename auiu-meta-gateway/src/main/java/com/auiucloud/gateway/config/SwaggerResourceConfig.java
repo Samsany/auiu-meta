@@ -1,18 +1,18 @@
-//package com.auiucloud.gateway.config;
+// package com.auiucloud.gateway.config;
 //
-//import com.auiucloud.core.common.constant.MetaConstant;
-//import lombok.AllArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.cloud.gateway.config.GatewayProperties;
-//import org.springframework.cloud.gateway.route.RouteLocator;
-//import org.springframework.cloud.gateway.support.NameUtils;
-//import org.springframework.context.annotation.Primary;
-//import org.springframework.stereotype.Component;
-//import springfox.documentation.swagger.web.SwaggerResource;
-//import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+// import com.auiucloud.core.common.constant.MetaConstant;
+// import lombok.AllArgsConstructor;
+// import lombok.extern.slf4j.Slf4j;
+// import org.springframework.cloud.gateway.config.GatewayProperties;
+// import org.springframework.cloud.gateway.route.RouteLocator;
+// import org.springframework.cloud.gateway.support.NameUtils;
+// import org.springframework.context.annotation.Primary;
+// import org.springframework.stereotype.Component;
+// import springfox.documentation.swagger.web.SwaggerResource;
+// import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 //
-//import java.util.ArrayList;
-//import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 //
 ///**
 // * @author dries
@@ -22,7 +22,7 @@
 //@Primary
 //@Component
 //@AllArgsConstructor
-//public class SwaggerResourceConfig implements SwaggerResourcesProvider {
+// public class SwaggerResourceConfig implements SwaggerResourcesProvider {
 //
 //    /**
 //     * swagger2默认的url后缀

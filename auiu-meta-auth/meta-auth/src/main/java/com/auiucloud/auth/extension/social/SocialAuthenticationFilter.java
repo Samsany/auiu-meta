@@ -69,11 +69,6 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 
-    public void setSocialParameter(String socialParameter) {
-        Assert.hasText(socialParameter, "Social parameter must not be empty or null");
-        this.socialParameter = socialParameter;
-    }
-
     /**
      * 获取 just-auth 登录后的用户信息
      */
@@ -127,6 +122,11 @@ public class SocialAuthenticationFilter extends AbstractAuthenticationProcessing
 
     public final String getSocialParameter() {
         return socialParameter;
+    }
+
+    public void setSocialParameter(String socialParameter) {
+        Assert.hasText(socialParameter, "Social parameter must not be empty or null");
+        this.socialParameter = socialParameter;
     }
 
     public void setPostOnly(boolean postOnly) {

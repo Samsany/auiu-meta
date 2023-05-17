@@ -33,3 +33,4 @@ build/
 .vscode/
 /logs/
 /doc/meta-docker/
+./certs/
