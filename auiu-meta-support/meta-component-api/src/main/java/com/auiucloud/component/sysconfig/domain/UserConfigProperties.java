@@ -101,7 +101,7 @@ public class UserConfigProperties implements Serializable {
      * 下载作品返佣金额 默认0
      */
     @Builder.Default
-    private String downloadWorkAmount = "0";
+    private Integer downloadWorkAmountRatio = 0;
 
     /**
      * 一级返佣比例 默认20%

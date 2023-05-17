@@ -9,6 +9,8 @@ import com.auiucloud.component.cms.mapper.GalleryMapper;
 import com.auiucloud.component.cms.service.*;
 import com.auiucloud.component.cms.vo.*;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
+import com.auiucloud.component.sysconfig.domain.UserConfigProperties;
+import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
@@ -21,7 +23,9 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.douyin.config.AppletsConfiguration;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
+import com.auiucloud.ums.dto.UserBrokerageChangeDTO;
 import com.auiucloud.ums.dto.UserPointChangeDTO;
+import com.auiucloud.ums.enums.UserBrokerageEnums;
 import com.auiucloud.ums.enums.UserPointEnums;
 import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.MemberInfoVO;
@@ -42,6 +46,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,6 +69,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     private final IUserGalleryLikeService userGalleryLikeService;
     private final IUserGalleryCollectionService userGalleryCollectionService;
     private final IUserGalleryDownloadService userGalleryDownloadService;
+    private final ISysConfigService sysConfigService;
     @Lazy
     @Resource
     private ISysAttachmentService sysAttachmentService;
@@ -518,9 +525,44 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .gId(gallery.getId())
                     .downloadIntegral(gallery.getDownloadIntegral())
                     .build());
+
+            // 赠送用户佣金
+            assignUserBrokerage(userId, gallery);
         }
 
         return apiResult;
+    }
+
+    // 赠送用户佣金
+    private void assignUserBrokerage(Long userId, Gallery gallery) {
+        // 判断是否开启下载作品赠送佣金
+        UserConfigProperties userConfigProperties = sysConfigService.getUserConfigProperties();
+        if (userConfigProperties.getIsEnableDownloadWorkRebate()) {
+            BigDecimal commission;
+            try {
+                Integer downloadIntegral = gallery.getDownloadIntegral();
+                Integer downloadWorkAmountRatio = userConfigProperties.getDownloadWorkAmountRatio();
+                // 计算佣金
+                commission = new BigDecimal(downloadIntegral)
+                        .multiply(BigDecimal.valueOf(downloadWorkAmountRatio))
+                        .divide(new BigDecimal("100"), RoundingMode.DOWN);
+            } catch (Exception e) {
+                commission = BigDecimal.ZERO;
+                log.error("计算佣金异常，作品ID『{}』, 积分『{}』, 下载人『{}』", gallery.getId(), gallery.getDownloadIntegral(), userId);
+            }
+
+            // 发放用户佣金
+            if (commission.compareTo(BigDecimal.ZERO) > 0) {
+                ApiResult<Boolean> apiResult = memberProvider.assignUserBrokerage(UserBrokerageChangeDTO.builder()
+                        .brokerage(commission)
+                        .changeType(UserBrokerageEnums.ChangeTypeEnum.INCREASE.getValue())
+                        .userId(gallery.getUId())
+                        .linkId(gallery.getId())
+                        .linkType(UserBrokerageEnums.SourceEnum.DOWNLOAD_WORKS.getValue())
+                        .title(UserBrokerageEnums.SourceEnum.DOWNLOAD_WORKS.getLabel())
+                        .build());
+            }
+        }
     }
 
     @Override

@@ -61,6 +61,8 @@ public class ProviderConstant {
     public final String PROVIDER_USER_REGISTER_SOCIAL = PROVIDER + "/user/register/social";
     // 用户积分扣减
     public final String PROVIDER_USER_DECREASE_POINT = PROVIDER + "/user/point/decrease";
+    // 分配用户佣金
+    public final String PROVIDER_USER_ASSIGN_BROKERAGE = PROVIDER + "/user/brokerage/assign";
 
     /**
      * 抖音内容安全检测

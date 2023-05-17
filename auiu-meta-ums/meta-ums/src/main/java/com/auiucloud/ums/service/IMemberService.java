@@ -6,14 +6,12 @@ import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.ums.domain.Member;
-import com.auiucloud.ums.dto.MemberInfoDTO;
-import com.auiucloud.ums.dto.RegisterMemberDTO;
-import com.auiucloud.ums.dto.UpdateUserInfoDTO;
-import com.auiucloud.ums.dto.UserPointChangeDTO;
+import com.auiucloud.ums.dto.*;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -100,6 +98,10 @@ public interface IMemberService extends IService<Member> {
     boolean increaseUserPoint(Long userId, Integer integration);
 
     boolean decreaseUserPoint(UserPointChangeDTO pointChangeDTO);
+
+    boolean assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO);
+
+    boolean saveMemberBrokerage(Long userId, BigDecimal total);
 
     boolean checkUserPointQuantity(Integer point);
 

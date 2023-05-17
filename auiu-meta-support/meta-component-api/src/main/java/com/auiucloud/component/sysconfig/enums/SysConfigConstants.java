@@ -82,7 +82,7 @@ public class SysConfigConstants {
     public static final String IS_ENABLE_PROMOTE_USER_REBATE = "is_enable_promote_user_rebate"; // 启用推广用户返佣
     public static final String IS_ENABLE_DOWNLOAD_WORK_REBATE = "is_enable_download_work_rebate"; // 启用下载作品返佣
     public static final String PROMOTE_USER_AMOUNT = "promote_user_amount"; // 推广用户返佣金额
-    public static final String DOWNLOAD_WORK_AMOUNT = "download_work_amount"; // 下载作品返佣金额
+    public static final String DOWNLOAD_WORK_AMOUNT_RATIO = "download_work_amount_ratio"; // 下载作品返佣金额比例
     public static final String FIRST_REBATE_RATIO = "first_rebate_ratio"; // 一级返佣比例
     public static final String SECOND_REBATE_RATIO = "second_rebate_ratio"; // 二级返佣比例
     public static final String FREEZE_TIME = "freeze_time"; // 佣金冻结时间

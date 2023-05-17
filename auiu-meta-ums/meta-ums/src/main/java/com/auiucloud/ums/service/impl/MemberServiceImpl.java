@@ -9,6 +9,7 @@ import com.auiucloud.component.feign.IUserGalleryProvider;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
+import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.exception.AuthException;
 import com.auiucloud.core.common.model.IpAddress;
@@ -22,18 +23,14 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.douyin.config.AppletsConfiguration;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.ums.domain.Member;
+import com.auiucloud.ums.domain.UserBrokerageRecord;
 import com.auiucloud.ums.domain.UserIntegralRecord;
 import com.auiucloud.ums.domain.UserLevelRecord;
-import com.auiucloud.ums.dto.MemberInfoDTO;
-import com.auiucloud.ums.dto.RegisterMemberDTO;
-import com.auiucloud.ums.dto.UpdateUserInfoDTO;
-import com.auiucloud.ums.dto.UserPointChangeDTO;
+import com.auiucloud.ums.dto.*;
+import com.auiucloud.ums.enums.UserBrokerageEnums;
 import com.auiucloud.ums.enums.UserPointEnums;
 import com.auiucloud.ums.mapper.MemberMapper;
-import com.auiucloud.ums.service.IMemberService;
-import com.auiucloud.ums.service.IUserFollowerService;
-import com.auiucloud.ums.service.IUserIntegralRecordService;
-import com.auiucloud.ums.service.IUserLevelService;
+import com.auiucloud.ums.service.*;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -42,12 +39,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -60,6 +59,7 @@ import java.util.stream.Collectors;
  * @description 针对表【ums_member(会员表)】的数据库操作Service实现
  * @createDate 2023-03-28 10:11:41
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
@@ -69,6 +69,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     private final IUserFollowerService userFollowerService;
     private final IUserLevelService userLevelService;
     private final IUserIntegralRecordService userIntegralRecordService;
+    private final IUserBrokerageRecordService userBrokerageRecordService;
 
     @Resource
     private IUserGalleryProvider userGalleryProvider;
@@ -378,6 +379,62 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         }
 
         return i > 0;
+    }
+
+    @Override
+    public boolean assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
+        // 获取用户信息
+        Long userId = userBrokerageChangeDTO.getUserId();
+        BigDecimal brokerage = userBrokerageChangeDTO.getBrokerage();
+
+        Member member = this.getById(userId);
+        BigDecimal brokeragePrice = member.getBrokeragePrice();
+
+        BigDecimal total = null;
+        try {
+            // 计算佣金
+            UserBrokerageEnums.ChangeTypeEnum enumByValue = IBaseEnum.getEnumByValue(userBrokerageChangeDTO.getChangeType(), UserBrokerageEnums.ChangeTypeEnum.class);
+            switch (enumByValue) {
+                case DECREASE -> {
+                    total = brokeragePrice.subtract(brokerage);
+                }
+                case INCREASE -> {
+                    total = brokeragePrice.add(brokerage);
+                }
+            }
+        } catch (Exception e) {
+            log.error("佣金分配异常，用户ID: {}, 佣金来源: {}, 分配类型：{}", userId, userBrokerageChangeDTO.getTitle(), userBrokerageChangeDTO.getChangeType());
+            return false;
+        }
+
+        // 分配佣金
+        boolean result = this.saveMemberBrokerage(userId, total);
+        // 保存记录
+        if (result) {
+            // 保存用户积分使用记录
+            UserBrokerageRecord build = UserBrokerageRecord.builder()
+                    .uId(userId)
+                    .linkId(userBrokerageChangeDTO.getLinkId())
+                    .linkType(userBrokerageChangeDTO.getLinkType())
+                    .title(userBrokerageChangeDTO.getTitle())
+                    .price(brokerage)
+                    .balance(total)
+                    .type(userBrokerageChangeDTO.getChangeType())
+                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                    .frozenTime(0)
+                    .thawTime(LocalDateTime.now())
+                    .build();
+            userBrokerageRecordService.save(build);
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean saveMemberBrokerage(Long userId, BigDecimal total) {
+        return this.update(Wrappers.<Member>lambdaUpdate()
+                .set(Member::getBrokeragePrice, total)
+                .eq(Member::getId, userId));
     }
 
     @Override

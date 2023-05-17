@@ -355,7 +355,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             return applet;
         }
 
-        AtomicReference<AppletConfigProperties> appletConfigProperties = new AtomicReference<>(new AppletConfigProperties());
         // 查询小程序配置列表
         List<SysConfig> list = Optional.ofNullable(this.list(
                 Wrappers.<SysConfig>lambdaQuery()
@@ -471,8 +470,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                             userConfig.setPromoteUserAmount(config.getConfigValue());
                     case SysConfigConstants.IS_ENABLE_DOWNLOAD_WORK_REBATE ->
                             userConfig.setIsEnableDownloadWorkRebate(Boolean.valueOf(config.getConfigValue()));
-                    case SysConfigConstants.DOWNLOAD_WORK_AMOUNT ->
-                            userConfig.setDownloadWorkAmount(config.getConfigValue());
+                    case SysConfigConstants.DOWNLOAD_WORK_AMOUNT_RATIO ->
+                            userConfig.setDownloadWorkAmountRatio(Integer.valueOf(config.getConfigValue()));
                     case SysConfigConstants.FIRST_REBATE_RATIO ->
                             userConfig.setFirstRebateRatio(Integer.valueOf(config.getConfigValue()));
                     case SysConfigConstants.SECOND_REBATE_RATIO ->

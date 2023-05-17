@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -54,12 +55,12 @@ public class UserBrokerageRecord extends BaseEntity {
     /**
      * 金额
      */
-    private Integer price;
+    private BigDecimal price;
 
     /**
      * 余额
      */
-    private Integer balance;
+    private BigDecimal balance;
 
     /**
      * 状态(1-订单创建 2-冻结期 3-完成 4-失效)

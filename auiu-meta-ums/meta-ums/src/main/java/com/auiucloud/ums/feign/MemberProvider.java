@@ -4,6 +4,7 @@ import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.ums.dto.MemberInfoDTO;
+import com.auiucloud.ums.dto.UserBrokerageChangeDTO;
 import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.vo.MemberInfoVO;
@@ -115,4 +116,14 @@ public class MemberProvider implements IMemberProvider {
         return ApiResult.data(memberService.decreaseUserPoint(userPointChangeDTO));
     }
 
+    /**
+     * 分配用户佣金
+     *
+     * @param userBrokerageChangeDTO 传递参数
+     * @return ApiResult
+     */
+    @Override
+    public ApiResult<Boolean> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
+        return ApiResult.data(memberService.assignUserBrokerage(userBrokerageChangeDTO));
+    }
 }
