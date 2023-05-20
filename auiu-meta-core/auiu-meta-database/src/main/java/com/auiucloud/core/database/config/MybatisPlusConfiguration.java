@@ -71,15 +71,15 @@ public class MybatisPlusConfiguration implements WebMvcConfigurer {
         return interceptor;
     }
 
-    /**
-     * sql 日志
-     */
-    @Bean
-    @Profile({"local", "dev", "test"})
-    @ConditionalOnProperty(value = "mybatis-plus.sql-log.enable", matchIfMissing = true)
-    public SqlLogInterceptor sqlLogInterceptor() {
-        return new SqlLogInterceptor();
-    }
+    // /**
+    //  * sql 日志
+    //  */
+    // @Bean
+    // @Profile({"local", "dev", "test"})
+    // @ConditionalOnProperty(value = "mybatis-plus.sql-log.enable", matchIfMissing = true)
+    // public SqlLogInterceptor sqlLogInterceptor() {
+    //     return new SqlLogInterceptor();
+    // }
 
     /**
      * mybatis-plus 乐观锁拦截器

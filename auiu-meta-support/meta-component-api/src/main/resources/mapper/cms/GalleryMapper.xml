@@ -12,12 +12,12 @@
         <result property="negativePrompt" column="negative_prompt" jdbcType="VARCHAR"/>
         <result property="width" column="width" jdbcType="INTEGER"/>
         <result property="height" column="height" jdbcType="INTEGER"/>
-        <result property="seed" column="seed" jdbcType="VARCHAR"/>
-        <result property="model" column="model" jdbcType="VARCHAR"/>
-        <result property="fusionModel" column="fusion_model" jdbcType="VARCHAR"/>
-        <result property="steps" column="steps" jdbcType="INTEGER"/>
-        <result property="sampler" column="sampler" jdbcType="VARCHAR"/>
-        <result property="cfgScale" column="cfg_scale" jdbcType="INTEGER"/>
+        <!--<result property="seed" column="seed" jdbcType="VARCHAR"/>-->
+        <!--<result property="model" column="model" jdbcType="VARCHAR"/>-->
+        <!--<result property="fusionModel" column="fusion_model" jdbcType="VARCHAR"/>-->
+        <!--<result property="steps" column="steps" jdbcType="INTEGER"/>-->
+        <!--<result property="sampler" column="sampler" jdbcType="VARCHAR"/>-->
+        <!--<result property="cfgScale" column="cfg_scale" jdbcType="INTEGER"/>-->
         <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
         <result property="collectionId" column="collection_id" jdbcType="BIGINT"/>
         <result property="isPublished" column="is_published" jdbcType="TINYINT"/>

@@ -93,8 +93,8 @@ public class LogAspect {
         String url = request.getRequestURI();
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
-        IpAddress ipAddress = IPUtil.getIpAddress(ip);
-        String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
+        // IpAddress ipAddress = IPUtil.getIpAddress(ip);
+        // String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
 
         // 参数
         Object[] args = point.getArgs();
@@ -109,7 +109,7 @@ public class LogAspect {
         }
         //　如果是登录请求，则不获取用户信息
         String username = null;
-        if (!url.contains("oauth") && !(url.contains("code"))) {
+        if (!url.contains("oauth")) {
             // 判断header是否存在，存在则获取用户名
             try {
                 username = SecurityUtil.getUsername();
@@ -123,7 +123,7 @@ public class LogAspect {
                 .method(method)
                 .url(url)
                 .operation(String.valueOf(result))
-                .location(region)
+                // .location(region)
                 .traceId(request.getHeader(MetaConstant.LOG_TRACE_ID))
                 .executeTime(tookTime)
                 .title(annotation.value())
@@ -197,7 +197,7 @@ public class LogAspect {
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
         IpAddress ipAddress = IPUtil.getIpAddress(ip);
-        String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
+        // String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
 
 
         //　获取request
@@ -216,7 +216,7 @@ public class LogAspect {
                 .ip(ip)
                 .method(method)
                 .url(url)
-                .location(region)
+                // .location(region)
                 .traceId(TraceUtil.getTraceId(request))
                 .executeTime(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime))
                 .title(logAnn.value())

@@ -34,3 +34,4 @@ build/
 /logs/
 /doc/meta-docker/
 ./certs/
+/skywalking/

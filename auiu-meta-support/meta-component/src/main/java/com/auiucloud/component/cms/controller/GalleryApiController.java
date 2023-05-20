@@ -143,6 +143,13 @@ public class GalleryApiController extends BaseController {
         return galleryService.upload(file, cId);
     }
 
+    // @Log(value = "作品")
+    // @Operation(summary = "上传AI作品")
+    // @PostMapping(value = "/upload/ai-works")
+    // public ApiResult<?> uploadAiWorks(@RequestBody Gallery gallery) {
+    //     return galleryService.uploadAiWorks(gallery);
+    // }
+
     /**
      * 分页查询作品列表
      */

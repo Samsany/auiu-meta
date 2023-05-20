@@ -67,39 +67,44 @@ public class Gallery extends BaseEntity {
     private Integer height;
 
     /**
-     * 大小
+     * 绘画配置
      */
-    private Long size;
+    private String sdConfig;
 
-    /**
-     * 随机种子
-     */
-    private Long seed;
-
-    /**
-     * 模型主题
-     */
-    private String model;
-
-    /**
-     * 融合模型
-     */
-    private String fusionModel;
-
-    /**
-     * 采样迭代步数
-     */
-    private Integer steps;
-
-    /**
-     * 采样方法
-     */
-    private String sampler;
-
-    /**
-     * 提示词相关性
-     */
-    private Integer cfgScale;
+    // /**
+    //  * 大小
+    //  */
+    // private Long size;
+    //
+    // /**
+    //  * 随机种子
+    //  */
+    // private Long seed;
+    //
+    // /**
+    //  * 模型主题
+    //  */
+    // private String model;
+    //
+    // /**
+    //  * 融合模型
+    //  */
+    // private String fusionModel;
+    //
+    // /**
+    //  * 采样迭代步数
+    //  */
+    // private Integer steps;
+    //
+    // /**
+    //  * 采样方法
+    //  */
+    // private String sampler;
+    //
+    // /**
+    //  * 提示词相关性
+    //  */
+    // private Integer cfgScale;
 
     /**
      * 标签ID
