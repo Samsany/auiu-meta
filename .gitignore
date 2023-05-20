@@ -33,5 +33,7 @@ build/
 .vscode/
 /logs/
 /doc/meta-docker/
+/doc/jre-17/
 ./certs/
 /skywalking/
+
