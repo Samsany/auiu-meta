@@ -53,14 +53,9 @@ public class GalleryVO implements Serializable {
     private String thumbUrl;
 
     /**
-     * 画面描述
+     * 图片比例
      */
-    private String prompt;
-
-    /**
-     * 反面描述
-     */
-    private String negativePrompt;
+    private String ratio;
 
     /**
      * 宽度
@@ -78,34 +73,9 @@ public class GalleryVO implements Serializable {
     private Long size;
 
     /**
-     * 随机种子
+     * AI绘画配置
      */
-    private Long seed;
-
-    /**
-     * 模型主题
-     */
-    private String model;
-
-    /**
-     * 融合模型
-     */
-    private String fusionModel;
-
-    /**
-     * 采样迭代步数
-     */
-    private Integer steps;
-
-    /**
-     * 采样方法
-     */
-    private String sampler;
-
-    /**
-     * 提示词相关性
-     */
-    private Integer cfgScale;
+    private String sdConfig;
 
     /**
      * 标签ID
@@ -163,7 +133,7 @@ public class GalleryVO implements Serializable {
     private Integer approvalStatus;
 
     /**
-     * 作品类型(0-壁纸 1-AI创作)
+     * 作品类型(0-壁纸 1-文生图 2-图生图)
      */
     private Integer type;
 

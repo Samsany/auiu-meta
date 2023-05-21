@@ -37,12 +37,6 @@ public class GalleryPublishVO implements Serializable {
     private String remark;
 
     /**
-     * 画面描述
-     */
-    @Size(min = 0, max = 1200, message = "作品简介长度在0~1200字符之间")
-    private String prompt;
-
-    /**
      * 标签ID
      */
     private Long tagId;

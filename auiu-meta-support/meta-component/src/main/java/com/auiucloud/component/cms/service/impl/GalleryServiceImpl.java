@@ -363,7 +363,6 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                 DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
                 List<Integer> resultList = douyinAppletService.checkTextList(List.of(
                         galleryVO.getTitle(),
-                        galleryVO.getPrompt(),
                         galleryVO.getRemark()
                 ));
                 if (resultList.size() > 0) {
@@ -377,7 +376,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         LambdaUpdateWrapper<Gallery> updateWrapper = Wrappers.lambdaUpdate();
         updateWrapper.set(Gallery::getTitle, galleryVO.getTitle());
         updateWrapper.set(Gallery::getRemark, galleryVO.getRemark());
-        updateWrapper.set(Gallery::getPrompt, galleryVO.getPrompt());
+
         updateWrapper.set(Gallery::getTagId, galleryVO.getTagId());
         updateWrapper.set(Gallery::getPublishedTime, new Date());
         // 默认已发布，无需审核

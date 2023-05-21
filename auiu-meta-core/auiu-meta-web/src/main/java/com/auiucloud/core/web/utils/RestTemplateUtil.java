@@ -25,6 +25,12 @@ public class RestTemplateUtil {
     @Resource
     private RestTemplate restTemplate;
 
+    @PostConstruct
+    public void init() {
+        restTemplateUtil = this;
+        restTemplateUtil.restTemplate = this.restTemplate;
+    }
+
     /**
      * get请求（超时设置）
      *
@@ -32,12 +38,6 @@ public class RestTemplateUtil {
      * @return
      */
     public static Map httpGetRequestFactoryToMap(String url) {
-        // 超时处理设置
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-        requestFactory.setConnectTimeout(1000);
-        requestFactory.setReadTimeout(1000);
-        // 应用超时设置
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
         return restTemplateUtil.restTemplate.getForObject(url, Map.class);
     }
 
@@ -47,7 +47,6 @@ public class RestTemplateUtil {
      * @param url
      */
     public static Map restTemplateGetToMap(String url) {
-        RestTemplate restTemplate = new RestTemplate();
         return restTemplateUtil.restTemplate.getForObject(url, Map.class);
     }
 
@@ -57,7 +56,6 @@ public class RestTemplateUtil {
      * @param url
      */
     public static String restTemplateGetToStr(String url) {
-        RestTemplate restTemplate = new RestTemplate();
         return restTemplateUtil.restTemplate.getForObject(url, String.class);
     }
 
@@ -65,7 +63,6 @@ public class RestTemplateUtil {
      * get请求 并添加消息头
      */
     public static ResponseEntity<String> httpGetHeaders(String url) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
@@ -84,7 +81,7 @@ public class RestTemplateUtil {
 
         // 设置header
         headers.setContentType(type);
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
 
         // 执行请求
         ResponseEntity<String> resp = restTemplate.postForEntity(url, request, String.class);
@@ -308,7 +305,7 @@ public class RestTemplateUtil {
      */
     public static <T> ResponseEntity<T> post(String url, HttpHeaders headers, Object requestBody, Class<T> responseType,
                                              Map<String, ?> uriVariables) throws RestClientException {
-        HttpEntity<Object> requestEntity = new HttpEntity<Object>(requestBody, headers);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(requestBody, headers);
         return post(url, requestEntity, responseType, uriVariables);
     }
 
@@ -353,6 +350,9 @@ public class RestTemplateUtil {
         return restTemplateUtil.restTemplate.exchange(url, HttpMethod.POST, requestEntity, responseType, uriVariables);
     }
 
+
+    // ----------------------------------PUT-------------------------------------------------------
+
     /**
      * PUT请求调用方式
      *
@@ -365,8 +365,6 @@ public class RestTemplateUtil {
             throws RestClientException {
         return put(url, HttpEntity.EMPTY, responseType, uriVariables);
     }
-
-    // ----------------------------------PUT-------------------------------------------------------
 
     /**
      * PUT请求调用方式
@@ -736,12 +734,6 @@ public class RestTemplateUtil {
     public static <T> ResponseEntity<T> exchange(String url, HttpMethod method, HttpEntity<?> requestEntity,
                                                  Class<T> responseType, Map<String, ?> uriVariables) throws RestClientException {
         return restTemplateUtil.restTemplate.exchange(url, method, requestEntity, responseType, uriVariables);
-    }
-
-    @PostConstruct
-    public void init() {
-        restTemplateUtil = this;
-        restTemplateUtil.restTemplate = this.restTemplate;
     }
 
 }

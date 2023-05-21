@@ -8,16 +8,13 @@
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="uId" column="u_id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="prompt" column="prompt" jdbcType="VARCHAR"/>
-        <result property="negativePrompt" column="negative_prompt" jdbcType="VARCHAR"/>
+        <result property="pic" column="pic" jdbcType="VARCHAR"/>
+        <result property="thumbUrl" column="thumb_url" jdbcType="VARCHAR"/>
+        <result property="ratio" column="ratio" jdbcType="VARCHAR"/>
         <result property="width" column="width" jdbcType="INTEGER"/>
         <result property="height" column="height" jdbcType="INTEGER"/>
-        <!--<result property="seed" column="seed" jdbcType="VARCHAR"/>-->
-        <!--<result property="model" column="model" jdbcType="VARCHAR"/>-->
-        <!--<result property="fusionModel" column="fusion_model" jdbcType="VARCHAR"/>-->
-        <!--<result property="steps" column="steps" jdbcType="INTEGER"/>-->
-        <!--<result property="sampler" column="sampler" jdbcType="VARCHAR"/>-->
-        <!--<result property="cfgScale" column="cfg_scale" jdbcType="INTEGER"/>-->
+        <result property="size" column="height" jdbcType="BIGINT"/>
+        <result property="sdConfig" column="sd_config" jdbcType="VARCHAR"/>
         <result property="tagId" column="tag_id" jdbcType="BIGINT"/>
         <result property="collectionId" column="collection_id" jdbcType="BIGINT"/>
         <result property="isPublished" column="is_published" jdbcType="TINYINT"/>
@@ -39,18 +36,36 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id
-        ,u_id,title,
-        prompt,negative_prompt,width,
-        height,seed,model,
-        fusion_model,steps,sampler,
-        cfg_scale,tag_id,collection_id,
-        is_published,is_top,download_integral,
-        download_times,views,sort,
-        approval_status,type,published_time,
-        create_time,update_time,create_by,
-        update_by,remark,tenant_id,
-        is_deleted
+        select id,
+               u_id,
+               title,
+               pic,
+               thumb_url,
+               ratio,
+               width,
+               height,
+               sd_config,
+               tag_id,
+               collection_id,
+               is_published,
+               is_top,
+               consume_integral,
+               download_integral,
+               download_times,
+               views,
+               sort,
+               approval_status,
+               type,
+               published_time,
+               join_collection_time,
+               create_time,
+               update_time,
+               create_by,
+               update_by,
+               remark,
+               tenant_id,
+               is_deleted
+        from cms_gallery
     </sql>
 
     <sql id="Base_GalleryVO_Column_List">
@@ -61,17 +76,11 @@
                cg.title,
                cg.pic,
                cg.thumb_url,
-               cg.prompt,
-               cg.negative_prompt,
+               cg.ratio,
                cg.width,
                cg.height,
                cg.size,
-               cg.seed,
-               cg.model,
-               cg.fusion_model,
-               cg.steps,
-               cg.sampler,
-               cg.cfg_scale,
+               cg.sd_config,
                cg.tag_id,
                cg.collection_id,
                cg.is_published,
