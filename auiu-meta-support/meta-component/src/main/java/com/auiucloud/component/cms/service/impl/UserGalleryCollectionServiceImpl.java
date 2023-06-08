@@ -49,15 +49,15 @@ public class UserGalleryCollectionServiceImpl extends ServiceImpl<UserGalleryCol
     }
 
     @Override
-    public List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByCId(Long cId) {
-        return Optional.ofNullable(baseMapper.selectGalleryFavoriteVOListByPostId2Type(cId, GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue()))
+    public List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByCId(Long cateId) {
+        return Optional.ofNullable(baseMapper.selectGalleryFavoriteVOListByPostId2Type(cateId, GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue()))
                 .orElse(Collections.emptyList());
     }
 
     @Override
     public UserGalleryCollection selectGalleryFavoriteByUserId2GalleryId(Long userId, Long postId, Integer type) {
         LambdaQueryWrapper<UserGalleryCollection> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(UserGalleryCollection::getUId, userId);
+        queryWrapper.eq(UserGalleryCollection::getUserId, userId);
         queryWrapper.eq(UserGalleryCollection::getPostId, postId);
         queryWrapper.eq(UserGalleryCollection::getType, type);
         return this.getOne(queryWrapper);

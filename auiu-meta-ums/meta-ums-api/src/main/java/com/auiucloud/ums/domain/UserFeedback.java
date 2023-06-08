@@ -27,7 +27,7 @@ public class UserFeedback extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 联系方式

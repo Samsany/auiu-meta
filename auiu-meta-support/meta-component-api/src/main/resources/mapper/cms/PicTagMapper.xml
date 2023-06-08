@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.PicTag">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="pId" column="p_id" jdbcType="BIGINT"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="activeIcon" column="active_icon" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,p_id,name,
+        id,parent_id,name,
         icon,active_icon,bg_img,
         status,sort,create_time,
         update_time,create_by,update_by,

@@ -1,6 +1,8 @@
 package com.auiucloud.ums.controller;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.redis.core.RedisService;
@@ -32,7 +34,11 @@ public class AuthController {
     @GetMapping("/user/info")
     public ApiResult<?> getUser() {
         // 获取当前登录用户信息
-        UserInfoVO userInfo = memberService.getUserInfoVOById(SecurityUtil.getUserId());
+        Long userId = SecurityUtil.getUserId();
+        UserInfoVO userInfo = memberService.getUserInfoVOById(userId);
+        if (ObjectUtil.isNull(userInfo)) {
+            return ApiResult.fail(ResultCode.USER_ERROR_A0230);
+        }
         return ApiResult.data(userInfo);
     }
 

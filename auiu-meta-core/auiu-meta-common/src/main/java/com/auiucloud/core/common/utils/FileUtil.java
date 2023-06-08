@@ -7,6 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import com.auiucloud.core.common.exception.ApiException;
+import com.auiucloud.core.common.model.MetaMultipartFile;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,8 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * File工具类，扩展 hutool 工具包
@@ -174,6 +177,42 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         inputFile.close();
         base64 = Base64.encode(buffer);
         return base64.replaceAll("[\\s*\t\n\r]", "");
+    }
+
+    public static MultipartFile base64ToMultipartFile(String baseImg) {
+        // 定义一个正则表达式的筛选规则，为了获取图片的类型
+        String regex = "data:image/(.*?);base64";
+        if (StrUtil.isBlank(baseImg)) {
+            return null;
+        }
+        String type = getSubUtilSimple(baseImg, regex);
+        // 去除base64图片的前缀
+        baseImg = baseImg.replaceFirst("data:(.+?);base64,", "");
+        byte[] imageByte;
+        String fileName;
+        // 把图片转换成二进制
+        imageByte = Base64.decode(baseImg.replaceAll(" ", "+"));
+        // 随机生成图片的名字，同时根据类型结尾
+        fileName = UUID.randomUUID() + "." + type;
+
+        InputStream inputStream = new ByteArrayInputStream(imageByte);
+        MetaMultipartFile mockMultipartFile = null;
+        try {
+            mockMultipartFile = new MetaMultipartFile(fileName, fileName, "", inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("base64ToMultipartFile转换失败");
+        }
+        return mockMultipartFile;
+    }
+
+    private static String getSubUtilSimple(String soap, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(soap);
+        while (m.find()) {
+            return m.group(1);
+        }
+        return "";
     }
 
     public static String getFileType(String type) {

@@ -3,7 +3,9 @@ package com.auiucloud.component.cms.service;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.vo.GalleryPublishVO;
+import com.auiucloud.component.cms.vo.GalleryUploadBatchVO;
 import com.auiucloud.component.cms.vo.GalleryVO;
+import com.auiucloud.component.cms.vo.SdDrawSaveVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
@@ -22,11 +24,17 @@ public interface IGalleryService extends IService<Gallery> {
 
     List<GalleryVO> listGalleryVOByGIds(List<Long> galleryIds);
 
-    List<GalleryVO> selectGalleryListByCId(Long cId);
+    List<GalleryVO> selectGalleryListByCId(Long cateId);
 
-    List<GalleryVO> selectGalleryListByCId2Limit(Long cId, Integer limit);
+    List<GalleryVO> selectGalleryListByCId2Limit(Long cateId, Integer limit);
 
     List<GalleryVO> selectGalleryReCommendList();
+
+    PageUtils selectGalleryPage(Search search, Gallery gallery);
+
+    PageUtils selectUserGalleryPage(Search search, Gallery gallery);
+
+    PageUtils galleryNoCollectionPage(Search search, Gallery gallery);
 
     PageUtils selectSquareGalleryVOPage(Search search, Gallery gallery);
 
@@ -40,11 +48,8 @@ public interface IGalleryService extends IService<Gallery> {
 
     GalleryVO selectGalleryInfoById(Long galleryId);
 
-    ApiResult<?> upload(MultipartFile file, Long cId);
-
-    PageUtils selectGalleryPage(Search search, Gallery gallery);
-
-    PageUtils galleryNoCollectionPage(Search search, Gallery gallery);
+    ApiResult<?> upload(MultipartFile file, Long cateId);
+    ApiResult<?> saveSdDrawGallery(SdDrawSaveVO vo);
 
     boolean joinGalleryCollection(JoinGalleryCollectionDTO joinGalleryCollectionDTO);
 
@@ -96,4 +101,5 @@ public interface IGalleryService extends IService<Gallery> {
 
     ApiResult<?> downLoadUserGallery(Long id);
 
+    boolean uploadGalleryBatch(GalleryUploadBatchVO vo);
 }

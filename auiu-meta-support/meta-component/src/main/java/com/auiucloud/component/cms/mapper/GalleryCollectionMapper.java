@@ -16,13 +16,15 @@ import java.util.List;
  */
 public interface GalleryCollectionMapper extends BaseMapper<GalleryCollection> {
 
-    GalleryCollectionVO selectGalleryCollectionVOById(@Param("cId") Long cId);
+    GalleryCollectionVO selectGalleryCollectionVOById(@Param("cateId") Long cateId);
 
     Long countUserHomeGalleryCollectionTotal(@Param("userId") Long userId, @Param("search") Search search, @Param("galleryCollection") GalleryCollection galleryCollection);
 
     List<GalleryCollectionVO> selectUserHomeGalleryCollectionPage(@Param("userId") Long userId, @Param("search") Search search, @Param("galleryCollection") GalleryCollection galleryCollection);
 
     List<GalleryCollectionVO> selectGalleryCollectionVOByCIds(List<Long> cIds);
+
+    List<GalleryCollectionVO> selectGalleryCollectionVOList(@Param("params") GalleryCollection galleryCollection);
 }
 
 

@@ -29,12 +29,12 @@ public class UserGalleryDownload extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 作品ID
      */
-    private Long gId;
+    private Long galleryId;
 
     /**
      * 下载消耗积分

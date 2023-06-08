@@ -8,9 +8,14 @@ package com.auiucloud.core.common.constant;
  */
 public class CommonConstant {
 
+    public static final Long SYSTEM_NODE_ID = -1L; // 根节点
+
     public static final Long ROOT_NODE_ID = 0L; // 根节点
 
     public static final Long NODE_ONE_ID = 1L; // 节点一
+
+    public static final int YES_VALUE = 1; // 是
+    public static final int NO_VALUE = 0; // 否
 
     public static final int STATUS_DISABLE_VALUE = 1; // 禁用状态
 

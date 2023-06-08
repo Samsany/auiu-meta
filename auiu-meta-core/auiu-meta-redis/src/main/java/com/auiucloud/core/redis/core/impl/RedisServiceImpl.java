@@ -266,4 +266,15 @@ public class RedisServiceImpl implements RedisService {
     public void unLock(String key) {
         redisLockUtil.releaseLock(key, "");
     }
+
+    /**
+     * 发送消息
+     *
+     * @param channel 通道
+     * @param message 消息体
+     */
+    @Override
+    public void publish(String channel, String message) {
+        redisTemplate.convertAndSend(channel, message);
+    }
 }

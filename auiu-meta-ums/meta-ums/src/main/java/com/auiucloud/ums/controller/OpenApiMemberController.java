@@ -9,6 +9,7 @@ import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.ums.service.IMemberService;
 import com.auiucloud.ums.vo.UserInfoVO;
+import com.auiucloud.ums.vo.UserRecommendVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,7 @@ public class OpenApiMemberController {
     @GetMapping("/user/recommend/list")
     @Operation(summary = "每日推荐用户列表")
     public ApiResult<?> userRecommendList() {
-        List<UserInfoVO> list = memberService.userRecommendList();
+        List<UserRecommendVO> list = memberService.userRecommendList();
         return ApiResult.data(list);
     }
 

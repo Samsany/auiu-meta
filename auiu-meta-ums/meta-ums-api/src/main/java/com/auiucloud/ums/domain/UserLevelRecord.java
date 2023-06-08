@@ -30,7 +30,7 @@ public class UserLevelRecord extends BaseEntity {
     /**
      * 用户uid
      */
-    private Long uid;
+    private Long userId;
 
     /**
      * 等级vip

@@ -53,7 +53,7 @@ public class UserFeedbackServiceImpl extends ServiceImpl<UserFeedbackMapper, Use
         BeanUtils.copyProperties(feedbackVO, userFeedback);
         try {
             Long userId = SecurityUtil.getUserId();
-            userFeedback.setUId(userId);
+            userFeedback.setUserId(userId);
             return this.save(userFeedback);
         } catch (Exception e) {
             throw new ApiException("请登录后提交反馈");

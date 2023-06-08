@@ -33,6 +33,7 @@ import com.auiucloud.ums.mapper.MemberMapper;
 import com.auiucloud.ums.service.*;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
+import com.auiucloud.ums.vo.UserRecommendVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -90,17 +91,20 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     }
 
     @Override
-    public List<UserInfoVO> userRecommendList() {
+    public List<UserRecommendVO> userRecommendList() {
         // 获取用户
         Long userId = SecurityUtil.getUserIdOrDefault();
-        List<UserInfoVO> userInfoVOList = baseMapper.selectUserRecommendList(userId);
-        Optional.ofNullable(userInfoVOList).ifPresent(creatorVOS -> creatorVOS.parallelStream().forEach(it -> {
-            // 设置是否关注该创作者
-            if (ObjectUtil.isNotNull(userId)) {
-                boolean isAttention = userFollowerService.checkedAttentionUser(userId, it.getId());
-                it.setIsAttention(isAttention);
-            }
-        }));
+        List<UserRecommendVO> userInfoVOList = baseMapper.selectUserRecommendList();
+        Optional.ofNullable(userInfoVOList)
+                .ifPresent(creatorVOS -> creatorVOS
+                        .parallelStream()
+                        .forEach(it -> {
+                            // 设置是否关注该创作者
+                            if (ObjectUtil.isNotNull(userId)) {
+                                boolean isAttention = userFollowerService.checkedAttentionUser(userId, it.getId());
+                                it.setIsAttention(isAttention);
+                            }
+                        }));
         return userInfoVOList;
     }
 
@@ -353,36 +357,54 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     }
 
     @Override
-    public boolean decreaseUserPoint(UserPointChangeDTO pointChangeDTO) {
+    public ApiResult<?> assignUserPoint(UserPointChangeDTO pointChangeDTO) {
         // 获取用户信息
         Long userId = pointChangeDTO.getUserId();
         Integer integral = pointChangeDTO.getIntegral();
         Member member = this.getById(userId);
         Integer oldIntegral = member.getIntegral();
-        if (integral > oldIntegral) {
-            throw new ApiException("用户积分不足");
+
+        int newIntegral = 0;
+        try {
+            // 计算积分
+            UserPointEnums.ChangeTypeEnum enumByValue = IBaseEnum.getEnumByValue(pointChangeDTO.getChangeType(), UserPointEnums.ChangeTypeEnum.class);
+            switch (enumByValue) {
+                case DECREASE -> {
+                    if (integral > oldIntegral) {
+                        return ApiResult.fail(ResultCode.USER_ERROR_A0160);
+                    }
+                    newIntegral = oldIntegral - integral;
+                }
+                case INCREASE -> {
+                    newIntegral = oldIntegral + integral;
+                }
+            }
+        } catch (Exception e) {
+            log.error("积分分配异常，用户ID: {}, 积分来源: {}, 分配类型：{}, 异常信息：{}", userId, pointChangeDTO.getTitle(), pointChangeDTO.getChangeType(), e.getMessage());
+            return ApiResult.fail("积分分配异常");
         }
-        int i = baseMapper.decreaseUserPoint(userId, integral);
-        if (i > 0) {
-            // 保存用户积分使用记录
+
+        boolean result = this.saveMemberIntegral(userId, newIntegral);
+        if (result) {
+            // 保存用户积分变动记录
             UserIntegralRecord build = UserIntegralRecord.builder()
-                    .uId(userId)
-                    .title(UserPointEnums.ConsumptionEnum.DOWNLOAD_GALLERY.getLabel())
+                    .userId(userId)
+                    .title(pointChangeDTO.getTitle())
                     .integral(integral)
-                    .balance(oldIntegral + integral)
-                    .type(UserPointEnums.ChangeTypeEnum.DECREASE.getValue())
-                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                    .balance(newIntegral)
+                    .type(pointChangeDTO.getChangeType())
+                    .status(pointChangeDTO.getStatus())
                     .frozenTime(0)
                     .thawTime(LocalDateTime.now())
                     .build();
             userIntegralRecordService.save(build);
         }
 
-        return i > 0;
+        return ApiResult.condition(result);
     }
 
     @Override
-    public boolean assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
+    public ApiResult<?> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
         // 获取用户信息
         Long userId = userBrokerageChangeDTO.getUserId();
         BigDecimal brokerage = userBrokerageChangeDTO.getBrokerage();
@@ -397,14 +419,17 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
             switch (enumByValue) {
                 case DECREASE -> {
                     total = brokeragePrice.subtract(brokerage);
+                    if (total.compareTo(BigDecimal.ZERO) < 0) {
+                        return ApiResult.fail(ResultCode.USER_ERROR_A0163);
+                    }
                 }
                 case INCREASE -> {
                     total = brokeragePrice.add(brokerage);
                 }
             }
         } catch (Exception e) {
-            log.error("佣金分配异常，用户ID: {}, 佣金来源: {}, 分配类型：{}", userId, userBrokerageChangeDTO.getTitle(), userBrokerageChangeDTO.getChangeType());
-            return false;
+            log.error("佣金分配异常，用户ID: {}, 佣金来源: {}, 分配类型：{}, 异常信息：{}", userId, userBrokerageChangeDTO.getTitle(), userBrokerageChangeDTO.getChangeType(), e.getMessage());
+            return ApiResult.fail("佣金分配异常");
         }
 
         // 分配佣金
@@ -413,21 +438,28 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         if (result) {
             // 保存用户积分使用记录
             UserBrokerageRecord build = UserBrokerageRecord.builder()
-                    .uId(userId)
+                    .userId(userId)
                     .linkId(userBrokerageChangeDTO.getLinkId())
                     .linkType(userBrokerageChangeDTO.getLinkType())
                     .title(userBrokerageChangeDTO.getTitle())
                     .price(brokerage)
                     .balance(total)
                     .type(userBrokerageChangeDTO.getChangeType())
-                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                    .status(userBrokerageChangeDTO.getStatus())
                     .frozenTime(0)
                     .thawTime(LocalDateTime.now())
                     .build();
             userBrokerageRecordService.save(build);
         }
 
-        return result;
+        return ApiResult.condition(result);
+    }
+
+    @Override
+    public boolean saveMemberIntegral(Long userId, Integer total) {
+        return this.update(Wrappers.<Member>lambdaUpdate()
+                .set(Member::getIntegral, total)
+                .eq(Member::getId, userId));
     }
 
     @Override
@@ -527,46 +559,49 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     }
 
     public UserInfoVO getUserInfoVO(Long userId, Member member) {
-        UserInfoVO userInfoVO = new UserInfoVO();
-        BeanUtils.copyProperties(member, userInfoVO);
+        UserInfoVO userInfoVO = null;
+        if (ObjectUtil.isNotNull(member)) {
+            userInfoVO = new UserInfoVO();
+            BeanUtils.copyProperties(member, userInfoVO);
 
-        // 判断是否为付费会员
-        UserLevelRecord userLevelRecord = userLevelService.selectUserLevelRecordByUId(member.getId());
-        userInfoVO.setIsPaidMember(Boolean.FALSE);
-        if (userLevelRecord != null) {
-            if (userLevelRecord.getExpiredTime().isAfter(LocalDateTime.now())) {
-                userInfoVO.setIsPaidMember(Boolean.TRUE);
-            }
-            userInfoVO.setMemberExpiredTime(userLevelRecord.getExpiredTime());
-        }
-
-        // 设置粉丝数
-        long countUserFollower = userFollowerService.countUserFollower(member.getId());
-        userInfoVO.setFollowerNum(countUserFollower);
-
-        // 设置关注数
-        long countUserAttention = userFollowerService.countUserAttention(member.getId());
-        userInfoVO.setAttentionNum(countUserAttention);
-
-        // 设置是否关注该创作者
-        if (ObjectUtil.isNotNull(userId) && !Objects.equals(member.getId(), userId)) {
-            boolean isAttention = userFollowerService.checkedAttentionUser(userId, member.getId());
-            userInfoVO.setIsAttention(isAttention);
-        }
-
-        try {
-            // 设置获赞数
-            ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(userId);
-            if (countUserLikeResult != null && countUserLikeResult.successful()) {
-                userInfoVO.setReceivedLikeNum(countUserLikeResult.getData());
+            // 判断是否为付费会员
+            UserLevelRecord userLevelRecord = userLevelService.selectUserLevelRecordByUId(member.getId());
+            userInfoVO.setIsPaidMember(Boolean.FALSE);
+            if (userLevelRecord != null) {
+                if (userLevelRecord.getExpiredTime().isAfter(LocalDateTime.now())) {
+                    userInfoVO.setIsPaidMember(Boolean.TRUE);
+                }
+                userInfoVO.setMemberExpiredTime(userLevelRecord.getExpiredTime());
             }
 
-            // 设置作品数
-            ApiResult<Long> galleryApiResult = userGalleryProvider.countPublishUserGallery(userId);
-            if (galleryApiResult != null && galleryApiResult.successful()) {
-                userInfoVO.setGalleryNum(galleryApiResult.getData());
+            // 设置粉丝数
+            long countUserFollower = userFollowerService.countUserFollower(member.getId());
+            userInfoVO.setFollowerNum(countUserFollower);
+
+            // 设置关注数
+            long countUserAttention = userFollowerService.countUserAttention(member.getId());
+            userInfoVO.setAttentionNum(countUserAttention);
+
+            // 设置是否关注该创作者
+            if (ObjectUtil.isNotNull(userId) && !Objects.equals(member.getId(), userId)) {
+                boolean isAttention = userFollowerService.checkedAttentionUser(userId, member.getId());
+                userInfoVO.setIsAttention(isAttention);
             }
-        } catch (Exception ignored) {
+
+            try {
+                // 设置获赞数
+                ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(userId);
+                if (countUserLikeResult != null && countUserLikeResult.successful()) {
+                    userInfoVO.setReceivedLikeNum(countUserLikeResult.getData());
+                }
+
+                // 设置作品数
+                ApiResult<Long> galleryApiResult = userGalleryProvider.countPublishUserGallery(userId);
+                if (galleryApiResult != null && galleryApiResult.successful()) {
+                    userInfoVO.setGalleryNum(galleryApiResult.getData());
+                }
+            } catch (Exception ignored) {
+            }
         }
 
         return userInfoVO;

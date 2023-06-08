@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserTaskRecord">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
         <result property="taskId" column="task_id" jdbcType="BIGINT"/>
         <result property="taskProgress" column="task_progress" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,task_id,
+        id,user_id,task_id,
         task_progress,create_time,update_time,
         create_by,update_by,remark,
         tenant_id,is_deleted

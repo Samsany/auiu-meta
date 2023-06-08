@@ -89,7 +89,7 @@ public class SwiperAdvController extends BaseController {
      * 删除轮播广告
      */
     @Log(value = "轮播广告", exception = "删除轮播广告请求异常")
-    @DeleteMapping("/delete/{swiperAdvId}")
+    @DeleteMapping("/{swiperAdvId}")
     @Parameter(name = "swiperAdvId", description = "轮播广告ID", in = ParameterIn.PATH)
     @Operation(summary = "删除轮播广告")
     public ApiResult<?> remove(@PathVariable Long swiperAdvId) {

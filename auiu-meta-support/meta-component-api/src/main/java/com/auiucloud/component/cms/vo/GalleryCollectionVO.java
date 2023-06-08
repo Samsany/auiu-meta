@@ -1,7 +1,9 @@
 package com.auiucloud.component.cms.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.auiucloud.core.validator.UpdateGroup;
 import com.auiucloud.core.validator.Xss;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -35,7 +37,7 @@ public class GalleryCollectionVO implements Serializable {
     /**
      * 创建人ID
      */
-    private Long uId;
+    private Long userId;
     /**
      * 创建人昵称
      */

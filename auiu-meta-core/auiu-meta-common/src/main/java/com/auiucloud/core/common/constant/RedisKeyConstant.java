@@ -70,4 +70,9 @@ public class RedisKeyConstant {
     }
 
 
+    /**
+     * redis 消息订阅
+     */
+    public static final String REDIS_TOPIC_WS_PUSH_CHANNEL = "channel:websocket-push";
+    public static final String REDIS_TOPIC_WS_PUSH_ALL_CHANNEL = "channel:websocket-push-all";
 }

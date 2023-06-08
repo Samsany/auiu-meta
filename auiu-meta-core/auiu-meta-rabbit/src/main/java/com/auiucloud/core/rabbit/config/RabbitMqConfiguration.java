@@ -1,12 +1,16 @@
 package com.auiucloud.core.rabbit.config;
 
+import com.auiucloud.core.common.utils.YamlPropertyLoaderFactory;
+import com.auiucloud.core.rabbit.utils.RabbitMqUtils;
 import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -17,22 +21,20 @@ import javax.annotation.Resource;
  * @author dries
  * @date 2021/12/22
  */
-@Configuration
+@AutoConfiguration
+@PropertySource(factory = YamlPropertyLoaderFactory.class, value = "classpath:rabbitmq.yml")
 public class RabbitMqConfiguration {
 
     @Resource
-    RabbitTemplate rabbitTemplate;
+    private RabbitTemplate rabbitTemplate;
 
-    /**
-     * 使用JSON序列化机制，进行消息转换
-     */
     @Bean
-    public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public RabbitMqUtils rabbitMqUtils() {
+        return new RabbitMqUtils(rabbitTemplate);
     }
 
     /**
-     * 定制RabbitTemplate
+     * 定制 RabbitTemplate
      * 注解@PostConstruct: MyRabbitMqConfig对象创建完成后，执行这个方法
      */
     @PostConstruct
@@ -56,6 +58,7 @@ public class RabbitMqConfiguration {
         rabbitTemplate.setReturnsCallback(new RabbitTemplate.ReturnsCallback() {
             /**
              * 只要消息没有投递给指定的队列，就触发这个失败回调
+             *
              * @param returned 投递失败的信息
              */
             @Override

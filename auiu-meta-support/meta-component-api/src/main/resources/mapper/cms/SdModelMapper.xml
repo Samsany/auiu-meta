@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auiucloud.component.cms.mapper.SdModelMapper">
+
+    <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.SdModel">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="cateId" column="cate_id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="pic" column="pic" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="modelName" column="model_name" jdbcType="VARCHAR"/>
+            <result property="modelHash" column="model_hash" jdbcType="VARCHAR"/>
+            <result property="sha256" column="sha256" jdbcType="VARCHAR"/>
+            <result property="filename" column="filename" jdbcType="VARCHAR"/>
+            <result property="config" column="config" jdbcType="VARCHAR"/>
+            <result property="fusionModal" column="fusion_modal" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="sort" column="sort" jdbcType="INTEGER"/>
+            <result property="isHotModel" column="is_hot_model" jdbcType="TINYINT"/>
+            <result property="isNewModel" column="is_new_model" jdbcType="TINYINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+            <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="tenantId" column="tenant_id" jdbcType="BIGINT"/>
+            <result property="isDeleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,cate_id,name,
+        pic,title,model_name,
+        model_hash,sha256,filename,
+        config,fusion_modal,status,
+        sort,is_hot_model,is_new_model,
+        create_time,update_time,create_by,
+        update_by,remark,tenant_id,
+        is_deleted
+    </sql>
+</mapper>

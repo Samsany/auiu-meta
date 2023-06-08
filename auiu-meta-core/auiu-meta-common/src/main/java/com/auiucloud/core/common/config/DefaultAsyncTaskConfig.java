@@ -3,6 +3,8 @@ package com.auiucloud.core.common.config;
 import com.auiucloud.core.common.props.ThreadPoolConfigProps;
 import com.auiucloud.core.common.utils.CustomThreadPoolTaskExecutor;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -17,8 +19,9 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author dries
  * @date 2021/12/21
  */
-@Data
+@AutoConfiguration
 @EnableAsync(proxyTargetClass = true)
+@EnableConfigurationProperties(ThreadPoolConfigProps.class)
 public class DefaultAsyncTaskConfig {
 
     @Resource

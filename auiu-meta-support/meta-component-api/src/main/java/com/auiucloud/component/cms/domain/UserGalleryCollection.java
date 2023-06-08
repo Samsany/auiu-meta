@@ -33,7 +33,7 @@ public class UserGalleryCollection implements Serializable {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 被收藏的ID

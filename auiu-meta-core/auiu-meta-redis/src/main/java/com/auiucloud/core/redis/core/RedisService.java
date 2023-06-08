@@ -214,4 +214,6 @@ public interface RedisService {
     boolean tryLock(String key, int lockWaitTime);
 
     void unLock(String key);
+
+    void publish(String channel, String message);
 }

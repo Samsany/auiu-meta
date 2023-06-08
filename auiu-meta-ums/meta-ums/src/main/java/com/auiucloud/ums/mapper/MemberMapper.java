@@ -2,6 +2,7 @@ package com.auiucloud.ums.mapper;
 
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.vo.UserInfoVO;
+import com.auiucloud.ums.vo.UserRecommendVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -18,7 +19,7 @@ public interface MemberMapper extends BaseMapper<Member> {
 
     Member getMemberByOpenId2Source(@Param("openId") String openId, @Param("source") String source);
 
-    List<UserInfoVO> selectUserRecommendList(@Param("userId") Long userId);
+    List<UserRecommendVO> selectUserRecommendList();
 
     List<UserInfoVO> selectUserAttentionList(@Param("userId") Long userId);
 

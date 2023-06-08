@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.Gallery">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="pic" column="pic" jdbcType="VARCHAR"/>
         <result property="thumbUrl" column="thumb_url" jdbcType="VARCHAR"/>
@@ -37,7 +37,7 @@
 
     <sql id="Base_Column_List">
         select id,
-               u_id,
+               user_id,
                title,
                pic,
                thumb_url,
@@ -70,7 +70,7 @@
 
     <sql id="Base_GalleryVO_Column_List">
         select cg.id,
-               cg.u_id,
+               cg.user_id,
                u2.nickname,
                u2.avatar,
                cg.title,
@@ -102,7 +102,7 @@
                cgc.title collection,
                cpt.name  tag
         from cms_gallery cg
-                 inner join ums_user u2 on u2.id = cg.u_id and u2.is_deleted = 0
+                 inner join ums_user u2 on u2.id = cg.user_id and u2.is_deleted = 0
                  left join cms_gallery_collection cgc on cg.collection_id = cgc.id and cgc.is_deleted = 0
                  left join cms_pic_tag cpt on cg.tag_id = cpt.id and cpt.is_deleted = 0
     </sql>
@@ -136,7 +136,7 @@
         select count(*)
         from cms_gallery cg
         inner join ums_user u2
-        on u2.id = cg.u_id and u2.is_deleted = 0
+        on u2.id = cg.user_id and u2.is_deleted = 0
         <where>
             cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1
             <if test="gallery.tagId != null and gallery.tagId != 0 ">
@@ -161,11 +161,11 @@
         select count(*)
         from cms_gallery cg
         inner join ums_user u2
-        on u2.id = cg.u_id and u2.is_deleted = 0
+        on u2.id = cg.user_id and u2.is_deleted = 0
         <where>
             cg.is_deleted = 0
             <if test="userId != null">
-                and cg.u_id = #{gallery.uId}
+                and cg.user_id = #{gallery.userId}
             </if>
             <if test="gallery.tagId != null">
                 and cg.tag_id = #{gallery.tagId}
@@ -173,7 +173,7 @@
             <if test="gallery.collectionId != null">
                 and cg.collection_id = #{gallery.collectionId}
             </if>
-            <if test="userId != null and userId != gallery.uId">
+            <if test="userId != null and userId != gallery.userId">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>
         </where>
@@ -184,7 +184,7 @@
         <where>
             cg.is_deleted = 0
             <if test="userId != null">
-                and cg.u_id = #{gallery.uId}
+                and cg.user_id = #{gallery.userId}
             </if>
             <if test="gallery.tagId != null">
                 and cg.tag_id = #{gallery.tagId}
@@ -192,7 +192,7 @@
             <if test="gallery.collectionId != null">
                 and cg.collection_id = #{gallery.collectionId}
             </if>
-            <if test="userId != null and userId != gallery.uId">
+            <if test="userId != null and userId != gallery.userId">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>
             order by ${search.order}

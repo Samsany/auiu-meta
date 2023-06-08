@@ -44,7 +44,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     @Override
     public List<UserTaskRecord> selectUserTaskRecordListByTaskId2UserId(Long taskId, Long userId) {
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());
@@ -54,7 +54,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     public List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId2Day(Long taskId, Long userId) {
         // 查询今日记录
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
                 .orderByDesc(UserTaskRecord::getCreateBy)
@@ -65,7 +65,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     public List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId2Week(Long taskId, Long userId) {
         // 查询每周记录
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
                 .orderByDesc(UserTaskRecord::getCreateBy)
@@ -76,7 +76,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     public List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId2Month(Long taskId, Long userId) {
         // 查询每月记录
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("YEARWEEK(date_format(create_time,'%Y-%m-%d'))=YEARWEEK(now())")
                 .orderByDesc(UserTaskRecord::getCreateBy)
@@ -87,7 +87,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     public List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId2Year(Long taskId, Long userId) {
         // 查询每年记录
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("and YEAR(create_time)=YEAR(now())")
                 .orderByDesc(UserTaskRecord::getCreateBy)
@@ -98,7 +98,7 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
     public List<UserTaskRecord> selectUserTaskRecordByTaskId2UserId(Long taskId, Long userId) {
         // 不限日期
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
-                .eq(UserTaskRecord::getUId, userId)
+                .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .orderByDesc(UserTaskRecord::getCreateBy)
         )).orElse(Collections.emptyList());

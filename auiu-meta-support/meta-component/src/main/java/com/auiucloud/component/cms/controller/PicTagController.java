@@ -1,12 +1,15 @@
 package com.auiucloud.component.cms.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.auiucloud.component.cms.domain.PicTag;
 import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.web.controller.BaseController;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -34,12 +37,23 @@ public class PicTagController extends BaseController {
     @GetMapping("/list")
     @Operation(summary = "查询图片标签列表")
     @Parameters({
+            @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
             @Parameter(name = "keyword", description = "关键字", in = ParameterIn.QUERY),
     })
-    public ApiResult<?> list(Search search, @Parameter(hidden = true) PicTag picTag) {
-        return ApiResult.data(picTagService.listPage(search, picTag));
+    public ApiResult<?> list(@Parameter(hidden = true) Search search, @Parameter(hidden = true) PicTag picTag) {
+        QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());
+        return switch (mode) {
+            case LIST ->
+                    ApiResult.data(picTagService.list(Wrappers.<PicTag>lambdaQuery()
+                            .like(StrUtil.isNotBlank(picTag.getName()), PicTag::getName, picTag.getName())
+                            .eq(PicTag::getStatus, picTag.getStatus())
+                            .orderByDesc(PicTag::getSort)
+                            .orderByDesc(PicTag::getCreateTime)
+                    ));
+            default -> ApiResult.data(picTagService.listPage(search, picTag));
+        };
     }
 
     /**

@@ -8,15 +8,12 @@ import com.auiucloud.ums.dto.UserBrokerageChangeDTO;
 import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -80,7 +77,7 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @PostMapping(ProviderConstant.PROVIDER_USER_DECREASE_POINT)
-    ApiResult<Boolean> decreaseUserPoint(@RequestBody UserPointChangeDTO userPointChangeDTO);
+    ApiResult<?> assignUserPoint(@RequestBody UserPointChangeDTO userPointChangeDTO);
 
     /**
      * 分配用户佣金
@@ -89,5 +86,5 @@ public interface IMemberProvider {
      * @return ApiResult
      */
     @PostMapping(ProviderConstant.PROVIDER_USER_ASSIGN_BROKERAGE)
-    ApiResult<Boolean> assignUserBrokerage(@RequestBody UserBrokerageChangeDTO userBrokerageChangeDTO);
+    ApiResult<?> assignUserBrokerage(@RequestBody UserBrokerageChangeDTO userBrokerageChangeDTO);
 }

@@ -39,7 +39,13 @@ public class AppletConfigProperties implements Serializable {
     private String appletName;
 
     /**
-     * 是否开启激励视频 默认true
+     * 是否开启Ai绘画功能 默认FALSE
+     */
+    @Builder.Default
+    private Boolean isEnableAiDraw = Boolean.FALSE;
+
+    /**
+     * 是否开启激励视频 默认FALSE
      */
     @Builder.Default
     private Boolean isEnableVideoAd = Boolean.FALSE;
@@ -50,7 +56,7 @@ public class AppletConfigProperties implements Serializable {
     private String rewardedVideoAd;
 
     /**
-     * 是否开启插屏广告 默认false
+     * 是否开启插屏广告 默认FALSE
      */
     @Builder.Default
     private Boolean isEnableInterstitialAd = Boolean.FALSE;

@@ -17,9 +17,9 @@ public interface IUserFollowerService extends IService<UserFollower> {
 
     ApiResult<?> attentionUser(Long userId);
 
-    long countUserFollower(Long uId);
+    long countUserFollower(Long userId);
 
-    long countUserAttention(Long uId);
+    long countUserAttention(Long userId);
 
     boolean checkedAttentionUser(Long userId, Long creatorId);
 

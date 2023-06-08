@@ -30,7 +30,7 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
         LambdaQueryWrapper<UserFollower> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserFollower::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
         queryWrapper.and(qr ->
-                qr.in(UserFollower::getUId, userIds)
+                qr.in(UserFollower::getUserId, userIds)
                         .or().in(UserFollower::getFollowerId, userIds));
         return Optional.ofNullable(this.list(queryWrapper))
                 .orElse(Collections.emptyList());
@@ -46,7 +46,7 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
     public ApiResult<?> attentionUser(Long userId) {
         Long uId = SecurityUtil.getUserId();
         LambdaQueryWrapper<UserFollower> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(UserFollower::getUId, userId);
+        queryWrapper.eq(UserFollower::getUserId, userId);
         queryWrapper.eq(UserFollower::getFollowerId, uId);
         UserFollower userFollower = this.getOne(queryWrapper);
         if (ObjectUtil.isNotNull(userFollower)) {
@@ -61,8 +61,8 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
             return ApiResult.condition(message, this.updateById(userFollower));
         } else {
             UserFollower build = UserFollower.builder()
-                    .uId(userId)
-                    .followerId(uId)
+                    .userId(userId)
+                    .followerId(userId)
                     .status(CommonConstant.STATUS_NORMAL_VALUE)
                     .build();
             return ApiResult.condition("关注成功", this.save(build));
@@ -72,28 +72,28 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
     /**
      * 查询粉丝数
      *
-     * @param uId 用户ID
+     * @param userId 用户ID
      * @return long
      */
     @Override
-    public long countUserFollower(Long uId) {
+    public long countUserFollower(Long userId) {
         LambdaQueryWrapper<UserFollower> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserFollower::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
-        queryWrapper.eq(UserFollower::getUId, uId);
+        queryWrapper.eq(UserFollower::getUserId, userId);
         return this.count(queryWrapper);
     }
 
     /**
      * 查询我的关注数
      *
-     * @param uId 用户ID
+     * @param userId 用户ID
      * @return long
      */
     @Override
-    public long countUserAttention(Long uId) {
+    public long countUserAttention(Long userId) {
         LambdaQueryWrapper<UserFollower> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserFollower::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
-        queryWrapper.eq(UserFollower::getFollowerId, uId);
+        queryWrapper.eq(UserFollower::getFollowerId, userId);
         return this.count(queryWrapper);
     }
 
@@ -101,7 +101,7 @@ public class UserFollowerServiceImpl extends ServiceImpl<UserFollowerMapper, Use
     public boolean checkedAttentionUser(Long userId, Long creatorId) {
         LambdaQueryWrapper<UserFollower> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserFollower::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
-        queryWrapper.eq(UserFollower::getUId, creatorId);
+        queryWrapper.eq(UserFollower::getUserId, creatorId);
         queryWrapper.eq(UserFollower::getFollowerId, userId);
         return this.count(queryWrapper) > 0;
     }

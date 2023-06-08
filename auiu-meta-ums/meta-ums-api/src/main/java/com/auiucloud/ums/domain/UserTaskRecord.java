@@ -29,7 +29,7 @@ public class UserTaskRecord extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 任务ID

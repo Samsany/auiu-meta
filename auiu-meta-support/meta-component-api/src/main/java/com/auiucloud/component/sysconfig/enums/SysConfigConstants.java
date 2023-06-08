@@ -25,7 +25,11 @@ public class SysConfigConstants {
 
     // #########     小程序配置参数     #############
     /**
-     * 是否开启激励视频
+     * 是否开启AI绘画
+     */
+    public static final String IS_ENABLE_AI_DRAW = "is_enable_ai_draw";
+    /**
+     * 是否开启激励视频广告
      */
     public static final String IS_ENABLE_VIDEO_AD = "is_enable_video_ad";
     /**

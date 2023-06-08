@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserExperienceRecord">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="linkId" column="link_id" jdbcType="BIGINT"/>
         <result property="linkType" column="link_type" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="INTEGER"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,link_id,
+        id,user_id,link_id,
         link_type,type,title,
         experience,balance,status,
         frozen_time,thaw_time,create_time,

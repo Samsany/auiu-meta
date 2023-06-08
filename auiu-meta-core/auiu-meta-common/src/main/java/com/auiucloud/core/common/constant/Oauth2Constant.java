@@ -107,6 +107,7 @@ public class Oauth2Constant {
      * 用户名
      */
     public static final String META_USER_NAME = "username";
+    public static final String META_USER_TOKEN = "token";
     /**
      * 用户昵称
      */

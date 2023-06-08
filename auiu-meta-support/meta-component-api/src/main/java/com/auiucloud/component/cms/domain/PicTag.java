@@ -29,7 +29,7 @@ public class PicTag extends BaseEntity {
     /**
      * 父分类
      */
-    private Long pId;
+    private Long parentId;
 
     /**
      * 名称

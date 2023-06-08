@@ -25,7 +25,9 @@ public class GalleryEnums {
     public enum GalleryType implements IBaseEnum<Integer> {
 
         WALLPAPER(0, "壁纸"),
-        AI_WALLPAPER(1, "AI创作");
+        SD_TXT2IMG(1, "SD文生图"),
+        AI_WALLPAPER(2, "AI创作"),
+        ;
 
         private final Integer value;
         private final String label;

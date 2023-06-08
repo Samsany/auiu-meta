@@ -17,7 +17,7 @@ public interface IUserGalleryCollectionService extends IService<UserGalleryColle
 
     List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByGalleryIds(List<Long> galleryIds);
 
-    List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByCId(Long cId);
+    List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByCId(Long cateId);
 
     List<UserGalleryFavoriteVO> selectGalleryFavoriteVOListByCIds(List<Long> cIds);
 

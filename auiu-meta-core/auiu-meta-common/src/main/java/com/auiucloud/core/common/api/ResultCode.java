@@ -62,6 +62,9 @@ public enum ResultCode implements IResultCode {
     USER_ERROR_A0151(10151, "手机格式校验失败"),
     USER_ERROR_A0152(10152, "地址格式校验失败"),
     USER_ERROR_A0153(10153, "邮箱格式校验失败"),
+    USER_ERROR_A0160(10160, "用户积分不足"),
+    USER_ERROR_A0161(10161, "用户余额不足"),
+    USER_ERROR_A0163(10163, "用户佣金不足"),
 
     /**
      * 二级宏观错误码
@@ -141,6 +144,7 @@ public enum ResultCode implements IResultCode {
     USER_ERROR_A0504(10504, "WebSocket 连接异常"),
     USER_ERROR_A0505(10505, "WebSocket 连接断开"),
     USER_ERROR_A0506(10506, "用户重复请求"),
+
     /**
      * 二级宏观错误码
      */
@@ -243,6 +247,7 @@ public enum ResultCode implements IResultCode {
     SERVICE_ERROR_C0122(30122, "消息消费出错"),
     SERVICE_ERROR_C0123(30123, "消息订阅出错"),
     SERVICE_ERROR_C0124(30124, "消息分组未查到"),
+    SERVICE_ERROR_C0125(30125, "消息类型不支持"),
     SERVICE_ERROR_C0130(30130, "缓存服务出错"),
     SERVICE_ERROR_C0131(30131, "key 长度超过限制"),
     SERVICE_ERROR_C0132(30132, "value 长度超过限制"),

@@ -91,6 +91,15 @@ public class SecurityUtil {
     }
 
     /**
+     * 获取用户登录类型
+     *
+     * @return ID
+     */
+    public static String getLoginType() {
+        return getJwtPayload().getStr(Oauth2Constant.META_LOGIN_TYPE);
+    }
+
+    /**
      * 获取用户ID 默认返回NULL
      *
      * @return ID

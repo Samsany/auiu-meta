@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserExtract">
         <id property="id" column="id" jdbcType="OTHER"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="realName" column="real_name" jdbcType="VARCHAR"/>
         <result property="extractType" column="extract_type" jdbcType="VARCHAR"/>
         <result property="bankCode" column="bank_code" jdbcType="VARCHAR"/>
@@ -27,7 +27,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,real_name,
+        id,user_id,real_name,
         extract_type,bank_code,bank_name,
         bank_address,alipay_code,wechat_code,
         extract_price,status,cash_config_id,

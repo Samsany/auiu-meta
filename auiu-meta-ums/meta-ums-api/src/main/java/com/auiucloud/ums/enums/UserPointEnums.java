@@ -40,6 +40,7 @@ public class UserPointEnums {
     public enum ConsumptionEnum implements IBaseEnum<Integer> {
 
         DOWNLOAD_GALLERY(0, "下载作品"),
+        AI_TEXT2IMG(0, "文生图"),
         ;
 
         private Integer value;

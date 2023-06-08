@@ -1,6 +1,7 @@
 package com.auiucloud.core.oss.props;
 
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,7 +12,6 @@ import java.io.Serializable;
  * @author dries
  **/
 @Data
-//@ConfigurationProperties(prefix = OssProperties.PREFIX)
 public class OssProperties implements Serializable {
 
     @Serial

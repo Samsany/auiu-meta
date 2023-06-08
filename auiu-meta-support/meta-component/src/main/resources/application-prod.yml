@@ -10,3 +10,10 @@ spring:
     username: ${meta.datasource.username}
     password: ${meta.datasource.password}
     driver-class-name: ${meta.datasource.driver-class-name}
+
+  rabbitmq:
+    addresses: 47.100.74.170
+    port: 5672
+    username: admin
+    password: Zxx131013@
+    virtual-host: my_vhost

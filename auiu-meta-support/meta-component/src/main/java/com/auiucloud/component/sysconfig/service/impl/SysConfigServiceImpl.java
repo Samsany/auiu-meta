@@ -13,6 +13,7 @@ import com.auiucloud.component.sysconfig.vo.SysConfigTreeVO;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.ComponentConstant;
 import com.auiucloud.core.common.constant.RedisKeyConstant;
+import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
 import com.auiucloud.core.database.model.Search;
@@ -30,7 +31,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -350,10 +350,10 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public AppletConfigProperties getAppletConfigProperties(String appId) {
-        AppletConfigProperties applet = (AppletConfigProperties) redisService.get(RedisKeyConstant.cacheAppletConfigKey(appId));
-        if (ObjectUtil.isNotNull(applet)) {
-            return applet;
-        }
+        // AppletConfigProperties applet = (AppletConfigProperties) redisService.get(RedisKeyConstant.cacheAppletConfigKey(appId));
+        // if (ObjectUtil.isNotNull(applet)) {
+        //     return applet;
+        // }
 
         // 查询小程序配置列表
         List<SysConfig> list = Optional.ofNullable(this.list(
@@ -363,10 +363,8 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                         .ne(SysConfig::getParentId, CommonConstant.ROOT_NODE_ID)
         )).orElse(Collections.emptyList());
 
-        Map<String, Object> map = new HashMap<>();
         // 获取小程序配置项
-        listToProps(list, map);
-        applet = (AppletConfigProperties) map.get(appId);
+        AppletConfigProperties applet = listToProps(list, appId);
         redisService.set(RedisKeyConstant.cacheAppletConfigKey(appId), applet);
         return applet;
     }
@@ -376,30 +374,45 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
      *
      * @param sysConfigList List列表
      */
-    public void listToProps(List<SysConfig> sysConfigList, Map<String, Object> appletMap) {
-        sysConfigList.parallelStream().forEach(config -> {
+    public AppletConfigProperties listToProps(List<SysConfig> sysConfigList, String appId) {
+        AppletConfigProperties appletConfig = null;
+        for (SysConfig config : sysConfigList) {
             if (config.getConfigType().equals(SysConfigConstants.SettingTypeEnum.SETTING.getValue())) {
                 List<SysConfig> children = Optional.ofNullable(this.list(Wrappers.<SysConfig>lambdaQuery()
                         .eq(SysConfig::getParentId, config.getId())
                 )).orElse(Collections.emptyList());
-                listToProps(children, appletMap);
-            } else {
-                AppletConfigProperties applet = new AppletConfigProperties();
-                switch (config.getConfigKey()) {
-                    case SysConfigConstants.APP_ID -> applet.setAppId(config.getConfigValue());
-                    case SysConfigConstants.APP_SECRET -> applet.setAppSecret(config.getConfigValue());
-                    case SysConfigConstants.APPLET_NAME -> applet.setAppletName(config.getConfigValue());
-                    case SysConfigConstants.IS_ENABLE_VIDEO_AD ->
-                            applet.setIsEnableVideoAd(Objects.equals(config.getConfigValue(), "0"));
-                    case SysConfigConstants.IS_ENABLE_INTERSTITIAL_AD ->
-                            applet.setIsEnableInterstitialAd(Objects.equals(config.getConfigValue(), "0"));
-                    case SysConfigConstants.REWARDED_VIDEO_AD -> applet.setRewardedVideoAd(config.getConfigValue());
-                    case SysConfigConstants.INTERSTITIAL_AD -> applet.setInterstitialAd(config.getConfigValue());
+                AppletConfigProperties properties = new AppletConfigProperties();
+                listToAppletConfigProps(children, properties);
+                if (properties.getAppId().equals(appId)) {
+                    appletConfig = properties;
+                    break;
                 }
-                appletMap.put(applet.getAppId(), applet);
             }
+        }
+        if (ObjectUtil.isNotNull(appletConfig)) {
+            return appletConfig;
+        }
 
-        });
+        throw new ApiException("小程序配置不存在");
+    }
+
+    public void listToAppletConfigProps(List<SysConfig> sysConfigList, AppletConfigProperties applet) {
+        sysConfigList.parallelStream()
+                .forEach(config -> {
+                    switch (config.getConfigKey()) {
+                        case SysConfigConstants.APP_ID -> applet.setAppId(config.getConfigValue());
+                        case SysConfigConstants.APP_SECRET -> applet.setAppSecret(config.getConfigValue());
+                        case SysConfigConstants.APPLET_NAME -> applet.setAppletName(config.getConfigValue());
+                        case SysConfigConstants.IS_ENABLE_AI_DRAW ->
+                                applet.setIsEnableAiDraw(Objects.equals(config.getConfigValue(), "0"));
+                        case SysConfigConstants.IS_ENABLE_VIDEO_AD ->
+                                applet.setIsEnableVideoAd(Objects.equals(config.getConfigValue(), "0"));
+                        case SysConfigConstants.IS_ENABLE_INTERSTITIAL_AD ->
+                                applet.setIsEnableInterstitialAd(Objects.equals(config.getConfigValue(), "0"));
+                        case SysConfigConstants.REWARDED_VIDEO_AD -> applet.setRewardedVideoAd(config.getConfigValue());
+                        case SysConfigConstants.INTERSTITIAL_AD -> applet.setInterstitialAd(config.getConfigValue());
+                    }
+                });
 
     }
 

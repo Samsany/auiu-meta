@@ -32,14 +32,14 @@ public class MetaApiProperties {
             "/login/*",
             "/actuator/**",
             "/druid/**",
-            "/v2/api-docs/**",
             "/v3/api-docs/**",
-            "/doc.html",
             "/webjars/**",
             "/assets/**",
             "/favicon.ico",
             "/swagger-resources/**",
-            "/*/rsa/publicKey"
+            "/*/rsa/publicKey",
+            "/ws",
+            "/ws-sockjs"
     };
 
     /**

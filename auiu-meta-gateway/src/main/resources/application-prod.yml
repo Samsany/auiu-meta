@@ -18,6 +18,9 @@ spring:
       discovery:
         locator:
           enabled: true
+      httpclient:
+        websocket:
+          max-frame-payload-length: 20000000
 
     loadbalancer:
       retry:

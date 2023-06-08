@@ -2,6 +2,7 @@ package com.auiucloud.core.douyin.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.constant.CommonConstant;
@@ -162,34 +163,40 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
         // 设置请求参数
         List<Object> objList = new ArrayList<>();
         for (String content : contents) {
-            JSONObject obj = new JSONObject();
-            obj.set("content", content);
-            objList.add(obj);
+            if (StrUtil.isNotBlank(content)) {
+                JSONObject obj = JSONUtil.createObj();
+                obj.set("content", content);
+                objList.add(obj);
+            }
         }
-        MultiValueMap<String, Object> paramsMap = new LinkedMultiValueMap<>();
-        paramsMap.put("tasks", objList);
 
         List<Integer> errIndex = new ArrayList<>();
-        try {
-            HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
-            DouyinTextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, DouyinTextAntidirtResult.class);
-            List<DouyinTextAntidirtResult.ResultData> data = apiResponse.getData();
+        if (CollUtil.isNotEmpty(objList)) {
+            MultiValueMap<String, Object> paramsMap = new LinkedMultiValueMap<>();
+            paramsMap.put("tasks", objList);
 
-            int index = 0;
-            for (DouyinTextAntidirtResult.ResultData datum : data) {
-                if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
-                    List<DouyinTextAntidirtResult.Predicts> predicts = datum.getPredicts();
-                    for (DouyinTextAntidirtResult.Predicts predict : predicts) {
-                        if (predict.getHit()) {
-                            errIndex.add(index);
-                            index++;
+            try {
+                HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(paramsMap, headers);
+                DouyinTextAntidirtResult apiResponse = RestTemplateUtil.postObject(DouyinAppletProps.GET_TEXT_ANTIDIRT_URL_PROD, httpEntity, DouyinTextAntidirtResult.class);
+                List<DouyinTextAntidirtResult.ResultData> data = apiResponse.getData();
+
+                int index = 0;
+                for (DouyinTextAntidirtResult.ResultData datum : data) {
+                    if (datum.getCode().equals(CommonConstant.STATUS_NORMAL_VALUE)) {
+                        List<DouyinTextAntidirtResult.Predicts> predicts = datum.getPredicts();
+                        for (DouyinTextAntidirtResult.Predicts predict : predicts) {
+                            if (predict.getHit()) {
+                                errIndex.add(index);
+                                index++;
+                            }
                         }
                     }
                 }
+            } catch (Exception e) {
+                throw new ApiException("抖音内容安全检测接口异常，请重试");
             }
-        } catch (Exception e) {
-            throw new ApiException("抖音内容安全检测接口异常，请重试");
         }
+
         return errIndex;
     }
 

@@ -20,7 +20,7 @@ public class UserTaskCompleteDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -11536121770709460L;
 
-    private Long uId;
+    private Long userId;
 
     private Long taskId;
 

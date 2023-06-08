@@ -22,6 +22,11 @@ public class UserPointChangeDTO implements Serializable {
     private static final long serialVersionUID = -5777960298540636617L;
 
     /**
+     * 标题
+     */
+    private String title;
+
+    /**
      * 用户ID
      */
     @NotNull
@@ -38,5 +43,11 @@ public class UserPointChangeDTO implements Serializable {
      */
     @NotNull
     private Integer changeType;
+
+    /**
+     * 变动状态
+     */
+    @NotNull
+    private Integer status;
 
 }

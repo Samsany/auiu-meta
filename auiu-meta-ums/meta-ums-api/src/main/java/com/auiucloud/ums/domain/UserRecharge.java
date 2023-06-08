@@ -30,7 +30,7 @@ public class UserRecharge extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 订单号

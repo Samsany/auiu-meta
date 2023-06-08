@@ -9,6 +9,7 @@ import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.*;
 import com.auiucloud.ums.vo.MemberInfoVO;
 import com.auiucloud.ums.vo.UserInfoVO;
+import com.auiucloud.ums.vo.UserRecommendVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public interface IMemberService extends IService<Member> {
 
     List<MemberInfoVO> getMemberListByIds(List<Long> userIds);
 
-    List<UserInfoVO> userRecommendList();
+    List<UserRecommendVO> userRecommendList();
 
     UserInfoVO getSimpleUserById(Long userId);
 
@@ -97,11 +98,13 @@ public interface IMemberService extends IService<Member> {
      */
     boolean increaseUserPoint(Long userId, Integer integration);
 
-    boolean decreaseUserPoint(UserPointChangeDTO pointChangeDTO);
+    ApiResult<?> assignUserPoint(UserPointChangeDTO pointChangeDTO);
 
-    boolean assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO);
+    ApiResult<?> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO);
 
     boolean saveMemberBrokerage(Long userId, BigDecimal total);
+
+    boolean saveMemberIntegral(Long userId, Integer total);
 
     boolean checkUserPointQuantity(Integer point);
 

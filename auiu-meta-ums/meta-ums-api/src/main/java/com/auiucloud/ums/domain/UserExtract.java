@@ -30,7 +30,7 @@ public class UserExtract extends BaseEntity {
     /**
      * 用户id
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 名称

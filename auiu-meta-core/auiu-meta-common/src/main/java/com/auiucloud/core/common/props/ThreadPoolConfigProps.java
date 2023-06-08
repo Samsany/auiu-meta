@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
  * @date 2021/12/21
  */
 @Data
-@Component
-@ConfigurationProperties(prefix = "sync-task.thread")
+@ConfigurationProperties(prefix = "meta.sync-task.thread")
 public class ThreadPoolConfigProps {
 
     /**
@@ -32,6 +31,6 @@ public class ThreadPoolConfigProps {
     /**
      * 线程池前缀
      */
-    private String threadNamePrefix = "MateExecutor-";
+    private String threadNamePrefix = "MetaExecutor-";
 
 }

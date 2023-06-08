@@ -58,4 +58,10 @@ public class UserBrokerageChangeDTO implements Serializable {
     @NotNull
     private Integer changeType;
 
+    /**
+     * 变动状态
+     */
+    @NotNull
+    private Integer status;
+
 }

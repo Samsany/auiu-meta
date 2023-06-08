@@ -2,7 +2,7 @@ package com.auiucloud.core.redis.config;
 
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.redis.core.impl.RedisServiceImpl;
-import com.auiucloud.core.redis.props.MetaRedisProps;
+import com.auiucloud.core.redis.props.MetaRedisProperties;
 import com.auiucloud.core.redis.utils.RedisLockUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -28,8 +28,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @date 2021/12/22
  */
 @Configuration
-@EnableConfigurationProperties(MetaRedisProps.class)
-@ConditionalOnProperty(value = MetaRedisProps.PREFIX + ".enabled", havingValue = "true", matchIfMissing = true)
+@EnableConfigurationProperties(MetaRedisProperties.class)
+@ConditionalOnProperty(value = MetaRedisProperties.PREFIX + ".enabled", havingValue = "true", matchIfMissing = true)
 public class RedisConfiguration {
 
     @SuppressWarnings("all")

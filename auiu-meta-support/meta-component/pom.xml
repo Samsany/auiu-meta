@@ -31,6 +31,14 @@
             <groupId>com.auiucloud</groupId>
             <artifactId>auiu-meta-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auiucloud</groupId>
+            <artifactId>auiu-meta-rabbit</artifactId>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.auiucloud</groupId>-->
         <!--            <artifactId>auiu-meta-rocketmq</artifactId>-->

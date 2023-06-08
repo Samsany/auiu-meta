@@ -16,6 +16,8 @@ spring:
   cloud:
     gateway:
       httpclient:
+        websocket:
+          max-frame-payload-length: 20000000
         ssl:
           use-insecure-trust-manager: true
         connect-timeout: 5000
@@ -23,7 +25,6 @@ spring:
       discovery:
         locator:
           enabled: true
-
     loadbalancer:
       retry:
         enabled: true

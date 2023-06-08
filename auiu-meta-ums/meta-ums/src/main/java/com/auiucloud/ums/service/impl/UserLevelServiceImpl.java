@@ -18,9 +18,9 @@ public class UserLevelServiceImpl extends ServiceImpl<UserLevelMapper, UserLevel
         implements IUserLevelService {
 
     @Override
-    public UserLevelRecord selectUserLevelRecordByUId(Long uId) {
+    public UserLevelRecord selectUserLevelRecordByUId(Long userId) {
         return this.getOne(Wrappers.<UserLevelRecord>lambdaQuery()
-                .eq(UserLevelRecord::getUid, uId)
+                .eq(UserLevelRecord::getUserId, userId)
                 .eq(UserLevelRecord::getStatus, CommonConstant.STATUS_NORMAL_VALUE)
                 .last("limit 1")
         );

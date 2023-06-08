@@ -1,5 +1,5 @@
 server:
-  port: 23000
+  port: 22000
 spring:
   application:
     name: ${artifactId}

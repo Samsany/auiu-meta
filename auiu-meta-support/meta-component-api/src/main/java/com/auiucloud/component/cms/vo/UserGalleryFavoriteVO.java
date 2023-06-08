@@ -22,7 +22,7 @@ public class UserGalleryFavoriteVO implements Serializable {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 用户头像

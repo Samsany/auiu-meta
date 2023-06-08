@@ -84,7 +84,7 @@ public class GalleryApiController extends BaseController {
     @Operation(summary = "新增作品合集")
     public ApiResult<?> addCollection(@Validated({InsertGroup.class}) @RequestBody GalleryCollectionVO galleryCollection) {
         Long userId = SecurityUtil.getUserId();
-        galleryCollection.setUId(userId);
+        galleryCollection.setUserId(userId);
         return ApiResult.condition(galleryCollectionService.addGalleryCollect(galleryCollection));
     }
 
@@ -96,7 +96,7 @@ public class GalleryApiController extends BaseController {
     @Operation(summary = "编辑作品合集")
     public ApiResult<?> editCollection(@Validated({UpdateGroup.class}) @RequestBody GalleryCollectionVO galleryCollection) {
         Long userId = SecurityUtil.getUserId();
-        if (!galleryCollection.getUId().equals(userId)) {
+        if (!galleryCollection.getUserId().equals(userId)) {
             return ApiResult.fail(ResultCode.USER_ERROR_A0300);
         }
         return ApiResult.condition(galleryCollectionService.updateGalleryCollectById(galleryCollection));
@@ -139,16 +139,9 @@ public class GalleryApiController extends BaseController {
     @Log(value = "作品")
     @Operation(summary = "上传作品")
     @PostMapping(value = "/upload", consumes = {"multipart/form-data"})
-    public ApiResult<?> upload(@RequestParam("file") MultipartFile file, @RequestParam(required = false) Long cId) {
-        return galleryService.upload(file, cId);
+    public ApiResult<?> upload(@RequestParam("file") MultipartFile file, @RequestParam(required = false) Long cateId) {
+        return galleryService.upload(file, cateId);
     }
-
-    // @Log(value = "作品")
-    // @Operation(summary = "上传AI作品")
-    // @PostMapping(value = "/upload/ai-works")
-    // public ApiResult<?> uploadAiWorks(@RequestBody Gallery gallery) {
-    //     return galleryService.uploadAiWorks(gallery);
-    // }
 
     /**
      * 分页查询作品列表
@@ -161,7 +154,9 @@ public class GalleryApiController extends BaseController {
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
     })
     public ApiResult<?> galleryPage(Search search, @Parameter(hidden = true) Gallery gallery) {
-        return ApiResult.data(galleryService.selectGalleryPage(search, gallery));
+        Long userId = SecurityUtil.getUserId();
+        gallery.setUserId(userId);
+        return ApiResult.data(galleryService.selectUserGalleryPage(search, gallery));
     }
 
     /**

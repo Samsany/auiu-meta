@@ -31,7 +31,7 @@ public class UserIntegralRecord extends BaseEntity {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 关联id(order,sign,system)

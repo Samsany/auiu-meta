@@ -25,7 +25,7 @@ public class GalleryVO implements Serializable {
     /**
      * 创建人ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 创建人昵称

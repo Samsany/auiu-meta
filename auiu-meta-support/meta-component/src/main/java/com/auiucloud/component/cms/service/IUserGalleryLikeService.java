@@ -17,7 +17,7 @@ public interface IUserGalleryLikeService extends IService<UserGalleryLike> {
 
     List<UserGalleryLikeVO> selectGalleryLikeVOListByGIds(List<Long> galleryIds);
 
-    List<UserGalleryLikeVO> selectGalleryLikeVOListByCId(Long cId);
+    List<UserGalleryLikeVO> selectGalleryLikeVOListByCId(Long cateId);
 
     List<UserGalleryLikeVO> selectGalleryLikeVOListByCIds(List<Long> cIds);
 

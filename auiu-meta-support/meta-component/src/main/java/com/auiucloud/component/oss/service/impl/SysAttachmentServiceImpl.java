@@ -1,6 +1,7 @@
 package com.auiucloud.component.oss.service.impl;
 
 import cn.hutool.core.codec.Base64Encoder;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
@@ -39,9 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author dries
@@ -75,8 +74,20 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         if (attachment.getAttachmentGroupId() != CommonConstant.ROOT_NODE_ID.intValue()) {
             queryWrapper.eq(SysAttachment::getAttachmentGroupId, attachment.getAttachmentGroupId());
         }
-        queryWrapper.orderByDesc(SysAttachment::getCreateTime);
+        queryWrapper.orderByDesc(SysAttachment::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
+    }
+
+    @Override
+    public List<SysAttachment> selectAttachmentListByName(List<String> names) {
+        if (CollUtil.isNotEmpty(names)) {
+            LambdaQueryWrapper<SysAttachment> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.in(SysAttachment::getFileName, names);
+            return this.list(queryWrapper);
+        }
+
+        return Collections.emptyList();
+
     }
 
     /**
@@ -151,7 +162,8 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             String thumbUrl = null;
             // 上传缩略图
             if (thumb) {
-                String thumbFilePath = filename + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                String thumbFileName = FileUtil.getFileNameNoEx(filename)  + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                String thumbFilePath =  "thumb" + StringPool.SLASH + thumbFileName;
                 byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
                 ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
                 thumbUrl = ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath;

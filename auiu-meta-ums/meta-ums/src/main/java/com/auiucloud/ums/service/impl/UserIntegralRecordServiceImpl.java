@@ -26,7 +26,7 @@ public class UserIntegralRecordServiceImpl extends ServiceImpl<UserIntegralRecor
         LambdaQueryWrapper<UserIntegralRecord> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserIntegralRecord::getType, UserPointEnums.ChangeTypeEnum.INCREASE.getValue());
         queryWrapper.eq(UserIntegralRecord::getStatus, UserPointEnums.StatusEnum.SUCCESS.getValue());
-        queryWrapper.eq(UserIntegralRecord::getUId, SecurityUtil.getUserId());
+        queryWrapper.eq(UserIntegralRecord::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(UserIntegralRecord::getCreateTime);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
@@ -36,7 +36,7 @@ public class UserIntegralRecordServiceImpl extends ServiceImpl<UserIntegralRecor
         LambdaQueryWrapper<UserIntegralRecord> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(UserIntegralRecord::getType, UserPointEnums.ChangeTypeEnum.DECREASE.getValue());
         queryWrapper.eq(UserIntegralRecord::getStatus, UserPointEnums.StatusEnum.SUCCESS.getValue());
-        queryWrapper.eq(UserIntegralRecord::getUId, SecurityUtil.getUserId());
+        queryWrapper.eq(UserIntegralRecord::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(UserIntegralRecord::getCreateTime);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }

@@ -34,7 +34,7 @@ public class UserFollower implements Serializable {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 粉丝ID

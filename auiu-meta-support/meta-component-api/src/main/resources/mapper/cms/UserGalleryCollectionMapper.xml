@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.UserGalleryCollection">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="postId" column="post_id" jdbcType="BIGINT"/>
         <result property="type" column="type" jdbcType="TINYINT"/>
         <result property="status" column="status" jdbcType="TINYINT"/>
@@ -16,7 +16,7 @@
 
     <sql id="Base_Column_List">
         id
-        ,u_id,post_id,
+        ,user_id,post_id,
         type,status,create_time,
         update_time
     </sql>
@@ -24,7 +24,7 @@
     <select id="selectGalleryFavoriteVOListByPostId2Type"
             resultType="com.auiucloud.component.cms.vo.UserGalleryFavoriteVO">
         select uugc.id,
-               uugc.u_id,
+               uugc.user_id,
                u2.avatar,
                u2.nickname,
                uugc.post_id,
@@ -33,7 +33,7 @@
                uugc.create_time,
                uugc.update_time
         from ums_user_gallery_collection uugc
-                 left join ums_user u2 on u2.id = uugc.u_id
+                 left join ums_user u2 on u2.id = uugc.user_id
         where uugc.status = 0
           and u2.is_deleted = 0
           and uugc.post_id = #{postId}
@@ -43,7 +43,7 @@
     <select id="selectGalleryFavoriteVOListByPostIds2Type"
             resultType="com.auiucloud.component.cms.vo.UserGalleryFavoriteVO">
         select uugc.id,
-        uugc.u_id,
+        uugc.user_id,
         u2.avatar,
         u2.nickname,
         uugc.post_id,
@@ -52,7 +52,7 @@
         uugc.create_time,
         uugc.update_time
         from ums_user_gallery_collection uugc
-        left join ums_user u2 on u2.id = uugc.u_id
+        left join ums_user u2 on u2.id = uugc.user_id
         where uugc.status = 0
         and u2.is_deleted = 0
         and uugc.type = #{type}

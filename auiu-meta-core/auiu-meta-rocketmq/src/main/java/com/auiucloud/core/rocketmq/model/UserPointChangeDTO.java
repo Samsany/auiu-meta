@@ -20,7 +20,7 @@ public class UserPointChangeDTO implements Serializable {
     @Serial
     private static final long serialVersionUID = -4127401586928547728L;
 
-    private Long uId;
+    private Long userId;
 
     private Integer point;
 

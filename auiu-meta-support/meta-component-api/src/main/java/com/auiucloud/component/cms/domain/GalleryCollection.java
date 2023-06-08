@@ -29,7 +29,7 @@ public class GalleryCollection extends BaseEntity {
     /**
      * 创建人ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 标题

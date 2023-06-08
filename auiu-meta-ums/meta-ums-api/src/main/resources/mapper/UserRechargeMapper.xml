@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserRecharge">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
         <result property="price" column="price" jdbcType="DECIMAL"/>
         <result property="otPrice" column="ot_price" jdbcType="DECIMAL"/>
@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,order_sn,
+        id,user_id,order_sn,
         price,ot_price,give_price,
         recharge_type,create_time,update_time,
         create_by,update_by,remark,

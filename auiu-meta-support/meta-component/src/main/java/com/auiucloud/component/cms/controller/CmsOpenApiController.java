@@ -7,10 +7,7 @@ package com.auiucloud.component.cms.controller;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.SwiperAdv;
-import com.auiucloud.component.cms.service.IGalleryCollectionService;
-import com.auiucloud.component.cms.service.IGalleryService;
-import com.auiucloud.component.cms.service.IPicTagService;
-import com.auiucloud.component.cms.service.ISwiperAdvService;
+import com.auiucloud.component.cms.service.*;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
@@ -21,10 +18,7 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author dries
@@ -39,6 +33,7 @@ public class CmsOpenApiController extends BaseController {
     private final ISwiperAdvService swiperAdvService;
     private final IGalleryCollectionService galleryCollectionService;
     private final IGalleryService galleryService;
+    private final IAiDrawService aiDrawService;
 
     //    private final StreamBridge streamBridge;
 
@@ -91,7 +86,7 @@ public class CmsOpenApiController extends BaseController {
      */
     @Log(value = "作品")
     @GetMapping("/gallery/recommend/list")
-    @Operation(summary = "查询作品推荐列表")
+    @Operation(summary = "查询作品每日推荐列表")
     public ApiResult<?> galleryReCommendList() {
         return ApiResult.data(galleryService.selectGalleryReCommendList());
     }
@@ -121,7 +116,7 @@ public class CmsOpenApiController extends BaseController {
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
             @Parameter(name = "tagId", description = "作品标签", in = ParameterIn.QUERY),
-            @Parameter(name = "uId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
+            @Parameter(name = "userId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
     })
     public ApiResult<?> collectionPage(@Parameter(hidden = true) Search search, @Parameter(hidden = true) GalleryCollection galleryCollection) {
         return ApiResult.data(galleryCollectionService.selectGalleryCollectionUserHomePage(search, galleryCollection));
@@ -131,10 +126,10 @@ public class CmsOpenApiController extends BaseController {
      * 查询作品合集详情
      */
     @Log(value = "作品")
-    @GetMapping("/gallery-collection/info/{cId}")
+    @GetMapping("/gallery-collection/info/{cateId}")
     @Operation(summary = "查询作品合集详情")
-    public ApiResult<?> getGalleryCollection(@PathVariable Long cId) {
-        return ApiResult.data(galleryCollectionService.selectGalleryCollectionById(cId));
+    public ApiResult<?> getGalleryCollection(@PathVariable Long cateId) {
+        return ApiResult.data(galleryCollectionService.selectGalleryCollectionById(cateId));
     }
 
 
@@ -148,7 +143,7 @@ public class CmsOpenApiController extends BaseController {
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
             @Parameter(name = "tagId", description = "作品标签", in = ParameterIn.QUERY),
-            @Parameter(name = "uId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
+            @Parameter(name = "userId", description = "创作者ID", in = ParameterIn.QUERY, required = true),
     })
     public ApiResult<?> galleryUserHomePage(Search search, @Parameter(hidden = true) Gallery gallery) {
         return ApiResult.data(galleryService.selectGalleryUserHomePage(search, gallery));
@@ -165,6 +160,23 @@ public class CmsOpenApiController extends BaseController {
     })
     public ApiResult<?> galleryCommonInfo(@PathVariable Long galleryId) {
         return ApiResult.data(galleryService.selectGalleryInfoById(galleryId));
+    }
+
+    @Log(value = "Ai绘画")
+    @Operation(summary = "Ai绘画类型")
+    @GetMapping(value = "/ai-draw/menu/list")
+    public ApiResult<?> aiDrawMenuList() {
+        return ApiResult.data(aiDrawService.aiDrawMenuList());
+    }
+
+    @Log(value = "Ai绘画")
+    @Operation(summary = "SD文生图配置")
+    @GetMapping(value = "/sd-api/text2img/config")
+    @Parameters({
+            @Parameter(name = "aiDrawMenuId", description = "Ai绘画类型ID", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> sdDrawConfig(@RequestParam Long aiDrawMenuId) {
+        return ApiResult.data(aiDrawService.sdText2ImgConfig(aiDrawMenuId));
     }
 
 }

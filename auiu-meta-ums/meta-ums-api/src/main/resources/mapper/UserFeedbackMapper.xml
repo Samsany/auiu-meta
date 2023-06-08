@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.auiucloud.ums.domain.UserFeedback">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="uId" column="u_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
         <result property="contactInformation" column="contact_information" jdbcType="VARCHAR"/>
         <result property="feedType" column="feed_type" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,u_id,contact_information,
+        id,user_id,contact_information,
         feed_type,content,status,
         pic_urls,create_time,update_time,
         create_by,update_by,remark,

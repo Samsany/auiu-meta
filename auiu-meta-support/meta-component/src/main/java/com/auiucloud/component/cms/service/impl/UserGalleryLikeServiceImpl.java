@@ -27,7 +27,7 @@ public class UserGalleryLikeServiceImpl extends ServiceImpl<UserGalleryLikeMappe
     @Override
     public UserGalleryLike selectGalleryLikeByUserId2GalleryId(Long userId, Long postId, Integer type) {
         LambdaQueryWrapper<UserGalleryLike> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(UserGalleryLike::getUId, userId);
+        queryWrapper.eq(UserGalleryLike::getUserId, userId);
         queryWrapper.eq(UserGalleryLike::getPostId, postId);
         queryWrapper.eq(UserGalleryLike::getType, type);
         return this.getOne(queryWrapper);
@@ -48,8 +48,8 @@ public class UserGalleryLikeServiceImpl extends ServiceImpl<UserGalleryLikeMappe
     }
 
     @Override
-    public List<UserGalleryLikeVO> selectGalleryLikeVOListByCId(Long cId) {
-        return Optional.ofNullable(baseMapper.selectGalleryLikeVOListByPostId2Type(cId, GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())).orElse(Collections.emptyList());
+    public List<UserGalleryLikeVO> selectGalleryLikeVOListByCId(Long cateId) {
+        return Optional.ofNullable(baseMapper.selectGalleryLikeVOListByPostId2Type(cateId, GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())).orElse(Collections.emptyList());
     }
 
     @Override

@@ -1,5 +1,5 @@
 server:
-  port: 22000
+  port: 23000
 spring:
   application:
     name: ${artifactId}
@@ -10,3 +10,17 @@ spring:
     username: ${meta.datasource.username}
     password: ${meta.datasource.password}
     driver-class-name: ${meta.datasource.driver-class-name}
+
+  rabbitmq:
+    addresses: 47.100.74.170
+    port: 5672
+    username: admin
+    password: Zxx131013@
+    virtual-host: my_vhost
+#    publisher-confirm-type: correlated # 确认消息已发送到交换机选择确认类型交互
+#    publisher-returns: true # 开启消息发送端消息抵达队列的确认
+#    template:
+#      mandatory: true # 只要抵达队列，以异步发送优先回调我们这个returnConfirm
+#    listener:
+#      simple:
+#        acknowledge-mode: manual # 手动ack消息

@@ -11,7 +11,7 @@ import java.util.List;
  * @author dries
  **/
 @Data
-public class SdText2ImgConfig implements Serializable {
+public class SdText2ImgParam implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 5316008974459562350L;
@@ -41,10 +41,10 @@ public class SdText2ImgConfig implements Serializable {
      * hr_resize_x 宽度调整
      * hr_resize_y 高度调整
      */
-    private Integer hr_scale = 2; // 放大倍数 2
+    private Float hr_scale = 2f; // 放大倍数 2
     private String hr_upscaler; // 放大算法
     private Integer hr_second_pass_steps = 20; // 20
-    private Integer denoising_strength = 0; // 0
+    private Float denoising_strength = 0f; // 0
     private Integer hr_resize_x = 0; // 0
     private Integer hr_resize_y = 0; // 0
     private Integer firstphase_width = 0; // 0
@@ -65,7 +65,7 @@ public class SdText2ImgConfig implements Serializable {
     private Integer batch_size = 1; // 每次张数 1
 
     private Integer steps = 20; // 采样迭代步数 20
-    private Integer cfg_scale = 7; // 提示词相关性 7
+    private Float cfg_scale = 7f; // 提示词相关性 7
     private Integer width = 512; // 宽度 512
     private Integer height = 512; // 高度 512
 
@@ -131,7 +131,7 @@ public class SdText2ImgConfig implements Serializable {
      *         }
      *     }
      */
-    private Object alwayson_scripts;
+    // private Object alwayson_scripts;
 
 }
 

@@ -9,10 +9,9 @@ import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
-import com.auiucloud.ums.domain.Member;
-import com.auiucloud.ums.domain.UserIntegralRecord;
 import com.auiucloud.ums.domain.UserTask;
 import com.auiucloud.ums.domain.UserTaskRecord;
+import com.auiucloud.ums.dto.UserPointChangeDTO;
 import com.auiucloud.ums.dto.UserTaskAwardDTO;
 import com.auiucloud.ums.dto.UserTaskCompleteDTO;
 import com.auiucloud.ums.enums.UserPointEnums;
@@ -33,7 +32,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -106,7 +104,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
     public boolean completeUserTask(Long taskId) {
         return this.completeUserTask(UserTaskCompleteDTO.builder()
                 .taskId(taskId)
-                .uId(SecurityUtil.getUserId())
+                .userId(SecurityUtil.getUserId())
                 .build());
     }
 
@@ -114,7 +112,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
     @Override
     public boolean completeUserTask(UserTaskCompleteDTO userTaskVO) {
         if (ObjectUtil.isNotNull(userTaskVO.getTaskId())) {
-            Long userId = userTaskVO.getUId();
+            Long userId = userTaskVO.getUserId();
             UserTaskVO userTask = this.getUserTaskById(userTaskVO.getTaskId());
 
             if (ObjectUtil.isNotNull(userTask)) {
@@ -194,7 +192,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
                     .build());
         }
         UserTaskRecord memberTaskLog = UserTaskRecord.builder()
-                .uId(userId)
+                .userId(userId)
                 .taskId(userTask.getId())
                 .taskProgress(1)
                 .build();
@@ -206,25 +204,14 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
         Long userId = taskAwardDTO.getUserId();
         // 发放积分
         Integer point = taskAwardDTO.getPoint();
-        if (point > 0) {
-            // 更新用户积分
-            Member member = memberService.getById(userId);
-            Integer integral = member.getIntegral();
-            memberService.increaseUserPoint(userId, point);
+        memberService.assignUserPoint(UserPointChangeDTO.builder()
+                .userId(userId)
+                .integral(point)
+                .changeType(UserPointEnums.ChangeTypeEnum.INCREASE.getValue())
+                .title(UserPointEnums.SourceEnum.TASK.getLabel())
+                .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                .build());
 
-            // 保存用户积分记录
-            UserIntegralRecord build = UserIntegralRecord.builder()
-                    .uId(userId)
-                    .title(taskAwardDTO.getTagEnum().getLabel())
-                    .integral(point)
-                    .balance(point + integral)
-                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
-                    .type(UserPointEnums.ChangeTypeEnum.INCREASE.getValue())
-                    .frozenTime(0)
-                    .thawTime(LocalDateTime.now())
-                    .build();
-            userIntegralRecordService.save(build);
-        }
     }
 
 

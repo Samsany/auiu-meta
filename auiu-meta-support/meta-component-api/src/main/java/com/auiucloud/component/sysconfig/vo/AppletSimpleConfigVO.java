@@ -30,6 +30,11 @@ public class AppletSimpleConfigVO implements Serializable {
     private String appletName;
 
     /**
+     * AI绘画功能启用 默认 false
+     */
+    private Boolean isEnableAiDraw;
+
+    /**
      * 是否开启激励视频 默认true
      */
     private Boolean isEnableVideoAd;

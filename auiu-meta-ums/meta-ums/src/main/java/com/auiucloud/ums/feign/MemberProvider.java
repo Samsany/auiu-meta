@@ -104,16 +104,15 @@ public class MemberProvider implements IMemberProvider {
     }
 
     /**
-     * 用户积分扣减
+     * 分配用户积分
      *
      * @param userPointChangeDTO 用户信息
      * @return ApiResult
      */
     @Override
-    @Log(value = "用户积分扣减", exception = "用户积分扣减请求失败")
-    @Operation(summary = "用户积分扣减", description = "用户积分扣减")
-    public ApiResult<Boolean> decreaseUserPoint(@Validated @RequestBody UserPointChangeDTO userPointChangeDTO) {
-        return ApiResult.data(memberService.decreaseUserPoint(userPointChangeDTO));
+    @Log(value = "分配用户积分", exception = "用户积分分配请求失败")
+    public ApiResult<?> assignUserPoint(@Validated @RequestBody UserPointChangeDTO userPointChangeDTO) {
+        return memberService.assignUserPoint(userPointChangeDTO);
     }
 
     /**
@@ -122,8 +121,9 @@ public class MemberProvider implements IMemberProvider {
      * @param userBrokerageChangeDTO 传递参数
      * @return ApiResult
      */
+    @Log(value = "分配用户佣金", exception = "用户佣金分配请求失败")
     @Override
-    public ApiResult<Boolean> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
-        return ApiResult.data(memberService.assignUserBrokerage(userBrokerageChangeDTO));
+    public ApiResult<?> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO) {
+        return memberService.assignUserBrokerage(userBrokerageChangeDTO);
     }
 }

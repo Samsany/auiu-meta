@@ -6,6 +6,7 @@ import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +24,8 @@ public interface ISysAttachmentService extends IService<SysAttachment> {
      * @return PageUtils
      */
     PageUtils listPage(Search search, SysAttachment attachment);
+
+    List<SysAttachment> selectAttachmentListByName(List<String> names);
 
     /**
      * 附件上传
@@ -67,4 +70,5 @@ public interface ISysAttachmentService extends IService<SysAttachment> {
      * @return boolean
      */
     boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename);
+
 }

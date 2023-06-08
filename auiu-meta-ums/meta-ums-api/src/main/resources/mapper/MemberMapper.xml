@@ -103,25 +103,25 @@
           and su.open_id = #{openId}
           and su.source = #{source}
     </select>
-    <select id="selectUserRecommendList" resultType="com.auiucloud.ums.vo.UserInfoVO">
-        select id,
-        account,
-        real_name,
-        nickname,
-        avatar,
-        bg_img,
-        invitation_code,
-        status,
-        remark
-        from ums_user
+    <select id="selectUserRecommendList" resultType="com.auiucloud.ums.vo.UserRecommendVO">
+        select u.id,
+        u.account,
+        u.real_name,
+        u.nickname,
+        u.avatar,
+        u.bg_img,
+        u.invitation_code,
+        u.status,
+        u.remark
+        from ums_user u
+        inner join ums_user_recommend uur on uur.user_id = u.id and uur.status = 0
         <where>
-            is_deleted = 0 and status = 0
+            u.is_deleted = 0 and u.status = 0
             <if test="userId != null">
-                and id != #{userId}
+                and u.id != #{userId}
             </if>
-            order by rand() limit 10;
         </where>
-
+        order by uur.sort desc, uur.create_time desc
     </select>
     <select id="selectUserAttentionList" resultType="com.auiucloud.ums.vo.UserInfoVO">
         select uu.id,
@@ -131,7 +131,7 @@
                uu.bg_img,
                uu.invitation_code
         from ums_user uu
-                 inner join ums_user_follower uuf on uu.id = uuf.u_id
+                 inner join ums_user_follower uuf on uu.id = uuf.user_id
         where uuf.follower_id = #{userId}
           and uuf.status = 0
           and uu.is_deleted = 0;
@@ -145,7 +145,7 @@
                uu.invitation_code
         from ums_user uu
                  inner join ums_user_follower uuf on uu.id = uuf.follower_id
-        where uuf.u_id = #{userId}
+        where uuf.user_id = #{userId}
           and uuf.status = 0
           and uu.is_deleted = 0;
     </select>

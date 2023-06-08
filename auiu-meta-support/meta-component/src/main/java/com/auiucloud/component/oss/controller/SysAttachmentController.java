@@ -45,7 +45,6 @@ public class SysAttachmentController {
     public ApiResult<?> upload(@RequestParam("file") MultipartFile file,
                                @RequestParam(required = false, defaultValue = "1000") Long groupId,
                                @RequestParam(required = false) String filename
-
     ) {
         return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, false, false));
     }
@@ -56,8 +55,9 @@ public class SysAttachmentController {
     public ApiResult<?> uploadImage(@RequestParam("file") MultipartFile file,
                                     @RequestParam(required = false, defaultValue = "1000") Long groupId,
                                     @RequestParam(required = false) String filename,
-                                    @RequestParam(required = false, defaultValue = "false") Boolean thumb) {
-        return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, thumb, true));
+                                    @RequestParam(required = false, defaultValue = "false") Boolean thumb,
+                                    @RequestParam(required = false, defaultValue = "false") Boolean checkImg) {
+        return ApiResult.data(sysAttachmentService.upload(file, groupId, filename, thumb, checkImg));
     }
 
     @Log(value = "删除文件")

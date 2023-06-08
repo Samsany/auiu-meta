@@ -18,13 +18,15 @@ public interface IGalleryCollectionService extends IService<GalleryCollection> {
 
     List<GalleryCollectionVO> listGalleryCollectionVOByCIds(List<Long> cIds);
 
+    List<GalleryCollectionVO> selectUserCollectionList(Search search, GalleryCollection galleryCollection);
+
     List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection);
 
     PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection);
 
     PageUtils selectGalleryCollectionUserHomePage(Search search, GalleryCollection galleryCollection);
 
-    GalleryCollectionVO selectGalleryCollectionById(Long cId);
+    GalleryCollectionVO selectGalleryCollectionById(Long cateId);
 
     GalleryCollectionVO getGalleryCollect(Long collectId);
 
@@ -37,4 +39,5 @@ public interface IGalleryCollectionService extends IService<GalleryCollection> {
     boolean removeGalleryCollectionByIds(List<Long> ids);
 
     boolean setCollectionTopStatus(UpdateStatusDTO statusDTO);
+
 }

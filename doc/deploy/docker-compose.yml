@@ -2,7 +2,7 @@ version: '3'
 services:
   meta-gateway:
     build:
-      context: ./auiu-meta-gateway
+      context: ../../auiu-meta-gateway
     restart: always
     container_name: meta-gateway
     image: meta-gateway
@@ -12,7 +12,7 @@ services:
 
   meta-auth:
     build:
-      context: ./meta-auth
+      context: ../../auiu-meta-auth/meta-auth
     restart: always
     container_name: meta-auth
     image: meta-auth
@@ -22,7 +22,7 @@ services:
 
   meta-admin:
     build:
-      context: ./meta-admin
+      context: ../../auiu-meta-admin/meta-admin
     restart: always
     container_name: meta-admin
     image: meta-admin
@@ -32,7 +32,7 @@ services:
 
   meta-ums:
     build:
-      context: ./meta-ums
+      context: ../../auiu-meta-ums/meta-ums
     restart: always
     container_name: meta-ums
     image: meta-ums
@@ -42,7 +42,7 @@ services:
 
   meta-component:
     build:
-      context: ./meta-component
+      context: ../../auiu-meta-support/meta-component
     restart: always
     container_name: meta-component
     image: meta-component

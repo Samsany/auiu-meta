@@ -13,6 +13,7 @@ import com.auiucloud.component.cms.vo.GalleryVO;
 import com.auiucloud.component.cms.vo.UserGalleryFavoriteVO;
 import com.auiucloud.component.cms.vo.UserGalleryLikeVO;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -29,10 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -71,9 +69,21 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     }
 
     @Override
+    public List<GalleryCollectionVO> selectUserCollectionList(Search search, GalleryCollection galleryCollection) {
+        List<GalleryCollectionVO> galleryCollections = new ArrayList<>();
+        galleryCollections.add(GalleryCollectionVO.builder()
+                .id(CommonConstant.ROOT_NODE_ID)
+                .title("全部")
+                .build());
+        Optional.ofNullable(baseMapper.selectGalleryCollectionVOList(galleryCollection)).ifPresent(galleryCollections::addAll);
+
+        return galleryCollections;
+    }
+
+    @Override
     public List<GalleryCollection> selectUserCollectionApiList(Search search, GalleryCollection galleryCollection) {
         LambdaQueryWrapper<GalleryCollection> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(GalleryCollection::getUId, SecurityUtil.getUserId());
+        queryWrapper.eq(GalleryCollection::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(GalleryCollection::getIsTop);
         queryWrapper.orderByDesc(GalleryCollection::getSort);
         queryWrapper.orderByDesc(GalleryCollection::getCreateTime);
@@ -83,7 +93,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Override
     public PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection) {
         LambdaQueryWrapper<GalleryCollection> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(GalleryCollection::getUId, SecurityUtil.getUserId());
+        queryWrapper.eq(GalleryCollection::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(GalleryCollection::getIsTop);
         queryWrapper.orderByDesc(GalleryCollection::getSort);
         queryWrapper.orderByDesc(GalleryCollection::getCreateTime);
@@ -118,11 +128,11 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     }
 
     @Override
-    public GalleryCollectionVO selectGalleryCollectionById(Long cId) {
-        GalleryCollectionVO galleryCollectionVO = baseMapper.selectGalleryCollectionVOById(cId);
+    public GalleryCollectionVO selectGalleryCollectionById(Long cateId) {
+        GalleryCollectionVO galleryCollectionVO = baseMapper.selectGalleryCollectionVOById(cateId);
         if (ObjectUtil.isNotNull(galleryCollectionVO)) {
-            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByCId(cId);
-            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByCId(cId);
+            List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByCId(cateId);
+            List<UserGalleryFavoriteVO> userGalleryFavoriteVOS = userGalleryCollectionService.selectGalleryFavoriteVOListByCId(cateId);
             Long userId = SecurityUtil.getUserIdOrDefault();
             buildGalleryCollectionAdditionalVO(userId, galleryCollectionVO, userGalleryLikeVOS, userGalleryFavoriteVOS);
         }
@@ -145,7 +155,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
 
     private void setGalleryTotal(Long userId, GalleryCollectionVO galleryCollectionVO) {
         Long total;
-        if (userId.equals(galleryCollectionVO.getUId())) {
+        if (userId.equals(galleryCollectionVO.getUserId())) {
             total = galleryService.countGalleryNumByCId(galleryCollectionVO.getId());
         } else {
             total = galleryService.countPublishedGalleryNumByCId(galleryCollectionVO.getId());
@@ -176,7 +186,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
 
         if (ObjectUtil.isNotNull(userId)) {
             favoriteList.parallelStream()
-                    .filter(it -> it.getUId().equals(userId))
+                    .filter(it -> it.getUserId().equals(userId))
                     .findAny()
                     .ifPresent(it -> {
                         galleryCollectionVO.setIsFavorite(Boolean.TRUE);
@@ -195,7 +205,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
 
         if (ObjectUtil.isNotNull(userId)) {
             likeList.parallelStream()
-                    .filter(it -> it.getUId().equals(userId))
+                    .filter(it -> it.getUserId().equals(userId))
                     .findAny()
                     .ifPresent(it -> {
                         galleryCollectionVO.setIsLike(Boolean.TRUE);
@@ -276,7 +286,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
     @Override
     public boolean setCollectionTopStatus(UpdateStatusDTO statusDTO) {
         GalleryCollection galleryCollection = this.getById(statusDTO.getId());
-        if (!galleryCollection.getUId().equals(SecurityUtil.getUserId())) {
+        if (!galleryCollection.getUserId().equals(SecurityUtil.getUserId())) {
             throw new ApiException(ResultCode.USER_ERROR_A0300);
         }
         galleryCollection.setIsTop(statusDTO.getStatus());
@@ -288,7 +298,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         LambdaQueryWrapper<GalleryCollection> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.ne(ObjectUtil.isNotNull(galleryCollection.getId()), GalleryCollection::getId, galleryCollection.getId());
         queryWrapper.eq(GalleryCollection::getTitle, galleryCollection.getTitle());
-        queryWrapper.eq(GalleryCollection::getUId, galleryCollection.getUId());
+        queryWrapper.eq(GalleryCollection::getUserId, galleryCollection.getUserId());
 
         queryWrapper.last("limit 1");
         return this.count(queryWrapper) > 0;
@@ -302,7 +312,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
 
         boolean flag = false;
         for (GalleryCollection collection : galleryList) {
-            if (!collection.getUId().equals(userId)) {
+            if (!collection.getUserId().equals(userId)) {
                 flag = true;
                 break;
             }

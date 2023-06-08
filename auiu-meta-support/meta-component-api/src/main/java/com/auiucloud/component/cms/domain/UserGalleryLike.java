@@ -34,7 +34,7 @@ public class UserGalleryLike implements Serializable {
     /**
      * 用户ID
      */
-    private Long uId;
+    private Long userId;
 
     /**
      * 被点赞的ID
