@@ -46,6 +46,16 @@ public class SysAttachment extends BaseEntity {
     private long size;
 
     /**
+     * 宽
+     */
+    private Integer width;
+
+    /**
+     * 高
+     */
+    private Integer height;
+
+    /**
      * 文件地址
      */
     private String url;

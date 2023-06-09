@@ -119,10 +119,21 @@ public class IPUtil {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
         if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
+            ip = request.getHeader("HTTP_CLIENT_IP");
         }
-        if (ip.contains(",")) {
-            ip = ip.split(",")[0];
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = Objects.requireNonNull(request.getRemoteHost());
+        }
+        if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
+            if (ip.contains(StringPool.COMMA)) {
+                ip = ip.split(StringPool.COMMA)[0];
+            }
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
@@ -130,11 +141,6 @@ public class IPUtil {
     public static String getServerHttpRequestIpAddress(ServerHttpRequest request) {
         HttpHeaders headers = request.getHeaders();
         String ip = headers.getFirst("x-forwarded-for");
-        if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
-            if (ip.contains(StringPool.COMMA)) {
-                ip = ip.split(StringPool.COMMA)[0];
-            }
-        }
         if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("Proxy-Client-IP");
         }
@@ -152,6 +158,11 @@ public class IPUtil {
         }
         if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
+        }
+        if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
+            if (ip.contains(StringPool.COMMA)) {
+                ip = ip.split(StringPool.COMMA)[0];
+            }
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }

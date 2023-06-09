@@ -13,6 +13,7 @@ import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
+import com.auiucloud.core.common.enums.FileEnums;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.utils.FileUtil;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -40,6 +41,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -162,21 +165,25 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             String thumbUrl = null;
             // 上传缩略图
             if (thumb) {
-                String thumbFileName = FileUtil.getFileNameNoEx(filename)  + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
-                String thumbFilePath =  "thumb" + StringPool.SLASH + thumbFileName;
+                String thumbFileName = FileUtil.getFileNameNoEx(filename) + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                String thumbFilePath = "thumb" + StringPool.SLASH + thumbFileName;
                 byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
                 ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
                 thumbUrl = ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath;
                 uMap.put("thumbUrl", thumbUrl);
             }
 
+            Integer width = null;
+            Integer height = null;
             if (FileUtil.getFileType(FileUtil.getExtensionName(filename)).equals("pic")) {
                 BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-                uMap.put("width", bufferedImage.getWidth());
-                uMap.put("height", bufferedImage.getHeight());
+                width = bufferedImage.getWidth();
+                height = bufferedImage.getHeight();
+                uMap.put("width", width);
+                uMap.put("height", height);
             }
             // 上传成功后记录入库
-            this.attachmentLog(file, url, thumbUrl, groupId, filename);
+            this.attachmentLog(file, url, thumbUrl, groupId, filename, width, height);
             return uMap;
         } catch (Exception e) {
             log.error("上传失败", e);
@@ -223,6 +230,23 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
     public boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename) {
+        return this.attachmentLog(file, url, thumbUrl, groupId, filename, null, null);
+    }
+
+    /**
+     * 将上传成功的文件记录入库
+     *
+     * @param file     　文件
+     * @param url      　返回的URL
+     * @param thumbUrl 　返回的缩略图URL
+     * @param groupId  附件分组
+     * @param filename 新文件名
+     * @return boolean
+     */
+    @Override
+    @SneakyThrows
+    @Transactional(rollbackFor = Exception.class)
+    public boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename, Integer width, Integer height) {
         SysAttachment sysAttachment = new SysAttachment();
         String original = file.getOriginalFilename();
 
@@ -233,6 +257,8 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         sysAttachment.setThumbUrl(thumbUrl);
         sysAttachment.setFileName(filename);
         sysAttachment.setSize(file.getSize());
+        sysAttachment.setWidth(width);
+        sysAttachment.setHeight(height);
         sysAttachment.setFileType(OssUtil.getFileType(original));
         return this.save(sysAttachment);
     }
@@ -261,6 +287,27 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
                 log.error("内容安全检测: {}", result);
                 // return ApiResult.fail("图片违规,请重新上传");
                 throw new ApiException(ResultCode.USER_ERROR_A0432);
+            }
+        }
+    }
+
+    @Override
+    public void asyncAttachmentWidth2Height() {
+        // 同步附件文件宽高
+        List<SysAttachment> list = this.list(Wrappers.<SysAttachment>lambdaQuery().eq(SysAttachment::getFileType, FileEnums.FileTypeEnum.PIC.getValue()));
+        for (SysAttachment sysAttachment : list) {
+            try {
+                String url = sysAttachment.getUrl();
+                InputStream inputStream = new URL(url).openStream();
+                BufferedImage read = ImageIO.read(inputStream);
+                int width = read.getWidth();
+                int height = read.getHeight();
+
+                sysAttachment.setWidth(width);
+                sysAttachment.setHeight(height);
+                this.updateById(sysAttachment);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

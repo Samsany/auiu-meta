@@ -102,4 +102,7 @@ public interface IGalleryService extends IService<Gallery> {
     ApiResult<?> downLoadUserGallery(Long id);
 
     boolean uploadGalleryBatch(GalleryUploadBatchVO vo);
+
+    void asyncGalleryWidth2Height();
+
 }

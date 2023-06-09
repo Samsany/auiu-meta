@@ -32,6 +32,12 @@ public class GalleryController {
 
     private final IGalleryService galleryService;
 
+    @GetMapping("/asyncGalleryWidth2Height")
+    public ApiResult<?> asyncGalleryWidth2Height() {
+        galleryService.asyncGalleryWidth2Height();
+        return ApiResult.success();
+    }
+
     /**
      * 分页查询作品列表
      */

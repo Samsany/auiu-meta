@@ -70,5 +70,8 @@ public interface ISysAttachmentService extends IService<SysAttachment> {
      * @return boolean
      */
     boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename);
+    boolean attachmentLog(MultipartFile file, String url, String thumbUrl, Long groupId, String filename, Integer width, Integer height);
+
+    void asyncAttachmentWidth2Height();
 
 }

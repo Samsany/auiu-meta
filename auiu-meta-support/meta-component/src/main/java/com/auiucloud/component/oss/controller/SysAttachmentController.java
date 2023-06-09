@@ -25,6 +25,12 @@ public class SysAttachmentController {
 
     private final ISysAttachmentService sysAttachmentService;
 
+    @GetMapping("/asyncAttachmentWidth2Height")
+    public ApiResult<?> asyncAttachmentWidth2Height() {
+        sysAttachmentService.asyncAttachmentWidth2Height();
+        return ApiResult.success();
+    }
+
     @Log(value = "附件分页")
     @GetMapping("/list")
     @Operation(summary = "附件分页")

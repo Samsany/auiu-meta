@@ -50,8 +50,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -174,17 +179,18 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         IPage<UserGalleryLike> page = userGalleryLikeService.page(PageUtils.getPage(search), queryWrapper);
         if (page.getRecords().size() > 0) {
             // 分别取出作品 和 合集
-            Map<Integer, List<UserGalleryLike>> map = page.getRecords().parallelStream()
+            Map<Integer, List<UserGalleryLike>> map = page.getRecords()
+                    .parallelStream()
                     .filter(it -> it.getType() != null)
                     .collect(Collectors.groupingBy(UserGalleryLike::getType));
 
             // 作品
-            List<UserGalleryLike> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
+            List<UserGalleryLike> userGalleryLikes = Optional.ofNullable(map.get(GalleryEnums.GalleryPageType.GALLERY.getValue())).orElse(Collections.emptyList());
             List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryLike::getPostId).toList();
             List<GalleryVO> galleryList = this.listGalleryVOByGIds(galleryIds);
 
             // 合集
-            List<UserGalleryLike> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
+            List<UserGalleryLike> userGalleryCollectionLikes = Optional.ofNullable(map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())).orElse(Collections.emptyList());
             List<Long> cIds = userGalleryCollectionLikes.parallelStream().map(UserGalleryLike::getPostId).toList();
             List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
 
@@ -220,12 +226,12 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .collect(Collectors.groupingBy(UserGalleryCollection::getType));
 
             // 作品
-            List<UserGalleryCollection> userGalleryLikes = map.get(GalleryEnums.GalleryPageType.GALLERY.getValue());
+            List<UserGalleryCollection> userGalleryLikes = Optional.ofNullable(map.get(GalleryEnums.GalleryPageType.GALLERY.getValue())).orElse(Collections.emptyList());
             List<Long> galleryIds = userGalleryLikes.parallelStream().map(UserGalleryCollection::getPostId).toList();
             List<GalleryVO> galleryList = this.listGalleryVOByGIds(galleryIds);
 
             // 合集
-            List<UserGalleryCollection> userGalleryCollectionLikes = map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue());
+            List<UserGalleryCollection> userGalleryCollectionLikes = Optional.ofNullable(map.get(GalleryEnums.GalleryPageType.GALLERY_COLLECTION.getValue())).orElse(Collections.emptyList());
             List<Long> cIds = userGalleryCollectionLikes.parallelStream().map(UserGalleryCollection::getPostId).toList();
             List<GalleryCollectionVO> galleryCollections = galleryCollectionService.listGalleryCollectionVOByCIds(cIds);
 
@@ -325,6 +331,8 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .remark(vo.getRemark())
                     .sort(vo.getSort())
                     .size(image.getSize())
+                    .width(image.getWidth())
+                    .height(image.getHeight())
                     .pic(image.getUrl())
                     .thumbUrl(image.getThumbUrl())
                     .type(GalleryEnums.GalleryType.WALLPAPER.getValue())
@@ -833,6 +841,27 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             log.error(e.getMessage());
         }
         return memberInfoVOS;
+    }
+
+    @Override
+    public void asyncGalleryWidth2Height() {
+        // 同步附件文件宽高
+        List<Gallery> list = this.list(Wrappers.<Gallery>lambdaQuery().isNull(Gallery::getWidth));
+        for (Gallery gallery : list) {
+            try {
+                String url = gallery.getPic();
+                InputStream inputStream = new URL(url).openStream();
+                BufferedImage read = ImageIO.read(inputStream);
+                int width = read.getWidth();
+                int height = read.getHeight();
+
+                gallery.setWidth(width);
+                gallery.setHeight(height);
+                this.updateById(gallery);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
 
