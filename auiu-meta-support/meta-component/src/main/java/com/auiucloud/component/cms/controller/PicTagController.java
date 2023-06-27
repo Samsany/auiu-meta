@@ -4,11 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.auiucloud.component.cms.domain.PicTag;
 import com.auiucloud.component.cms.service.IPicTagService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.web.controller.BaseController;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author dries
  **/
-@Tag(name = "图片标签管理")
+@Tag(name = "作品管理")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/pic-tag")
@@ -51,6 +51,7 @@ public class PicTagController extends BaseController {
                             .eq(PicTag::getStatus, picTag.getStatus())
                             .orderByDesc(PicTag::getSort)
                             .orderByDesc(PicTag::getCreateTime)
+                            .orderByDesc(PicTag::getId)
                     ));
             default -> ApiResult.data(picTagService.listPage(search, picTag));
         };

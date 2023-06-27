@@ -5,12 +5,17 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.component.cms.domain.*;
+import com.auiucloud.component.cms.dto.GalleryUpdateDTO;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
+import com.auiucloud.component.cms.dto.SaveAiDrawGalleryDTO;
 import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.mapper.GalleryMapper;
 import com.auiucloud.component.cms.service.*;
 import com.auiucloud.component.cms.vo.*;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
+import com.auiucloud.component.sd.domain.AiDrawImgVO;
+import com.auiucloud.component.sd.domain.SdTxt2ImgParams;
+import com.auiucloud.component.sd.vo.SdDrawSaveVO;
 import com.auiucloud.component.sysconfig.domain.SysAttachment;
 import com.auiucloud.component.sysconfig.domain.UserConfigProperties;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
@@ -74,11 +79,13 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
 
     private final IUserGalleryDownloadService galleryDownloadRecordService;
     private final IGalleryCollectionService galleryCollectionService;
-    private final IPicTagService picTagService;
     private final IUserGalleryLikeService userGalleryLikeService;
     private final IUserGalleryCollectionService userGalleryCollectionService;
     private final IUserGalleryDownloadService userGalleryDownloadService;
     private final ISysConfigService sysConfigService;
+    private final IGalleryAppealService galleryAppealService;
+    private final IGalleryReviewService galleryReviewService;
+
     @Lazy
     @Resource
     private ISysAttachmentService sysAttachmentService;
@@ -106,6 +113,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.orderByDesc(Gallery::getIsTop);
         queryWrapper.orderByDesc(Gallery::getSort);
         queryWrapper.orderByDesc(Gallery::getCreateTime);
+        queryWrapper.orderByDesc(Gallery::getId);
         return getGalleryVOS(queryWrapper);
     }
 
@@ -116,6 +124,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.orderByDesc(Gallery::getIsTop);
         queryWrapper.orderByDesc(Gallery::getSort);
         queryWrapper.orderByDesc(Gallery::getCreateTime);
+        queryWrapper.orderByDesc(Gallery::getId);
         queryWrapper.last(limit != null, "limit " + limit);
         return getGalleryVOS(queryWrapper);
     }
@@ -130,7 +139,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
 
         if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.COLLECTION.getValue())) {
             // todo 查询合集
-            return new PageUtils(Collections.emptyList());
+            return new PageUtils(search);
         } else {
             // 查询全部
             if (gallery.getTagId().equals(GalleryEnums.GalleryTagType.ALL.getValue())) {
@@ -289,11 +298,104 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         return getGalleryVO(galleryVO);
     }
 
+    @Override
+    public PageUtils selectGalleryPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getUserId, gallery.getUserId());
+        queryWrapper.eq(ObjectUtil.isNotNull(gallery.getCollectionId()) && !Objects.equals(gallery.getCollectionId(), CommonConstant.ROOT_NODE_ID), Gallery::getCollectionId, gallery.getCollectionId());
+        queryWrapper.orderByDesc(Gallery::getSort);
+        queryWrapper.orderByDesc(Gallery::getCreateTime);
+        queryWrapper.orderByDesc(Gallery::getId);
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils selectGalleryReviewPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), Gallery::getTitle, search.getKeyword());
+        queryWrapper.eq(ObjectUtil.isNotNull(gallery.getUserId()), Gallery::getUserId, gallery.getUserId());
+        if (!search.getStatus().equals(CommonConstant.SYSTEM_STATUS_VALUE)) {
+            queryWrapper.eq(Gallery::getApprovalStatus, search.getStatus());
+        } else {
+            queryWrapper.isNotNull(Gallery::getApprovalStatus);
+        }
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            try {
+                UserInfoVO userInfo = memberProvider.getSimpleUserById(it.getUserId()).getData();
+                galleryVO.setNickname(userInfo.getNickname());
+                galleryVO.setAvatar(userInfo.getAvatar());
+            } catch (Exception e) {
+                log.error("获取创作者信息异常，{}", e.getMessage());
+            }
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils selectUserGalleryPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), Gallery::getTitle, search.getKeyword());
+        queryWrapper.eq(Gallery::getUserId, gallery.getUserId());
+        queryWrapper.eq(ObjectUtil.isNotNull(gallery.getCollectionId()) &&
+                !gallery.getCollectionId().equals(CommonConstant.ROOT_NODE_ID), Gallery::getCollectionId, gallery.getCollectionId());
+        queryWrapper.orderByDesc(Gallery::getIsTop);
+        queryWrapper.orderByDesc(Gallery::getSort);
+        queryWrapper.orderByDesc(ObjectUtil.isNotNull(gallery.getCollectionId()), Gallery::getJoinCollectionTime);
+        queryWrapper.orderByDesc(Gallery::getCreateTime);
+        queryWrapper.orderByDesc(Gallery::getId);
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            try {
+                UserInfoVO userInfo = memberProvider.getSimpleUserById(it.getUserId()).getData();
+                galleryVO.setNickname(userInfo.getNickname());
+                galleryVO.setAvatar(userInfo.getAvatar());
+            } catch (Exception e) {
+                log.error("获取创作者信息异常，{}", e.getMessage());
+            }
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils galleryNoCollectionPage(Search search, Gallery gallery) {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getUserId, SecurityUtil.getUserId());
+        queryWrapper.isNull(Gallery::getCollectionId);
+        queryWrapper.ne(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.REJECT.getValue());
+        queryWrapper.orderByDesc(Gallery::getIsTop);
+        queryWrapper.orderByDesc(Gallery::getSort);
+        queryWrapper.orderByDesc(Gallery::getCreateTime);
+        queryWrapper.orderByDesc(Gallery::getId);
+        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryVO galleryVO = new GalleryVO();
+            BeanUtils.copyProperties(it, galleryVO);
+            return galleryVO;
+        });
+        return new PageUtils(page);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ApiResult<?> upload(MultipartFile file, Long cateId) {
         try {
+            UserConfigProperties userConfigProperties = sysConfigService.getUserConfigProperties();
             Map<String, Object> upload = sysAttachmentService.upload(file, 1001L, true, true);
+            Integer width = (Integer) upload.get("width");
+            Integer height = (Integer) upload.get("height");
             Gallery gallery = Gallery.builder()
                     .userId(SecurityUtil.getUserId())
                     .collectionId(cateId)
@@ -302,12 +404,23 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .width((Integer) upload.getOrDefault("width", CommonConstant.STATUS_NORMAL_VALUE))
                     .height((Integer) upload.getOrDefault("height", CommonConstant.STATUS_NORMAL_VALUE))
                     .size((Long) upload.getOrDefault("size", CommonConstant.ROOT_NODE_ID))
+                    .width(width)
+                    .height(height)
                     .type(GalleryEnums.GalleryType.WALLPAPER.getValue())
                     .isPublished(GalleryEnums.GalleryIsPublished.NO.getValue())
+                    .approvalStatus(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
                     .joinCollectionTime(ObjectUtil.isNotNull(cateId) ? LocalDateTime.now() : null)
+                    .downloadIntegral(userConfigProperties.getDefaultDownloadIntegral())
                     .build();
             boolean result = this.save(gallery);
             if (result) {
+                // 插入审核记录
+                GalleryReview galleryReview = GalleryReview.builder()
+                        .galleryId(gallery.getId())
+                        .userId(gallery.getUserId())
+                        .status(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
+                        .build();
+                galleryReviewService.save(galleryReview);
                 return ApiResult.data(gallery);
             }
             return ApiResult.fail(ResultCode.USER_ERROR_A0500);
@@ -319,7 +432,8 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean uploadGalleryBatch(GalleryUploadBatchVO vo) {
-
+        // 获取默认下载积分
+        UserConfigProperties userConfigProperties = sysConfigService.getUserConfigProperties();
         List<Gallery> galleryList = new ArrayList<>();
         // 获取图片
         for (SysAttachment image : vo.getImages()) {
@@ -339,104 +453,90 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     .joinCollectionTime(ObjectUtil.isNotNull(vo.getCollectionId()) ? LocalDateTime.now() : null)
                     .approvalStatus(GalleryEnums.GalleryApprovalStatus.RESOLVE.getValue())
                     .isPublished(GalleryEnums.GalleryIsPublished.YES.getValue())
-                    .downloadIntegral(1)
+                    .downloadIntegral(userConfigProperties.getDefaultDownloadIntegral())
                     .build();
             galleryList.add(build);
         }
         return this.saveBatch(galleryList);
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
-    public ApiResult<?> saveSdDrawGallery(SdDrawSaveVO vo) {
-        Long userId = SecurityUtil.getUserId();
-        List<String> images = vo.getImages();
-        SdText2ImgParam sdText2ImgParam = vo.getSdText2ImgParam();
-
-        List<Gallery> galleryList = new ArrayList<>();
-        for (String image : images) {
-            MultipartFile multipartFile = FileUtil.base64ToMultipartFile(image);
-            if (multipartFile != null) {
-                Map<String, Object> upload = sysAttachmentService.upload(multipartFile, 1001L, true, true);
-                Gallery gallery = Gallery.builder()
-                        .userId(userId)
-                        .pic((String) upload.getOrDefault("url", ""))
-                        .thumbUrl((String) upload.getOrDefault("thumbUrl", ""))
-                        .width(sdText2ImgParam.getWidth())
-                        .height(sdText2ImgParam.getHeight())
-                        .size((long) (multipartFile.getSize() / 1024))
-                        .sdConfig(JSONUtil.toJsonStr(sdText2ImgParam))
-                        .type(GalleryEnums.GalleryType.SD_TXT2IMG.getValue())
-                        .isPublished(GalleryEnums.GalleryIsPublished.NO.getValue())
-                        .joinCollectionTime(null)
-                        .build();
-                galleryList.add(gallery);
-            } else {
-                throw new ApiException(ResultCode.USER_ERROR_A0700);
+    public List<Long> saveAiDrawGallery(SaveAiDrawGalleryDTO data) {
+        // 获取默认下载积分
+        UserConfigProperties userConfigProperties = sysConfigService.getUserConfigProperties();
+        List<Long> galleryIds = new ArrayList<>();
+        for (int i = 0; i < data.getBatchSize(); i++) {
+            Gallery gallery = Gallery.builder()
+                    .userId(data.getUserId())
+                    .pic("")
+                    .thumbUrl("")
+                    .width(data.getWidth())
+                    .height(data.getHeight())
+                    .size(0L)
+                    .sdConfig(data.getSdConfig())
+                    .type(GalleryEnums.GalleryType.SD_TXT2IMG.getValue())
+                    .isPublished(GalleryEnums.GalleryIsPublished.NO.getValue())
+                    .status(GalleryEnums.GalleryStatus.AWAIT.getValue())
+                    .approvalStatus(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
+                    .consumeIntegral(data.getConsumeIntegral())
+                    .downloadIntegral(userConfigProperties.getDefaultDownloadIntegral())
+                    .build();
+            boolean result = this.save(gallery);
+            if (result) {
+                galleryIds.add(gallery.getId());
             }
         }
 
-        return ApiResult.condition(this.saveBatch(galleryList));
+        return galleryIds;
     }
 
     @Override
-    public PageUtils selectGalleryPage(Search search, Gallery gallery) {
-        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(Gallery::getUserId, gallery.getUserId());
-        queryWrapper.eq(ObjectUtil.isNotNull(gallery.getCollectionId()) && !Objects.equals(gallery.getCollectionId(), CommonConstant.ROOT_NODE_ID), Gallery::getCollectionId, gallery.getCollectionId());
-        queryWrapper.orderByDesc(Gallery::getSort);
-        queryWrapper.orderByDesc(Gallery::getCreateTime);
-        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
-        page.convert(it -> {
-            GalleryVO galleryVO = new GalleryVO();
-            BeanUtils.copyProperties(it, galleryVO);
-            return galleryVO;
-        });
-        return new PageUtils(page);
+    public void updateAiDrawGalleryStatusByIds(List<String> ids, Integer status) {
+        this.update(Wrappers.<Gallery>lambdaUpdate()
+                .set(Gallery::getStatus, status)
+                .in(Gallery::getId, ids)
+        );
     }
 
     @Override
-    public PageUtils selectUserGalleryPage(Search search, Gallery gallery) {
-        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), Gallery::getTitle, search.getKeyword());
-        queryWrapper.eq(Gallery::getUserId, gallery.getUserId());
-        queryWrapper.eq(ObjectUtil.isNotNull(gallery.getCollectionId()) &&
-                !gallery.getCollectionId().equals(CommonConstant.ROOT_NODE_ID), Gallery::getCollectionId, gallery.getCollectionId());
-        queryWrapper.orderByDesc(Gallery::getIsTop);
-        queryWrapper.orderByDesc(Gallery::getSort);
-        queryWrapper.orderByDesc(ObjectUtil.isNotNull(gallery.getCollectionId()), Gallery::getJoinCollectionTime);
-        queryWrapper.orderByDesc(Gallery::getCreateTime);
-        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
-        page.convert(it -> {
-            GalleryVO galleryVO = new GalleryVO();
-            BeanUtils.copyProperties(it, galleryVO);
-            try {
-                UserInfoVO userInfo = memberProvider.getSimpleUserById(gallery.getUserId()).getData();
-                galleryVO.setNickname(userInfo.getNickname());
-                galleryVO.setAvatar(userInfo.getAvatar());
-            } catch (Exception e) {
-                log.error("获取创作者信息异常，{}", e.getMessage());
+    public List<AiDrawImgVO> updateAiDrawResult(Long userId, List<AiDrawImgVO> aiDrawImgList) {
+        for (AiDrawImgVO aiDrawImg : aiDrawImgList) {
+            if (aiDrawImg.getStatus().equals(GalleryEnums.AiDrawStatus.SUCCESS.getValue())) {
+                Gallery gallery = Gallery.builder()
+                        .id(aiDrawImg.getGalleryId())
+                        .status(GalleryEnums.GalleryStatus.SUCCESS.getValue())
+                        .build();
+                // 上传图片
+                String thumbUrl = "";
+                try {
+                    MultipartFile multipartFile = FileUtil.base64ToMultipartFile(aiDrawImg.getImageData());
+                    Map<String, Object> upload = sysAttachmentService.upload(multipartFile, 1001L, true, false);
+                    String url = (String) upload.getOrDefault("url", "");
+                    thumbUrl = (String) upload.getOrDefault("thumbUrl", "");
+                    gallery.setPic(url);
+                    gallery.setThumbUrl(thumbUrl);
+                } catch (Exception e) {
+                    log.error("AI绘画数据上传异常: {}", e.getMessage());
+                    gallery.setStatus(GalleryEnums.GalleryStatus.FAIL.getValue());
+                    aiDrawImg.setStatus(GalleryEnums.AiDrawStatus.FAIL.getValue());
+                }
+
+                boolean result = this.updateById(gallery);
+                if (result) {
+                    // 插入审核记录
+                    GalleryReview galleryReview = GalleryReview.builder()
+                            .galleryId(gallery.getId())
+                            .userId(userId)
+                            .status(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
+                            .build();
+                    galleryReviewService.save(galleryReview);
+                    aiDrawImg.setStatus(GalleryEnums.AiDrawStatus.FAIL.getValue());
+                }
+                aiDrawImg.setUrl(thumbUrl);
             }
-            return galleryVO;
-        });
-        return new PageUtils(page);
-    }
+        }
 
-    @Override
-    public PageUtils galleryNoCollectionPage(Search search, Gallery gallery) {
-        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(Gallery::getUserId, SecurityUtil.getUserId());
-        queryWrapper.isNull(Gallery::getCollectionId);
-        queryWrapper.orderByDesc(Gallery::getIsTop);
-        queryWrapper.orderByDesc(Gallery::getSort);
-        queryWrapper.orderByDesc(Gallery::getCreateTime);
-        IPage<Gallery> page = this.page(PageUtils.getPage(search), queryWrapper);
-        page.convert(it -> {
-            GalleryVO galleryVO = new GalleryVO();
-            BeanUtils.copyProperties(it, galleryVO);
-            return galleryVO;
-        });
-        return new PageUtils(page);
+        return aiDrawImgList;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -446,12 +546,15 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         if (!gallery.getUserId().equals(SecurityUtil.getUserId())) {
             throw new ApiException(ResultCode.USER_ERROR_A0300);
         }
+        if (ObjectUtil.isNull(gallery.getApprovalStatus())
+                || gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
+            return ApiResult.fail("作品审核中，请耐心等待");
+        }
+        if (gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.REJECT.getValue())) {
+            return ApiResult.fail("作品涉嫌违规，发布失败");
+        }
         if (gallery.getIsPublished().equals(CommonConstant.STATUS_DISABLE_VALUE)) {
             return ApiResult.fail("作品已发布，请勿重复操作");
-        }
-        if (ObjectUtil.isNotNull(gallery.getApprovalStatus())
-                && gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
-            return ApiResult.fail("作品已提交，等待审核中");
         }
 
         try {
@@ -472,17 +575,72 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         }
 
         LambdaUpdateWrapper<Gallery> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Gallery::getId, gallery.getId());
+
         updateWrapper.set(Gallery::getTitle, galleryVO.getTitle());
         updateWrapper.set(Gallery::getRemark, galleryVO.getRemark());
-
         updateWrapper.set(Gallery::getTagId, galleryVO.getTagId());
         updateWrapper.set(Gallery::getPublishedTime, new Date());
-        // 默认已发布，无需审核
-        // updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.AWAIT.getValue());
-        updateWrapper.set(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.RESOLVE.getValue());
         updateWrapper.set(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
-        updateWrapper.eq(Gallery::getId, gallery.getId());
+        updateWrapper.set(ObjectUtil.isNotNull(galleryVO.getIsTop()), Gallery::getIsTop, galleryVO.getIsTop());
+        updateWrapper.set(Gallery::getUpdateBy, SecurityUtil.getUsername());
         return ApiResult.condition(this.update(updateWrapper));
+    }
+
+    @Override
+    public ApiResult<?> editGallery(GalleryUpdateDTO galleryVO) {
+        Gallery gallery = this.getById(galleryVO.getId());
+        if (!gallery.getUserId().equals(SecurityUtil.getUserId())) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+
+        try {
+            String appId = RequestHolder.getHttpServletRequestHeader("appId");
+            Integer loginType = SecurityUtil.getUser().getLoginType();
+            if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
+                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+                List<Integer> resultList = douyinAppletService.checkTextList(List.of(
+                        galleryVO.getTitle(),
+                        galleryVO.getRemark()
+                ));
+                if (resultList.size() > 0) {
+                    return ApiResult.fail(ResultCode.USER_ERROR_A0431);
+                }
+            }
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+
+        LambdaUpdateWrapper<Gallery> updateWrapper = Wrappers.lambdaUpdate();
+        updateWrapper.eq(Gallery::getId, gallery.getId());
+
+        updateWrapper.set(Gallery::getTitle, galleryVO.getTitle());
+        updateWrapper.set(Gallery::getRemark, galleryVO.getRemark());
+        updateWrapper.set(Gallery::getTagId, galleryVO.getTagId());
+
+        updateWrapper.set(ObjectUtil.isNotNull(galleryVO.getIsTop()), Gallery::getIsTop, galleryVO.getIsTop());
+        updateWrapper.set(Gallery::getUpdateBy, SecurityUtil.getUsername());
+        return ApiResult.condition(this.update(updateWrapper));
+    }
+
+    /**
+     * 隐藏作品
+     *
+     * @param galleryId 作品ID
+     * @return result
+     */
+    @Override
+    public ApiResult<?> hiddenGallery(Long galleryId) {
+        Gallery gallery = this.getById(galleryId);
+        Long userId = SecurityUtil.getUserId();
+        if (!gallery.getUserId().equals(userId)) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+        return ApiResult.condition(this.update(Wrappers.<Gallery>lambdaUpdate()
+                .eq(Gallery::getId, galleryId)
+                .set(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.NO.getValue())
+                .set(Gallery::getUpdateBy, SecurityUtil.getUsername())
+        ));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -862,6 +1020,62 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public ApiResult<?> galleryAppeal(GallerySubmitAppealVO vo) {
+        Long userId = SecurityUtil.getUserId();
+        if (!userId.equals(vo.getUserId())) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+
+        try {
+            String appId = RequestHolder.getHttpServletRequestHeader("appId");
+            Integer loginType = SecurityUtil.getUser().getLoginType();
+            if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
+                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+                List<Integer> resultList = douyinAppletService.checkTextList(List.of(
+                        vo.getReason()
+                ));
+                if (resultList.size() > 0) {
+                    return ApiResult.fail(ResultCode.USER_ERROR_A0431);
+                }
+            }
+        } catch (Exception e) {
+            throw new ApiException(e.getMessage());
+        }
+
+        // 查询是否存在待审核的作品, 存在即取消
+        GalleryAppeal galleryAppeal = galleryAppealService.selectWaitAppealGalleryByGalleryId2UserId(userId, vo.getGalleryId());
+        if (ObjectUtil.isNotNull(galleryAppeal)) {
+            galleryAppeal.setStatus(GalleryEnums.GalleryAppealStatus.CANCEL.getValue());
+            galleryAppealService.updateById(galleryAppeal);
+        }
+
+        GalleryAppeal build = GalleryAppeal.builder()
+                .userId(userId)
+                .galleryId(vo.getGalleryId())
+                .reason(vo.getReason())
+                .status(GalleryEnums.GalleryAppealStatus.AWAIT.getValue())
+                .build();
+        // todo 发送代办提醒
+        return ApiResult.condition(galleryAppealService.save(build));
+    }
+
+    @Override
+    public boolean setGalleryApprovalStatus(UpdateStatusDTO updateStatus) {
+        return this.update(Wrappers.<Gallery>lambdaUpdate()
+                .eq(Gallery::getId, updateStatus.getId())
+                .set(Gallery::getApprovalStatus, updateStatus.getStatus())
+        );
+    }
+
+    @Override
+    public Long selectGalleryWaitReviewCount() {
+        LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.AWAIT.getValue());
+        return this.count(queryWrapper);
     }
 }
 

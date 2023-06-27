@@ -39,5 +39,10 @@ public class MetaConstant {
      */
     public static final String CONFIG_DATA_ID_DYNAMIC_ROUTES = "auiu-meta-dynamic-routes.yaml";
 
+    /**
+     * 默认的路由yml配置
+     */
+    public static final String SD_DRAW_DEFAULT_ID = "default_sd_config";
+
 
 }

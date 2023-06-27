@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.component.oss.mapper.SysAttachmentMapper;
+import com.auiucloud.component.oss.service.IOSSConfigService;
 import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sysconfig.domain.SysAttachment;
@@ -57,7 +58,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         implements ISysAttachmentService {
 
     private final OssTemplate ossTemplate;
-    private final ISysConfigService configService;
+    private final IOSSConfigService ossConfigService;
     private final ISysAttachmentGroupService sysAttachmentGroupService;
 
     /**
@@ -77,6 +78,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         if (attachment.getAttachmentGroupId() != CommonConstant.ROOT_NODE_ID.intValue()) {
             queryWrapper.eq(SysAttachment::getAttachmentGroupId, attachment.getAttachmentGroupId());
         }
+        queryWrapper.orderByDesc(SysAttachment::getCreateTime);
         queryWrapper.orderByDesc(SysAttachment::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
@@ -318,7 +320,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
      * @return OssProperties
      */
     public OssProperties getOssProperties() {
-        return configService.getDefaultOssProperties();
+        return ossConfigService.getDefaultOssProperties();
     }
 }
 

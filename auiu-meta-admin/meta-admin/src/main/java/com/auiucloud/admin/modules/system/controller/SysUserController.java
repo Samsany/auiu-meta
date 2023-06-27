@@ -4,15 +4,15 @@ import com.auiucloud.admin.modules.system.domain.SysUser;
 import com.auiucloud.admin.modules.system.dto.SysUserDTO;
 import com.auiucloud.admin.modules.system.service.ISysUserService;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.validator.InsertGroup;
-import com.auiucloud.core.validator.UpdateGroup;
+import com.auiucloud.core.validator.group.InsertGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -121,13 +121,23 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 修改系统用户密码
+     * 更新用户密码
      */
     @Log(value = "系统用户", exception = "修改系统用户请求异常")
     @PutMapping("/setNewPassword")
-    @Operation(summary = "修改系统用户密码")
+    @Operation(summary = "强制更新系统用户密码")
     public ApiResult<?> setNewPassword(@Validated({UpdatePasswordDTO.SetPasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
         return ApiResult.condition(sysUserService.setNewPassword(updatePasswordDTO));
+    }
+
+    /**
+     * 修改系统用户密码
+     */
+    @Log(value = "系统用户", exception = "修改系统用户请求异常")
+    @PutMapping("/updatePassword")
+    @Operation(summary = "更新系统用户密码")
+    public ApiResult<?> updatePassword(@Validated({UpdatePasswordDTO.UpdatePasswordGroup.class}) @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        return ApiResult.condition(sysUserService.updatePassword(updatePasswordDTO));
     }
 
     /**

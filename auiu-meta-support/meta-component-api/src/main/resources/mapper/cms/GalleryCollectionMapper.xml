@@ -67,7 +67,7 @@
         left join (select cg.collection_id, cg.is_published, count(cg.collection_id) gallery_num
         from cms_gallery cg
         <where>
-            cg.is_deleted = 0
+            cg.is_deleted = 0 and cg.approval_status != 2
             <if test="userId != null and userId != galleryCollection.userId">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>
@@ -88,7 +88,7 @@
         left join (select cg.collection_id, cg.is_published, count(cg.collection_id) gallery_num
         from cms_gallery cg
         <where>
-            cg.is_deleted = 0
+            cg.is_deleted = 0 and cg.approval_status != 2
             <if test="userId != null and userId != galleryCollection.userId">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>

@@ -16,7 +16,7 @@ spring:
     port: 5672
     username: admin
     password: Zxx131013@
-    virtual-host: my_vhost
+    virtual-host: dev_vhost
 #    publisher-confirm-type: correlated # 确认消息已发送到交换机选择确认类型交互
 #    publisher-returns: true # 开启消息发送端消息抵达队列的确认
 #    template:

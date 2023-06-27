@@ -28,6 +28,7 @@ public class UserIntegralRecordServiceImpl extends ServiceImpl<UserIntegralRecor
         queryWrapper.eq(UserIntegralRecord::getStatus, UserPointEnums.StatusEnum.SUCCESS.getValue());
         queryWrapper.eq(UserIntegralRecord::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(UserIntegralRecord::getCreateTime);
+        queryWrapper.orderByDesc(UserIntegralRecord::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 
@@ -38,6 +39,7 @@ public class UserIntegralRecordServiceImpl extends ServiceImpl<UserIntegralRecor
         queryWrapper.eq(UserIntegralRecord::getStatus, UserPointEnums.StatusEnum.SUCCESS.getValue());
         queryWrapper.eq(UserIntegralRecord::getUserId, SecurityUtil.getUserId());
         queryWrapper.orderByDesc(UserIntegralRecord::getCreateTime);
+        queryWrapper.orderByDesc(UserIntegralRecord::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 

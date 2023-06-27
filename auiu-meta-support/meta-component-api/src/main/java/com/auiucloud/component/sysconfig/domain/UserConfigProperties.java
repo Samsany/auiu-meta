@@ -128,6 +128,12 @@ public class UserConfigProperties implements Serializable {
     private Integer pointRedemptionRatio = 20;
 
     /**
+     * 下载作品默认消耗积分 默认1
+     */
+    @Builder.Default
+    private Integer defaultDownloadIntegral = 1;
+
+    /**
      * 提现方式
      */
     @Builder.Default

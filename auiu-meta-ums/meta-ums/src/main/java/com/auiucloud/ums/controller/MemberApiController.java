@@ -1,10 +1,10 @@
 package com.auiucloud.ums.controller;
 
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.ums.domain.UserTask;
 import com.auiucloud.ums.dto.UpdateUserInfoDTO;
 import com.auiucloud.ums.service.*;

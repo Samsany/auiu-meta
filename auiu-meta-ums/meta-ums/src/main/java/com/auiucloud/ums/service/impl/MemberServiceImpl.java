@@ -118,6 +118,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         queryWrapper.ne(ObjectUtil.isNotNull(userId), Member::getId, userId);
         // todo 用户排序逻辑待完善
         queryWrapper.orderByDesc(Member::getCreateTime);
+        queryWrapper.orderByDesc(Member::getId);
         IPage<Member> page = this.page(PageUtils.getPage(search), queryWrapper);
         if (page.getRecords().size() > 0) {
             page.convert(it -> getUserInfoVO(userId, it));
@@ -542,6 +543,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
 
         queryWrapper.eq(ObjectUtil.isNotNull(search.getStatus()), Member::getStatus, search.getStatus());
         queryWrapper.orderByDesc(Member::getCreateTime);
+        queryWrapper.orderByDesc(Member::getId);
 
         return queryWrapper;
     }

@@ -19,10 +19,12 @@
         <result property="collectionId" column="collection_id" jdbcType="BIGINT"/>
         <result property="isPublished" column="is_published" jdbcType="TINYINT"/>
         <result property="isTop" column="is_top" jdbcType="TINYINT"/>
+        <result property="consumeIntegral" column="consume_integral" jdbcType="INTEGER"/>
         <result property="downloadIntegral" column="download_integral" jdbcType="INTEGER"/>
         <result property="downloadTimes" column="download_times" jdbcType="VARCHAR"/>
         <result property="views" column="views" jdbcType="VARCHAR"/>
         <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="approvalStatus" column="approval_status" jdbcType="INTEGER"/>
         <result property="type" column="type" jdbcType="TINYINT"/>
         <result property="publishedTime" column="published_time" jdbcType="TIMESTAMP"/>
@@ -54,6 +56,7 @@
                download_times,
                views,
                sort,
+               status,
                approval_status,
                type,
                published_time,
@@ -85,10 +88,12 @@
                cg.collection_id,
                cg.is_published,
                cg.is_top,
+               cg.consume_integral,
                cg.download_integral,
                cg.download_times,
                cg.views,
                cg.sort,
+               cg.status,
                cg.approval_status,
                cg.type,
                cg.published_time,
@@ -129,6 +134,7 @@
         where cg.is_deleted = 0
         and cg.is_published = 1
         and cg.approval_status = 1
+        and cg.status = 2
         order by rand() limit 9
     </select>
 
@@ -138,7 +144,7 @@
         inner join ums_user u2
         on u2.id = cg.user_id and u2.is_deleted = 0
         <where>
-            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1
+            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1 and cg.status = 2
             <if test="gallery.tagId != null and gallery.tagId != 0 ">
                 and cg.tag_id = #{gallery.tagId}
             </if>
@@ -148,7 +154,7 @@
     <select id="selectSquareGalleryVOPage" resultType="com.auiucloud.component.cms.vo.GalleryVO">
         <include refid="Base_GalleryVO_Column_List"/>
         <where>
-            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1
+            cg.is_deleted = 0 and cg.is_published = 1 and cg.approval_status = 1 and cg.status = 2
             <if test="gallery.tagId != null and gallery.tagId != 0 ">
                 and cg.tag_id = #{gallery.tagId}
             </if>
@@ -163,7 +169,7 @@
         inner join ums_user u2
         on u2.id = cg.user_id and u2.is_deleted = 0
         <where>
-            cg.is_deleted = 0
+            cg.is_deleted = 0 and cg.approval_status != 2 and cg.status = 2
             <if test="userId != null">
                 and cg.user_id = #{gallery.userId}
             </if>
@@ -182,7 +188,7 @@
     <select id="selectUserHomeGalleryVOPage" resultType="com.auiucloud.component.cms.vo.GalleryVO">
         <include refid="Base_GalleryVO_Column_List"/>
         <where>
-            cg.is_deleted = 0
+            cg.is_deleted = 0  and cg.approval_status != 2 and cg.status = 2
             <if test="userId != null">
                 and cg.user_id = #{gallery.userId}
             </if>

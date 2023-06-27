@@ -34,6 +34,8 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
         LambdaQueryWrapper<PicTag> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), PicTag::getName, search.getKeyword());
         queryWrapper.orderByDesc(PicTag::getSort);
+        queryWrapper.orderByDesc(PicTag::getCreateTime);
+        queryWrapper.orderByDesc(PicTag::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 
@@ -43,6 +45,8 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
         queryWrapper.eq(PicTag::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
         queryWrapper.eq(PicTag::getIsHomeDisplay, CommonConstant.STATUS_DISABLE_VALUE);
         queryWrapper.orderByDesc(PicTag::getSort);
+        queryWrapper.orderByDesc(PicTag::getCreateTime);
+        queryWrapper.orderByDesc(PicTag::getId);
         return this.list(queryWrapper);
     }
 
@@ -55,6 +59,7 @@ public class PicTagServiceImpl extends ServiceImpl<PicTagMapper, PicTag> impleme
         queryWrapper.eq(PicTag::getStatus, CommonConstant.STATUS_NORMAL_VALUE);
         queryWrapper.orderByDesc(PicTag::getSort);
         queryWrapper.orderByAsc(PicTag::getCreateTime);
+        queryWrapper.orderByDesc(PicTag::getId);
         List<PicTag> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
 
         if (type.equals(CommonConstant.STATUS_DISABLE_VALUE)) {

@@ -38,6 +38,7 @@ public class MetaApiProperties {
             "/favicon.ico",
             "/swagger-resources/**",
             "/*/rsa/publicKey",
+            "/open-api/**",
             "/ws",
             "/ws-sockjs"
     };

@@ -30,6 +30,8 @@ public class SwiperAdvServiceImpl extends ServiceImpl<SwiperAdvMapper, SwiperAdv
         LambdaQueryWrapper<SwiperAdv> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), SwiperAdv::getName, search.getKeyword());
         queryWrapper.orderByDesc(SwiperAdv::getSort);
+        queryWrapper.orderByDesc(SwiperAdv::getCreateTime);
+        queryWrapper.orderByDesc(SwiperAdv::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 
@@ -40,6 +42,7 @@ public class SwiperAdvServiceImpl extends ServiceImpl<SwiperAdvMapper, SwiperAdv
         queryWrapper.eq(SwiperAdv::getType, swiperAdv.getType());
         queryWrapper.orderByDesc(SwiperAdv::getSort);
         queryWrapper.orderByDesc(SwiperAdv::getCreateTime);
+        queryWrapper.orderByDesc(SwiperAdv::getId);
         return this.list(queryWrapper);
     }
 

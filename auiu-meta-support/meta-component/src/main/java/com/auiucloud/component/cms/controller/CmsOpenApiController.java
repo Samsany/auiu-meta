@@ -8,10 +8,11 @@ import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.SwiperAdv;
 import com.auiucloud.component.cms.service.*;
+import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.web.controller.BaseController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author dries
  **/
-@Tag(name = "内容管理开放API")
+@Tag(name = "内容开放API")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/open-api/cms")
@@ -33,7 +34,6 @@ public class CmsOpenApiController extends BaseController {
     private final ISwiperAdvService swiperAdvService;
     private final IGalleryCollectionService galleryCollectionService;
     private final IGalleryService galleryService;
-    private final IAiDrawService aiDrawService;
 
     //    private final StreamBridge streamBridge;
 
@@ -160,23 +160,6 @@ public class CmsOpenApiController extends BaseController {
     })
     public ApiResult<?> galleryCommonInfo(@PathVariable Long galleryId) {
         return ApiResult.data(galleryService.selectGalleryInfoById(galleryId));
-    }
-
-    @Log(value = "Ai绘画")
-    @Operation(summary = "Ai绘画类型")
-    @GetMapping(value = "/ai-draw/menu/list")
-    public ApiResult<?> aiDrawMenuList() {
-        return ApiResult.data(aiDrawService.aiDrawMenuList());
-    }
-
-    @Log(value = "Ai绘画")
-    @Operation(summary = "SD文生图配置")
-    @GetMapping(value = "/sd-api/text2img/config")
-    @Parameters({
-            @Parameter(name = "aiDrawMenuId", description = "Ai绘画类型ID", in = ParameterIn.QUERY),
-    })
-    public ApiResult<?> sdDrawConfig(@RequestParam Long aiDrawMenuId) {
-        return ApiResult.data(aiDrawService.sdText2ImgConfig(aiDrawMenuId));
     }
 
 }

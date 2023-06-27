@@ -20,6 +20,7 @@ import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -87,23 +88,36 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
         queryWrapper.orderByDesc(GalleryCollection::getIsTop);
         queryWrapper.orderByDesc(GalleryCollection::getSort);
         queryWrapper.orderByDesc(GalleryCollection::getCreateTime);
+        queryWrapper.orderByDesc(GalleryCollection::getId);
         return Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
     }
 
     @Override
     public PageUtils selectUserCollectionApiPage(Search search, GalleryCollection galleryCollection) {
+        Long userId = SecurityUtil.getUserId();
         LambdaQueryWrapper<GalleryCollection> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(GalleryCollection::getUserId, SecurityUtil.getUserId());
+        queryWrapper.eq(GalleryCollection::getUserId, userId);
         queryWrapper.orderByDesc(GalleryCollection::getIsTop);
         queryWrapper.orderByDesc(GalleryCollection::getSort);
         queryWrapper.orderByDesc(GalleryCollection::getCreateTime);
-        PageUtils.startPage(search);
-        List<GalleryCollection> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
-        PageUtils pageUtils = new PageUtils(list);
-        List<Long> tagIds = list.parallelStream().map(GalleryCollection::getTagId).filter(Objects::nonNull).toList();
-        List<GalleryCollectionVO> galleryCollectionVOS = list.stream().map(it -> getGalleryCollectionVO(it, tagIds)).toList();
-        pageUtils.setList(galleryCollectionVOS);
-        return pageUtils;
+        queryWrapper.orderByDesc(GalleryCollection::getId);
+        IPage<GalleryCollection> page = this.page(PageUtils.getPage(search), queryWrapper);
+        page.convert(it -> {
+            GalleryCollectionVO galleryCollectionVO = new GalleryCollectionVO();
+            BeanUtils.copyProperties(it, galleryCollectionVO);
+            // 获取Tag
+            if (ObjectUtil.isNotNull(it.getTagId())) {
+                PicTag tag = picTagService.getById(it.getTagId());
+                galleryCollectionVO.setTag(tag.getName());
+            }
+
+            // 设置封面信息
+            setGalleryCollectionCover(galleryCollectionVO);
+            // 设置作品数量
+            setGalleryTotal(userId, galleryCollectionVO);
+            return galleryCollectionVO;
+        });
+        return new PageUtils(page);
     }
 
     @Override
@@ -171,6 +185,8 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
                     .map(GalleryVO::getPic)
                     .toList();
             galleryCollectionVO.setCovers(covers);
+        } else {
+            galleryCollectionVO.setCovers(Collections.emptyList());
         }
     }
 

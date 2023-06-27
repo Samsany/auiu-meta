@@ -52,9 +52,9 @@ public class MybatisPlusMetaObjectHandler implements MetaObjectHandler {
 
         LocalDateTime now = LocalDateTime.now();
         fillValIfNullByName("createTime", now, metaObject, false);
-        fillValIfNullByName("updateTime", now, metaObject, false);
+        // fillValIfNullByName("updateTime", now, metaObject, false);
         fillValIfNullByName("createBy", getUserName(), metaObject, false);
-        fillValIfNullByName("updateBy", getUserName(), metaObject, false);
+        // fillValIfNullByName("updateBy", getUserName(), metaObject, false);
     }
 
     @Override

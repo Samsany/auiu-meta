@@ -32,6 +32,8 @@ public class UserTagGroupServiceImpl extends ServiceImpl<UserTagGroupMapper, Use
         LambdaQueryWrapper<UserTagGroup> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StrUtil.isNotBlank(userTagGroup.getName()), UserTagGroup::getName, userTagGroup.getName());
         queryWrapper.orderByDesc(UserTagGroup::getSort);
+        queryWrapper.orderByDesc(UserTagGroup::getCreateTime);
+        queryWrapper.orderByDesc(UserTagGroup::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 

@@ -34,6 +34,8 @@ public class UserTagServiceImpl extends ServiceImpl<UserTagMapper, UserTag>
         queryWrapper.eq(ObjectUtil.isNotNull(userTag.getGroupId()), UserTag::getGroupId, userTag.getGroupId());
         queryWrapper.like(StrUtil.isNotBlank(userTag.getName()), UserTag::getName, userTag.getName());
         queryWrapper.orderByDesc(UserTag::getSort);
+        queryWrapper.orderByDesc(UserTag::getCreateTime);
+        queryWrapper.orderByDesc(UserTag::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 

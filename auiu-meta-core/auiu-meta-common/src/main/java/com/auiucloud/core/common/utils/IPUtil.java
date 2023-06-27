@@ -1,5 +1,6 @@
 package com.auiucloud.core.common.utils;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.core.common.model.IpAddress;
@@ -111,26 +112,43 @@ public class IPUtil {
     }
 
     public static String getHttpServletRequestIpAddress(HttpServletRequest request) {
+
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeader("X-Real-IP");
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = Objects.requireNonNull(request.getRemoteHost());
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
         }
-        if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_FORWARDED_FOR");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_FORWARDED");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_VIA");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader("REMOTE_ADDR");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        if (StrUtil.isBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
             if (ip.contains(StringPool.COMMA)) {
                 ip = ip.split(StringPool.COMMA)[0];
             }
@@ -141,29 +159,46 @@ public class IPUtil {
     public static String getServerHttpRequestIpAddress(ServerHttpRequest request) {
         HttpHeaders headers = request.getHeaders();
         String ip = headers.getFirst("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = headers.getFirst("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = headers.getFirst("X-Real-IP");
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_X_FORWARDED");
         }
-        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_X_CLUSTER_CLIENT_IP");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_CLIENT_IP");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_FORWARDED_FOR");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_FORWARDED");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("HTTP_VIA");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = headers.getFirst("REMOTE_ADDR");
+        }
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
         }
-        if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) && !UNKNOWN.equalsIgnoreCase(ip)) {
             if (ip.contains(StringPool.COMMA)) {
                 ip = ip.split(StringPool.COMMA)[0];
             }
         }
+
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
     }
 

@@ -4,7 +4,7 @@ import com.auiucloud.admin.modules.system.domain.SysRole;
 import com.auiucloud.admin.modules.system.service.ISysRoleService;
 import com.auiucloud.admin.modules.system.vo.SysRoleVO;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;

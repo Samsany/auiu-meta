@@ -6,7 +6,7 @@ import com.auiucloud.admin.modules.system.vo.SysMenuTreeVO;
 import com.auiucloud.admin.modules.system.vo.SysMenuVO;
 import com.auiucloud.admin.utils.TreeUtil;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.tree.ForestNodeMerger;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;

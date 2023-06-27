@@ -24,6 +24,10 @@ public class UserFeedbackVO implements Serializable {
 
     private Long userId;
 
+    private String nickname;
+
+    private String avatar;
+
     /**
      * 联系方式
      */
@@ -41,7 +45,7 @@ public class UserFeedbackVO implements Serializable {
      */
     @NotBlank(message = "请填写反馈内容")
     @Xss(message = "反馈内容不能包含脚本字符")
-    @Size(max = 1024, message = "反馈内容长度在0~50个字符之间")
+    @Size(max = 1024, message = "反馈内容长度在0~1000个字符之间")
     private String content;
 
     /**
@@ -53,6 +57,6 @@ public class UserFeedbackVO implements Serializable {
     /**
      * 图片地址列表
      */
-    @Size(max = 1024, message = "图片链接长度在0~1024字符之间")
+    @Size(max = 1024, message = "图片链接长度在0~1000字符之间")
     private String picUrls;
 }

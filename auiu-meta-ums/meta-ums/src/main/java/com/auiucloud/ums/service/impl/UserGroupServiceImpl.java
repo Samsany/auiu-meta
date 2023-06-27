@@ -32,6 +32,8 @@ public class UserGroupServiceImpl extends ServiceImpl<UserGroupMapper, UserGroup
         LambdaQueryWrapper<UserGroup> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.like(StrUtil.isNotBlank(userGroup.getGroupName()), UserGroup::getGroupName, userGroup.getGroupName());
         queryWrapper.orderByDesc(UserGroup::getSort);
+        queryWrapper.orderByDesc(UserGroup::getCreateTime);
+        queryWrapper.orderByDesc(UserGroup::getId);
         return new PageUtils(this.page(PageUtils.getPage(search), queryWrapper));
     }
 

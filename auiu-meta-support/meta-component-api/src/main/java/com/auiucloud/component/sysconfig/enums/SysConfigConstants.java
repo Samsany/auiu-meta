@@ -79,6 +79,11 @@ public class SysConfigConstants {
      */
     public static final String POINT_REDEMPTION_RATIO = "point_redemption_ratio";
     /**
+     * 下载作品消耗默认积分
+     */
+    public static final String DEFAULT_DOWNLOAD_INTEGRAL = "default_download_integral";
+
+    /**
      * 返佣配置
      */
     public static final String IS_ENABLE_SELF_PURCHASED_REBATE = "is_enable_self_purchased_rebate"; // 启用自购返佣

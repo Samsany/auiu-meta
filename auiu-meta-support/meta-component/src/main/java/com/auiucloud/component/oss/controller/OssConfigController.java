@@ -1,6 +1,7 @@
 package com.auiucloud.component.oss.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.auiucloud.component.oss.service.IOSSConfigService;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.log.annotation.Log;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 @RequestMapping("/oss/config")
 public class OssConfigController {
 
-    private final ISysConfigService sysConfigService;
+    private final IOSSConfigService ossConfigService;
 
     /**
      * 查询OSS配置
@@ -33,7 +34,7 @@ public class OssConfigController {
     @GetMapping("/get-config-by-code")
     @Operation(summary = "查询OSS配置")
     public ApiResult<?> getConfigByCode(@RequestParam String configCode) {
-        return ApiResult.data(sysConfigService.getConfigByCode(configCode));
+        return ApiResult.data(ossConfigService.getConfigByCode(configCode));
     }
 
     /**
@@ -45,7 +46,7 @@ public class OssConfigController {
     @Operation(summary = "默认配置")
     @GetMapping("/default-oss")
     public ApiResult<?> defaultOss() {
-        OssProperties oss = sysConfigService.getOssProperties();
+        OssProperties oss = ossConfigService.getOssProperties();
         // 对oss部分字段进行隐藏显示，保护隐私
         oss.setSecretKey(StrUtil.hide(oss.getSecretKey(), 3, 23));
         return ApiResult.data(oss);
@@ -61,7 +62,7 @@ public class OssConfigController {
     @Operation(summary = "保存OSS配置")
     @PostMapping("/save-config-oss")
     public ApiResult<?> saveConfigOss(@Valid @RequestBody OssProperties ossProperties) {
-        return ApiResult.condition(sysConfigService.saveConfigOss(ossProperties));
+        return ApiResult.condition(ossConfigService.saveConfigOss(ossProperties));
     }
 
 }

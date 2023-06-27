@@ -55,7 +55,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         if (StringUtil.isNotBlank(sysLog.getUrl())) {
             queryWrapper.eq(SysLog::getUrl, sysLog.getUrl());
         }
-        // queryWrapper.orderByDesc(SysLog::getCreateTime);
+        queryWrapper.orderByDesc(SysLog::getCreateTime);
+        queryWrapper.orderByDesc(SysLog::getId);
         return queryWrapper;
     }
 }

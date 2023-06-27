@@ -37,6 +37,14 @@ public class RedisKeyConstant {
      * 用户默认配置
      */
     public static final String USER_CONFIG = ROOT_DIR + "system-config:user";
+    /**
+     * 机器翻译默认配置
+     */
+    public static final String TRANSLATION_DEFAULT_CONFIG = ROOT_DIR + "system-config:translation";
+    /**
+     * SD默认配置
+     */
+    public static final String SD_DEFAULT_CONFIG = ROOT_DIR + "system-config:stable-diffusion";
 
 
     /**
@@ -75,4 +83,11 @@ public class RedisKeyConstant {
      */
     public static final String REDIS_TOPIC_WS_PUSH_CHANNEL = "channel:websocket-push";
     public static final String REDIS_TOPIC_WS_PUSH_ALL_CHANNEL = "channel:websocket-push-all";
+
+    /**
+     * AI绘画缓存数据
+     */
+    public static String cacheSdDrawKey(String userId, String drawId) {
+        return ROOT_DIR + "sd-draw:" + userId + "-" + drawId;
+    }
 }

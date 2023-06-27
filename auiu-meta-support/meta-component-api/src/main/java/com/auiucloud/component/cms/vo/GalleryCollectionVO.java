@@ -1,9 +1,7 @@
 package com.auiucloud.component.cms.vo;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.auiucloud.core.validator.UpdateGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import com.auiucloud.core.validator.Xss;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -52,7 +50,7 @@ public class GalleryCollectionVO implements Serializable {
      */
     @Xss(message = "标题不能包含脚本字符")
     @NotBlank(message = "标题不能为空")
-    @Size(min = 2, max = 30, message = "标题长度在2~100个字符之间")
+    @Size(min = 2, max = 100, message = "标题长度在2~100个字符之间")
     private String title;
 
     /**

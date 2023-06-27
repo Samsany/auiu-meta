@@ -2,11 +2,13 @@ package com.auiucloud.component.cms.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.component.cms.domain.Gallery;
+import com.auiucloud.component.cms.dto.GalleryAppealDTO;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.vo.GalleryUploadBatchVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.exception.ApiException;
+import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +38,31 @@ public class GalleryController {
     public ApiResult<?> asyncGalleryWidth2Height() {
         galleryService.asyncGalleryWidth2Height();
         return ApiResult.success();
+    }
+
+    /**
+     * 分页查询作品列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/review/page")
+    @Operation(summary = "查询作品审核列表")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
+            @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
+            @Parameter(name = "status", description = "审核状态", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> galleryReviewPage(Search search, @Parameter(hidden = true) Gallery gallery) {
+        return ApiResult.data(galleryService.selectGalleryReviewPage(search, gallery));
+    }
+
+    /**
+     * 分页查询作品列表
+     */
+    @Log(value = "作品")
+    @GetMapping("/wait-review/count")
+    @Operation(summary = "查询作品待审核数")
+    public ApiResult<?> galleryWaitReviewCount() {
+        return ApiResult.data(galleryService.selectGalleryWaitReviewCount());
     }
 
     /**

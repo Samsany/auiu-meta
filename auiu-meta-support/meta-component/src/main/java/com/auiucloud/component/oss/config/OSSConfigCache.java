@@ -1,5 +1,6 @@
 package com.auiucloud.component.oss.config;
 
+import com.auiucloud.component.oss.service.IOSSConfigService;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +18,19 @@ import javax.annotation.PreDestroy;
 @RequiredArgsConstructor
 public class OSSConfigCache {
 
-    private final ISysConfigService sysConfigService;
+    private final IOSSConfigService ossConfigService;
 
     @PostConstruct
     public void init() {
-        sysConfigService.clearOss();
+        ossConfigService.clearOss();
         // 加载OSS配置文件
-        sysConfigService.getOssProperties();
+        ossConfigService.getOssProperties();
     }
 
     @PreDestroy
     public void destroy() {
         // 系统运行结束
-        sysConfigService.clearOss();
+        ossConfigService.clearOss();
     }
 
     @Scheduled(cron = "0 0 0/2 * * ?")

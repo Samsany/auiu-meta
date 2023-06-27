@@ -40,51 +40,6 @@ public interface ISysConfigService extends IService<SysConfig> {
      */
     PageUtils listPage(Search search, SysConfig config);
 
-    /**
-     * 获取默认主题
-     *
-     * @return OssProperties
-     */
-    OssProperties getOssProperties();
-
-    /**
-     * 根据code获取主题信息
-     *
-     * @param code code编码
-     * @return OssProperties
-     */
-    OssProperties getConfigByCode(String code);
-
-    /**
-     * 保存配置信息
-     *
-     * @param ossProperties OssProperties
-     * @return boolean
-     */
-    boolean saveConfigOss(OssProperties ossProperties);
-
-    /**
-     * 修改默认oss
-     *
-     * @param code 关键词
-     * @return boolean
-     */
-    boolean saveDefaultOss(String code);
-
-    /**
-     * 获取默认oss的code
-     *
-     * @return code
-     */
-    String defaultOss();
-
-    /**
-     * 清理Oss缓存
-     */
-    void clearOss();
-
-    OssProperties getDefaultOssProperties();
-
     PageUtils treePageList(Search search, SysConfig config);
 
     List<SysConfigTreeVO> selectConfigTreeList(SysConfig config);

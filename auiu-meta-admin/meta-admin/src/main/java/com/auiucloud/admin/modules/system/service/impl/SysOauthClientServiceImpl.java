@@ -62,6 +62,7 @@ public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper,
             queryWrapper.like(SysOauthClient::getClientName, oauthClient.getClientName());
         }
         queryWrapper.orderByDesc(SysOauthClient::getCreateTime);
+        queryWrapper.orderByDesc(SysOauthClient::getId);
         return queryWrapper;
     }
 

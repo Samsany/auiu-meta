@@ -1,10 +1,10 @@
 package com.auiucloud.component.message.consumer;
 
 import cn.hutool.json.JSONUtil;
-import com.auiucloud.component.cms.enums.SdDrawEnums;
-import com.auiucloud.component.cms.service.IAiDrawService;
-import com.auiucloud.component.cms.vo.SdDrawParamVO;
-import com.auiucloud.component.cms.vo.SdWaitQueueVO;
+import com.auiucloud.component.sd.enums.SdDrawEnums;
+import com.auiucloud.component.sd.service.IAiDrawService;
+import com.auiucloud.component.sd.dto.SdTxt2ImgConfigDTO;
+import com.auiucloud.component.sd.vo.SdWaitQueueVO;
 import com.auiucloud.component.websocket.utils.WebSocketUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
@@ -43,24 +43,13 @@ public class SdText2ImgConsumerService {
             // 开始生成图片
             WsMsgModel payload = message.getPayload();
 
-            log.info("[开始消费文生图消息队列数据...]");
+            log.debug("[开始消费文生图消息队列数据...]");
             Channel channel = message.getHeaders().get(AmqpHeaders.CHANNEL, Channel.class);
             Long deliveryTag = message.getHeaders().get(AmqpHeaders.DELIVERY_TAG, Long.class);
             if (channel != null && deliveryTag != null) {
                 try {
-                    log.info("监听者收到消息：{}", message.getPayload());
-                    // 发送给当前用户已经开始生成图片
-                    // WebSocketUtil.sendMessage(WsMsgModel.builder()
-                    //         .code(MessageEnums.WsMessageTypeEnum.SD_START_WORK.getValue())
-                    //         .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                    //         .to(payload.getFrom())
-                    //         .content("开始生成中...")
-                    //         .build());
-
-                    // 发送其它用户当前队列数量
-                    // AMQP.Queue.DeclareOk declareOk = channel.queueDeclarePassive(MessageConstant.SD_TXT2IMG_MESSAGE_QUEUE);
-                    // int messageCount = declareOk.getMessageCount();
-                    // log.info("排队中的消息数量：{}", messageCount);
+                    log.debug("监听者收到消息：{}", message.getPayload());
+                    // 通知其它用户当前队列数量
                     WebSocketUtil.sendMessageToOther(WsMsgModel.builder()
                             .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG_QUEUE.getValue())
                             .from(payload.getFrom())
@@ -72,20 +61,13 @@ public class SdText2ImgConsumerService {
                             .build());
 
                     // 开始生成图片
-                    SdDrawParamVO sdDrawParam = JSONUtil.toBean((String) payload.getContent(), SdDrawParamVO.class);
-                    sdDrawParam.setUserId(Long.valueOf(payload.getFrom()));
-                    ApiResult<?> apiResult = aiDrawService.sdText2Img(sdDrawParam);
-                    WebSocketUtil.sendMessage(WsMsgModel.builder()
-                            .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG.getValue())
-                            .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                            .to(payload.getFrom())
-                            .content(apiResult)
-                            .build());
+                    SdTxt2ImgConfigDTO sdDrawParam = JSONUtil.toBean(JSONUtil.toJsonStr(payload.getContent()), SdTxt2ImgConfigDTO.class);
+                    aiDrawService.sdText2Img(sdDrawParam);
                     // channel.basicReject(deliveryTag, true);
                 } catch (Exception e) {
                     log.error("[SD文生图异常，失败信息:{}]", e.getMessage());
                     WebSocketUtil.sendMessage(WsMsgModel.builder()
-                            .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG.getValue())
+                            .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
                             .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
                             .to(payload.getFrom())
                             .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.SERVICE_ERROR_C0122))
@@ -96,13 +78,13 @@ public class SdText2ImgConsumerService {
                         // channel.basicReject(deliveryTag, true); // 单个处理
                         channel.basicAck(deliveryTag, false);
                     } catch (IOException e) {
-                        log.error("[SD文生图消息处理异常，失败信息:{}]", e.getMessage());
-                        WebSocketUtil.sendMessage(WsMsgModel.builder()
-                                .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG.getValue())
-                                .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                                .to(payload.getFrom())
-                                .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.SERVICE_ERROR_C0122))
-                                .build());
+                        log.error("[SD文生图消息签收处理异常，异常信息:{}]", e.getMessage());
+                        // WebSocketUtil.sendMessage(WsMsgModel.builder()
+                        //         .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
+                        //         .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                        //         .to(payload.getFrom())
+                        //         .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.SERVICE_ERROR_C0122))
+                        //         .build());
                     }
                 }
             }

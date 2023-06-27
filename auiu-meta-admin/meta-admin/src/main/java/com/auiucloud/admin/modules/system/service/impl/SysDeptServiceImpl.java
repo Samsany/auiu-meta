@@ -53,6 +53,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
         }
         queryWrapper.orderByAsc(SysDept::getSort);
         queryWrapper.orderByDesc(SysDept::getCreateTime);
+        queryWrapper.orderByDesc(SysDept::getId);
         return queryWrapper;
     }
 

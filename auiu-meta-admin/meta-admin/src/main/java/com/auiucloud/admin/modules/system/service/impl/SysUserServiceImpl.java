@@ -15,6 +15,7 @@ import com.auiucloud.admin.modules.system.vo.SysDeptVO;
 import com.auiucloud.admin.modules.system.vo.SysRoleVO;
 import com.auiucloud.admin.modules.system.vo.SysUserVO;
 import com.auiucloud.admin.modules.system.vo.UserInfoVO;
+import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.MetaConstant;
 import com.auiucloud.core.common.constant.Oauth2Constant;
@@ -147,6 +148,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             queryWrapper.eq(SysUser::getStatus, search.getStatus());
         }
         queryWrapper.orderByDesc(SysUser::getCreateTime);
+        queryWrapper.orderByDesc(SysUser::getId);
 
         return queryWrapper;
     }
@@ -275,10 +277,40 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO) {
-        LambdaUpdateWrapper<SysUser> queryWrapper = new LambdaUpdateWrapper<>();
-        queryWrapper.set(SysUser::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
-        queryWrapper.eq(SysUser::getId, updatePasswordDTO.getId());
-        return this.update(queryWrapper);
+        if (updatePasswordDTO.getConfirmPassword().equals(updatePasswordDTO.getNewPassword())) {
+            LambdaUpdateWrapper<SysUser> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.set(SysUser::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
+            queryWrapper.eq(SysUser::getId, updatePasswordDTO.getId());
+            return this.update(queryWrapper);
+        } else {
+            throw new ApiException(ResultCode.USER_ERROR_A0120);
+        }
+    }
+
+    @Override
+    public boolean updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+        // 获取当前用户信息
+        Long userId = SecurityUtil.getUserId();
+        if (!userId.equals(updatePasswordDTO.getId())) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+        SysUser sysUser = this.getById(updatePasswordDTO.getId());
+        if (ObjectUtil.isNull(sysUser)) {
+            throw new ApiException(ResultCode.USER_ERROR_A0300);
+        }
+
+        if (!passwordEncoder.matches(updatePasswordDTO.getOldPassword(), sysUser.getPassword())) {
+            throw new ApiException(ResultCode.USER_ERROR_A0120);
+        }
+
+        if (updatePasswordDTO.getConfirmPassword().equals(updatePasswordDTO.getNewPassword())) {
+            LambdaUpdateWrapper<SysUser> queryWrapper = new LambdaUpdateWrapper<>();
+            queryWrapper.set(SysUser::getPassword, passwordEncoder.encode(updatePasswordDTO.getNewPassword()));
+            queryWrapper.eq(SysUser::getId, updatePasswordDTO.getId());
+            return this.update(queryWrapper);
+        } else {
+            throw new ApiException(ResultCode.USER_ERROR_A0120);
+        }
     }
 
     /**

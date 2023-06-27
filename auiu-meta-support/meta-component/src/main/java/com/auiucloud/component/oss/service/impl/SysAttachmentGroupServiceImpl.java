@@ -30,6 +30,8 @@ public class SysAttachmentGroupServiceImpl extends ServiceImpl<SysAttachmentGrou
         queryWrapper.like(StrUtil.isNotBlank(search.getKeyword()), SysAttachmentGroup::getName, search.getKeyword());
         queryWrapper.eq(SysAttachmentGroup::getType, attachmentGroup.getType());
         queryWrapper.orderByDesc(SysAttachmentGroup::getSort);
+        queryWrapper.orderByDesc(SysAttachmentGroup::getCreateTime);
+        queryWrapper.orderByDesc(SysAttachmentGroup::getId);
         attachmentGroupList.addAll(this.list(queryWrapper));
         return attachmentGroupList;
     }

@@ -2,20 +2,15 @@ package com.auiucloud.component.websocket.handle;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
-import com.auiucloud.component.cms.enums.SdDrawEnums;
-import com.auiucloud.component.cms.vo.SdWaitQueueVO;
+import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.component.websocket.utils.WebSocketUtil;
 import com.auiucloud.core.common.api.ResultCode;
-import com.auiucloud.core.common.constant.CommonConstant;
-import com.auiucloud.core.common.constant.MessageConstant;
 import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.enums.MessageEnums;
 import com.auiucloud.core.common.model.WsMsgModel;
-import com.auiucloud.core.rabbit.utils.RabbitMqUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
@@ -28,8 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SpringSocketHandle extends AbstractWebSocketHandler {
 
-    private final StreamBridge streamBridge;
-    private final RabbitMqUtils rabbitMqUtils;
+    private final IAiDrawService aiDrawService;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -44,45 +38,29 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
     /**
      * 文本消息
      *
-     * @param session
-     * @param message
-     * @throws Exception
+     * @param session 消息通道
+     * @param message 消息
+     * @throws Exception 异常信息
      */
     @Override
     protected void handleTextMessage(@NotNull WebSocketSession session, TextMessage message) throws Exception {
         // log.info("SpringSocketHandle, 连接：{}, 已收到消息。", session.getId());
         String msgStr = ((CharSequence) message.getPayload()).toString();
         try {
-            WsMsgModel wsMsgModel = JSONUtil.toBean(msgStr, WsMsgModel.class);
+            WsMsgModel payload = JSONUtil.toBean(msgStr, WsMsgModel.class);
             Map<String, Object> attributes = session.getAttributes();
-            String token = (String) attributes.get("token");
+            // String token = (String) attributes.get("token");
             Long userId = (Long) attributes.get("userId");
             // 覆盖传递的发送用户ID
-            wsMsgModel.setFrom(String.valueOf(userId));
-
-            // log.info("消息内容: {}", wsMsgModel.getContent());
-            String code = wsMsgModel.getCode();
+            payload.setFrom(String.valueOf(userId));
+            String code = payload.getCode();
             // 获取消息类型
             MessageEnums.WsMessageTypeEnum messageType = IBaseEnum.getEnumByValue(code, MessageEnums.WsMessageTypeEnum.class);
             if (ObjectUtil.isNotNull(messageType)) {
                 // 消息队列发送消息
                 switch (messageType) {
                     case SD_TXT2IMG -> {
-                        Integer queueMessageCount = rabbitMqUtils.getQueueMessageCount(MessageConstant.SD_TXT2IMG_MESSAGE_QUEUE);
-                        // System.out.println("当前排队数量"+queueMessageCount);
-                        session.sendMessage(new TextMessage(WebSocketUtil.buildSendMessageModel(
-                                WsMsgModel.builder()
-                                        .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG_QUEUE.getValue())
-                                        .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                                        .to(String.valueOf(userId))
-                                        .content(SdWaitQueueVO.builder()
-                                                .queueMessageCount(queueMessageCount)
-                                                .changeType(SdDrawEnums.QueueChangeType.INCREASE.getValue())
-                                                .build())
-                                        .build()
-                        )
-                        ));
-                        streamBridge.send(MessageConstant.SD_TXT2IMG_MESSAGE_OUTPUT, wsMsgModel);
+                        aiDrawService.sdTxt2ImgHandleMessage(session, payload);
                     }
                 }
             } else {
@@ -96,7 +74,7 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
             session.sendMessage(new TextMessage(
                     WebSocketUtil.buildSendMessageModel(WsMsgModel.builder()
                             .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
-                            .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.SERVICE_ERROR_C0121))
+                            .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.ERROR))
                             .build())));
         }
 

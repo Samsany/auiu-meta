@@ -112,6 +112,8 @@ public interface ISysUserService extends IService<SysUser> {
      */
     boolean setNewPassword(UpdatePasswordDTO updatePasswordDTO);
 
+    boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
+
     /**
      * 批量删除系统用户
      *
@@ -151,5 +153,4 @@ public interface ISysUserService extends IService<SysUser> {
      * @return boolean
      */
     boolean checkUserEmailExist(SysUser sysUser);
-
 }

@@ -3,7 +3,7 @@ package com.auiucloud.admin.modules.system.controller;
 import com.auiucloud.admin.modules.system.domain.SysDictType;
 import com.auiucloud.admin.modules.system.service.ISysDictTypeService;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;

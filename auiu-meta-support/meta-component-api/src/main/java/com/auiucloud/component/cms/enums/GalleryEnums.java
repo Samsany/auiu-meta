@@ -26,7 +26,35 @@ public class GalleryEnums {
 
         WALLPAPER(0, "壁纸"),
         SD_TXT2IMG(1, "SD文生图"),
-        AI_WALLPAPER(2, "AI创作"),
+        AI_WALLPAPER(2, "图生图"),
+        ;
+
+        private final Integer value;
+        private final String label;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum GalleryStatus implements IBaseEnum<Integer> {
+
+        FAIL(-1, "生成失败"),
+        AWAIT(0, "等待生成"),
+        IN_PROGRESS(1, "生成中"),
+        SUCCESS(2, "已完成"),
+        ;
+
+        private final Integer value;
+        private final String label;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum AiDrawStatus implements IBaseEnum<Integer> {
+
+        FAIL(-1, "上传失败"),
+        AWAIT(0, "待处理"),
+        SUCCESS(1, "已完成"),
+        VIOLATIONS(2, "图片违规"),
         ;
 
         private final Integer value;
@@ -49,6 +77,20 @@ public class GalleryEnums {
     @AllArgsConstructor
     public enum GalleryApprovalStatus implements IBaseEnum<Integer> {
 
+        AWAIT(0, "待审核"),
+        RESOLVE(1, "审核通过"),
+        REJECT(2, "已驳回(违规)"),
+        ;
+
+        private final Integer value;
+        private final String label;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public enum GalleryAppealStatus implements IBaseEnum<Integer> {
+
+        CANCEL(-1, "已取消"),
         AWAIT(0, "待审核"),
         RESOLVE(1, "审核通过"),
         REJECT(2, "已驳回"),

@@ -1,11 +1,13 @@
 package com.auiucloud.component.cms.service;
 
 import com.auiucloud.component.cms.domain.Gallery;
+import com.auiucloud.component.cms.dto.GalleryUpdateDTO;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
-import com.auiucloud.component.cms.vo.GalleryPublishVO;
-import com.auiucloud.component.cms.vo.GalleryUploadBatchVO;
-import com.auiucloud.component.cms.vo.GalleryVO;
-import com.auiucloud.component.cms.vo.SdDrawSaveVO;
+import com.auiucloud.component.cms.dto.SaveAiDrawGalleryDTO;
+import com.auiucloud.component.cms.dto.UpdateAiDrawPicDTO;
+import com.auiucloud.component.cms.vo.*;
+import com.auiucloud.component.sd.domain.AiDrawImgVO;
+import com.auiucloud.component.sd.vo.SdDrawSaveVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
@@ -32,6 +34,8 @@ public interface IGalleryService extends IService<Gallery> {
 
     PageUtils selectGalleryPage(Search search, Gallery gallery);
 
+    PageUtils selectGalleryReviewPage(Search search, Gallery gallery);
+
     PageUtils selectUserGalleryPage(Search search, Gallery gallery);
 
     PageUtils galleryNoCollectionPage(Search search, Gallery gallery);
@@ -49,7 +53,6 @@ public interface IGalleryService extends IService<Gallery> {
     GalleryVO selectGalleryInfoById(Long galleryId);
 
     ApiResult<?> upload(MultipartFile file, Long cateId);
-    ApiResult<?> saveSdDrawGallery(SdDrawSaveVO vo);
 
     boolean joinGalleryCollection(JoinGalleryCollectionDTO joinGalleryCollectionDTO);
 
@@ -83,6 +86,16 @@ public interface IGalleryService extends IService<Gallery> {
      */
     ApiResult<?> publishGallery(GalleryPublishVO gallery);
 
+    ApiResult<?> editGallery(GalleryUpdateDTO gallery);
+
+    /**
+     * 隐藏作品
+     *
+     * @param galleryId
+     * @return
+     */
+    ApiResult<?> hiddenGallery(Long galleryId);
+
     /**
      * 统计用户已发布作品数量
      *
@@ -105,4 +118,15 @@ public interface IGalleryService extends IService<Gallery> {
 
     void asyncGalleryWidth2Height();
 
+    ApiResult<?> galleryAppeal(GallerySubmitAppealVO vo);
+
+    boolean setGalleryApprovalStatus(UpdateStatusDTO data);
+
+    Long selectGalleryWaitReviewCount();
+
+    List<Long> saveAiDrawGallery(SaveAiDrawGalleryDTO data);
+
+    void updateAiDrawGalleryStatusByIds(List<String> ids, Integer status);
+
+    List<AiDrawImgVO> updateAiDrawResult(Long userId, List<AiDrawImgVO> aiDrawImgList);
 }

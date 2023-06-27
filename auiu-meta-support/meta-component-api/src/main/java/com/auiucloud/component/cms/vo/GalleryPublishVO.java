@@ -27,7 +27,7 @@ public class GalleryPublishVO implements Serializable {
     @NotBlank(message = "作品名称不能为空")
     @Xss(message = "作品名称不能包含脚本字符")
     @NotBlank(message = "作品名称不能为空")
-    @Size(min = 0, max = 100, message = "作品名称长度在2~30个字符之间")
+    @Size(min = 0, max = 100, message = "作品名称长度在2~100个字符之间")
     private String title;
 
     /**
@@ -40,4 +40,9 @@ public class GalleryPublishVO implements Serializable {
      * 标签ID
      */
     private Long tagId;
+
+    /**
+     * 标签ID
+     */
+    private Integer isTop;
 }

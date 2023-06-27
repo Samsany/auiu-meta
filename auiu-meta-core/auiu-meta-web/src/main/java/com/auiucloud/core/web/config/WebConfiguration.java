@@ -2,6 +2,7 @@ package com.auiucloud.core.web.config;
 
 import com.auiucloud.core.web.props.HttpClientProperties;
 import com.auiucloud.core.web.utils.RestTemplateUtil;
+import com.auiucloud.core.web.utils.SpringContextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -61,6 +62,11 @@ public class WebConfiguration implements WebMvcConfigurer {
     @Bean
     public RestTemplateUtil restTemplateUtil() {
         return new RestTemplateUtil();
+    }
+
+    @Bean
+    public SpringContextUtils springContextUtils() {
+        return new SpringContextUtils();
     }
 
 

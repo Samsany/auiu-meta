@@ -1,15 +1,15 @@
 package com.auiucloud.ums.controller;
 
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.common.controller.BaseController;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.validator.InsertGroup;
-import com.auiucloud.core.validator.UpdateGroup;
+import com.auiucloud.core.validator.group.InsertGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.service.IMemberService;

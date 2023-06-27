@@ -3,6 +3,7 @@ package com.auiucloud.component.websocket.config;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
+import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.component.websocket.handle.SpringSocketHandle;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.utils.SecurityUtil;
@@ -21,6 +22,7 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -33,21 +35,19 @@ import java.util.Map;
 @Configuration
 public class WebSocketAutoConfig implements WebSocketConfigurer {
 
-    private StreamBridge streamBridge;
-    private RabbitMqUtils rabbitMqUtils;
+    private IAiDrawService aiDrawService;
     @Autowired
-    public void setStreamBridge(StreamBridge streamBridge, RabbitMqUtils rabbitMqUtils) {
-        this.streamBridge = streamBridge;
-        this.rabbitMqUtils = rabbitMqUtils;
+    public void setStreamBridge(IAiDrawService aiDrawService) {
+        this.aiDrawService = aiDrawService;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new SpringSocketHandle(streamBridge, rabbitMqUtils), "/ws")
+        registry.addHandler(new SpringSocketHandle(aiDrawService), "/ws")
                 .setAllowedOrigins("*")
                 .addInterceptors(new MyHandshakeInterceptor());
 
-        registry.addHandler(new SpringSocketHandle(streamBridge, rabbitMqUtils), "/ws-sockjs")
+        registry.addHandler(new SpringSocketHandle(aiDrawService), "/ws-sockjs")
                 .setAllowedOriginPatterns("*")
                 .addInterceptors(new MyHandshakeInterceptor())
                 .withSockJS();

@@ -46,6 +46,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
         }
 
         queryWrapper.orderByDesc(SysDictType::getCreateTime);
+        queryWrapper.orderByDesc(SysDictType::getId);
         return queryWrapper;
     }
 

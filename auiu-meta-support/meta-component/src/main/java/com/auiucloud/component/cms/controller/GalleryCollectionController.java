@@ -1,14 +1,12 @@
 package com.auiucloud.component.cms.controller;
 
 import com.auiucloud.component.cms.domain.GalleryCollection;
-import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
-import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.validator.UpdateGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -21,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author dries
  **/
-@Tag(name = "作品合集管理")
+@Tag(name = "作品管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/gallery-collection")

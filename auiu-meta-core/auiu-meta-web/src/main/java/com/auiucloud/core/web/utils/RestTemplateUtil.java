@@ -18,7 +18,6 @@ import java.util.Map;
  * @author dries
  * @date 2021/12/22
  */
-@Component
 public class RestTemplateUtil {
 
     private static RestTemplateUtil restTemplateUtil;

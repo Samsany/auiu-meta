@@ -1,8 +1,8 @@
 package com.auiucloud.admin.modules.system.dto;
 
 import com.auiucloud.admin.modules.system.vo.SysDeptVO;
-import com.auiucloud.core.validator.InsertGroup;
-import com.auiucloud.core.validator.UpdateGroup;
+import com.auiucloud.core.validator.group.InsertGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import com.auiucloud.core.validator.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

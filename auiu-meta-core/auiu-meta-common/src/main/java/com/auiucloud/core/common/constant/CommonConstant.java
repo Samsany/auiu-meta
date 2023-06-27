@@ -17,6 +17,8 @@ public class CommonConstant {
     public static final int YES_VALUE = 1; // 是
     public static final int NO_VALUE = 0; // 否
 
+    public static final int SYSTEM_STATUS_VALUE = -1;
+
     public static final int STATUS_DISABLE_VALUE = 1; // 禁用状态
 
     public static final int STATUS_NORMAL_VALUE = 0; // 启用状态

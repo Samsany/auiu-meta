@@ -46,7 +46,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 
@@ -57,7 +58,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 
@@ -68,7 +70,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("to_days(create_time)=to_days(now())")
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 
@@ -79,7 +82,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("YEARWEEK(date_format(create_time,'%Y-%m-%d'))=YEARWEEK(now())")
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 
@@ -90,7 +94,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
                 .apply("and YEAR(create_time)=YEAR(now())")
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 
@@ -100,7 +105,8 @@ public class UserTaskRecordServiceImpl extends ServiceImpl<UserTaskRecordMapper,
         return Optional.ofNullable(this.list(new LambdaQueryWrapper<UserTaskRecord>()
                 .eq(UserTaskRecord::getUserId, userId)
                 .eq(UserTaskRecord::getTaskId, taskId)
-                .orderByDesc(UserTaskRecord::getCreateBy)
+                .orderByDesc(UserTaskRecord::getCreateTime)
+                .orderByDesc(UserTaskRecord::getId)
         )).orElse(Collections.emptyList());
     }
 

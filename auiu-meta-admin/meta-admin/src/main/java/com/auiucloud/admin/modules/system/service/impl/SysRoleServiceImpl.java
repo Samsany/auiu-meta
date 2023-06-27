@@ -57,6 +57,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         queryWrapper.orderByAsc(SysRole::getSort);
         queryWrapper.orderByDesc(SysRole::getCreateTime);
+        queryWrapper.orderByDesc(SysRole::getId);
         return queryWrapper;
     }
 

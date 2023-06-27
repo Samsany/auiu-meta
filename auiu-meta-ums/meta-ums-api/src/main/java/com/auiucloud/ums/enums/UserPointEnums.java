@@ -41,6 +41,7 @@ public class UserPointEnums {
 
         DOWNLOAD_GALLERY(0, "下载作品"),
         AI_TEXT2IMG(0, "文生图"),
+        AI_TEXT2IMG_FAIL(0, "文生图异常退还"),
         ;
 
         private Integer value;

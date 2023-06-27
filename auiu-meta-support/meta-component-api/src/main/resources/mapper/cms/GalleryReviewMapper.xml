@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auiucloud.component.cms.mapper.GalleryReviewMapper">
+
+    <resultMap id="BaseResultMap" type="com.auiucloud.component.cms.domain.GalleryReview">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="galleryId" column="gallery_id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="reason" column="reason" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="TINYINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="tenantId" column="tenant_id" jdbcType="BIGINT"/>
+        <result property="deleted" column="is_deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,gallery_id,user_id,
+        reason,status,create_time,
+        update_time,create_by,update_by,
+        remark,tenant_id,is_deleted
+    </sql>
+
+    <sql id="Base_Column_VO_List">
+        select cgr.id,
+               cgr.gallery_id,
+               cgr.user_id,
+               uu.nickname,
+               uu.avatar,
+               cgr.reason,
+               cgr.status,
+               cgr.create_time,
+               cgr.update_time,
+               cgr.create_by,
+               cgr.update_by,
+               cgr.remark,
+               cg.title,
+               cg.pic,
+               cg.thumb_url,
+               cg.ratio,
+               cg.width,
+               cg.height,
+               cg.size,
+               cg.sd_config,
+               cg.tag_id,
+               cpt.name as tag,
+               cg.collection_id,
+               cgc.title as collection,
+               cg.is_published,
+               # cg.is_top,
+               cg.consume_integral,
+               cg.download_integral,
+               # cg.download_times,
+               # cg.views,
+               # cg.sort,
+               cg.approval_status,
+               cg.type,
+               cg.published_time,
+               cg.join_collection_time,
+               cg.create_time as gallery_create_time,
+               cg.update_time as gallery_update_time,
+               cg.create_by as gallery_create_by,
+               cg.update_by as gallery_update_by,
+               cg.remark as gallery_remark
+        from cms_gallery_review cgr
+                 inner join cms_gallery cg on cgr.gallery_id = cg.id
+                 inner join ums_user uu on uu.id = cg.user_id and uu.is_deleted = 0
+                 left join cms_gallery_collection cgc on cgc.id = cg.collection_id and cgc.is_deleted = 0
+                 left join cms_pic_tag cpt on cpt.id = cg.tag_id and cpt.is_deleted = 0
+    </sql>
+
+    <select id="countGalleryReviewVOTotal" resultType="java.lang.Long">
+        select count(*) from cms_gallery_review cgr
+        inner join cms_gallery cg on cgr.gallery_id = cg.id
+        <where>
+            cgr.is_deleted = 0 and cg.is_deleted = 0
+            <if test="params.status != null and params.status != -1">
+                and cgr.status = #{params.status}
+            </if>
+            <if test="params.userId != null ">
+                and cgr.status = #{params.userId}
+            </if>
+            <if test="params.galleryId != null">
+                and cgr.galleryId = #{params.galleryId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectGalleryReviewVOPage" resultType="com.auiucloud.component.cms.vo.GalleryReviewVO">
+        <include refid="Base_Column_VO_List" />
+        <where>
+            cgr.is_deleted = 0 and cg.is_deleted = 0
+            <if test="params.status != null and params.status != -1">
+                and cgr.status = #{params.status}
+            </if>
+            <if test="params.userId != null ">
+                and cgr.status = #{params.userId}
+            </if>
+            <if test="params.galleryId != null">
+                and cgr.galleryId = #{params.galleryId}
+            </if>
+        </where>
+        limit #{search.pageNum}, #{search.pageSize};
+    </select>
+
+    <select id="selectGalleryReviewVOById" resultType="com.auiucloud.component.cms.vo.GalleryReviewVO">
+        <include refid="Base_Column_VO_List" />
+        <where>
+            cgr.is_deleted = 0 and cg.is_deleted = 0 and cgr.id = #{id}
+        </where>
+    </select>
+
+</mapper>

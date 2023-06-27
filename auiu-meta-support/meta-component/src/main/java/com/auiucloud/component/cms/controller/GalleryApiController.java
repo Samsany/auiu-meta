@@ -3,21 +3,23 @@ package com.auiucloud.component.cms.controller;
 import cn.hutool.core.collection.CollUtil;
 import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
+import com.auiucloud.component.cms.dto.GalleryUpdateDTO;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.service.IGalleryCollectionService;
 import com.auiucloud.component.cms.service.IGalleryService;
+import com.auiucloud.component.cms.vo.GallerySubmitAppealVO;
 import com.auiucloud.component.cms.vo.GalleryCollectionVO;
 import com.auiucloud.component.cms.vo.GalleryPublishVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.SecurityUtil;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.validator.InsertGroup;
-import com.auiucloud.core.validator.UpdateGroup;
-import com.auiucloud.core.web.controller.BaseController;
+import com.auiucloud.core.validator.group.InsertGroup;
+import com.auiucloud.core.validator.group.UpdateGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -200,6 +202,29 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
+     * 编辑作品
+     */
+    @Log(value = "作品")
+    @PutMapping("/edit")
+    @Operation(summary = "编辑作品")
+    @Parameters({
+            @Parameter(name = "appId", description = "appId", in = ParameterIn.HEADER),
+    })
+    public ApiResult<?> editGallery(@Validated @RequestBody GalleryUpdateDTO gallery) {
+        return galleryService.editGallery(gallery);
+    }
+
+    /**
+     * 下架作品
+     */
+    @Log(value = "作品")
+    @PutMapping("/hidden/{galleryId}")
+    @Operation(summary = "下架作品")
+    public ApiResult<?> hiddenGallery(@PathVariable Long galleryId) {
+        return galleryService.hiddenGallery(galleryId);
+    }
+
+    /**
      * 设置作品置顶
      */
     @Log(value = "作品")
@@ -311,6 +336,14 @@ public class GalleryApiController extends BaseController {
     })
     public ApiResult<?> downLoadUserGallery(@RequestParam Long id) {
         return galleryService.downLoadUserGallery(id);
+    }
+
+
+    @Log(value = "用户")
+    @PostMapping("/appeal")
+    @Operation(summary = "作品申诉")
+    public ApiResult<?> galleryAppeal(@RequestBody GallerySubmitAppealVO vo) {
+        return galleryService.galleryAppeal(vo);
     }
 
 }

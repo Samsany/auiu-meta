@@ -7,6 +7,8 @@ import com.auiucloud.core.common.constant.CommonConstant;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author dries
@@ -482,5 +484,21 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     @SuppressWarnings("unchecked")
     public static <T> T cast(Object obj) {
         return (T) obj;
+    }
+
+    /**
+     * 判断字符串中是否包含中文
+     *
+     * @param str 待校验字符串
+     * @return 是否为中文
+     */
+    public static boolean isContainChinese(String str) {
+        if (isNotEmpty(str)) {
+            Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+            Matcher m = p.matcher(str);
+            return m.find();
+        }
+
+        return false;
     }
 }

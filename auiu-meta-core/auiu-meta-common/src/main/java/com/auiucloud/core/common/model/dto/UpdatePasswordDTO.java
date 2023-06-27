@@ -36,6 +36,10 @@ public class UpdatePasswordDTO implements Serializable {
     @NotBlank(message = "新密码不能为空", groups = {UpdatePasswordGroup.class, SetPasswordGroup.class})
     private String newPassword;
 
+    @Size(min = 6, max = 18, message = "密码长度不符合规范", groups = {UpdatePasswordGroup.class, SetPasswordGroup.class})
+    @NotBlank(message = "确认密码不能为空", groups = {UpdatePasswordGroup.class, SetPasswordGroup.class})
+    private String confirmPassword;
+
     public interface UpdatePasswordGroup {
     }
 

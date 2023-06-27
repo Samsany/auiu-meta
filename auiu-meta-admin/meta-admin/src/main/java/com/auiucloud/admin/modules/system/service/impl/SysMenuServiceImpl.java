@@ -52,7 +52,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (ObjectUtil.isNotNull(search.getStatus())) {
             queryWrapper.eq(SysMenu::getStatus, search.getStatus());
         }
-        queryWrapper.orderByAsc(SysMenu::getSort).orderByDesc(SysMenu::getCreateTime);
+        queryWrapper.orderByAsc(SysMenu::getSort)
+                .orderByDesc(SysMenu::getCreateTime)
+                .orderByDesc(SysMenu::getId);
         return queryWrapper;
     }
 

@@ -1,6 +1,6 @@
 package com.auiucloud.ums.dto;
 
-import com.auiucloud.core.validator.InsertGroup;
+import com.auiucloud.core.validator.group.InsertGroup;
 import com.auiucloud.core.validator.Xss;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

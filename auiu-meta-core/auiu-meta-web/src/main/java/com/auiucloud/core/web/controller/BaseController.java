@@ -1,6 +1,6 @@
 package com.auiucloud.core.web.controller;
 
-import com.auiucloud.core.common.utils.DateUtil;
+import cn.hutool.core.date.DateUtil;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
@@ -8,8 +8,11 @@ import java.beans.PropertyEditorSupport;
 import java.util.Date;
 
 /**
+ * web层通用数据处理
+ *
  * @author dries
- **/
+ * @createDate 2022-08-16 12-45
+ */
 public class BaseController {
 
     /**
@@ -21,9 +24,10 @@ public class BaseController {
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
             @Override
             public void setAsText(String text) {
-                setValue(DateUtil.parseLocalDateTime(text, DateUtil.DATETIME_FORMATTER));
+                setValue(DateUtil.parseDate(text));
             }
         });
     }
+
 
 }

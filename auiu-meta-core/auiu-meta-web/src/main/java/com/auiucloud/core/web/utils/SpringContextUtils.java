@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.env.Environment;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
