@@ -10,6 +10,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author dries
@@ -102,7 +104,26 @@ public class UserInfoVO implements Serializable {
     @Builder.Default
     private Long galleryNum = 0L;
 
+    // 预览作品信息
+    @Builder.Default
+    private List<GalleryInfo> galleryList = Collections.emptyList();
+
     private String remark;
 
     private LocalDateTime createTime;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class GalleryInfo implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 4835931390015403680L;
+
+        private Long id;
+
+        private String thumbnail;
+
+    }
 }

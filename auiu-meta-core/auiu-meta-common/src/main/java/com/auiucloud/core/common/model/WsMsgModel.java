@@ -29,6 +29,16 @@ public class WsMsgModel implements Serializable {
     private String code;
 
     /**
+     * 发送类型:
+     *
+     * 0-发送给所有人
+     * 1-指定用户发送
+     * 2-指定部分用户发送
+     * 3-排除部分用户发送
+     */
+    private Integer sendType;
+
+    /**
      * 来自（保证唯一）
      */
     private String from;

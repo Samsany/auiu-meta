@@ -18,6 +18,12 @@ public class SdTxt2ImgDTO implements Serializable {
     private static final long serialVersionUID = 1993365554529220271L;
 
     /**
+     * 任务标识
+     */
+    @NotBlank(message = "任务标识获取异常")
+    private String taskId;
+
+    /**
      * 客户端ID
      * 平台
      */

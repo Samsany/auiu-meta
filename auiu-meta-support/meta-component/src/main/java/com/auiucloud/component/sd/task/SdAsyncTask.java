@@ -2,7 +2,7 @@ package com.auiucloud.component.sd.task;
 
 import com.auiucloud.component.sd.component.AiDrawFactory;
 import com.auiucloud.component.sd.config.AiDrawConfiguration;
-import com.auiucloud.component.sd.domain.AiDrawResult;
+import com.auiucloud.component.sd.domain.SdDrawResult;
 import com.auiucloud.component.sd.domain.SdTxt2ImgParams;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.MetaConstant;
@@ -32,7 +32,7 @@ public class SdAsyncTask {
      * @return
      */
     @Async("taskExecutor")
-    public CompletableFuture<ApiResult<AiDrawResult>> doSdText2ImgTask(SdTxt2ImgParams txt2ImgParams) {
+    public CompletableFuture<ApiResult<SdDrawResult>> doSdText2ImgTask(SdTxt2ImgParams txt2ImgParams) {
         AiDrawFactory aiDrawFactory = AiDrawConfiguration.getAiDrawFactory(MetaConstant.SD_DRAW_DEFAULT_ID);
         return CompletableFuture.completedFuture(aiDrawFactory.sdText2Img(txt2ImgParams));
     }

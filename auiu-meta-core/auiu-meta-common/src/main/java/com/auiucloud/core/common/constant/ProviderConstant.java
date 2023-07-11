@@ -80,6 +80,10 @@ public class ProviderConstant {
 
     // ---------------------------------------------------- META-COMPONENT -------------------------------------------------------------
     /**
+     * 根据用户ID查询作品数量 & 部分作品信息
+     */
+    public final String PROVIDER_USER_STATISTICAL_GALLERY = PROVIDER + "/user/gallery/statistical-by-id";
+    /**
      * 根据用户ID查询作品数量
      */
     public final String PROVIDER_USER_GALLERY_NUM = PROVIDER + "/user/gallery/count";

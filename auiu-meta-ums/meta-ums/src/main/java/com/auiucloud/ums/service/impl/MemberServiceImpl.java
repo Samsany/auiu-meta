@@ -5,9 +5,11 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
+import com.auiucloud.component.cms.vo.UserStatisticalGalleryVO;
 import com.auiucloud.component.feign.IUserGalleryProvider;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.ApiException;
@@ -110,21 +112,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
 
     @Override
     public PageUtils selectOpenApiUserPage(Search search) {
-
         // 获取用户
         Long userId = SecurityUtil.getUserIdOrDefault();
-        LambdaQueryWrapper<Member> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(StrUtil.isNotBlank(search.getKeyword()), Member::getInvitationCode, search.getKeyword());
-        queryWrapper.ne(ObjectUtil.isNotNull(userId), Member::getId, userId);
-        // todo 用户排序逻辑待完善
-        queryWrapper.orderByDesc(Member::getCreateTime);
-        queryWrapper.orderByDesc(Member::getId);
-        IPage<Member> page = this.page(PageUtils.getPage(search), queryWrapper);
-        if (page.getRecords().size() > 0) {
-            page.convert(it -> getUserInfoVO(userId, it));
-        }
-
-        return new PageUtils(page);
+        Long total = baseMapper.selectOpenApiUserTotal(search, userId);
+        Search newSearch = PageUtils.buildPage(search, Math.toIntExact(total));
+        List<UserInfoVO> userList = Optional.ofNullable(baseMapper.selectOpenApiUserPage(newSearch, userId))
+                .orElse(Collections.emptyList());
+        // 构建用户附加信息
+        userList.parallelStream().forEach(it -> buildUserAdditionalInfo(userId, it));
+        return new PageUtils(total, search, userList);
     }
 
     @Override
@@ -288,10 +284,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         // todo 设置默认背景
         // 获取用户注册信息
         IpAddress ipAddress = IPUtil.getIpAddress();
-        String pro = StrUtil.isBlank(ipAddress.getPro()) ? "" : ipAddress.getPro();
-        String city = StrUtil.isBlank(ipAddress.getCity()) ? "" : ipAddress.getCity();
         member.setRegisterIp(ipAddress.getIp());
-        member.setRegisterAddress(pro + city + ipAddress.getRegion());
+        member.setRegisterAddress(ipAddress.getAddr());
         boolean result = this.save(member);
         if (result) {
             return memberInfoDTO.withId(member.getId());
@@ -355,6 +349,52 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
     @Override
     public boolean increaseUserPoint(Long userId, Integer integration) {
         return baseMapper.increaseUserPoint(userId, integration) > 0;
+    }
+
+    @Transactional
+    @Override
+    public boolean setUserIntegral(AdjustUserPointDTO adjustUserPoint) {
+        Long userId = adjustUserPoint.getUserId();
+        Integer integral = adjustUserPoint.getPoint();
+        if (integral == CommonConstant.STATUS_NORMAL_VALUE) {
+            return true;
+        }
+        Member member = this.getById(adjustUserPoint.getUserId());
+        Integer oldIntegral = member.getIntegral();
+
+        // 计算积分
+        int newIntegral = 0;
+        UserPointEnums.ChangeTypeEnum enumByValue = IBaseEnum.getEnumByValue(adjustUserPoint.getStatus(), UserPointEnums.ChangeTypeEnum.class);
+        String title = "";
+        switch (enumByValue) {
+            case DECREASE -> {
+                newIntegral = oldIntegral - integral;
+                title = "系统扣除积分";
+            }
+            case INCREASE -> {
+                newIntegral = oldIntegral + integral;
+                title = "系统赠送积分";
+            }
+        }
+
+        boolean result = this.saveMemberIntegral(userId, newIntegral);
+        if (result) {
+            // 保存用户积分变动记录
+            UserIntegralRecord build = UserIntegralRecord.builder()
+                    .userId(userId)
+                    .title(title)
+                    .integral(integral)
+                    .balance(newIntegral)
+                    .type(adjustUserPoint.getStatus())
+                    .status(CommonConstant.STATUS_NORMAL_VALUE)
+                    .frozenTime(0)
+                    .thawTime(LocalDateTime.now())
+                    .remark(adjustUserPoint.getRemark())
+                    .build();
+            userIntegralRecordService.save(build);
+        }
+
+        return result;
     }
 
     @Override
@@ -592,13 +632,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
 
             try {
                 // 设置获赞数
-                ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(userId);
+                ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(member.getId());
                 if (countUserLikeResult != null && countUserLikeResult.successful()) {
                     userInfoVO.setReceivedLikeNum(countUserLikeResult.getData());
                 }
 
                 // 设置作品数
-                ApiResult<Long> galleryApiResult = userGalleryProvider.countPublishUserGallery(userId);
+                ApiResult<Long> galleryApiResult = userGalleryProvider.countPublishUserGallery(member.getId());
                 if (galleryApiResult != null && galleryApiResult.successful()) {
                     userInfoVO.setGalleryNum(galleryApiResult.getData());
                 }
@@ -607,6 +647,86 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
         }
 
         return userInfoVO;
+    }
+
+    private void buildUserAdditionalInfo(Long userId, UserInfoVO userInfo) {
+        // 判断是否为付费会员
+        setUseIsPaidMember(userInfo);
+
+        // 设置粉丝数
+        setUserFollowerNum(userInfo);
+
+        // 设置关注数 && 设置是否关注该创作者
+        setUserAttentionInfo(userId, userInfo);
+
+        // 设置获赞数
+        setUserReceivedLikeNum(userInfo);
+
+        // 设置作品数
+        setUserGalleryInfo(userInfo);
+    }
+
+    // 设置作品数
+    private void setUserGalleryInfo(UserInfoVO userInfo) {
+        try {
+            UserStatisticalGalleryVO userStatisticalGallery = userGalleryProvider.getUserStatisticalGalleryVOById(userInfo.getId()).getData();
+            userInfo.setGalleryNum(userStatisticalGallery.getGalleryNum());
+            List<UserStatisticalGalleryVO.GalleryInfo> galleryList = userStatisticalGallery.getGalleryList();
+            userInfo.setGalleryList(
+                    galleryList
+                            .parallelStream()
+                            .map(it -> UserInfoVO.GalleryInfo.builder()
+                                    .id(it.getId())
+                                    .thumbnail(it.getThumbnail())
+                                    .build())
+                            .toList()
+            );
+        } catch (Exception e) {
+            log.error("获取用户作品信息异常: {}", e.getMessage());
+        }
+    }
+
+    // 设置获赞数
+    private void setUserReceivedLikeNum(UserInfoVO userInfo) {
+        try {
+            ApiResult<Long> countUserLikeResult = userGalleryProvider.countUserReceivedLikeNum(userInfo.getId());
+            if (countUserLikeResult != null && countUserLikeResult.successful()) {
+                userInfo.setReceivedLikeNum(countUserLikeResult.getData());
+            }
+        } catch (Exception e) {
+            log.error("获取用户获赞数异常: {}", e.getMessage());
+        }
+    }
+
+    // 判断是否为付费会员
+    private void setUseIsPaidMember(UserInfoVO userInfo) {
+        UserLevelRecord userLevelRecord = userLevelService.selectUserLevelRecordByUId(userInfo.getId());
+        userInfo.setIsPaidMember(Boolean.FALSE);
+        if (userLevelRecord != null) {
+            if (userLevelRecord.getExpiredTime().isAfter(LocalDateTime.now())) {
+                userInfo.setIsPaidMember(Boolean.TRUE);
+            }
+            userInfo.setMemberExpiredTime(userLevelRecord.getExpiredTime());
+        }
+    }
+
+    // 设置粉丝数
+    private void setUserFollowerNum(UserInfoVO userInfo) {
+        long countUserFollower = userFollowerService.countUserFollower(userInfo.getId());
+        userInfo.setFollowerNum(countUserFollower);
+    }
+
+    // 设置关注数 && 设置是否关注该创作者
+    private void setUserAttentionInfo(Long userId, UserInfoVO userInfo) {
+        // 设置关注数
+        long countUserAttention = userFollowerService.countUserAttention(userInfo.getId());
+        userInfo.setAttentionNum(countUserAttention);
+
+        // 设置是否关注该创作者
+        if (ObjectUtil.isNotNull(userId) && !Objects.equals(userInfo.getId(), userId)) {
+            boolean isAttention = userFollowerService.checkedAttentionUser(userId, userInfo.getId());
+            userInfo.setIsAttention(isAttention);
+        }
     }
 }
 

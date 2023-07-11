@@ -20,6 +20,16 @@ public class SdWaitQueueVO implements Serializable {
     private static final long serialVersionUID = 6777529653803082133L;
 
     /**
+     * 任务标识
+     */
+    private String taskId;
+
+    /**
+     * 等待绘画作品ID
+     */
+    private String drawIds;
+
+    /**
      * 队列等待数量
      */
     private Integer queueMessageCount;

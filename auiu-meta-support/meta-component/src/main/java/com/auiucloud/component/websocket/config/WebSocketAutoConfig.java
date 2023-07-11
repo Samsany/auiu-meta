@@ -37,17 +37,22 @@ public class WebSocketAutoConfig implements WebSocketConfigurer {
 
     private IAiDrawService aiDrawService;
     @Autowired
-    public void setStreamBridge(IAiDrawService aiDrawService) {
+    public void setAiDrawService(IAiDrawService aiDrawService) {
         this.aiDrawService = aiDrawService;
+    }
+    private StreamBridge streamBridge;
+    @Autowired
+    public void setStreamBridge(StreamBridge streamBridge) {
+        this.streamBridge = streamBridge;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(new SpringSocketHandle(aiDrawService), "/ws")
+        registry.addHandler(new SpringSocketHandle(aiDrawService,streamBridge), "/ws")
                 .setAllowedOrigins("*")
                 .addInterceptors(new MyHandshakeInterceptor());
 
-        registry.addHandler(new SpringSocketHandle(aiDrawService), "/ws-sockjs")
+        registry.addHandler(new SpringSocketHandle(aiDrawService,streamBridge), "/ws-sockjs")
                 .setAllowedOriginPatterns("*")
                 .addInterceptors(new MyHandshakeInterceptor())
                 .withSockJS();
@@ -61,25 +66,26 @@ public class WebSocketAutoConfig implements WebSocketConfigurer {
         public boolean beforeHandshake(@NotNull ServerHttpRequest request, @NotNull ServerHttpResponse response,
                                        @NotNull WebSocketHandler handler, @NotNull Map<String, Object> attributes) throws Exception {
             HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
-            String token = servletRequest.getHeader(Oauth2Constant.JWT_TOKEN_HEADER);
-            if (StrUtil.isNotBlank(token)) {
+            String token = servletRequest.getParameter(Oauth2Constant.META_USER_TOKEN);
+            if (StrUtil.isBlank(token)) {
+                token = servletRequest.getHeader(Oauth2Constant.JWT_TOKEN_HEADER);
                 if (StrUtil.isNotBlank(token)) {
                     token = token.replace(Oauth2Constant.JWT_TOKEN_PREFIX, "");
                 } else {
                     return false;
                 }
-            } else {
-                token = servletRequest.getParameter(Oauth2Constant.META_USER_TOKEN);
             }
 
             try {
                 JSONObject jwtPayload = SecurityUtil.getJwtPayload(token);
                 Long userId = jwtPayload.getLong(Oauth2Constant.META_USER_ID);
+                String loginType = jwtPayload.getStr(Oauth2Constant.META_LOGIN_TYPE);
                 if (ObjectUtil.isNull(userId)) {
                     return false;
                 } else {
                     attributes.put(Oauth2Constant.META_USER_ID, userId);
                     attributes.put(Oauth2Constant.META_USER_TOKEN, token);
+                    attributes.put(Oauth2Constant.META_LOGIN_TYPE, loginType);
                     return true;
                 }
             } catch (Exception e) {

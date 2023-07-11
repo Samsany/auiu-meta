@@ -93,8 +93,8 @@ public class LogAspect {
         String url = request.getRequestURI();
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
-        // IpAddress ipAddress = IPUtil.getIpAddress(ip);
-        // String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
+        IpAddress ipAddress = IPUtil.getIpAddress(ip);
+        String addr = ipAddress.getAddr();
 
         // 参数
         Object[] args = point.getArgs();
@@ -123,7 +123,7 @@ public class LogAspect {
                 .method(method)
                 .url(url)
                 .operation(String.valueOf(result))
-                // .location(region)
+                .location(addr)
                 .traceId(request.getHeader(MetaConstant.LOG_TRACE_ID))
                 .executeTime(tookTime)
                 .title(annotation.value())
@@ -197,7 +197,7 @@ public class LogAspect {
         // 获取IP和地区
         String ip = IPUtil.getHttpServletRequestIpAddress();
         IpAddress ipAddress = IPUtil.getIpAddress(ip);
-        // String region = StrUtil.isBlank(ipAddress.getRegion()) ? "本地" : ipAddress.getRegion();
+        String addr = ipAddress.getAddr();
 
 
         //　获取request
@@ -216,7 +216,7 @@ public class LogAspect {
                 .ip(ip)
                 .method(method)
                 .url(url)
-                // .location(region)
+                .location(addr)
                 .traceId(TraceUtil.getTraceId(request))
                 .executeTime(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime))
                 .title(logAnn.value())

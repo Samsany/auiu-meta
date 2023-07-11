@@ -4,13 +4,20 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.component.websocket.utils.WebSocketUtil;
+import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
+import com.auiucloud.core.common.constant.CommonConstant;
+import com.auiucloud.core.common.constant.MessageConstant;
+import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.common.enums.IBaseEnum;
-import com.auiucloud.core.common.enums.MessageEnums;
+import com.auiucloud.core.common.enums.WsMessageEnums;
+import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.WsMsgModel;
+import com.auiucloud.core.common.utils.StringPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
@@ -24,15 +31,17 @@ import java.util.Map;
 public class SpringSocketHandle extends AbstractWebSocketHandler {
 
     private final IAiDrawService aiDrawService;
+    private final StreamBridge streamBridge;
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         Map<String, Object> attributes = session.getAttributes();
-        String token = (String) attributes.get("token");
-        Long userId = (Long) attributes.get("userId");
+        String loginType = (String) attributes.get(Oauth2Constant.META_LOGIN_TYPE);
+        String token = (String) attributes.get(Oauth2Constant.META_USER_TOKEN);
+        Long userId = (Long) attributes.get(Oauth2Constant.META_USER_ID);
 
         log.info("SpringSocketHandle, 收到新的连接: {}, 用户：{}", session.getId(), userId);
-        WebSocketUtil.putUser(token, String.valueOf(userId), session);
+        WebSocketUtil.putUser(loginType + StringPool.AT + token, String.valueOf(userId), session);
     }
 
     /**
@@ -45,37 +54,59 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
     @Override
     protected void handleTextMessage(@NotNull WebSocketSession session, TextMessage message) throws Exception {
         // log.info("SpringSocketHandle, 连接：{}, 已收到消息。", session.getId());
-        String msgStr = ((CharSequence) message.getPayload()).toString();
+        Map<String, Object> attributes = session.getAttributes();
+        Long userId = (Long) attributes.get("userId");
+        // String token = (String) attributes.get("token");
+        log.debug("文本消息：{}", message.getPayload());
         try {
-            WsMsgModel payload = JSONUtil.toBean(msgStr, WsMsgModel.class);
-            Map<String, Object> attributes = session.getAttributes();
-            // String token = (String) attributes.get("token");
-            Long userId = (Long) attributes.get("userId");
-            // 覆盖传递的发送用户ID
+            WsMsgModel payload = JSONUtil.toBean(message.getPayload(), WsMsgModel.class);
             payload.setFrom(String.valueOf(userId));
             String code = payload.getCode();
             // 获取消息类型
-            MessageEnums.WsMessageTypeEnum messageType = IBaseEnum.getEnumByValue(code, MessageEnums.WsMessageTypeEnum.class);
+            WsMessageEnums.TypeEnum messageType = IBaseEnum.getEnumByValue(code, WsMessageEnums.TypeEnum.class);
             if (ObjectUtil.isNotNull(messageType)) {
                 // 消息队列发送消息
                 switch (messageType) {
                     case SD_TXT2IMG -> {
-                        aiDrawService.sdTxt2ImgHandleMessage(session, payload);
+                        try {
+                            aiDrawService.sdTxt2ImgHandleMessage(session, payload);
+                        } catch (Exception e) {
+                            ApiResult<Object> apiResult = ApiResult.fail(e.getMessage());
+                            apiResult.setData(payload.getContent());
+
+                            if (e.getMessage().equals(ResultCode.USER_ERROR_A0160.getMessage())) {
+                                apiResult = WebSocketUtil.buildSendErrorMessageModel(ResultCode.USER_ERROR_A0160);
+                            }
+                            streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                                    .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
+                                    .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
+                                    .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                                    .to(String.valueOf(userId))
+                                    .content(apiResult)
+                                    .build());
+                            // session.sendMessage(new TextMessage(
+                            //         WebSocketUtil.buildSendMessageModel(WsMsgModel.builder()
+                            //                 .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
+                            //                 .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                            //                 .to(String.valueOf(userId))
+                            //                 .content(apiResult)
+                            //                 .build())));
+                        }
                     }
                 }
             } else {
-                session.sendMessage(new TextMessage(
-                        WebSocketUtil.buildSendMessageModel(WsMsgModel.builder()
-                                .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
-                                .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.SERVICE_ERROR_C0125))
-                                .build())));
+                throw new ApiException(ResultCode.SERVICE_ERROR_C0125);
             }
         } catch (Exception e) {
-            session.sendMessage(new TextMessage(
-                    WebSocketUtil.buildSendMessageModel(WsMsgModel.builder()
-                            .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
-                            .content(WebSocketUtil.buildSendErrorMessageModel(ResultCode.ERROR))
-                            .build())));
+            log.error("处理文本消息异常: {}", e.getMessage());
+            streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                    .code(WsMessageEnums.TypeEnum.ERROR.getValue())
+                    .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
+                    .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                    .to(String.valueOf(userId))
+                    .content(ApiResult.fail(e.getMessage()))
+                    .build());
+            // log.error("[SD文生图异常，失败信息:{}]", e.getMessage());
         }
 
     }
@@ -115,9 +146,10 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         log.info("WS 关闭连接");
         Map<String, Object> attributes = session.getAttributes();
-        String token = (String) attributes.get("token");
-        Long userId = (Long) attributes.get("userId");
-        WebSocketUtil.removeUser(token, String.valueOf(userId));
+        String loginType = (String) attributes.get(Oauth2Constant.META_LOGIN_TYPE);
+        String token = (String) attributes.get(Oauth2Constant.META_USER_TOKEN);
+        Long userId = (Long) attributes.get(Oauth2Constant.META_USER_ID);
+        WebSocketUtil.removeUser(loginType + StringPool.AT + token, String.valueOf(userId));
     }
 
     // 支持分片消息

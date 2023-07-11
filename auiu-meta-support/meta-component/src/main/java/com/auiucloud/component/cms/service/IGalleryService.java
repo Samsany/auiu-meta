@@ -4,10 +4,8 @@ import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.dto.GalleryUpdateDTO;
 import com.auiucloud.component.cms.dto.JoinGalleryCollectionDTO;
 import com.auiucloud.component.cms.dto.SaveAiDrawGalleryDTO;
-import com.auiucloud.component.cms.dto.UpdateAiDrawPicDTO;
 import com.auiucloud.component.cms.vo.*;
-import com.auiucloud.component.sd.domain.AiDrawImgVO;
-import com.auiucloud.component.sd.vo.SdDrawSaveVO;
+import com.auiucloud.component.sd.domain.AiDrawInfo;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.database.model.Search;
@@ -51,6 +49,8 @@ public interface IGalleryService extends IService<Gallery> {
     PageUtils selectMyDownloadGalleryPage(Search search);
 
     GalleryVO selectGalleryInfoById(Long galleryId);
+
+    Long selectMyGalleryTotal();
 
     ApiResult<?> upload(MultipartFile file, Long cateId);
 
@@ -110,6 +110,8 @@ public interface IGalleryService extends IService<Gallery> {
 
     Long countPublishedGalleryNumByCId(Long id);
 
+    UserStatisticalGalleryVO getUserStatisticalGalleryVOById(Long userId);
+
     boolean checkUserPointQuantity(Long id);
 
     ApiResult<?> downLoadUserGallery(Long id);
@@ -128,5 +130,5 @@ public interface IGalleryService extends IService<Gallery> {
 
     void updateAiDrawGalleryStatusByIds(List<String> ids, Integer status);
 
-    List<AiDrawImgVO> updateAiDrawResult(Long userId, List<AiDrawImgVO> aiDrawImgList);
+    List<AiDrawInfo> updateAiDrawResult(Long userId, List<AiDrawInfo> aiDrawImgList);
 }

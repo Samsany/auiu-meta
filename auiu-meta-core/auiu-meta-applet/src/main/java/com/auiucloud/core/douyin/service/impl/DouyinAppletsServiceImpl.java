@@ -250,7 +250,7 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
                 }).collect(Collectors.joining(","));
             }
 
-            log.info("抖音图片安全检测：{}", msg);
+            log.debug("抖音图片安全检测：{}", msg);
             return msg;
         }
 

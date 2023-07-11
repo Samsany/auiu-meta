@@ -1,6 +1,9 @@
 package com.auiucloud.core.database.utils;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import com.auiucloud.core.common.enums.OrderTypeEnum;
+import com.auiucloud.core.common.utils.sql.SqlUtil;
 import com.auiucloud.core.database.model.Search;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

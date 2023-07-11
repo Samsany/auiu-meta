@@ -108,6 +108,11 @@ public class GalleryVO implements Serializable {
     private Integer isTop;
 
     /**
+     * 消耗积分
+     */
+    private Integer consumeIntegral;
+
+    /**
      * 下载积分(开通会员可设置)
      */
     private Integer downloadIntegral;
@@ -126,6 +131,11 @@ public class GalleryVO implements Serializable {
      * 排序
      */
     private Integer sort;
+
+    /**
+     * 审核状态(-1-生成失败 0-等待生成 1-进行中 2-已完成)
+     */
+    private Integer status;
 
     /**
      * 审核状态(0-待审核 1-审核通过 2-已驳回)

@@ -1,6 +1,9 @@
 package com.auiucloud.component.sd.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -14,14 +17,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AiDrawResult implements Serializable {
-
     @Serial
-    private static final long serialVersionUID = 5363547120422799952L;
+    private static final long serialVersionUID = -5075419407290210319L;
 
-    private List<String> images;
+    private String taskId;
 
-    private String info;
+    private String drawIds;
 
-    private Object parameters;
+    private List<AiDrawInfo> aiDrawList;
 
 }

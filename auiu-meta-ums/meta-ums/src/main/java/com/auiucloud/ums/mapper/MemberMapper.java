@@ -1,5 +1,6 @@
 package com.auiucloud.ums.mapper;
 
+import com.auiucloud.core.database.model.Search;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.vo.UserInfoVO;
 import com.auiucloud.ums.vo.UserRecommendVO;
@@ -30,6 +31,10 @@ public interface MemberMapper extends BaseMapper<Member> {
 
     @Update("update ums_user set integral = integral - #{integral} where id = #{userId}")
     int decreaseUserPoint(@Param("userId") Long userId, @Param("integral") Integer integral);
+
+    Long selectOpenApiUserTotal(@Param("search") Search search, @Param("userId") Long userId);
+
+    List<UserInfoVO> selectOpenApiUserPage(@Param("search") Search search, @Param("userId") Long userId);
 
 }
 

@@ -20,10 +20,10 @@ public class AiDrawConfiguration {
     @Resource
     private ISdConfigService sdConfigService;
 
-    private static final Map<String, AiDrawFactory> AI_DRAW_FACTORYS = new HashMap<>();
+    public static final Map<String, AiDrawFactory> AI_DRAW_FACTORY_MAP = new HashMap<>();
 
     public static AiDrawFactory getAiDrawFactory(String sdId) {
-        AiDrawFactory aiDrawFactory = AI_DRAW_FACTORYS.get(sdId);
+        AiDrawFactory aiDrawFactory = AI_DRAW_FACTORY_MAP.get(sdId);
 
         if (aiDrawFactory == null) {
             throw new IllegalArgumentException(String.format("未找到对应sd=[%s]的配置，请核实！", sdId));
@@ -41,7 +41,7 @@ public class AiDrawConfiguration {
             aiDrawFactory.setAppId(properties.getAppId());
             aiDrawFactory.setAppSecret(properties.getAppSecret());
             aiDrawFactory.setUrl(properties.getUrl());
-            AI_DRAW_FACTORYS.put(properties.getCode(), aiDrawFactory);
+            AI_DRAW_FACTORY_MAP.put(properties.getCode(), aiDrawFactory);
         }
     }
 

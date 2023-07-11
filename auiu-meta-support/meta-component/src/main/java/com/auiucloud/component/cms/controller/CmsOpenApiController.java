@@ -8,8 +8,9 @@ import com.auiucloud.component.cms.domain.Gallery;
 import com.auiucloud.component.cms.domain.GalleryCollection;
 import com.auiucloud.component.cms.domain.SwiperAdv;
 import com.auiucloud.component.cms.service.*;
-import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.core.common.api.ApiResult;
+import com.auiucloud.core.common.model.IpAddress;
+import com.auiucloud.core.common.utils.IPUtil;
 import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.core.database.model.Search;
 import com.auiucloud.core.log.annotation.Log;
@@ -44,6 +45,13 @@ public class CmsOpenApiController extends BaseController {
     //        streamBridge.send(MessageConstant.SMS_MESSAGE_OUTPUT, message);
     //        return ApiResult.success();
     //    }
+
+       @GetMapping("/ip2Region")
+       @Operation(summary = "解析IP信息")
+       public ApiResult<?> ip2Region(String ip) {
+           IpAddress ipAddress = IPUtil.getIpAddress(ip);
+           return ApiResult.data(ipAddress);
+       }
 
     /**
      * 查询轮播广告列表

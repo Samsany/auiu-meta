@@ -1,5 +1,6 @@
 package com.auiucloud.component.feign;
 
+import com.auiucloud.component.cms.vo.UserStatisticalGalleryVO;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.ProviderConstant;
 import com.auiucloud.core.feign.constant.FeignConstant;
@@ -27,11 +28,21 @@ public interface IUserGalleryProvider {
     ApiResult<Long> countPublishUserGallery(@RequestParam("userId") Long userId);
 
     /**
-     * 获取用户作品数量
+     * 获取用户作品点赞数量
      *
      * @param userId 用户ID
      * @return ApiResult
      */
     @GetMapping(ProviderConstant.PROVIDER_USER_GALLERY_LIKE_NUM)
     ApiResult<Long> countUserReceivedLikeNum(@RequestParam("userId") Long userId);
+
+    /**
+     * 获取用户作品总数 & 作品列表前5个
+     *
+     * @param userId 用户ID
+     * @return ApiResult
+     */
+    @GetMapping(ProviderConstant.PROVIDER_USER_STATISTICAL_GALLERY)
+    ApiResult<UserStatisticalGalleryVO> getUserStatisticalGalleryVOById(@RequestParam("userId") Long userId);
+
 }

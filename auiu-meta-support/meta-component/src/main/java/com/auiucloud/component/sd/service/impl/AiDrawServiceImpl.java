@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.auiucloud.component.cms.dto.SaveAiDrawGalleryDTO;
-import com.auiucloud.component.cms.dto.UpdateAiDrawPicDTO;
 import com.auiucloud.component.cms.enums.GalleryEnums;
 import com.auiucloud.component.cms.service.IGalleryService;
 import com.auiucloud.component.cms.service.IPicQualityService;
@@ -17,20 +16,18 @@ import com.auiucloud.component.sd.enums.SdDrawEnums;
 import com.auiucloud.component.sd.service.IAiDrawService;
 import com.auiucloud.component.sd.service.ISdModelService;
 import com.auiucloud.component.sd.task.SdAsyncTask;
-import com.auiucloud.component.sd.vo.SdProgressVO;
 import com.auiucloud.component.sd.vo.SdWaitQueueVO;
 import com.auiucloud.component.translate.component.TranslateFactory;
 import com.auiucloud.component.translate.component.TranslateService;
 import com.auiucloud.component.translate.domain.TextTranslateParams;
 import com.auiucloud.component.translate.domain.TranslateResult;
 import com.auiucloud.component.translate.enums.TranslateEnums;
-import com.auiucloud.component.websocket.utils.WebSocketUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.MessageConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
-import com.auiucloud.core.common.enums.MessageEnums;
+import com.auiucloud.core.common.enums.WsMessageEnums;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.WsMsgModel;
 import com.auiucloud.core.common.utils.StringPool;
@@ -48,10 +45,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -81,6 +78,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
     @Override
     public void sdText2Img(SdTxt2ImgConfigDTO txt2ImgConfig) {
 
+        String taskId = txt2ImgConfig.getTaskId();
         String drawIds = txt2ImgConfig.getDrawIds();
         try {
             // 更新文生图状态
@@ -90,32 +88,21 @@ public class AiDrawServiceImpl implements IAiDrawService {
             BeanUtils.copyProperties(txt2ImgConfig, params);
             // 构建关键词
             this.buildTxt2ImgPrompt(txt2ImgConfig, params);
-            CompletableFuture<ApiResult<AiDrawResult>> future = sdAsyncTask.doSdText2ImgTask(params);
+            CompletableFuture<ApiResult<SdDrawResult>> future = sdAsyncTask.doSdText2ImgTask(params);
             // 获取制作进度
             String userIdStr = String.valueOf(txt2ImgConfig.getUserId());
             sdAsyncTask.doSdProgressTask(userIdStr, txt2ImgConfig.getTaskId(), txt2ImgConfig.getDrawIds());
             // 等待全部任务完成
             CompletableFuture.allOf(future).join();
-            // SdProgressVO sdProgress = SdProgressVO.builder()
-            //         .drawIds(txt2ImgConfig.getDrawIds())
-            //         .taskId(txt2ImgConfig.getTaskId())
-            //         .progress(CommonConstant.YES_VALUE * 100)
-            //         .build();
-            // WebSocketUtil.sendMessage(WsMsgModel.builder()
-            //         .code(MessageEnums.WsMessageTypeEnum.SD_PROGRESS.getValue())
-            //         .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-            //         .to(userIdStr)
-            //         .content(ApiResult.data(sdProgress))
-            //         .build());
-            ApiResult<AiDrawResult> apiResult = future.get();
+            ApiResult<SdDrawResult> apiResult = future.get();
             // 在这里可以处理全部异步任务完成后的结果 更新作图记录
             if (apiResult.successful()) {
                 // 完成任务
-                AiDrawResult aiDrawResult = apiResult.getData();
+                SdDrawResult sdDrawResult = apiResult.getData();
                 // 图片处理
-                List<AiDrawImgVO> aiDrawImgList = this.updateAiDrawResultByIds(txt2ImgConfig, aiDrawResult.getImages());
+                List<AiDrawInfo> aiDrawImgList = this.updateAiDrawResultByIds(txt2ImgConfig, sdDrawResult.getImages());
                 long errCount = aiDrawImgList.parallelStream()
-                        .filter(it -> !it.getStatus().equals(GalleryEnums.AiDrawStatus.SUCCESS.getValue()))
+                        .filter(it -> it.getStatus().equals(GalleryEnums.GalleryStatus.FAIL.getValue()))
                         .count();
                 if (errCount > CommonConstant.ROOT_NODE_ID) {
                     // 退回用户部分积分
@@ -127,11 +114,17 @@ public class AiDrawServiceImpl implements IAiDrawService {
                             .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
                             .build());
                 }
-                WebSocketUtil.sendMessage(WsMsgModel.builder()
-                        .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG.getValue())
+                // 通知结果
+                streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                        .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
+                        .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
                         .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
                         .to(String.valueOf(txt2ImgConfig.getUserId()))
-                        .content(ApiResult.data(aiDrawImgList))
+                        .content(ApiResult.data(AiDrawResult.builder()
+                                .taskId(taskId)
+                                .drawIds(drawIds)
+                                .aiDrawList(aiDrawImgList)
+                                .build()))
                         .build());
             } else {
                 log.error("[SD文生图异常，失败信息:{}, {}]", apiResult.getCode(), apiResult.getMessage());
@@ -148,15 +141,30 @@ public class AiDrawServiceImpl implements IAiDrawService {
                     .title(UserPointEnums.ConsumptionEnum.AI_TEXT2IMG_FAIL.getLabel())
                     .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
                     .build());
-            WebSocketUtil.sendMessage(WsMsgModel.builder()
-                    .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
+
+            ApiResult<Object> apiResult = ApiResult.fail(e.getMessage());
+            apiResult.setData(JSONUtil.createObj().set("taskId", taskId));
+            streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                    .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
+                    .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
                     .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
                     .to(String.valueOf(txt2ImgConfig.getUserId()))
-                    .content(ApiResult.data(e.getMessage()))
+                    .content(apiResult)
                     .build());
         } finally {
             // 停止获取进度任务
             sdAsyncTask.stopSdProgressTask();
+            // 通知所有用户当前队列数量 -1
+            streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                    .code(WsMessageEnums.TypeEnum.SD_TXT2IMG_QUEUE.getValue())
+                    .sendType(WsMessageEnums.SendTypeEnum.ALL.getValue())
+                    .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                    .to(String.valueOf(txt2ImgConfig.getUserId()))
+                    .content(ApiResult.data(SdWaitQueueVO.builder()
+                            .queueMessageCount(CommonConstant.STATUS_DISABLE_VALUE)
+                            .changeType(SdDrawEnums.QueueChangeType.DECREASE.getValue())
+                            .build()))
+                    .build());
         }
     }
 
@@ -255,47 +263,43 @@ public class AiDrawServiceImpl implements IAiDrawService {
 
     @GlobalTransactional
     @Override
-    public void sdTxt2ImgHandleMessage(WebSocketSession session, WsMsgModel payload) {
-        // 组装Ai绘画生图参数
-        try {
-            SdTxt2ImgDTO sdDrawParam = JSONUtil.toBean((String) payload.getContent(), SdTxt2ImgDTO.class);
-            sdDrawParam.setUserId(Long.valueOf(payload.getFrom()));
-            SdTxt2ImgConfigDTO sdDrawImgConfig = this.generatorSdTxt2ImgParams(sdDrawParam);
-            // 保存作品
-            List<Long> galleryIds = this.saveTxt2ImgRecord(JSONUtil.toJsonStr(payload.getContent()), sdDrawImgConfig);
-            sdDrawImgConfig.setDrawIds(galleryIds.parallelStream()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(StringPool.COMMA))
-            );
-            Integer queueMessageCount = rabbitMqUtils.getQueueMessageCount(MessageConstant.SD_TXT2IMG_MESSAGE_QUEUE);
-            session.sendMessage(new TextMessage(WebSocketUtil.buildSendMessageModel(
-                    WsMsgModel.builder()
-                            .code(MessageEnums.WsMessageTypeEnum.SD_TXT2IMG_QUEUE.getValue())
-                            .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                            .to(payload.getFrom())
-                            .content(SdWaitQueueVO.builder()
-                                    .queueMessageCount(queueMessageCount)
-                                    .changeType(SdDrawEnums.QueueChangeType.INCREASE.getValue())
-                                    .build())
-                            .build()
-            )));
-            payload.setContent(sdDrawImgConfig);
-            streamBridge.send(MessageConstant.SD_TXT2IMG_MESSAGE_OUTPUT, payload);
-        } catch (Exception e) {
-            log.error("[SD文生图异常，失败信息:{}]", e.getMessage());
-            ApiResult<?> apiResult = ApiResult.fail(e.getMessage());
-            if (e.getMessage().equals(ResultCode.USER_ERROR_A0160.getMessage())) {
-                apiResult = WebSocketUtil.buildSendErrorMessageModel(ResultCode.USER_ERROR_A0160);
-            }
-            WebSocketUtil.sendMessage(WsMsgModel.builder()
-                    .code(MessageEnums.WsMessageTypeEnum.ERROR.getValue())
-                    .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                    .to(payload.getFrom())
-                    .content(apiResult)
-                    .build());
+    public void sdTxt2ImgHandleMessage(WebSocketSession session, WsMsgModel payload) throws IOException {
+        // 获取队列大小
+        Integer queueMessageCount = rabbitMqUtils.getQueueMessageCount(MessageConstant.SD_TXT2IMG_MESSAGE_QUEUE);
 
-            throw new RuntimeException();
-        }
+        String userId = payload.getFrom();
+        // 组装Ai绘画生图参数
+        SdTxt2ImgDTO sdDrawParam = JSONUtil.toBean((String) payload.getContent(), SdTxt2ImgDTO.class);
+        sdDrawParam.setUserId(Long.valueOf(userId));
+        SdTxt2ImgConfigDTO sdDrawImgConfig = this.generatorSdTxt2ImgParams(sdDrawParam);
+        // 保存作品
+        List<Long> galleryIds = this.saveTxt2ImgRecord(JSONUtil.toJsonStr(payload.getContent()), sdDrawImgConfig);
+        sdDrawImgConfig.setDrawIds(galleryIds.parallelStream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(StringPool.COMMA))
+        );
+        // 发送AI绘画任务消息
+        streamBridge.send(MessageConstant.SD_TXT2IMG_MESSAGE_OUTPUT, WsMsgModel.builder()
+                .code(WsMessageEnums.TypeEnum.SD_TXT2IMG_QUEUE.getValue())
+                .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
+                .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                .to(userId)
+                .content(sdDrawImgConfig)
+                .build());
+
+        log.debug("当前队列数量: {}", queueMessageCount);
+        streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                .code(WsMessageEnums.TypeEnum.SD_TXT2IMG_QUEUE.getValue())
+                .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
+                .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                .to(userId)
+                .content(ApiResult.data(SdWaitQueueVO.builder()
+                        .taskId(sdDrawImgConfig.getTaskId())
+                        .drawIds(sdDrawImgConfig.getDrawIds())
+                        .queueMessageCount(queueMessageCount + 1)
+                        .changeType(SdDrawEnums.QueueChangeType.INCREASE.getValue())
+                        .build()))
+                .build());
     }
 
     @Override
@@ -382,7 +386,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
             txt2ImgConfig.setAppId(appId);
             txt2ImgConfig.setUserId(userId);
             txt2ImgConfig.setSdDrawType(SdDrawEnums.DrawType.TXT2IMG.getValue());
-            // txt2ImgConfig.setTaskId(IdUtil.getSnowflakeNextIdStr());
+            txt2ImgConfig.setTaskId(sdDrawParam.getTaskId());
             txt2ImgConfig.setConsumeIntegral(consumeIntegral);
             txt2ImgConfig.setStyle(sdDrawParam.getStyle());
             txt2ImgConfig.setLora(sdDrawParam.getLora());
@@ -461,19 +465,21 @@ public class AiDrawServiceImpl implements IAiDrawService {
     }
 
     @Override
-    public List<AiDrawImgVO> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, List<String> images) {
+    public List<AiDrawInfo> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, List<String> images) {
 
-        List<AiDrawImgVO> aiDrawImgList = new ArrayList<>();
+        List<AiDrawInfo> aiDrawImgList = new ArrayList<>();
         String drawIds = txt2ImgConfig.getDrawIds();
         if (StrUtil.isNotBlank(drawIds)) {
             List<String> ids = StrUtil.split(drawIds, StringPool.COMMA);
             for (int i = 0; i < ids.size(); i++) {
                 Long id = Long.valueOf(ids.get(i));
                 String base64Img = images.get(i);
-                AiDrawImgVO aiDrawImg = AiDrawImgVO.builder()
+                AiDrawInfo aiDrawImg = AiDrawInfo.builder()
+                        .taskId(txt2ImgConfig.getTaskId())
                         .galleryId(id)
+                        .url("")
                         .imageData("data:image/png;base64," + base64Img)
-                        .status(GalleryEnums.AiDrawStatus.SUCCESS.getValue()) // 先默认成功
+                        .status(GalleryEnums.GalleryStatus.SUCCESS.getValue()) // 先默认成功
                         .build();
                 try {
                     String platform = txt2ImgConfig.getPlatform();
@@ -483,7 +489,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
                         String result = douyinAppletService.checkImageData(base64Img);
                         if (StrUtil.isNotBlank(result)) {
                             log.error("内容安全检测: {}", result);
-                            aiDrawImg.setStatus(GalleryEnums.AiDrawStatus.VIOLATIONS.getValue());
+                            aiDrawImg.setStatus(GalleryEnums.GalleryStatus.VIOLATIONS.getValue());
                         }
                     }
                 } catch (Exception e) {

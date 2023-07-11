@@ -24,6 +24,17 @@ public class MessageConstant {
     public static final String INPUT = "in" + StringPool.DASH + StringPool.ZERO;
 
     /**
+     * 消息通知
+     */
+    public static final String NOTICE_MESSAGE = "notice" + StringPool.DASH;
+    public static final String NOTICE_DESTINATION = NOTICE_MESSAGE + "topic";
+    public static final String NOTICE_BINDER_GROUP = NOTICE_MESSAGE + "binder-group";
+    public static final String NOTICE_MESSAGE_OUTPUT = NOTICE_MESSAGE + OUTPUT;
+    public static final String NOTICE_MESSAGE_INPUT = NOTICE_MESSAGE + INPUT;
+    public static final String NOTICE_MESSAGE_QUEUE = NOTICE_DESTINATION + StringPool.DOT + NOTICE_BINDER_GROUP;
+    public static final String NOTICE_MESSAGE_DLQ_QUEUE = NOTICE_MESSAGE_QUEUE + StringPool.DOT + "dlq";
+
+    /**
      * AI绘画消息(sd 文生图)
      */
     public static final String SD_TXT2IMG_MESSAGE = "txt2img" + StringPool.DASH;

@@ -93,6 +93,7 @@
         <weixin-java-miniapp.version>4.5.0</weixin-java-miniapp.version>
         <thumbnailator.version>0.4.19</thumbnailator.version>
         <xxl-job.version>2.3.1</xxl-job.version>
+        <ip2region.version>2.7.0</ip2region.version>
     </properties>
 
     <dependencyManagement>
@@ -485,6 +486,13 @@
                 <artifactId>weixin-java-miniapp</artifactId>
                 <version>${weixin-java-miniapp.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

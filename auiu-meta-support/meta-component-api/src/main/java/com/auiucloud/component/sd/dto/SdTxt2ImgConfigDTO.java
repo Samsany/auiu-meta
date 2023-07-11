@@ -4,6 +4,7 @@ import com.auiucloud.component.sd.domain.SdTxt2ImgParams;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serial;
 import java.io.Serializable;
 

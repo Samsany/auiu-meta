@@ -11,6 +11,7 @@ import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.validator.group.InsertGroup;
 import com.auiucloud.core.validator.group.UpdateGroup;
 import com.auiucloud.ums.domain.Member;
+import com.auiucloud.ums.dto.AdjustUserPointDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.service.IMemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -127,6 +128,17 @@ public class MemberController extends BaseController {
     public ApiResult<?> setUserStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
         return ApiResult.condition(memberService.setUserStatus(updateStatusDTO));
     }
+
+    /**
+     * 修改会员积分
+     */
+    @Log(value = "会员", exception = "修改会员积分请求异常")
+    @PutMapping("/setIntegral")
+    @Operation(summary = "修改会员积分")
+    public ApiResult<?> setUserIntegral(@Validated @RequestBody AdjustUserPointDTO adjustUserPoint) {
+        return ApiResult.condition(memberService.setUserIntegral(adjustUserPoint));
+    }
+
 
     //    /**
     //     * 修改会员密码

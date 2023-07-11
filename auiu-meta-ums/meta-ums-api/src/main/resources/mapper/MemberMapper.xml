@@ -76,6 +76,59 @@
         remark,is_deleted
     </sql>
 
+    <sql id="Base_User_VO_Column_List">
+        select u2.id,
+               u2.account,
+               u2.open_id,
+               u2.real_name,
+               u2.nickname,
+               u2.avatar,
+               u2.bg_img,
+               u2.mobile,
+               u2.email,
+               u2.card_id,
+               u2.password,
+               u2.gender,
+               u2.birthday,
+               u2.status,
+               u2.group_ids,
+               u2.tag_ids,
+               u2.balance,
+               u2.brokerage_price,
+               u2.integral,
+               u2.experience,
+               u2.sign_num,
+               u2.level_id,
+               u2.invitation_code,
+               u2.spread_uid,
+               u2.spread_time,
+               u2.promoter_time,
+               u2.is_promoter,
+               u2.pay_count,
+               u2.spread_count,
+               u2.country,
+               u2.province,
+               u2.city,
+               u2.area,
+               u2.language,
+               u2.login_type,
+               u2.login_date,
+               u2.login_ip,
+               u2.register_ip,
+               u2.register_address,
+               u2.register_source,
+               u2.account_non_expired,
+               u2.account_non_locked,
+               u2.credentials_non_expired,
+               u2.create_time,
+               u2.update_time,
+               u2.create_by,
+               u2.update_by,
+               u2.remark,
+               u2.is_deleted
+        from ums_user u2
+    </sql>
+
     <select id="getMemberByOpenId2Source" resultMap="BaseResultMap">
         select u.id,
                u.account,
@@ -148,5 +201,34 @@
         where uuf.user_id = #{userId}
           and uuf.status = 0
           and uu.is_deleted = 0;
+    </select>
+
+    <select id="selectOpenApiUserTotal" resultType="java.lang.Long">
+        select count(*) from ums_user u2
+        <where>
+            u2.is_deleted = 0 and (select count(*) from cms_gallery cg where u2.id = cg.user_id and cg.status = 2 and
+            cg.approval_status = 1) &gt;= 3
+            <if test="userId != null">
+                and u2.id != #{userId}
+            </if>
+            <if test="search.keyword != null and search.keyword != ''">
+                and u2.invitation_code = #{search.keyword}
+            </if>
+        </where>
+    </select>
+    <select id="selectOpenApiUserPage" resultType="com.auiucloud.ums.vo.UserInfoVO">
+        <include refid="Base_User_VO_Column_List"/>
+        <where>
+            u2.is_deleted = 0 and (select count(*) from cms_gallery cg where u2.id = cg.user_id and cg.status = 2 and
+            cg.approval_status = 1) &gt;= 3
+            <if test="userId != null">
+                and u2.id != #{userId}
+            </if>
+            <if test="search.keyword != null and search.keyword != ''">
+                and u2.invitation_code = #{search.keyword}
+            </if>
+        </where>
+        order by create_time desc, id desc
+        limit #{search.pageNum}, #{search.pageSize};
     </select>
 </mapper>

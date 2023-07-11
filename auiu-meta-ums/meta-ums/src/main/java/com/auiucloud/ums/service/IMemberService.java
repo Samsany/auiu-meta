@@ -98,6 +98,8 @@ public interface IMemberService extends IService<Member> {
      */
     boolean increaseUserPoint(Long userId, Integer integration);
 
+    boolean setUserIntegral(AdjustUserPointDTO adjustUserPoint);
+
     ApiResult<?> assignUserPoint(UserPointChangeDTO pointChangeDTO);
 
     ApiResult<?> assignUserBrokerage(UserBrokerageChangeDTO userBrokerageChangeDTO);

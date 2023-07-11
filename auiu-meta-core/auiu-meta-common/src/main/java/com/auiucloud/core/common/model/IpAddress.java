@@ -1,6 +1,7 @@
 package com.auiucloud.core.common.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @date 2021/12/20
  */
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class IpAddress implements Serializable {

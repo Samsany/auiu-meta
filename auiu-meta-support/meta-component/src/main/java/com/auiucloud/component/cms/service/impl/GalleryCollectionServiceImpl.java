@@ -169,7 +169,7 @@ public class GalleryCollectionServiceImpl extends ServiceImpl<GalleryCollectionM
 
     private void setGalleryTotal(Long userId, GalleryCollectionVO galleryCollectionVO) {
         Long total;
-        if (userId.equals(galleryCollectionVO.getUserId())) {
+        if (ObjectUtil.isNotNull(userId) && userId.equals(galleryCollectionVO.getUserId())) {
             total = galleryService.countGalleryNumByCId(galleryCollectionVO.getId());
         } else {
             total = galleryService.countPublishedGalleryNumByCId(galleryCollectionVO.getId());

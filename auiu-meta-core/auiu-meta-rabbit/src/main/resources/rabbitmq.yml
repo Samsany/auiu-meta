@@ -13,7 +13,7 @@ spring:
                 password: ${spring.rabbitmq.password}
       # 消息多个需要在此定义
       function:
-        definition: txt2img
+        definition: txt2img;notice
       bindings:
         txt2img-out-0:
           binder: defaultRabbit
@@ -27,12 +27,34 @@ spring:
           consumer:
             max-attempts: 5
 
+        notice-out-0:
+          binder: defaultRabbit
+          destination: notice-topic
+          content-type: application/json
+        notice-in-0:
+          binder: defaultRabbit
+          destination: notice-topic
+          content-type: text/plain
+          group: notice-binder-group
+          consumer:
+            max-attempts: 5
+
       rabbit:
         bindings:
           txt2img-out-0:
             producer:
               group: txt2img-binder-group
           txt2img-in-0:
+            consumer:
+              acknowledge-mode: manual # 手动ack消息
+              autoBindDlq: true
+              dlqTtl: 50000
+              dlqDeadLetterExchange: # 默认创建dlq死信交换机
+
+          notice-out-0:
+            producer:
+              group: notice-binder-group
+          notice-in-0:
             consumer:
               acknowledge-mode: manual # 手动ack消息
               autoBindDlq: true

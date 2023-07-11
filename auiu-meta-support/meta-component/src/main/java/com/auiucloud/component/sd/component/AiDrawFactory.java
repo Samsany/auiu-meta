@@ -1,7 +1,7 @@
 package com.auiucloud.component.sd.component;
 
 import com.auiucloud.component.cms.props.SdConstants;
-import com.auiucloud.component.sd.domain.AiDrawResult;
+import com.auiucloud.component.sd.domain.SdDrawResult;
 import com.auiucloud.component.sd.domain.SdTxt2ImgParams;
 import com.auiucloud.component.sd.service.IAiDrawFactoryService;
 import com.auiucloud.component.sd.vo.SdProgressVO;
@@ -28,12 +28,12 @@ public class AiDrawFactory implements IAiDrawFactoryService {
      * @return Object
      */
     @Override
-    public ApiResult<AiDrawResult> sdText2Img(SdTxt2ImgParams txt2ImgParams) {
+    public ApiResult<SdDrawResult> sdText2Img(SdTxt2ImgParams txt2ImgParams) {
         try {
             // 设置请求头
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
-            ResponseEntity<AiDrawResult> post = RestTemplateUtil.post(this.url + SdConstants.text2Img, headers, txt2ImgParams, AiDrawResult.class);
+            ResponseEntity<SdDrawResult> post = RestTemplateUtil.post(this.url + SdConstants.text2Img, headers, txt2ImgParams, SdDrawResult.class);
             return ApiResult.data(post.getBody());
         } catch (Exception e) {
             // log.error("====================> {}", e.getMessage());

@@ -37,6 +37,7 @@ public class GalleryEnums {
     @AllArgsConstructor
     public enum GalleryStatus implements IBaseEnum<Integer> {
 
+        VIOLATIONS(-2, "图片违规"),
         FAIL(-1, "生成失败"),
         AWAIT(0, "等待生成"),
         IN_PROGRESS(1, "生成中"),
@@ -47,19 +48,19 @@ public class GalleryEnums {
         private final String label;
     }
 
-    @Getter
-    @AllArgsConstructor
-    public enum AiDrawStatus implements IBaseEnum<Integer> {
-
-        FAIL(-1, "上传失败"),
-        AWAIT(0, "待处理"),
-        SUCCESS(1, "已完成"),
-        VIOLATIONS(2, "图片违规"),
-        ;
-
-        private final Integer value;
-        private final String label;
-    }
+    // @Getter
+    // @AllArgsConstructor
+    // public enum AiDrawStatus implements IBaseEnum<Integer> {
+    //
+    //     FAIL(-1, "上传失败"),
+    //     AWAIT(0, "待处理"),
+    //     SUCCESS(1, "已完成"),
+    //     VIOLATIONS(2, "图片违规"),
+    //     ;
+    //
+    //     private final Integer value;
+    //     private final String label;
+    // }
 
     @Getter
     @AllArgsConstructor

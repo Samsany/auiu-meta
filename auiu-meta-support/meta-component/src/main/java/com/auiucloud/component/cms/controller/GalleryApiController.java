@@ -189,6 +189,16 @@ public class GalleryApiController extends BaseController {
     }
 
     /**
+     * 查询我的作品数量
+     */
+    @Log(value = "作品")
+    @GetMapping("/total")
+    @Operation(summary = "查询我的作品数量")
+    public ApiResult<?> galleryTotal() {
+        return ApiResult.data(galleryService.selectMyGalleryTotal());
+    }
+
+    /**
      * 发布作品
      */
     @Log(value = "作品")

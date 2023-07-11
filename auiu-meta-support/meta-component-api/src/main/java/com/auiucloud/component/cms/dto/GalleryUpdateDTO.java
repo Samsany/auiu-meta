@@ -33,8 +33,13 @@ public class GalleryUpdateDTO implements Serializable {
     /**
      * 备注
      */
-    @Size(min = 0, max = 500, message = "作品简介长度在0~1200字符之间")
+    @Xss(message = "作品简介不能包含脚本字符")
+    @Size(min = 0, max = 500, message = "作品简介长度在0~500字符之间")
     private String remark;
+
+    @Xss(message = "提示词不能包含脚本字符")
+    @Size(min = 0, max = 2000, message = "提示词长度在0~1200字符之间")
+    private String prompt;
 
     /**
      * 标签ID

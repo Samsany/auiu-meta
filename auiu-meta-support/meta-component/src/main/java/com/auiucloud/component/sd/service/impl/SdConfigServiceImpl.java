@@ -1,6 +1,9 @@
 package com.auiucloud.component.sd.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.auiucloud.component.sd.component.AiDrawFactory;
+import com.auiucloud.component.sd.config.AiDrawConfiguration;
 import com.auiucloud.component.sd.domain.SdConfigProperties;
 import com.auiucloud.component.sd.service.ISdConfigService;
 import com.auiucloud.component.sysconfig.domain.SysConfig;
@@ -16,6 +19,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,7 @@ import java.util.Optional;
 /**
  * @author dries
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SdConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig>
@@ -136,8 +141,11 @@ public class SdConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig>
 
         if (properties.getIsDefault().equals(CommonConstant.YES_VALUE)) {
             // 更新配置文件至redis
-            return this.saveDefaultSdConfig(properties.getCode());
+            this.saveDefaultSdConfig(properties.getCode());
         }
+
+        // 更新AiFactory
+        this.updateAiDrawService(properties);
 
         return true;
     }
@@ -158,6 +166,16 @@ public class SdConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig>
         }
 
         return flag;
+    }
+
+    private void updateAiDrawService(SdConfigProperties properties) {
+        AiDrawFactory aiDrawFactory = new AiDrawFactory();
+        aiDrawFactory.setAppId(properties.getAppId());
+        aiDrawFactory.setAppSecret(properties.getAppSecret());
+        aiDrawFactory.setUrl(properties.getUrl());
+        log.debug("更新前: {}", JSONUtil.toJsonStr(AiDrawConfiguration.AI_DRAW_FACTORY_MAP.get(properties.getCode())));
+        AiDrawConfiguration.AI_DRAW_FACTORY_MAP.put(properties.getCode(), aiDrawFactory);
+        log.debug("更新后: {}",  JSONUtil.toJsonStr(AiDrawConfiguration.AI_DRAW_FACTORY_MAP.get(properties.getCode())));
     }
 
 
