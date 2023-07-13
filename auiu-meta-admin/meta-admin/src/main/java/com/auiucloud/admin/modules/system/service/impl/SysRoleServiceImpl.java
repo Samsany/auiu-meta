@@ -40,7 +40,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @NotNull
     private static LambdaQueryWrapper<SysRole> buildSearchParams(Search search, SysRole sysRole) {
         LambdaQueryWrapper<SysRole> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
+        if (ObjectUtil.isNotNull(search.getStartDate())) {
             queryWrapper.between(SysRole::getCreateTime, search.getStartDate(), search.getEndDate());
         }
         if (StringUtil.isNotBlank(search.getKeyword())) {

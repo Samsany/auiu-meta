@@ -66,6 +66,7 @@
     <build>
         <finalName>${project.name}</finalName>
         <resources>
+            <!-- 指定打包时，需要特殊处理的文件 -->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>

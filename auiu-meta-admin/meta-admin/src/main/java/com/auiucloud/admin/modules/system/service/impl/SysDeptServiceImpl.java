@@ -42,7 +42,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept>
     @NotNull
     private static LambdaQueryWrapper<SysDept> buildSearchParams(Search search) {
         LambdaQueryWrapper<SysDept> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
+        if (ObjectUtil.isNotNull(search.getStartDate())) {
             queryWrapper.between(SysDept::getCreateTime, search.getStartDate(), search.getEndDate());
         }
         if (StringUtil.isNotBlank(search.getKeyword())) {

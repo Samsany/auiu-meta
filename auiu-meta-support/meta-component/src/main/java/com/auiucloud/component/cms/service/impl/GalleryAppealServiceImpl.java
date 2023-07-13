@@ -48,8 +48,8 @@ public class GalleryAppealServiceImpl extends ServiceImpl<GalleryAppealMapper, G
         queryWrapper.eq(ObjectUtil.isNotNull(galleryAppeal.getStatus()), GalleryAppeal::getStatus, galleryAppeal.getStatus());
         queryWrapper.eq(ObjectUtil.isNotNull(galleryAppeal.getUserId()), GalleryAppeal::getUserId, galleryAppeal.getUserId());
         queryWrapper.eq(ObjectUtil.isNotNull(galleryAppeal.getGalleryId()), GalleryAppeal::getGalleryId, galleryAppeal.getGalleryId());
-        queryWrapper.ge(StrUtil.isNotBlank(search.getStartDate()), GalleryAppeal::getCreateTime, search.getStartDate());
-        queryWrapper.le(StrUtil.isNotBlank(search.getEndDate()), GalleryAppeal::getCreateTime, search.getEndDate());
+        queryWrapper.ge(ObjectUtil.isNotNull(search.getStartDate()), GalleryAppeal::getCreateTime, search.getStartDate());
+        queryWrapper.le(ObjectUtil.isNotNull(search.getEndDate()), GalleryAppeal::getCreateTime, search.getEndDate());
         IPage<GalleryAppeal> page = this.page(PageUtils.getPage(search), queryWrapper);
         page.convert(it -> {
             GalleryAppealVO galleryAppealVO = new GalleryAppealVO();
@@ -87,7 +87,7 @@ public class GalleryAppealServiceImpl extends ServiceImpl<GalleryAppealMapper, G
         boolean update = this.update(Wrappers.<GalleryAppeal>lambdaUpdate()
                 .eq(GalleryAppeal::getId, galleryAppeal.getAppealId())
                 .set(GalleryAppeal::getStatus, galleryAppeal.getStatus())
-                .set(GalleryAppeal::getRemark, galleryAppeal.getReason())
+                .set(GalleryAppeal::getRemark, galleryAppeal.getRemark())
                 .set(GalleryAppeal::getUpdateBy, SecurityUtil.getUsername())
         );
         if (update) {
@@ -104,7 +104,7 @@ public class GalleryAppealServiceImpl extends ServiceImpl<GalleryAppealMapper, G
         return this.update(Wrappers.<GalleryAppeal>lambdaUpdate()
                 .eq(GalleryAppeal::getId, galleryAppeal.getAppealId())
                 .set(GalleryAppeal::getStatus, galleryAppeal.getStatus())
-                .set(GalleryAppeal::getRemark, galleryAppeal.getReason())
+                .set(GalleryAppeal::getRemark, galleryAppeal.getRemark())
                 .set(GalleryAppeal::getUpdateBy, SecurityUtil.getUsername())
         );
     }

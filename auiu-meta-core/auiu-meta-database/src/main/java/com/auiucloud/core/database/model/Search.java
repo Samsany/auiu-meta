@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 搜索封装类
@@ -36,13 +37,13 @@ public class Search implements Serializable {
      * 开始日期
      */
     @Schema(description = "开始日期", hidden = true)
-    private String startDate;
+    private Date startDate;
 
     /**
      * 结束日期
      */
     @Schema(description = "结束日期", hidden = true)
-    private String endDate;
+    private Date endDate;
 
     /**
      * 排序属性

@@ -88,19 +88,19 @@ public class IPUtil {
             return UNKNOWN;
         }
         String ip = request.getHeader("x-forwarded-for");
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Forwarded-For");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("X-Real-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
         return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : getMultistageReverseProxyIp(ip);
@@ -113,19 +113,19 @@ public class IPUtil {
         HttpHeaders headers = request.getHeaders();
         String ip = headers.getFirst("x-forwarded-for");
 
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("Proxy-Client-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("X-Forwarded-For");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("WL-Proxy-Client-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = headers.getFirst("X-Real-IP");
         }
-        if (StrUtil.isNotBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+        if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = Objects.requireNonNull(request.getRemoteAddress()).getAddress().getHostAddress();
         }
 

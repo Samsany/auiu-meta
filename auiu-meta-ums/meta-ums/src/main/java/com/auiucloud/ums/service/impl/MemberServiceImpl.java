@@ -568,13 +568,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member>
      */
     private LambdaQueryWrapper<Member> buildSearchParams(Search search, Member member) {
         LambdaQueryWrapper<Member> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
+        if (ObjectUtil.isNotNull(search.getStartDate())) {
             queryWrapper.between(Member::getCreateTime, search.getStartDate(), search.getEndDate());
         }
         if (StringUtil.isNotBlank(search.getKeyword())) {
             queryWrapper.and(e -> e.like(Member::getAccount, search.getKeyword())
-                    .like(Member::getMobile, search.getKeyword())
-                    .like(Member::getNickname, search.getKeyword()));
+                    .or().like(Member::getMobile, search.getKeyword())
+                    .or().like(Member::getNickname, search.getKeyword()));
         } else {
             queryWrapper.like(StringUtil.isNotBlank(member.getAccount()), Member::getAccount, member.getAccount());
             queryWrapper.like(StringUtil.isNotBlank(member.getMobile()), Member::getMobile, member.getMobile());

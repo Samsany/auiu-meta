@@ -25,7 +25,7 @@ public class GalleryAppealDTO implements Serializable {
     private Long galleryId;
 
     @NotBlank(message = "请填写驳回理由", groups = {RejectGroup.class})
-    private String reason;
+    private String remark;
 
     @NotNull(message = "审核状态异常")
     private Integer status;

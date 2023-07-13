@@ -1,5 +1,6 @@
 package com.auiucloud.admin.modules.system.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.auiucloud.admin.modules.system.domain.SysLog;
 import com.auiucloud.admin.modules.system.mapper.SysLogMapper;
@@ -40,7 +41,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
      */
     private LambdaQueryWrapper<SysLog> buildSysLogSearch(Search search, SysLog sysLog) {
         LambdaQueryWrapper<SysLog> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
+        if (ObjectUtil.isNotNull(search.getStartDate())) {
             queryWrapper.between(SysLog::getCreateTime, search.getStartDate(), search.getEndDate());
         }
         if (StringUtil.isNotBlank(search.getKeyword())) {

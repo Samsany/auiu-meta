@@ -75,19 +75,20 @@
 
     <build>
         <resources>
+            <!-- 指定打包时，需要特殊处理的文件 -->
             <resource>
-                <!-- 指定打包时，需要特殊处理的文件 -->
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>certs/*</exclude>
+                    <exclude>ip2region/*</exclude>
                 </excludes>
-                <!-- 处理文件时，需要对文件进行变量替换 -->
                 <filtering>true</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>certs/*</include>
+                    <include>ip2region/*</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

@@ -1,6 +1,7 @@
 package com.auiucloud.ums.service.impl;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
@@ -41,8 +42,8 @@ public class UserFeedbackServiceImpl extends ServiceImpl<UserFeedbackMapper, Use
     @Override
     public PageUtils listPage(Search search, UserFeedback userFeedback) {
         LambdaQueryWrapper<UserFeedback> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.ge(StrUtil.isNotBlank(search.getStartDate()), UserFeedback::getCreateTime, search.getStartDate());
-        queryWrapper.le(StrUtil.isNotBlank(search.getEndDate()), UserFeedback::getCreateTime, search.getEndDate());
+        queryWrapper.ge(ObjectUtil.isNotNull(search.getStartDate()), UserFeedback::getCreateTime, search.getStartDate());
+        queryWrapper.le(ObjectUtil.isNotNull(search.getEndDate()), UserFeedback::getCreateTime, search.getEndDate());
         queryWrapper.orderByDesc(UserFeedback::getCreateTime);
         queryWrapper.orderByDesc(UserFeedback::getId);
         IPage<UserFeedback> page = this.page(PageUtils.getPage(search), queryWrapper);

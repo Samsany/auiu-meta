@@ -26,4 +26,6 @@ public interface IGalleryReviewService extends IService<GalleryReview> {
     boolean withdrawGalleryReview(GalleryReviewDTO galleryReview);
 
     boolean galleryReviewBatch(GalleryReviewBatchDTO galleryReview);
+
+    Long auditCount(Search search);
 }

@@ -140,11 +140,6 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
                 throw new ApiException("任务不存在或已结束");
             }
         }
-        //        else if (StrUtil.isNotBlank(userTaskVO.getTaskTag())) {
-        //            List<UserTaskVO> userTasks = this.listUserTask(UserTask.builder()
-        //                    .taskTag(userTaskVO.getTaskTag())
-        //                    .build());
-        //        }
 
         return true;
     }
@@ -208,7 +203,7 @@ public class UserTaskServiceImpl extends ServiceImpl<UserTaskMapper, UserTask>
                 .userId(userId)
                 .integral(point)
                 .changeType(UserPointEnums.ChangeTypeEnum.INCREASE.getValue())
-                .title(UserPointEnums.SourceEnum.TASK.getLabel())
+                .title(taskAwardDTO.getTagEnum().getLabel() + UserPointEnums.SourceEnum.TASK.getLabel())
                 .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
                 .build());
 

@@ -129,7 +129,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     private LambdaQueryWrapper<SysUser> buildSearchParams(Search search, SysUser sysUser) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtil.isNotBlank(search.getStartDate())) {
+        if (ObjectUtil.isNotNull(search.getStartDate())) {
             queryWrapper.between(SysUser::getCreateTime, search.getStartDate(), search.getEndDate());
         }
         if (StringUtil.isNotBlank(sysUser.getAccount())) {

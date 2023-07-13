@@ -78,15 +78,24 @@
         select count(*) from cms_gallery_review cgr
         inner join cms_gallery cg on cgr.gallery_id = cg.id
         <where>
-            cgr.is_deleted = 0 and cg.is_deleted = 0
+            cgr.is_deleted = 0 and cg.is_deleted = 0 and cg.is_published = 1
             <if test="params.status != null and params.status != -1">
                 and cgr.status = #{params.status}
+                <if test="params.status == 0">
+                    and cg.approval_status = 0
+                </if>
             </if>
             <if test="params.userId != null ">
-                and cgr.status = #{params.userId}
+                and cgr.user_id = #{params.userId}
             </if>
             <if test="params.galleryId != null">
                 and cgr.galleryId = #{params.galleryId}
+            </if>
+            <if test="search.startDate != null">
+                and cgr.create_time &gt;= #{search.startDate}
+            </if>
+            <if test="search.endDate != null">
+                and cgr.create_time &lt;= #{search.endDate}
             </if>
         </where>
     </select>
@@ -94,15 +103,21 @@
     <select id="selectGalleryReviewVOPage" resultType="com.auiucloud.component.cms.vo.GalleryReviewVO">
         <include refid="Base_Column_VO_List" />
         <where>
-            cgr.is_deleted = 0 and cg.is_deleted = 0
+            cgr.is_deleted = 0 and cg.is_deleted = 0 and cg.is_published = 1
             <if test="params.status != null and params.status != -1">
                 and cgr.status = #{params.status}
+                <if test="params.status == 0">
+                    and cg.approval_status = 0
+                </if>
             </if>
             <if test="params.userId != null ">
-                and cgr.status = #{params.userId}
+                and cgr.user_id = #{params.userId}
             </if>
             <if test="params.galleryId != null">
                 and cgr.galleryId = #{params.galleryId}
+            </if>
+            <if test="search.startDate != null and search.endDate != null">
+                and (cgr.create_time &gt;= #{search.startDate} and cgr.create_time &lt;= #{search.endDate})
             </if>
         </where>
         limit #{search.pageNum}, #{search.pageSize};

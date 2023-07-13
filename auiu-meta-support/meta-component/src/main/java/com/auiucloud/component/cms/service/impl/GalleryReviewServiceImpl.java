@@ -136,6 +136,11 @@ public class GalleryReviewServiceImpl extends ServiceImpl<GalleryReviewMapper, G
         }
         return update;
     }
+
+    @Override
+    public Long auditCount(Search search) {
+        return null;
+    }
 }
 
 

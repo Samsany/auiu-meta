@@ -1,19 +1,22 @@
 package com.auiucloud.ums.controller;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.auiucloud.core.common.api.ApiResult;
-import com.auiucloud.core.web.controller.BaseController;
+import com.auiucloud.core.common.enums.QueryModeEnum;
 import com.auiucloud.core.common.model.dto.UpdatePasswordDTO;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.poi.ExcelUtil;
 import com.auiucloud.core.database.model.Search;
-import com.auiucloud.core.database.utils.PageUtils;
 import com.auiucloud.core.log.annotation.Log;
 import com.auiucloud.core.validator.group.InsertGroup;
 import com.auiucloud.core.validator.group.UpdateGroup;
+import com.auiucloud.core.web.controller.BaseController;
 import com.auiucloud.ums.domain.Member;
 import com.auiucloud.ums.dto.AdjustUserPointDTO;
 import com.auiucloud.ums.dto.RegisterMemberDTO;
 import com.auiucloud.ums.service.IMemberService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -46,6 +49,8 @@ public class MemberController extends BaseController {
     @GetMapping("/list")
     @Operation(summary = "查询会员列表")
     @Parameters({
+            @Parameter(name = "queryMode", description = "查询模式", in = ParameterIn.QUERY),
+            @Parameter(name = "keyword", description = "模糊搜索", in = ParameterIn.QUERY),
             @Parameter(name = "pageNum", description = "当前页", in = ParameterIn.QUERY),
             @Parameter(name = "pageSize", description = "每页显示数据", in = ParameterIn.QUERY),
             @Parameter(name = "account", description = "账户", in = ParameterIn.QUERY),
@@ -53,8 +58,18 @@ public class MemberController extends BaseController {
             @Parameter(name = "mobile", description = "手机号", in = ParameterIn.QUERY),
     })
     public ApiResult<?> list(Search search, @Parameter(hidden = true) Member member) {
-        PageUtils list = memberService.listPage(search, member);
-        return ApiResult.data(list);
+        QueryModeEnum mode = QueryModeEnum.getQueryModeByCode(search.getQueryMode());
+        return switch (mode) {
+            case LIST -> ApiResult.data(memberService.list(Wrappers.<Member>lambdaQuery()
+                    .eq(ObjectUtil.isNotNull(search.getStatus()), Member::getStatus, search.getStatus())
+                    .and(e -> e.like(StrUtil.isNotBlank(search.getKeyword()), Member::getAccount, search.getKeyword())
+                            .or().like(StrUtil.isNotBlank(search.getKeyword()), Member::getNickname, search.getKeyword())
+                    )
+                    .orderByDesc(Member::getCreateTime)
+                    .orderByDesc(Member::getId)
+            ));
+            default -> ApiResult.data(memberService.listPage(search, member));
+        };
     }
 
     /**

@@ -46,6 +46,21 @@ public class GalleryReviewController extends BaseController {
     }
 
     /**
+     * 查询作品待审核数量
+     */
+    @Log(value = "作品审核", exception = "查询作品待审核数量请求异常")
+    @GetMapping("/audit/count")
+    @Operation(summary = "查询作品待审核数量")
+    @Parameters({
+            @Parameter(name = "keyword", description = "关键字", in = ParameterIn.QUERY),
+            @Parameter(name = "startDate", description = "开始时间", in = ParameterIn.QUERY),
+            @Parameter(name = "endDate", description = "结束时间", in = ParameterIn.QUERY),
+    })
+    public ApiResult<?> auditCount(Search search) {
+        return ApiResult.data(galleryReviewService.auditCount(search));
+    }
+
+    /**
      * 获取作品审核详情
      */
     @Log(value = "作品审核", exception = "获取作品审核详情请求异常")
