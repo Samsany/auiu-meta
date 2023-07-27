@@ -66,7 +66,7 @@ public class SdModelController extends BaseController {
     @Log(value = "Ai绘画模型管理", exception = "新增Ai绘画模型请求异常")
     @PostMapping
     @Operation(summary = "新增Ai绘画模型")
-    public ApiResult<?> add(@RequestBody SdModelConfigVO model) {
+    public ApiResult<?> add(@Validated @RequestBody SdModelConfigVO model) {
         return ApiResult.condition(sdModelService.saveBySdModelConfigVO(model));
     }
 
@@ -76,7 +76,7 @@ public class SdModelController extends BaseController {
     @Log(value = "Ai绘画模型管理", exception = "修改Ai绘画模型请求异常")
     @PutMapping
     @Operation(summary = "修改Ai绘画模型")
-    public ApiResult<?> edit(@RequestBody SdModelConfigVO model) {
+    public ApiResult<?> edit(@Validated @RequestBody SdModelConfigVO model) {
         return ApiResult.condition(sdModelService.updateSdModelConfigVOById(model));
     }
 

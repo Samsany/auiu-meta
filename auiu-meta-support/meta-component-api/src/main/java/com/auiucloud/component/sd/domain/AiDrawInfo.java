@@ -25,6 +25,8 @@ public class AiDrawInfo implements Serializable {
 
     private String imageData;
 
+    private String info;
+
     private String url;
 
     private Integer status;

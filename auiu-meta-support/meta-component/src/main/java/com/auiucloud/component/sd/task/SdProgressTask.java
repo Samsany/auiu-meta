@@ -48,7 +48,7 @@ public class SdProgressTask {
     }
 
     // @Scheduled(fixedDelay = 2000)
-    @SneakyThrows
+    // @SneakyThrows
     public void runTask() {
         AiDrawFactory aiDrawFactory = AiDrawConfiguration.getAiDrawFactory(MetaConstant.SD_DRAW_DEFAULT_ID);
         scheduledTask = taskScheduler.schedule(() -> {
@@ -88,7 +88,7 @@ public class SdProgressTask {
                                     .build());
                         }
                     } else {
-                        if (errCount.get() > 5) {
+                        if (errCount.get() > 10) {
                             stopTask();
                         } else {
                             errCount.incrementAndGet();

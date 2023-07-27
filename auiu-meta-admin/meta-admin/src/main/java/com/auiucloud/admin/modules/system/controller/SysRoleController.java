@@ -126,7 +126,7 @@ public class SysRoleController extends BaseController {
      * 设置系统角色状态
      */
     @Log(value = "系统角色", exception = "修改系统角色请求异常")
-    @GetMapping("/setStatus")
+    @PutMapping("/setStatus")
     @Operation(summary = "修改系统角色状态")
     public ApiResult<?> setRoleStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
         return ApiResult.condition(sysRoleService.setRoleStatus(updateStatusDTO));

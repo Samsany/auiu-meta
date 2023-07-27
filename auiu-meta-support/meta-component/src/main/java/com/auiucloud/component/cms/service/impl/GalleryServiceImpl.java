@@ -15,6 +15,7 @@ import com.auiucloud.component.cms.service.*;
 import com.auiucloud.component.cms.vo.*;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sd.domain.AiDrawInfo;
+import com.auiucloud.component.sd.dto.SdTxt2ImgDTO;
 import com.auiucloud.component.sysconfig.domain.SysAttachment;
 import com.auiucloud.component.sysconfig.domain.UserConfigProperties;
 import com.auiucloud.component.sysconfig.service.ISysConfigService;
@@ -22,7 +23,6 @@ import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
-import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.dto.UpdateStatusDTO;
 import com.auiucloud.core.common.utils.FileUtil;
@@ -50,6 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,6 +65,7 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -85,6 +87,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     private final ISysConfigService sysConfigService;
     private final IGalleryAppealService galleryAppealService;
     private final IGalleryReviewService galleryReviewService;
+    private final TaskExecutor taskExecutor;
 
     @Lazy
     @Resource
@@ -150,7 +153,8 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
 
             Long total = baseMapper.countSquareGalleryVOTotal(search, gallery);
             Search s = PageUtils.buildPage(search, Math.toIntExact(total));
-            List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectSquareGalleryVOPage(s, gallery)).orElse(Collections.emptyList());
+            List<GalleryVO> galleryVOS = Optional.ofNullable(baseMapper.selectSquareGalleryVOPage(s, gallery))
+                    .orElse(Collections.emptyList());
 
             List<Long> galleryIds = galleryVOS.parallelStream().map(GalleryVO::getId).collect(Collectors.toList());
             List<UserGalleryLikeVO> userGalleryLikeVOS = userGalleryLikeService.selectGalleryLikeVOListByGIds(galleryIds);
@@ -511,10 +515,13 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     @Override
     public List<AiDrawInfo> updateAiDrawResult(Long userId, List<AiDrawInfo> aiDrawImgList) {
         for (AiDrawInfo aiDrawImg : aiDrawImgList) {
-            Gallery gallery = Gallery.builder()
-                    .id(aiDrawImg.getGalleryId())
-                    .status(aiDrawImg.getStatus())
-                    .build();
+            // 获取作品详情
+            Gallery gallery = this.getById(aiDrawImg.getGalleryId());
+            gallery.setStatus(aiDrawImg.getStatus());
+            // 组装Ai绘画生图参数
+            SdTxt2ImgDTO sdDrawParam = JSONUtil.toBean(gallery.getSdConfig(), SdTxt2ImgDTO.class);
+            sdDrawParam.setInfo(aiDrawImg.getInfo());
+            gallery.setSdConfig(JSONUtil.toJsonStr(sdDrawParam));
 
             if (aiDrawImg.getStatus().equals(GalleryEnums.GalleryStatus.SUCCESS.getValue())) {
                 // 上传图片
@@ -527,6 +534,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
                     gallery.setPic(url);
                     gallery.setThumbUrl(thumbUrl);
                     aiDrawImg.setUrl(thumbUrl);
+                    aiDrawImg.setImageData("");
                 } catch (Exception e) {
                     log.error("AI绘画数据上传异常: {}", e.getMessage());
                     gallery.setStatus(GalleryEnums.GalleryStatus.FAIL.getValue());
@@ -537,15 +545,17 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             }
 
             boolean result = this.updateById(gallery);
-            if (result && gallery.getStatus().equals(GalleryEnums.GalleryStatus.SUCCESS.getValue())) {
-                // 插入审核记录
-                GalleryReview galleryReview = GalleryReview.builder()
-                        .galleryId(gallery.getId())
-                        .userId(userId)
-                        .status(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
-                        .build();
-                galleryReviewService.save(galleryReview);
-            }
+            // 异步插入待审核记录
+            CompletableFuture.runAsync(() -> {
+                if (result && gallery.getStatus().equals(GalleryEnums.GalleryStatus.SUCCESS.getValue())) {
+                    GalleryReview galleryReview = GalleryReview.builder()
+                            .galleryId(gallery.getId())
+                            .userId(userId)
+                            .status(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())
+                            .build();
+                    galleryReviewService.save(galleryReview);
+                }
+            }, taskExecutor);
         }
 
         return aiDrawImgList;
@@ -570,7 +580,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
             return ApiResult.fail("作品违规");
         }
         if (gallery.getIsPublished().equals(CommonConstant.STATUS_DISABLE_VALUE)) {
-            if(gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
+            if (gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
                 return ApiResult.fail("发布已提交，等待工作人员审核");
             }
             return ApiResult.fail("作品已发布，请勿重复操作");
@@ -604,10 +614,10 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         updateWrapper.set(ObjectUtil.isNotNull(galleryVO.getIsTop()), Gallery::getIsTop, galleryVO.getIsTop());
         updateWrapper.set(Gallery::getUpdateBy, SecurityUtil.getUsername());
         boolean result = this.update(updateWrapper);
-        if(!result) {
+        if (!result) {
             return ApiResult.fail();
         }
-        if(gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
+        if (gallery.getApprovalStatus().equals(GalleryEnums.GalleryApprovalStatus.AWAIT.getValue())) {
             return ApiResult.fail("发布已提交，等待工作人员审核");
         }
         return ApiResult.success();
@@ -800,6 +810,7 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
     public UserStatisticalGalleryVO getUserStatisticalGalleryVOById(Long userId) {
         // 统计总数
         LambdaQueryWrapper<Gallery> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(Gallery::getUserId, userId);
         queryWrapper.eq(Gallery::getIsPublished, GalleryEnums.GalleryIsPublished.YES.getValue());
         queryWrapper.eq(Gallery::getStatus, GalleryEnums.GalleryStatus.SUCCESS.getValue());
         queryWrapper.eq(Gallery::getApprovalStatus, GalleryEnums.GalleryApprovalStatus.RESOLVE.getValue());
@@ -812,10 +823,11 @@ public class GalleryServiceImpl extends ServiceImpl<GalleryMapper, Gallery>
         queryWrapper.orderByDesc(Gallery::getId);
         queryWrapper.last("limit 5");
         List<Gallery> list = Optional.ofNullable(this.list(queryWrapper)).orElse(Collections.emptyList());
-        List<UserStatisticalGalleryVO.GalleryInfo> galleryInfoList = list.parallelStream().map(it -> UserStatisticalGalleryVO.GalleryInfo.builder()
-                .id(it.getId())
-                .thumbnail(it.getThumbUrl())
-                .build()).toList();
+        List<UserStatisticalGalleryVO.GalleryInfo> galleryInfoList = list.parallelStream()
+                .map(it -> UserStatisticalGalleryVO.GalleryInfo.builder()
+                        .id(it.getId())
+                        .thumbnail(it.getThumbUrl())
+                        .build()).toList();
 
         return UserStatisticalGalleryVO.builder()
                 .galleryNum(count)

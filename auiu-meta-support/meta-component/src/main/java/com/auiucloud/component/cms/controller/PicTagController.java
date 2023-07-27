@@ -100,7 +100,7 @@ public class PicTagController extends BaseController {
      * 设置图片标签状态
      */
     @Log(value = "图片标签", exception = "修改图片标签请求异常")
-    @GetMapping("/setStatus")
+    @PutMapping("/setStatus")
     @Operation(summary = "修改图片标签状态")
     public ApiResult<?> setStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
         return ApiResult.condition(picTagService.setStatus(updateStatusDTO));

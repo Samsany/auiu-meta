@@ -35,7 +35,7 @@ public class MemberOpenApiController {
      */
     @Log(value = "用户")
     @GetMapping("/user/recommend/list")
-    @Operation(summary = "每日推荐用户列表")
+    @Operation(summary = "推荐用户列表")
     public ApiResult<?> userRecommendList() {
         List<UserRecommendVO> list = memberService.userRecommendList();
         return ApiResult.data(list);

@@ -65,6 +65,11 @@ public class SdModelVO implements Serializable {
     /**
      * 文件路径
      */
+    private String filePath;
+
+    /**
+     * 文件名
+     */
     private String filename;
 
     /**

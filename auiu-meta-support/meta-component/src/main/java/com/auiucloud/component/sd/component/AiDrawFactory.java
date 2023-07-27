@@ -51,7 +51,7 @@ public class AiDrawFactory implements IAiDrawFactoryService {
         try {
             // 定时任务的逻辑
             return RestTemplateUtil.get(this.url + SdConstants.progress + "?skip_current_image=false", SdProgressVO.class).getBody();
-        } catch (RestClientException e) {
+        } catch (Exception e) {
             log.error("获取生图进度异常：{}", e.getMessage());
             return null;
         }

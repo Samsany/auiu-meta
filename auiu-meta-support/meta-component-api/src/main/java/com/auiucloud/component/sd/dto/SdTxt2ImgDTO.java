@@ -148,4 +148,6 @@ public class SdTxt2ImgDTO implements Serializable {
          */
         private String negativePrompt = "";
     }
+
+    private String info;
 }

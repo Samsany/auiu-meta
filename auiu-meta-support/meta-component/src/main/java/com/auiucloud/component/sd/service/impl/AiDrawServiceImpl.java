@@ -1,5 +1,6 @@
 package com.auiucloud.component.sd.service.impl;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -30,8 +31,10 @@ import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
 import com.auiucloud.core.common.enums.WsMessageEnums;
 import com.auiucloud.core.common.exception.ApiException;
 import com.auiucloud.core.common.model.WsMsgModel;
+import com.auiucloud.core.common.utils.FileUtil;
 import com.auiucloud.core.common.utils.StringPool;
 import com.auiucloud.core.common.utils.StringUtils;
+import com.auiucloud.core.common.utils.ThumbUtil;
 import com.auiucloud.core.douyin.config.AppletsConfiguration;
 import com.auiucloud.core.douyin.service.DouyinAppletsService;
 import com.auiucloud.core.rabbit.utils.RabbitMqUtils;
@@ -41,9 +44,11 @@ import com.auiucloud.ums.feign.IMemberProvider;
 import com.auiucloud.ums.vo.UserInfoVO;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -52,6 +57,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -74,7 +82,9 @@ public class AiDrawServiceImpl implements IAiDrawService {
     private final StreamBridge streamBridge;
     private final RabbitMqUtils rabbitMqUtils;
 
-    @GlobalTransactional
+    private final TaskExecutor taskExecutor;
+
+    @GlobalTransactional(timeoutMills = 60 * 60 * 1000)
     @Override
     public void sdText2Img(SdTxt2ImgConfigDTO txt2ImgConfig) {
 
@@ -82,7 +92,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
         String drawIds = txt2ImgConfig.getDrawIds();
         try {
             // 更新文生图状态
-            this.updateDrawStatusByIds(drawIds, GalleryEnums.GalleryStatus.IN_PROGRESS.getValue());
+            CompletableFuture.runAsync(() -> this.updateDrawStatusByIds(drawIds, GalleryEnums.GalleryStatus.IN_PROGRESS.getValue()), taskExecutor);
 
             SdTxt2ImgParams params = new SdTxt2ImgParams();
             BeanUtils.copyProperties(txt2ImgConfig, params);
@@ -100,7 +110,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
                 // 完成任务
                 SdDrawResult sdDrawResult = apiResult.getData();
                 // 图片处理
-                List<AiDrawInfo> aiDrawImgList = this.updateAiDrawResultByIds(txt2ImgConfig, sdDrawResult.getImages());
+                List<AiDrawInfo> aiDrawImgList = this.updateAiDrawResultByIds(txt2ImgConfig, sdDrawResult);
                 long errCount = aiDrawImgList.parallelStream()
                         .filter(it -> it.getStatus().equals(GalleryEnums.GalleryStatus.FAIL.getValue()))
                         .count();
@@ -302,144 +312,182 @@ public class AiDrawServiceImpl implements IAiDrawService {
                 .build());
     }
 
+    @SneakyThrows
     @Override
     public SdTxt2ImgConfigDTO generatorSdTxt2ImgParams(SdTxt2ImgDTO sdDrawParam) {
-        // 文本校验
-        String prompt = sdDrawParam.getPrompt();
-        if (StrUtil.isBlank(prompt)) {
-            throw new ApiException("请输入关键词");
-        }
-        boolean checkPrompt = false;
-        String clientId = "";
-        String appId = "";
-        try {
-            String platform = sdDrawParam.getPlatform();
-            String[] split = platform.split(StringPool.COLON);
-            clientId = split[0];
-            appId = split[1];
 
-            if (clientId.equalsIgnoreCase(AuthenticationIdentityEnum.DOUYIN_APPLET.name())) {
-                DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
-                List<Integer> resultList = douyinAppletService.checkTextList(List.of(
-                        sdDrawParam.getPrompt(),
-                        sdDrawParam.getNegativePrompt()
-                ));
-                if (resultList.size() > 0) {
-                    checkPrompt = true;
+            // 文本校验
+            String prompt = sdDrawParam.getPrompt();
+            if (StrUtil.isBlank(prompt)) {
+                throw new ApiException("请输入关键词");
+            }
+            AtomicBoolean checkPrompt = new AtomicBoolean(false);
+            AtomicReference<String> clientId = new AtomicReference<>("");
+            AtomicReference<String> appId = new AtomicReference<>("");
+
+            CompletableFuture<Void> checkTextFuture = CompletableFuture.runAsync(() -> {
+                try {
+                    String platform = sdDrawParam.getPlatform();
+                    String[] split = platform.split(StringPool.COLON);
+                    String clientIdStr = split[0];
+                    String appIdStr = split[1];
+                    clientId.set(clientIdStr);
+                    appId.set(appIdStr);
+
+                    if (clientIdStr.equalsIgnoreCase(AuthenticationIdentityEnum.DOUYIN_APPLET.name())) {
+                        DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appIdStr);
+                        List<Integer> resultList = douyinAppletService.checkTextList(List.of(
+                                sdDrawParam.getPrompt(),
+                                sdDrawParam.getNegativePrompt()
+                        ));
+                        if (resultList.size() > 0) {
+                            checkPrompt.set(true);
+                        }
+                    }
+                } catch (Exception e) {
+                    log.error("文生图参数关键词校验异常: {}", e.getMessage());
+                    // throw new ApiException(ResultCode.USER_ERROR_A0500);
                 }
-            }
-        } catch (Exception e) {
-            log.error("文生图参数关键词校验异常: {}", e.getMessage());
-            // throw new ApiException(ResultCode.USER_ERROR_A0500);
-        }
-        if (checkPrompt) {
-            throw new ApiException(ResultCode.USER_ERROR_A0431);
-        }
+                if (checkPrompt.get()) {
+                    throw new ApiException(ResultCode.USER_ERROR_A0431);
+                }
+            }, taskExecutor);
 
-        Long userId = sdDrawParam.getUserId();
-        UserInfoVO userInfo = memberProvider.getSimpleUserById(userId).getData();
-        if (ObjectUtil.isNull(userInfo)) {
-            throw new ApiException(ResultCode.USER_ERROR_A0301);
-        }
-        // 用户的积分
-        Integer integral = userInfo.getIntegral();
 
-        // 计算消耗积分
-        // 1.获取生图比例
-        SdPicRatio picRatio = picRatioService.getById(sdDrawParam.getPicRatioId());
-        if (ObjectUtil.isNull(userInfo)) {
-            throw new ApiException("绘制画面比例异常，请重试");
-        }
+            Long userId = sdDrawParam.getUserId();
+            // 用户
+            CompletableFuture<UserInfoVO> getUserFuture = CompletableFuture.supplyAsync(() -> {
+                UserInfoVO userInfo = memberProvider.getSimpleUserById(userId).getData();
+                if (ObjectUtil.isNull(userInfo)) {
+                    throw new ApiException(ResultCode.USER_ERROR_A0301);
+                }
+                return userInfo;
+            }, taskExecutor);
 
-        // 2.获取图片质量
-        SdPicQuality picQuality = sdUpScaleService.getById(sdDrawParam.getPicQualityId());
-        if (ObjectUtil.isNull(userInfo)) {
-            throw new ApiException("制作异常，请重试");
-        }
+            // 计算消耗积分
+            // 1.获取生图比例
+            CompletableFuture<SdPicRatio> getPicRatioFuture = CompletableFuture.supplyAsync(() -> {
+                SdPicRatio picRatio = picRatioService.getById(sdDrawParam.getPicRatioId());
+                if (ObjectUtil.isNull(picRatio)) {
+                    throw new ApiException("绘制画面比例异常，请重试");
+                }
+                return picRatio;
+            }, taskExecutor);
 
-        Integer consumeIntegral = (picRatio.getConsumeIntegral() + picQuality.getConsumeIntegral()) * sdDrawParam.getBatchSize();
-        if (picQuality.getEnableHr().equals(CommonConstant.YES_VALUE)) {
-            consumeIntegral = consumeIntegral * picQuality.getHrScale().intValue();
-        }
-        if (integral < consumeIntegral) {
-            throw new ApiException(ResultCode.USER_ERROR_A0160);
-        }
 
-        // 3.获取Model
-        SdModel model = sdModelService.getById(sdDrawParam.getModelId());
-        if (ObjectUtil.isNull(model) || StrUtil.isBlank(model.getModelName()) || StrUtil.isBlank(model.getModelHash())) {
-            throw new ApiException("模型解析异常，请重试");
-        }
+            // 2.获取图片质量
+            CompletableFuture<SdPicQuality> getPicQualityFuture = CompletableFuture.supplyAsync(() -> {
+                SdPicQuality picQuality = sdUpScaleService.getById(sdDrawParam.getPicQualityId());
+                if (ObjectUtil.isNull(picQuality)) {
+                    throw new ApiException("制作异常，请重试");
+                }
+                return picQuality;
+            }, taskExecutor);
 
-        // 扣减用户积分
-        ApiResult<?> apiResult = memberProvider.assignUserPoint(UserPointChangeDTO.builder()
-                .userId(userId)
-                .integral(consumeIntegral)
-                .changeType(UserPointEnums.ChangeTypeEnum.DECREASE.getValue())
-                .title(UserPointEnums.ConsumptionEnum.AI_TEXT2IMG.getLabel())
-                .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
-                .build());
+            // 3.获取Model
+            CompletableFuture<SdModel> getSdModelFuture = CompletableFuture.supplyAsync(() -> {
+                SdModel model = sdModelService.getById(sdDrawParam.getModelId());
+                if (ObjectUtil.isNull(model) || StrUtil.isBlank(model.getModelName()) || StrUtil.isBlank(model.getModelHash())) {
+                    throw new ApiException("模型解析异常，请重试");
+                }
+                return model;
+            }, taskExecutor);
 
-        if (apiResult.successful()) {
-            SdTxt2ImgConfigDTO txt2ImgConfig = new SdTxt2ImgConfigDTO();
-            txt2ImgConfig.setPlatform(clientId);
-            txt2ImgConfig.setAppId(appId);
-            txt2ImgConfig.setUserId(userId);
-            txt2ImgConfig.setSdDrawType(SdDrawEnums.DrawType.TXT2IMG.getValue());
-            txt2ImgConfig.setTaskId(sdDrawParam.getTaskId());
-            txt2ImgConfig.setConsumeIntegral(consumeIntegral);
-            txt2ImgConfig.setStyle(sdDrawParam.getStyle());
-            txt2ImgConfig.setLora(sdDrawParam.getLora());
-            txt2ImgConfig.setEmbedding(sdDrawParam.getEmbedding());
-            txt2ImgConfig.setRatio(picRatio.getRatio());
+            CompletableFuture.allOf(checkTextFuture, getUserFuture, getPicRatioFuture, getPicQualityFuture, getSdModelFuture).get();
+            UserInfoVO userInfo = getUserFuture.get();
+            SdPicRatio picRatio = getPicRatioFuture.get();
+            SdPicQuality picQuality = getPicQualityFuture.get();
+            SdModel model = getSdModelFuture.get();
 
-            // 覆盖配置 model、clip_skip、eta、ENSD
-            JSONObject obj = JSONUtil.createObj();
-            // obj.set("sd_model_checkpoint", model.getModelName() + " " + model.getModelHash());
-            obj.set("sd_model_checkpoint", model.getTitle());
-            // obj.set("filter_nsfw", true);
-            obj.set("CLIP_stop_at_last_layers", 2);
-            // obj.set("sd_vae", "");
-            txt2ImgConfig.setOverride_settings(obj);
-            txt2ImgConfig.setAlwayson_scripts(JSONUtil.createObj());
-
-            txt2ImgConfig.setPrompt(sdDrawParam.getPrompt());
-            txt2ImgConfig.setNegative_prompt(sdDrawParam.getNegativePrompt());
-
-            txt2ImgConfig.setBatch_size(sdDrawParam.getBatchSize());
-            txt2ImgConfig.setWidth(picRatio.getWidth());
-            txt2ImgConfig.setHeight(picRatio.getHeight());
-
-            txt2ImgConfig.setRestore_faces(sdDrawParam.getRestoreFaces());
-            txt2ImgConfig.setTiling(sdDrawParam.getTiling());
-            txt2ImgConfig.setEnable_hr(sdDrawParam.getEnableHr());
-
-            // 是否开启高清修复
+            Integer integral = userInfo.getIntegral();
+            Integer consumeIntegral = (picRatio.getConsumeIntegral() + picQuality.getConsumeIntegral()) * sdDrawParam.getBatchSize();
             if (picQuality.getEnableHr().equals(CommonConstant.YES_VALUE)) {
-                txt2ImgConfig.setEnable_hr(Boolean.TRUE);
-                txt2ImgConfig.setHr_scale(picQuality.getHrScale());
-                txt2ImgConfig.setHr_upscaler(picQuality.getName());
-                txt2ImgConfig.setHr_second_pass_steps(picQuality.getSteps());
-                txt2ImgConfig.setDenoising_strength(picQuality.getDenoisingStrength());
-                txt2ImgConfig.setHr_resize_x(picQuality.getHrResizeX());
-                txt2ImgConfig.setHr_resize_y(picQuality.getHrResizeY());
-                // text2ImgParam.setFirstphase_width(picRatio.getWidth());
-                // text2ImgParam.setFirstphase_height(picRatio.getHeight());
-                txt2ImgConfig.setWidth((int) (txt2ImgConfig.getWidth() * picQuality.getHrScale()));
-                txt2ImgConfig.setHeight((int) (txt2ImgConfig.getHeight() * picQuality.getHrScale()));
+                consumeIntegral = consumeIntegral * picQuality.getHrScale().intValue();
+            }
+            if (integral < consumeIntegral) {
+                throw new ApiException(ResultCode.USER_ERROR_A0160);
             }
 
-            // todo 判断是否为会员 否则使用默认配置
-            SdModelConfig sdModelConfig = JSONUtil.toBean(model.getConfig(), SdModelConfig.class);
-            txt2ImgConfig.setCfg_scale(sdModelConfig.getCfgScale());
-            txt2ImgConfig.setSteps(sdModelConfig.getSteps());
-            txt2ImgConfig.setSampler_index(sdModelConfig.getDefaultSampler());
-            txt2ImgConfig.setSampler_name(sdModelConfig.getDefaultSampler());
+            // 扣减用户积分
+            ApiResult<?> apiResult = memberProvider.assignUserPoint(UserPointChangeDTO.builder()
+                    .userId(userId)
+                    .integral(consumeIntegral)
+                    .changeType(UserPointEnums.ChangeTypeEnum.DECREASE.getValue())
+                    .title(UserPointEnums.ConsumptionEnum.AI_TEXT2IMG.getLabel())
+                    .status(UserPointEnums.StatusEnum.SUCCESS.getValue())
+                    .build());
 
-            return txt2ImgConfig;
-        }
+            if (apiResult.successful()) {
+                SdTxt2ImgConfigDTO txt2ImgConfig = new SdTxt2ImgConfigDTO();
+                txt2ImgConfig.setPlatform(clientId.get());
+                txt2ImgConfig.setAppId(appId.get());
+                txt2ImgConfig.setUserId(userId);
+                txt2ImgConfig.setSdDrawType(SdDrawEnums.DrawType.TXT2IMG.getValue());
+                txt2ImgConfig.setTaskId(sdDrawParam.getTaskId());
+                txt2ImgConfig.setConsumeIntegral(consumeIntegral);
+                txt2ImgConfig.setStyle(sdDrawParam.getStyle());
+                txt2ImgConfig.setLora(sdDrawParam.getLora());
+                txt2ImgConfig.setEmbedding(sdDrawParam.getEmbedding());
+                txt2ImgConfig.setRatio(picRatio.getRatio());
 
-        throw new ApiException(apiResult.getMessage());
+                // 覆盖配置 model、clip_skip、eta、ENSD
+                JSONObject obj = JSONUtil.createObj();
+
+                // 获取模型
+                String filename = model.getFilename();
+                if(StrUtil.isBlank(filename)) {
+                    throw new ApiException("模型参数异常，请联系管理员");
+                }
+                if (StrUtil.isNotBlank(model.getFilePath())) {
+                    filename = model.getFilePath() + StringPool.SLASH + filename;
+                }
+
+                obj.set("sd_model_checkpoint", filename);
+                // obj.set("filter_nsfw", true);
+                obj.set("CLIP_stop_at_last_layers", 2);
+                // obj.set("sd_vae", "");
+                txt2ImgConfig.setOverride_settings(obj);
+                txt2ImgConfig.setAlwayson_scripts(JSONUtil.createObj());
+
+                txt2ImgConfig.setPrompt(sdDrawParam.getPrompt());
+                txt2ImgConfig.setNegative_prompt(sdDrawParam.getNegativePrompt());
+
+                txt2ImgConfig.setBatch_size(sdDrawParam.getBatchSize());
+                txt2ImgConfig.setWidth(picRatio.getWidth());
+                txt2ImgConfig.setHeight(picRatio.getHeight());
+
+                txt2ImgConfig.setRestore_faces(sdDrawParam.getRestoreFaces());
+                txt2ImgConfig.setTiling(sdDrawParam.getTiling());
+                txt2ImgConfig.setEnable_hr(sdDrawParam.getEnableHr());
+
+                // 是否开启高清修复
+                if (picQuality.getEnableHr().equals(CommonConstant.YES_VALUE)) {
+                    txt2ImgConfig.setEnable_hr(Boolean.TRUE);
+                    txt2ImgConfig.setHr_scale(picQuality.getHrScale());
+                    txt2ImgConfig.setHr_upscaler(picQuality.getName());
+                    txt2ImgConfig.setHr_second_pass_steps(picQuality.getSteps());
+                    txt2ImgConfig.setDenoising_strength(picQuality.getDenoisingStrength());
+                    txt2ImgConfig.setHr_resize_x(picQuality.getHrResizeX());
+                    txt2ImgConfig.setHr_resize_y(picQuality.getHrResizeY());
+                    // text2ImgParam.setFirstphase_width(picRatio.getWidth());
+                    // text2ImgParam.setFirstphase_height(picRatio.getHeight());
+                    txt2ImgConfig.setWidth((int) (txt2ImgConfig.getWidth() * picQuality.getHrScale()));
+                    txt2ImgConfig.setHeight((int) (txt2ImgConfig.getHeight() * picQuality.getHrScale()));
+                }
+
+                // todo 判断是否为会员 否则使用默认配置
+                SdModelConfig sdModelConfig = JSONUtil.toBean(model.getConfig(), SdModelConfig.class);
+                txt2ImgConfig.setCfg_scale(sdModelConfig.getCfgScale());
+                txt2ImgConfig.setSteps(sdModelConfig.getSteps());
+                txt2ImgConfig.setSampler_index(sdModelConfig.getDefaultSampler());
+                txt2ImgConfig.setSampler_name(sdModelConfig.getDefaultSampler());
+                txt2ImgConfig.setRestore_faces(sdModelConfig.getRestoreFaces().equals(CommonConstant.YES_VALUE));
+                txt2ImgConfig.setTiling(sdModelConfig.getTiling().equals(CommonConstant.YES_VALUE));
+
+                return txt2ImgConfig;
+            }
+
+            throw new ApiException(apiResult.getMessage());
     }
 
     @Override
@@ -465,10 +513,11 @@ public class AiDrawServiceImpl implements IAiDrawService {
     }
 
     @Override
-    public List<AiDrawInfo> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, List<String> images) {
+    public List<AiDrawInfo> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, SdDrawResult sdDrawResult) {
 
         List<AiDrawInfo> aiDrawImgList = new ArrayList<>();
         String drawIds = txt2ImgConfig.getDrawIds();
+        List<String> images = sdDrawResult.getImages();
         if (StrUtil.isNotBlank(drawIds)) {
             List<String> ids = StrUtil.split(drawIds, StringPool.COMMA);
             for (int i = 0; i < ids.size(); i++) {
@@ -479,6 +528,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
                         .galleryId(id)
                         .url("")
                         .imageData("data:image/png;base64," + base64Img)
+                        .info(sdDrawResult.getInfo())
                         .status(GalleryEnums.GalleryStatus.SUCCESS.getValue()) // 先默认成功
                         .build();
                 try {
@@ -486,7 +536,9 @@ public class AiDrawServiceImpl implements IAiDrawService {
                     String appId = txt2ImgConfig.getAppId();
                     if (platform.equalsIgnoreCase(AuthenticationIdentityEnum.DOUYIN_APPLET.name())) {
                         DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
-                        String result = douyinAppletService.checkImageData(base64Img);
+                        // 压缩图片
+                        byte[] compressedBytes = ThumbUtil.compressPicForScale(Base64.decode(base64Img), 50);
+                        String result = douyinAppletService.checkImageData(Base64.encode(compressedBytes));
                         if (StrUtil.isNotBlank(result)) {
                             log.error("内容安全检测: {}", result);
                             aiDrawImg.setStatus(GalleryEnums.GalleryStatus.VIOLATIONS.getValue());
@@ -496,13 +548,8 @@ public class AiDrawServiceImpl implements IAiDrawService {
                     log.error("内容安全检测异常: {}", e.getMessage());
                 }
                 aiDrawImgList.add(aiDrawImg);
-                // UpdateAiDrawPicDTO data = UpdateAiDrawPicDTO.builder()
-                //         .id(Long.valueOf(ids.get(i)))
-                //         .pic(images.get(i))
-                //         .build();
-                // updateAiDrawPicDTOS.add(data);
             }
-            aiDrawImgList = galleryService.updateAiDrawResult(txt2ImgConfig.getUserId(), aiDrawImgList);
+            galleryService.updateAiDrawResult(txt2ImgConfig.getUserId(), aiDrawImgList);
         }
         return aiDrawImgList;
     }

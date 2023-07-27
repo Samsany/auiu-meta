@@ -96,7 +96,7 @@ public class SysOauthClientController {
      * 设置客户端状态
      */
     @Log(value = "客户端", exception = "修改客户端请求异常")
-    @GetMapping("/setStatus")
+    @PutMapping("/setStatus")
     @Operation(summary = "修改客户端状态")
     public ApiResult<?> setOauthClientStatus(@Validated UpdateStatusDTO statusDTO) {
         return ApiResult.condition(sysOauthClientService.setOauthClientStatus(statusDTO));

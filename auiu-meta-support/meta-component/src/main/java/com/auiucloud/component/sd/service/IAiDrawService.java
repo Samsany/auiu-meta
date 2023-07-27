@@ -1,6 +1,7 @@
 package com.auiucloud.component.sd.service;
 
 import com.auiucloud.component.sd.domain.AiDrawInfo;
+import com.auiucloud.component.sd.domain.SdDrawResult;
 import com.auiucloud.component.sd.dto.SdTxt2ImgDTO;
 import com.auiucloud.component.sd.dto.SdTxt2ImgConfigDTO;
 import com.auiucloud.core.common.model.WsMsgModel;
@@ -26,5 +27,5 @@ public interface IAiDrawService {
 
     void updateDrawStatusByIds(String drawIds, Integer status);
 
-    List<AiDrawInfo> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, List<String> images);
+    List<AiDrawInfo> updateAiDrawResultByIds(SdTxt2ImgConfigDTO txt2ImgConfig, SdDrawResult sdDrawResult);
 }

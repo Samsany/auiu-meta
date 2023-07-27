@@ -79,7 +79,7 @@ public class SwiperAdvController extends BaseController {
      * 设置轮播广告状态
      */
     @Log(value = "轮播广告", exception = "修改轮播广告请求异常")
-    @GetMapping("/setStatus")
+    @PutMapping("/setStatus")
     @Operation(summary = "修改轮播广告状态")
     public ApiResult<?> setStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
         return ApiResult.condition(swiperAdvService.setStatus(updateStatusDTO));

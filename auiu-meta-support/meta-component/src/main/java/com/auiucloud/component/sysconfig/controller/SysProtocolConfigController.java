@@ -84,7 +84,7 @@ public class SysProtocolConfigController {
      * 设置系统协议配置状态
      */
     @Log(value = "系统协议配置", exception = "修改图片标签请求异常")
-    @GetMapping("/setStatus")
+    @PutMapping("/setStatus")
     @Operation(summary = "修改系统协议配置状态")
     public ApiResult<?> setStatus(@Validated @RequestBody UpdateStatusDTO updateStatusDTO) {
         return ApiResult.condition(sysProtocolConfigService.setStatus(updateStatusDTO));

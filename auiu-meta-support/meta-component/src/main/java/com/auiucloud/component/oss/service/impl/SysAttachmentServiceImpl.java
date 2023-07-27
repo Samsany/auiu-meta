@@ -10,7 +10,6 @@ import com.auiucloud.component.oss.service.ISysAttachmentGroupService;
 import com.auiucloud.component.oss.service.ISysAttachmentService;
 import com.auiucloud.component.sysconfig.domain.SysAttachment;
 import com.auiucloud.component.sysconfig.domain.SysAttachmentGroup;
-import com.auiucloud.component.sysconfig.service.ISysConfigService;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
@@ -35,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,6 +45,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author dries
@@ -60,6 +62,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     private final OssTemplate ossTemplate;
     private final IOSSConfigService ossConfigService;
     private final ISysAttachmentGroupService sysAttachmentGroupService;
+    private final TaskExecutor taskExecutor;
 
     /**
      * 分页查询附件
@@ -131,9 +134,14 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
     @Transactional
     @Override
     public Map<String, Object> upload(MultipartFile file, Long groupId, String filename, boolean thumb, boolean checkImg) {
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        String fileType = FileUtil.getFileType(extension);
+
         try {
+            OssProperties ossProperties = getOssProperties();
+            assert ossProperties != null;
+
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            String fileType = FileUtil.getFileType(extension);
+
             if (checkImg) {
                 if (!fileType.equals("pic")) {
                     throw new ApiException("文件类型不匹配");
@@ -142,20 +150,26 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
                 uploadImageCheck(file);
             }
 
-            OssProperties ossProperties = getOssProperties();
             SysAttachmentGroup group = sysAttachmentGroupService.getUploadGroupById(groupId);
-
             if (StrUtil.isBlank(filename)) {
                 filename = UUID.randomUUID().toString().replace("-", "")
                         + StringPool.DOT + extension;
             }
 
+            String fileNameNoEx = FileUtil.getFileNameNoEx(filename);
+
+            // 上传主文件
             String bizPath = group.getBizPath();
             String filePath = StrUtil.isNotBlank(bizPath) ? bizPath.concat(StringPool.SLASH + filename) : filename;
             Map<String, Object> uMap = new HashMap<>();
-            // 上传文件
-            assert ossProperties != null;
-            ossTemplate.putObject(ossProperties.getBucketName(), filePath, file.getInputStream(), file.getSize(), file.getContentType());
+            CompletableFuture<Void> uploadFileFuture = CompletableFuture.runAsync(() -> {
+                try {
+                    ossTemplate.putObject(ossProperties.getBucketName(), filePath, file.getInputStream(), file.getSize(), file.getContentType());
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }, taskExecutor);
+
             String url = ossProperties.getCustomDomain() + StringPool.SLASH + filePath;
             // 自定义返回报文
             uMap.put("bucketName", ossProperties.getBucketName());
@@ -164,28 +178,48 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             // 文件大小 单位kb
             uMap.put("size", file.getSize() / 1024);
 
-            String thumbUrl = null;
             // 上传缩略图
-            if (thumb) {
-                String thumbFileName = FileUtil.getFileNameNoEx(filename) + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
-                String thumbFilePath = "thumb" + StringPool.SLASH + thumbFileName;
-                byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
-                ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
-                thumbUrl = ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath;
-                uMap.put("thumbUrl", thumbUrl);
-            }
+            AtomicReference<String> thumbUrl = new AtomicReference<>(null);
+            CompletableFuture<Void> uploadThumbFuture = CompletableFuture.runAsync(() -> {
+                try {
+                    if (thumb) {
+                        String thumbFileName = fileNameNoEx + StringPool.UNDERSCORE + "thumb" + StringPool.DOT + extension;
+                        String thumbFilePath = "thumb" + StringPool.SLASH + thumbFileName;
+                        byte[] thumbBytes = ThumbUtil.compressPicForScale(file.getBytes(), 500);
+                        ossTemplate.putObject(ossProperties.getBucketName(), thumbFilePath, thumbBytes, file.getContentType());
+                        thumbUrl.set(ossProperties.getCustomDomain() + StringPool.SLASH + thumbFilePath);
+                        uMap.put("thumbUrl", thumbUrl.get());
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }, taskExecutor);
 
-            Integer width = null;
-            Integer height = null;
-            if (FileUtil.getFileType(FileUtil.getExtensionName(filename)).equals("pic")) {
-                BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-                width = bufferedImage.getWidth();
-                height = bufferedImage.getHeight();
-                uMap.put("width", width);
-                uMap.put("height", height);
-            }
-            // 上传成功后记录入库
-            this.attachmentLog(file, url, thumbUrl, groupId, filename, width, height);
+
+            String newFilename = filename;
+            CompletableFuture<Void> saveAttachmentFuture = CompletableFuture.runAsync(() -> {
+                // 获取图片宽高
+                Integer width = null;
+                Integer height = null;
+                if (fileType.equals("pic")) {
+                    width = 512;
+                    height = 512;
+                    BufferedImage bufferedImage;
+                    try {
+                        bufferedImage = ImageIO.read(file.getInputStream());
+                        width = bufferedImage.getWidth();
+                        height = bufferedImage.getHeight();
+                        uMap.put("width", width);
+                        uMap.put("height", height);
+                    } catch (Exception e) {
+                        log.error("保存记录异常: {}", e.getMessage());
+                    }
+                }
+                // 上传成功后记录入库
+                this.attachmentLog(file, url, thumbUrl.get(), groupId, newFilename, width, height);
+            }, taskExecutor);
+
+            CompletableFuture.allOf(uploadFileFuture, uploadThumbFuture, saveAttachmentFuture).join();
             return uMap;
         } catch (Exception e) {
             log.error("上传失败", e);
@@ -278,7 +312,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
             throw new ApiException(e.getMessage());
         }
         String base64Img = Base64Encoder.encode(bytes);
-        log.info("图片长度：{}", base64Img.length());
+        log.debug("图片长度：{}", base64Img.length());
         String appId = RequestHolder.getHttpServletRequestHeader("appId");
         Integer loginType = SecurityUtil.getUser().getLoginType();
         // 抖音内容安全检测

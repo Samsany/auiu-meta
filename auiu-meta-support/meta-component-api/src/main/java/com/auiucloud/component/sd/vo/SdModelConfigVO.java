@@ -3,6 +3,8 @@ package com.auiucloud.component.sd.vo;
 import com.auiucloud.component.sd.domain.SdModelConfig;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,16 +27,19 @@ public class SdModelConfigVO implements Serializable {
     /**
      * 所属分类ID
      */
+    @NotNull(message = "请选择模型分类")
     private Long cateId;
 
     /**
      * 名称
      */
+    @NotBlank(message = "请输入模型名称")
     private String name;
 
     /**
      * 预览图
      */
+    @NotBlank(message = "请上传模型缩略图")
     private String pic;
 
     /**
@@ -60,6 +65,12 @@ public class SdModelConfigVO implements Serializable {
     /**
      * 文件路径
      */
+    private String filePath;
+
+    /**
+     * 文件名
+     */
+    @NotBlank(message = "请输入模型文件名")
     private String filename;
 
     /**

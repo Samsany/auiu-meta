@@ -1,8 +1,12 @@
 package com.auiucloud.core.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.lionsoul.ip2region.xdb.Searcher;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
@@ -11,6 +15,8 @@ import java.util.Objects;
 @Slf4j
 public class RegionUtil {
 
+    private static final String JAVA_TEMP_DIR = "java.io.tmpdir";
+
     static Searcher searcher = null;
 
     /*
@@ -18,10 +24,23 @@ public class RegionUtil {
      */
     static {
         try {
-            // 因为jar无法读取文件,复制创建临时文件
             String dbPath = Objects.requireNonNull(RegionUtil.class.getResource("/ip2region/ip2region.xdb")).getPath();
+            File file = new File(dbPath);
             // 1、从 dbPath 加载整个 xdb 到内存。
-            byte[] cBuff = Searcher.loadContentFromFile(dbPath);
+            byte[] cBuff = new byte[(int) file.length()];
+            if (!file.exists()) {
+                String tmpDir = System.getProperties().getProperty(JAVA_TEMP_DIR);
+                dbPath = tmpDir + "ip2region.xdb";
+                file = new File(dbPath);
+                ClassPathResource cpr = new ClassPathResource("ip2region" + File.separator + "ip2region.xdb");
+                InputStream resourceAsStream = cpr.getInputStream();
+                if (resourceAsStream != null) {
+                    FileUtils.copyInputStreamToFile(resourceAsStream, file);
+                }
+                cBuff = Searcher.loadContentFromFile(dbPath);
+
+            }
+
             searcher = Searcher.newWithBuffer(cBuff);
             log.info("bean [{}]", searcher);
         } catch (Exception e) {

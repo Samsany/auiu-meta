@@ -115,11 +115,10 @@ public class SdModelServiceImpl extends ServiceImpl<SdModelMapper, SdModel>
         String jsonStr = JSONUtil.toJsonStr(sdModelConfig);
         sdModel.setConfig(jsonStr);
         String modelHash = model.getSha256();
-        if (StrUtil.isBlank(modelHash) && modelHash.length() < 10) {
-            throw new ApiException("模型Hash值效验错误");
+        if (StrUtil.isNotBlank(modelHash)) {
+            sdModel.setModelHash(StrUtil.sub(modelHash, 0, 10));
         }
-        sdModel.setModelHash(StrUtil.sub(modelHash, 0, 10));
-        sdModel.setModelName(FileUtil.getFileNameNoEx(sdModel.getTitle()));
+        sdModel.setModelName(FileUtil.getFileNameNoEx(sdModel.getFilename()));
         return this.saveOrUpdate(sdModel);
     }
 
@@ -144,7 +143,6 @@ public class SdModelServiceImpl extends ServiceImpl<SdModelMapper, SdModel>
     @Override
     public List<SdModelVO> selectSdModelVOListByCId(Long aiDrawId) {
         // 融合模型
-        List<SdFusionModelVO> sdFusionModelList = sdFusionModelService.selectAllSdFusionModelVOList();
         return Optional.ofNullable(this.list(Wrappers.<SdModel>lambdaQuery()
                         .eq(SdModel::getStatus, CommonConstant.STATUS_NORMAL_VALUE)
                         .eq(SdModel::getCateId, aiDrawId)
@@ -154,7 +152,7 @@ public class SdModelServiceImpl extends ServiceImpl<SdModelMapper, SdModel>
                 ))
                 .orElse(Collections.emptyList())
                 .parallelStream()
-                .map(item -> sdFusionModel2VO(item))
+                .map(this::sdFusionModel2VO)
                 .toList();
     }
 

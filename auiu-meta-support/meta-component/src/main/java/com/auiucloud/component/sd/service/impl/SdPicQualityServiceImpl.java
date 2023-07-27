@@ -47,6 +47,7 @@ public class SdPicQualityServiceImpl extends ServiceImpl<SdPicQualityMapper, SdP
         LambdaQueryWrapper<SdPicQuality> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.ne(ObjectUtil.isNotNull(quality.getId()), SdPicQuality::getId, quality.getId());
         queryWrapper.eq(SdPicQuality::getTitle, quality.getTitle());
+        queryWrapper.eq(SdPicQuality::getModelName, quality.getModelName());
 
         queryWrapper.last("limit 1");
         return this.count(queryWrapper) > 0;

@@ -67,8 +67,8 @@
         left join (select cg.collection_id, cg.is_published, count(cg.collection_id) gallery_num
         from cms_gallery cg
         <where>
-            cg.is_deleted = 0 and cg.approval_status != 2
-            <if test="userId != null and userId != galleryCollection.userId">
+            cg.is_deleted = 0 and cg.approval_status != 2 and cg.status = 2
+            <if test="userId == null or (userId != null and userId != galleryCollection.userId)">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>
         </where>
@@ -78,7 +78,7 @@
             cgc.is_deleted = 0
             and cg2.gallery_num > 0
             and cgc.user_id = #{galleryCollection.userId}
-            <if test="userId != null and userId != galleryCollection.userId">
+            <if test="userId == null or (userId != null and userId != galleryCollection.userId)">
                 and cgc.status = 1
             </if>
         </where>
@@ -88,8 +88,8 @@
         left join (select cg.collection_id, cg.is_published, count(cg.collection_id) gallery_num
         from cms_gallery cg
         <where>
-            cg.is_deleted = 0 and cg.approval_status != 2
-            <if test="userId != null and userId != galleryCollection.userId">
+            cg.is_deleted = 0 and cg.approval_status != 2 and cg.status = 2
+            <if test="userId == null or (userId != null and userId != galleryCollection.userId)">
                 and cg.is_published = 1 and cg.approval_status = 1
             </if>
         </where>
@@ -99,7 +99,7 @@
             cgc.is_deleted = 0
             and cg2.gallery_num > 0
             and cgc.user_id = #{galleryCollection.userId}
-            <if test="userId != null and userId != galleryCollection.userId">
+            <if test="userId == null or (userId != null and userId != galleryCollection.userId)">
                 and cgc.status = 1
             </if>
         </where>
