@@ -31,7 +31,6 @@ public class AuthController {
     private final RedisService redisService;
     private final ISysUserService sysUserService;
 
-    @Log(value = "用户信息", exception = "用户信息请求异常")
     @Operation(summary = "用户信息", description = "用户信息")
     @GetMapping("/user/info")
     public ApiResult<?> getUser() {

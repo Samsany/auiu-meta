@@ -33,7 +33,6 @@ public class GalleryReviewController extends BaseController {
     /**
      * 查询作品审核列表
      */
-    @Log(value = "作品审核", exception = "查询作品审核列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询作品审核列表")
     @Parameters({

@@ -43,7 +43,6 @@ public class SysUserController extends BaseController {
     /**
      * 查询系统用户列表
      */
-    @Log(value = "系统用户", exception = "查询系统用户列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询系统用户列表")
     @Parameters({
@@ -61,7 +60,6 @@ public class SysUserController extends BaseController {
     /**
      * 获取系统用户详情
      */
-    @Log(value = "系统用户", exception = "获取系统用户详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取系统用户详情", description = "根据id获取系统用户详情")
     @Parameters({
@@ -94,7 +92,6 @@ public class SysUserController extends BaseController {
     /**
      * 校验部门名称重复
      */
-    @Log(value = "系统用户", exception = "校验用户账户重复请求异常")
     @PostMapping(value = "/checkUsernameExist")
     @Operation(summary = "校验用户账户重复")
     @Parameters({

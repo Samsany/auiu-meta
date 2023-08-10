@@ -37,7 +37,6 @@ public class SysLogController extends BaseController {
     /**
      * 查询系统日志列表
      */
-    @Log(value = "系统日志", exception = "查询系统日志列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询系统日志列表")
     @Parameters({
@@ -55,7 +54,6 @@ public class SysLogController extends BaseController {
     /**
      * 获取系统日志详情
      */
-    @Log(value = "系统日志", exception = "获取系统日志详情请求异常")
     @GetMapping(value = "/info/{id}")
     @Operation(summary = "获取系统日志详情", description = "根据id获取系统日志详情")
     @Parameters({

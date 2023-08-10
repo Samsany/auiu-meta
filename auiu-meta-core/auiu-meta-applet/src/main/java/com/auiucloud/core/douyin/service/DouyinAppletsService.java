@@ -24,7 +24,7 @@ public interface DouyinAppletsService {
 
     String checkImage(String image);
 
-    String checkImageData(String imageData);
+    String checkBase64Image(String imageData);
 
     DouyinApiResult createOrder();
 

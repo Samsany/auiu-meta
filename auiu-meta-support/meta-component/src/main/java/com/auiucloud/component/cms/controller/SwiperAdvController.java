@@ -30,7 +30,6 @@ public class SwiperAdvController extends BaseController {
     /**
      * 查询轮播广告列表
      */
-    @Log(value = "轮播广告", exception = "查询轮播广告列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询轮播广告列表")
     @Parameters({
@@ -45,7 +44,6 @@ public class SwiperAdvController extends BaseController {
     /**
      * 获取轮播广告详情
      */
-    @Log(value = "轮播广告", exception = "获取轮播广告详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取轮播广告详情", description = "根据id获取轮播广告详情")
     @Parameters({

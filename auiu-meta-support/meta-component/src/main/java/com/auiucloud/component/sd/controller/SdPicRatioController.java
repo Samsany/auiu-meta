@@ -34,7 +34,6 @@ public class SdPicRatioController extends BaseController {
     /**
      * 查询图片比例列表
      */
-    @Log(value = "图片比例", exception = "查询图片比例列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询图片比例列表")
     @Parameters({
@@ -61,7 +60,6 @@ public class SdPicRatioController extends BaseController {
     /**
      * 获取图片比例详情
      */
-    @Log(value = "图片比例", exception = "获取图片比例详情请求异常")
     @GetMapping
     @Operation(summary = "获取图片比例详情", description = "根据id获取图片比例详情")
     @Parameters({

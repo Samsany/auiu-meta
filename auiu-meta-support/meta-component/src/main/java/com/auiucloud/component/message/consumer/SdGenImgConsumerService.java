@@ -1,15 +1,15 @@
 package com.auiucloud.component.message.consumer;
 
 import cn.hutool.json.JSONUtil;
+import com.auiucloud.component.sd.dto.SdImg2ImgConfigDTO;
 import com.auiucloud.component.sd.dto.SdTxt2ImgConfigDTO;
-import com.auiucloud.component.sd.enums.SdDrawEnums;
 import com.auiucloud.component.sd.service.IAiDrawService;
-import com.auiucloud.component.sd.vo.SdWaitQueueVO;
 import com.auiucloud.component.websocket.utils.WebSocketUtil;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.api.ResultCode;
 import com.auiucloud.core.common.constant.CommonConstant;
 import com.auiucloud.core.common.constant.MessageConstant;
+import com.auiucloud.core.common.enums.IBaseEnum;
 import com.auiucloud.core.common.enums.WsMessageEnums;
 import com.auiucloud.core.common.model.WsMsgModel;
 import com.rabbitmq.client.Channel;
@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SdText2ImgConsumerService {
+public class SdGenImgConsumerService {
 
     private final IAiDrawService aiDrawService;
     private final StreamBridge streamBridge;
@@ -45,6 +45,7 @@ public class SdText2ImgConsumerService {
         return message -> {
             // 开始生成图片
             WsMsgModel payload = message.getPayload();
+            String code = payload.getCode();
 
             log.debug("[开始消费文生图消息队列数据...]");
             Channel channel = message.getHeaders().get(AmqpHeaders.CHANNEL, Channel.class);
@@ -53,22 +54,25 @@ public class SdText2ImgConsumerService {
                 try {
                     log.debug("监听者收到消息：{}", message.getPayload());
 
-                    // 获取参数
-                    SdTxt2ImgConfigDTO sdDrawParam = JSONUtil.toBean(JSONUtil.toJsonStr(payload.getContent()), SdTxt2ImgConfigDTO.class);
-                    // 通知当前用户当前队列数量
-                    streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
-                            .code(WsMessageEnums.TypeEnum.SD_TXT2IMG_QUEUE.getValue())
-                            .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
-                            .from(payload.getFrom())
-                            .to(payload.getTo())
-                            .content(ApiResult.data(SdWaitQueueVO.builder()
-                                    .taskId(sdDrawParam.getTaskId())
-                                    .queueMessageCount(CommonConstant.STATUS_NORMAL_VALUE)
-                                    .changeType(SdDrawEnums.QueueChangeType.DECREASE.getValue())
-                                    .build()))
-                            .build());
-                    // 开始生成图片
-                    aiDrawService.sdText2Img(sdDrawParam);
+                    WsMessageEnums.TypeEnum typeEnum = IBaseEnum.getEnumByValue(code, WsMessageEnums.TypeEnum.class);
+
+                    switch (typeEnum) {
+                        case SD_TXT2IMG -> {
+                            // 获取参数
+                            SdTxt2ImgConfigDTO sdDrawParam = JSONUtil.toBean(JSONUtil.toJsonStr(payload.getContent()), SdTxt2ImgConfigDTO.class);
+
+                            // 开始生成图片
+                            aiDrawService.sdText2Img(sdDrawParam);
+                        }
+
+                        case SD_IMG2IMG -> {
+                            // 获取参数
+                            SdImg2ImgConfigDTO sdDrawParam = JSONUtil.toBean(JSONUtil.toJsonStr(payload.getContent()), SdImg2ImgConfigDTO.class);
+                            // 开始生成图片
+                            aiDrawService.sdImg2Img(sdDrawParam);
+                        }
+                    }
+
                     // channel.basicReject(deliveryTag, true);
                 } catch (Exception e) {
                     log.error("[SD文生图异常，失败信息:{}]", e.getMessage());
@@ -76,7 +80,7 @@ public class SdText2ImgConsumerService {
                     apiResult.setMessage(e.getMessage());
                     apiResult.setData(payload.getContent());
                     streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
-                            .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
+                            .code(code)
                             .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
                             .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
                             .to(payload.getFrom())

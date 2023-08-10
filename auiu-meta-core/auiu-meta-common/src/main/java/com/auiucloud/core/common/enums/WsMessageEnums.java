@@ -18,6 +18,7 @@ public class WsMessageEnums {
         SD_START_WORK("sd-start-work", "开始工作..."),
         SD_PROGRESS("sd-progress", "绘画进度条"),
         SD_TXT2IMG("sd-txt2img", "SD文生图"),
+        SD_IMG2IMG("sd-img2img", "SD图生图"),
         SD_TXT2IMG_QUEUE("sd-txt2img-queue", "SD文生图队列"),
         ;
 

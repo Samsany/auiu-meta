@@ -42,7 +42,6 @@ public class SysRoleController extends BaseController {
     /**
      * 查询系统全部角色列表
      */
-    @Log(value = "系统角色", exception = "查询系统全部角色列表请求异常")
     @GetMapping("/allList")
     @Operation(summary = "查询系统全部角色列表")
     public ApiResult<?> allList() {
@@ -52,7 +51,6 @@ public class SysRoleController extends BaseController {
     /**
      * 查询系统角色列表
      */
-    @Log(value = "系统角色", exception = "查询系统角色列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询系统角色列表")
     @Parameters({
@@ -80,7 +78,6 @@ public class SysRoleController extends BaseController {
     /**
      * 获取系统角色详情
      */
-    @Log(value = "系统角色", exception = "获取系统角色详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取系统角色详情", description = "根据id获取系统角色详情")
     @Parameters({

@@ -76,7 +76,7 @@ public class SdModelConfig implements Serializable {
     private List<String> defaultEmbeddings = new ArrayList<>();
 
     /**
-     * 生图可选的采样方式
+     * 生图默认的采样方式
      */
     private String defaultSampler;
 

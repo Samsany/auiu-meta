@@ -318,7 +318,7 @@ public class SysAttachmentServiceImpl extends ServiceImpl<SysAttachmentMapper, S
         // 抖音内容安全检测
         if (loginType.equals(AuthenticationIdentityEnum.DOUYIN_APPLET.getValue())) {
             DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
-            String result = douyinAppletService.checkImageData(base64Img);
+            String result = douyinAppletService.checkBase64Image(base64Img);
             if (StrUtil.isNotBlank(result)) {
                 log.error("内容安全检测: {}", result);
                 // return ApiResult.fail("图片违规,请重新上传");

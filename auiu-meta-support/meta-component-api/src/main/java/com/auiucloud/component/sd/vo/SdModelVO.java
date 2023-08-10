@@ -186,4 +186,10 @@ public class SdModelVO implements Serializable {
     @Builder.Default
     private Boolean selected = Boolean.FALSE;
 
+    /**
+     * 消耗积分
+     */
+    @Builder.Default
+    private Integer consumeIntegral = 0;
+
 }

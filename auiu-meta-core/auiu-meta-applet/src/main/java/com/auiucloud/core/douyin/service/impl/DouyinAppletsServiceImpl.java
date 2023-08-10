@@ -217,7 +217,7 @@ public class DouyinAppletsServiceImpl implements DouyinAppletsService {
     }
 
     @Override
-    public String checkImageData(String imageData) {
+    public String checkBase64Image(String imageData) {
         // 设置请求参数
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("app_id", appletConfig.getAppId());

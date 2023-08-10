@@ -34,7 +34,6 @@ public class SdPicQualityController extends BaseController {
     /**
      * 查询图片质量列表
      */
-    @Log(value = "图片质量", exception = "查询图片质量列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询图片质量列表")
     @Parameters({
@@ -61,7 +60,6 @@ public class SdPicQualityController extends BaseController {
     /**
      * 获取图片质量详情
      */
-    @Log(value = "图片质量", exception = "获取图片质量详情请求异常")
     @GetMapping
     @Operation(summary = "获取图片质量详情", description = "根据id获取图片质量详情")
     @Parameters({

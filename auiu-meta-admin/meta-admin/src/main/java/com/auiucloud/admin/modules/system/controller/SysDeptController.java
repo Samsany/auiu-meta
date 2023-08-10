@@ -38,7 +38,6 @@ public class SysDeptController {
     /**
      * 查询系统部门列表
      */
-    @Log(value = "系统部门", exception = "查询系统部门列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询系统部门列表")
     @Parameters({
@@ -65,7 +64,6 @@ public class SysDeptController {
     /**
      * 获取系统部门详情
      */
-    @Log(value = "系统部门", exception = "获取系统部门详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取系统部门详情", description = "根据id获取系统部门详情")
     @Parameters({
@@ -78,7 +76,6 @@ public class SysDeptController {
     /**
      * 校验部门名称重复
      */
-    @Log(value = "系统部门", exception = "校验部门名称重复请求异常")
     @PostMapping(value = "/checkDeptNameExist")
     @Operation(summary = "校验部门名称重复")
     @Parameters({

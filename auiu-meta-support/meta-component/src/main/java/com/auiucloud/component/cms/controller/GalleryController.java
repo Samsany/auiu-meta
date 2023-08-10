@@ -43,7 +43,6 @@ public class GalleryController {
     /**
      * 分页查询作品列表
      */
-    @Log(value = "作品")
     @GetMapping("/review/page")
     @Operation(summary = "查询作品审核列表")
     @Parameters({
@@ -58,7 +57,6 @@ public class GalleryController {
     /**
      * 分页查询作品列表
      */
-    @Log(value = "作品")
     @GetMapping("/wait-review/count")
     @Operation(summary = "查询作品待审核数")
     public ApiResult<?> galleryWaitReviewCount() {
@@ -68,7 +66,6 @@ public class GalleryController {
     /**
      * 分页查询作品列表
      */
-    @Log(value = "作品")
     @GetMapping("/user/page")
     @Operation(summary = "查询作品列表")
     @Parameters({

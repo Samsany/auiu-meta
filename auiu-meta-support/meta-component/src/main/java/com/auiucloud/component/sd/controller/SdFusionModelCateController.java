@@ -36,7 +36,6 @@ public class SdFusionModelCateController extends BaseController {
     /**
      * 查询融合模型分类列表
      */
-    @Log(value = "融合模型分类", exception = "查询融合模型分类列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询融合模型分类列表")
     @Parameters({
@@ -63,7 +62,6 @@ public class SdFusionModelCateController extends BaseController {
     /**
      * 获取融合模型分类详情
      */
-    @Log(value = "融合模型分类", exception = "获取融合模型分类详情请求异常")
     @GetMapping
     @Operation(summary = "获取融合模型分类详情", description = "根据id获取融合模型分类详情")
     @Parameters({

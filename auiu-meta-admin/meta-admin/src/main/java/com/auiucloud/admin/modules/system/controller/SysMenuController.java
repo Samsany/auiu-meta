@@ -38,7 +38,6 @@ public class SysMenuController extends BaseController {
 
     private final ISysMenuService sysMenuService;
 
-    @Log(value = "路由列表", exception = "菜单树请求异常")
     @Operation(summary = "路由列表", description = "根据用户查询路由列表")
     @GetMapping("/routes")
     public ApiResult<?> dynamicRoutes() {

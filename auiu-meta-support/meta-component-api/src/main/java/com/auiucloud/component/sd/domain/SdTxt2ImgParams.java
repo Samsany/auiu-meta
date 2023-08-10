@@ -132,12 +132,12 @@ public class SdTxt2ImgParams implements Serializable {
     /**
      * 随机种子 -1
      */
-    private Integer seed = -1;
+    private Long seed = -1L;
 
     /**
      * 次级种子
      */
-    private Integer subseed = -1;
+    private Long subseed = -1L;
 
     /**
      * 次级种子强度

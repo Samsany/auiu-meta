@@ -47,7 +47,6 @@ public class GalleryApiController extends BaseController {
     /**
      * 查询作品合集列表
      */
-    @Log(value = "作品")
     @GetMapping("/collection/list")
     @Operation(summary = "查询作品合集列表")
     public ApiResult<?> collectionList(@Parameter(hidden = true) Search search, @Parameter(hidden = true) GalleryCollection galleryCollection) {
@@ -57,7 +56,6 @@ public class GalleryApiController extends BaseController {
     /**
      * 分页查询作品合集列表
      */
-    @Log(value = "作品")
     @GetMapping("/collection/page")
     @Operation(summary = "分页查询用户作品合集列表")
     @Parameters({
@@ -71,7 +69,6 @@ public class GalleryApiController extends BaseController {
     /**
      * 查询作品合集
      */
-    @Log(value = "作品")
     @GetMapping("/collection/info/{collectId}")
     @Operation(summary = "查询作品合集")
     public ApiResult<?> getCollection(@PathVariable Long collectId) {

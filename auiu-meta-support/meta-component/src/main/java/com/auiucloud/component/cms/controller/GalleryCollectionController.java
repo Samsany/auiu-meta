@@ -30,7 +30,6 @@ public class GalleryCollectionController {
     /**
      * 查询作品合集列表
      */
-    @Log(value = "作品合集")
     @GetMapping("/list")
     @Operation(summary = "查询用户作品合集列表")
     public ApiResult<?> collectionList(@Parameter(hidden = true) Search search, @Parameter(hidden = true) GalleryCollection galleryCollection) {
@@ -40,7 +39,6 @@ public class GalleryCollectionController {
     /**
      * 获取作品合集详情
      */
-    @Log(value = "作品合集", exception = "获取作品合集详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取作品合集详情", description = "根据id获取作品合集详情")
     @Parameters({

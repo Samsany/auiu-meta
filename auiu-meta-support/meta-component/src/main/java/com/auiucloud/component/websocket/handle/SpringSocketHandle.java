@@ -57,7 +57,7 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
         Map<String, Object> attributes = session.getAttributes();
         Long userId = (Long) attributes.get("userId");
         // String token = (String) attributes.get("token");
-        log.debug("文本消息：{}", message.getPayload());
+        log.debug("处理WS消息异常：{}", message.getPayload());
         try {
             WsMsgModel payload = JSONUtil.toBean(message.getPayload(), WsMsgModel.class);
             payload.setFrom(String.valueOf(userId));
@@ -84,13 +84,25 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
                                     .to(String.valueOf(userId))
                                     .content(apiResult)
                                     .build());
-                            // session.sendMessage(new TextMessage(
-                            //         WebSocketUtil.buildSendMessageModel(WsMsgModel.builder()
-                            //                 .code(WsMessageEnums.TypeEnum.SD_TXT2IMG.getValue())
-                            //                 .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
-                            //                 .to(String.valueOf(userId))
-                            //                 .content(apiResult)
-                            //                 .build())));
+                        }
+                    }
+                    case SD_IMG2IMG -> {
+                        try {
+                            aiDrawService.sdImg2ImgHandleMessage(session, payload);
+                        } catch (Exception e) {
+                            ApiResult<Object> apiResult = ApiResult.fail(e.getMessage());
+                            apiResult.setData(payload.getContent());
+
+                            if (e.getMessage().equals(ResultCode.USER_ERROR_A0160.getMessage())) {
+                                apiResult = WebSocketUtil.buildSendErrorMessageModel(ResultCode.USER_ERROR_A0160);
+                            }
+                            streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
+                                    .code(WsMessageEnums.TypeEnum.SD_IMG2IMG.getValue())
+                                    .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())
+                                    .from(String.valueOf(CommonConstant.SYSTEM_NODE_ID))
+                                    .to(String.valueOf(userId))
+                                    .content(apiResult)
+                                    .build());
                         }
                     }
                 }
@@ -98,7 +110,7 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
                 throw new ApiException(ResultCode.SERVICE_ERROR_C0125);
             }
         } catch (Exception e) {
-            log.error("处理文本消息异常: {}", e.getMessage());
+            log.error("处理WS消息异常: {}", e.getMessage());
             streamBridge.send(MessageConstant.NOTICE_MESSAGE_OUTPUT, WsMsgModel.builder()
                     .code(WsMessageEnums.TypeEnum.ERROR.getValue())
                     .sendType(WsMessageEnums.SendTypeEnum.USER.getValue())

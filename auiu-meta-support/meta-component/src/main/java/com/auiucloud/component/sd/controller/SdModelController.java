@@ -35,7 +35,6 @@ public class SdModelController extends BaseController {
     /**
      * 查询Ai绘画模型管理列表
      */
-    @Log(value = "Ai绘画模型管理", exception = "查询Ai绘画模型列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询Ai绘画模型列表")
     @Parameters({
@@ -50,7 +49,6 @@ public class SdModelController extends BaseController {
     /**
      * 获取Ai绘画模型管理详情
      */
-    @Log(value = "Ai绘画模型管理", exception = "获取Ai绘画模型详情请求异常")
     @GetMapping
     @Operation(summary = "获取Ai绘画模型详情", description = "根据id获取Ai绘画模型详情")
     @Parameters({

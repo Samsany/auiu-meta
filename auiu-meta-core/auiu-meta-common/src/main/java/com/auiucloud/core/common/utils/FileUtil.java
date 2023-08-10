@@ -169,6 +169,11 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
         return null;
     }
 
+    public static String byteToBase64(byte[] buffer) {
+        String base64 = Base64.encode(buffer);
+        return base64.replaceAll("[\\s*\t\n\r]", "");
+    }
+
     public static String fileToBase64(File file) throws Exception {
         FileInputStream inputFile = new FileInputStream(file);
         String base64;

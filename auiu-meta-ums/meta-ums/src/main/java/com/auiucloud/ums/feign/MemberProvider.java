@@ -40,7 +40,6 @@ public class MemberProvider implements IMemberProvider {
      * @return ApiResult
      */
     @Override
-    @Log(value = "用户ID批量查询用户列表", exception = "用户ID查询用户列表请求失败")
     @Operation(summary = "用户ID批量查询用户列表", description = "用户ID批量查询用户列表")
     public ApiResult<List<MemberInfoVO>> getUserListByIds(List<Long> userIds) {
         return ApiResult.data(memberService.getMemberListByIds(userIds));
@@ -54,7 +53,6 @@ public class MemberProvider implements IMemberProvider {
      */
     @Override
     @GetMapping(ProviderConstant.PROVIDER_USER_USERNAME)
-    @Log(value = "用户名查询用户", exception = "用户名查询用户请求失败")
     @Operation(summary = "用户用户名查询", description = "用户用户名查询")
     public ApiResult<MemberInfoVO> getUserByUsername(String username) {
         return ApiResult.data(memberService.getMemberByUsername(username));
@@ -67,7 +65,6 @@ public class MemberProvider implements IMemberProvider {
      * @return ApiResult
      */
     @Override
-    @Log(value = "用户名查询用户", exception = "用户名查询用户请求失败")
     @Operation(summary = "用户用户名查询", description = "用户用户名查询")
     public ApiResult<UserInfoVO> getSimpleUserById(Long userId) {
         return ApiResult.data(memberService.getSimpleUserById(userId));
@@ -82,7 +79,6 @@ public class MemberProvider implements IMemberProvider {
      */
     @Override
     @GetMapping(ProviderConstant.PROVIDER_USER_OPENID)
-    @Log(value = "社交登录", exception = "社交登录请求失败")
     @Operation(summary = "社交登录", description = "社交登录")
     public ApiResult<MemberInfoVO> getMemberByOpenId2Source(String openId, String source) {
         // 查询用户关联表

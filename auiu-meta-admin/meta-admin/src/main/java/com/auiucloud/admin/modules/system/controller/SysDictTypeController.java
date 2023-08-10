@@ -78,7 +78,6 @@ public class SysDictTypeController extends BaseController {
     /**
      * 新增字典类型
      */
-    @Log(value = "字典类型", exception = "获取系统部门详情请求异常")
     @Operation(summary = "新增字典类型")
     @PostMapping
     public ApiResult<?> add(@Validated @RequestBody SysDictType dict) {

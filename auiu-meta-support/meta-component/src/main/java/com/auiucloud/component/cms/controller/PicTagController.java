@@ -33,7 +33,6 @@ public class PicTagController extends BaseController {
     /**
      * 查询图片标签列表
      */
-    @Log(value = "图片标签", exception = "查询图片标签列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询图片标签列表")
     @Parameters({
@@ -60,7 +59,6 @@ public class PicTagController extends BaseController {
     /**
      * 获取图片标签详情
      */
-    @Log(value = "图片标签", exception = "获取图片标签详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取图片标签详情", description = "根据id获取图片标签详情")
     @Parameters({

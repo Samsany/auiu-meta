@@ -34,7 +34,6 @@ public class SdDrawStyleController extends BaseController {
     /**
      * 查询绘画风格列表
      */
-    @Log(value = "绘画风格", exception = "查询绘画风格列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询绘画风格列表")
     @Parameters({
@@ -62,7 +61,6 @@ public class SdDrawStyleController extends BaseController {
     /**
      * 获取绘画风格详情
      */
-    @Log(value = "绘画风格", exception = "获取绘画风格详情请求异常")
     @GetMapping
     @Operation(summary = "获取绘画风格详情", description = "根据id获取绘画风格详情")
     @Parameters({

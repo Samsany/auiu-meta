@@ -38,7 +38,6 @@ public class SysOauthClientController {
     /**
      * 查询客户端列表
      */
-    @Log(value = "客户端", exception = "查询客户端列表请求异常")
     @GetMapping("/list")
     @Operation(summary = "查询客户端列表")
     @Parameters({
@@ -62,7 +61,6 @@ public class SysOauthClientController {
     /**
      * 获取客户端详情
      */
-    @Log(value = "客户端", exception = "获取客户端详情请求异常")
     @GetMapping(value = "/{id}")
     @Operation(summary = "获取客户端详情", description = "根据id获取客户端详情")
     @Parameters({

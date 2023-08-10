@@ -27,7 +27,6 @@ public class SdConfigController {
      *
      * @return ApiResult
      */
-    @Log(value = "查询SD配置列表")
     @Operation(summary = "查询SD配置列表")
     @GetMapping("/list")
     public ApiResult<?> list() {
@@ -40,7 +39,6 @@ public class SdConfigController {
      * @param configCode 　代码
      * @return ApiResult
      */
-    @Log(value = "查询SD配置")
     @GetMapping("/get-config-by-code")
     @Operation(summary = "查询SD配置")
     public ApiResult<?> getConfigByCode(@RequestParam String configCode) {

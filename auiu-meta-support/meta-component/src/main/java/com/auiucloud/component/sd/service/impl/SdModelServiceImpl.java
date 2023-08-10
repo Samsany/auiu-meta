@@ -119,6 +119,7 @@ public class SdModelServiceImpl extends ServiceImpl<SdModelMapper, SdModel>
             sdModel.setModelHash(StrUtil.sub(modelHash, 0, 10));
         }
         sdModel.setModelName(FileUtil.getFileNameNoEx(sdModel.getFilename()));
+        sdModel.setTitle(sdModel.getFilename());
         return this.saveOrUpdate(sdModel);
     }
 

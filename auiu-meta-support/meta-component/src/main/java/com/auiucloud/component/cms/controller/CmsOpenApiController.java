@@ -56,7 +56,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询轮播广告列表
      */
-    @Log(value = "轮播广告")
     @GetMapping("/swiper-adv/list")
     @Operation(summary = "查询轮播广告列表")
     @Parameters({
@@ -69,7 +68,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询图片标签列表
      */
-    @Log(value = "图片标签")
     @GetMapping("/pic-tag/recommend/list")
     @Operation(summary = "查询图片标签推荐列表")
     public ApiResult<?> picTagRecommendList() {
@@ -79,7 +77,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询图片标签列表
      */
-    @Log(value = "图片标签")
     @GetMapping("/pic-tag/common/list")
     @Operation(summary = "查询图片标签列表")
     @Parameters({
@@ -92,7 +89,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询作品推荐列表
      */
-    @Log(value = "作品")
     @GetMapping("/gallery/recommend/list")
     @Operation(summary = "查询作品每日推荐列表")
     public ApiResult<?> galleryReCommendList() {
@@ -102,7 +98,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 分页查询作品列表
      */
-    @Log(value = "作品")
     @GetMapping("/gallery/page")
     @Operation(summary = "查询作品列表")
     @Parameters({
@@ -117,7 +112,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 分页查询作品合集列表
      */
-    @Log(value = "作品")
     @GetMapping("/gallery-collection/user/home/page")
     @Operation(summary = "分页查询用户作品合集列表")
     @Parameters({
@@ -133,7 +127,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询作品合集详情
      */
-    @Log(value = "作品")
     @GetMapping("/gallery-collection/info/{cateId}")
     @Operation(summary = "查询作品合集详情")
     public ApiResult<?> getGalleryCollection(@PathVariable Long cateId) {
@@ -144,7 +137,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 分页查询作品列表
      */
-    @Log(value = "作品")
     @GetMapping("/gallery/user/home/page")
     @Operation(summary = "查询作品列表")
     @Parameters({
@@ -160,7 +152,6 @@ public class CmsOpenApiController extends BaseController {
     /**
      * 查询作品详情
      */
-    @Log(value = "作品")
     @GetMapping("/gallery/info/{galleryId}")
     @Operation(summary = "查询作品详情")
     @Parameters({

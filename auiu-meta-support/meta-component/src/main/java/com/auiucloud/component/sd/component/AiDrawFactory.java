@@ -2,6 +2,7 @@ package com.auiucloud.component.sd.component;
 
 import com.auiucloud.component.cms.props.SdConstants;
 import com.auiucloud.component.sd.domain.SdDrawResult;
+import com.auiucloud.component.sd.domain.SdImg2ImgParams;
 import com.auiucloud.component.sd.domain.SdTxt2ImgParams;
 import com.auiucloud.component.sd.service.IAiDrawFactoryService;
 import com.auiucloud.component.sd.vo.SdProgressVO;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 
 /**
  * @author dries
@@ -34,6 +34,26 @@ public class AiDrawFactory implements IAiDrawFactoryService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             ResponseEntity<SdDrawResult> post = RestTemplateUtil.post(this.url + SdConstants.text2Img, headers, txt2ImgParams, SdDrawResult.class);
+            return ApiResult.data(post.getBody());
+        } catch (Exception e) {
+            // log.error("====================> {}", e.getMessage());
+            return ApiResult.fail(e.getMessage());
+        }
+    }
+
+    /**
+     * 文生图
+     *
+     * @param img2ImgParams 参数
+     * @return Object
+     */
+    @Override
+    public ApiResult<SdDrawResult> sdImg2Img(SdImg2ImgParams img2ImgParams) {
+        try {
+            // 设置请求头
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            ResponseEntity<SdDrawResult> post = RestTemplateUtil.post(this.url + SdConstants.img2Img, headers, img2ImgParams, SdDrawResult.class);
             return ApiResult.data(post.getBody());
         } catch (Exception e) {
             // log.error("====================> {}", e.getMessage());
