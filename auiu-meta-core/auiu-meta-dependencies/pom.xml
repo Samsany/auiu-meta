@@ -53,8 +53,9 @@
 
         <spring.security.version>2.6.8</spring.security.version>
         <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
+        <spring.authorization.version>1.1.1</spring.authorization.version>
         <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
-        <spring.security.oauth2-jose.version>5.7.1</spring.security.oauth2-jose.version>
+        <spring.security.oauth2-jose.version>6.1.2</spring.security.oauth2-jose.version>
         <justauth.version>1.16.1</justauth.version>
         <justauth-start.version>1.4.0</justauth-start.version>
 
@@ -231,16 +232,23 @@
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
+
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-oauth2</artifactId>
-                <version>${spring.cloud.oauth2.version}</version>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring.authorization.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.springframework.security.oauth.boot</groupId>
-                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>${spring.security.version}</version>
-            </dependency>
+
+            <!--<dependency>-->
+            <!--    <groupId>org.springframework.cloud</groupId>-->
+            <!--    <artifactId>spring-cloud-starter-oauth2</artifactId>-->
+            <!--    <version>${spring.cloud.oauth2.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--    <groupId>org.springframework.security.oauth.boot</groupId>-->
+            <!--    <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+            <!--    <version>${spring.security.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-jose</artifactId>

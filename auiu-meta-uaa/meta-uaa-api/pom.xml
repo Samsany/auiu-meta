@@ -41,11 +41,11 @@
             <artifactId>JustAuth</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>org.springframework.security.oauth.boot</groupId>-->
+        <!--    <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
+        <!--    <scope>provided</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
 </project>
