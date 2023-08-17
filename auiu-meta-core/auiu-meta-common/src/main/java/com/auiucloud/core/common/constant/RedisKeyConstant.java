@@ -7,16 +7,16 @@ package com.auiucloud.core.common.constant;
 public class RedisKeyConstant {
 
     // redis根目录
-    public static final String ROOT_DIR = "meta:";
+    public static final String ROOT_DIR = "meta::";
 
     /**
      * 图形验证码
      */
-    public static final String CAPTCHA_KEY = ROOT_DIR + "captcha:image:";
+    public static final String CAPTCHA_KEY = ROOT_DIR + "captcha::image::";
     /**
      * 短信验证码
      */
-    public static final String SMS_CODE_KEY = ROOT_DIR + "captcha:sms:";
+    public static final String SMS_CODE_KEY = ROOT_DIR + "captcha::sms::";
     /**
      * 此配置需与just-auth state保持一致
      */
@@ -24,26 +24,32 @@ public class RedisKeyConstant {
     /**
      * 抖音小程序 access_token
      */
-    public static final String DOUYIN_APPLET_ACCESS_TOKEN = ROOT_DIR + "system-config:applets:douyin:access_token::";
+    public static final String DOUYIN_APPLET_ACCESS_TOKEN = ROOT_DIR + "system-config::applets::douyin:access_token::";
     /**
      * OSS默认配置
      */
-    public static final String OSS_DEFAULT_CONFIG = ROOT_DIR + "system-config:oss";
+    public static final String OSS_DEFAULT_CONFIG = ROOT_DIR + "system-config::oss";
 
     /**
      * ---- Redis缓存权限规则key 缓存相关 ----
      */
-    public static final String TOKEN_BLACKLIST_PREFIX = ROOT_DIR + "auth-token:blacklist:";
-    public static final String PERMISSION_ROLES_KEY = ROOT_DIR + "auth-perm:roles";
-    public static final String URL_PERM_ROLES_KEY = ROOT_DIR + "auth-perm:url_perm_roles";
-    public static final String BTN_PERM_ROLES_KEY = ROOT_DIR + "auth-perm:btn_perm_roles";
-    public static final String META_PERMISSION_PREFIX = ROOT_DIR + "auth-perm:";
+    public static final String TOKEN_BLACKLIST_PREFIX = ROOT_DIR + "auth-token::blacklist:";
+    public static final String PERMISSION_ROLES_KEY = ROOT_DIR + "auth-perm::roles";
+    public static final String URL_PERM_ROLES_KEY = ROOT_DIR + "auth-perm::url_perm_roles";
+    public static final String BTN_PERM_ROLES_KEY = ROOT_DIR + "auth-perm::btn_perm_roles";
+    public static final String META_PERMISSION_PREFIX = ROOT_DIR + "auth-perm::";
+
+    public static final String CLIENT_DETAILS_KEY = ROOT_DIR + "auth-client";
 
     /**
      * 客户端缓存Key
      */
     public static String cacheClientKey(String clientId) {
-        return ROOT_DIR + "auth-client:" + clientId;
+        return ROOT_DIR + "auth-client::" + clientId;
+    }
+
+    public static String buildTokenKey(String type, String token) {
+        return String.format("%s::%s::%s", ROOT_DIR + "auth-token", type, token);
     }
 
 }

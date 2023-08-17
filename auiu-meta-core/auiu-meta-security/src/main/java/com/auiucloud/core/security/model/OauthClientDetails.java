@@ -3,6 +3,7 @@ package com.auiucloud.core.security.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,8 @@ import java.io.Serializable;
  */
 @Data
 public class OauthClientDetails implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -73,4 +76,5 @@ public class OauthClientDetails implements Serializable {
      */
     @Schema(description = "自动授权")
     private String autoApprove;
+
 }

@@ -1,7 +1,6 @@
 package com.auiucloud.auth.extension.social;
 
 import com.auiucloud.core.common.enums.AuthenticationIdentityEnum;
-import com.auiucloud.core.security.config.SocialConfig;
 import com.auiucloud.core.security.service.MetaUserDetailService;
 import lombok.RequiredArgsConstructor;
 import me.zhyd.oauth.model.AuthUser;

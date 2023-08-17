@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.6</version>
+        <version>3.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -44,20 +44,22 @@
         <java.version>17</java.version>
         <auiu-meta.core.version>1.0.1</auiu-meta.core.version>
 
-        <spring.boot.version>3.0.6</spring.boot.version>
-        <spring.cloud.version>2022.0.2</spring.cloud.version>
-        <alibaba.cloud.version>2022.0.0.0-RC1</alibaba.cloud.version>
-        <nacos-client.version>2.2.2</nacos-client.version>
+        <spring.boot.version>3.1.2</spring.boot.version>
+        <spring.cloud.version>2022.0.4</spring.cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
+        <nacos-client.version>2.2.4</nacos-client.version>
         <seata.version>1.6.1</seata.version>
         <sentinel.version>1.8.2</sentinel.version>
 
-        <spring.security.version>2.6.8</spring.security.version>
-        <spring-boot-admin.version>3.0.2</spring-boot-admin.version>
+
+        <spring-admin-server.version>3.1.4</spring-admin-server.version>
         <spring.authorization.version>1.1.1</spring.authorization.version>
-        <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
-        <spring.security.oauth2-jose.version>6.1.2</spring.security.oauth2-jose.version>
         <justauth.version>1.16.1</justauth.version>
         <justauth-start.version>1.4.0</justauth-start.version>
+
+        <spring.security.version>2.6.8</spring.security.version>
+        <spring.cloud.oauth2.version>2.2.5.RELEASE</spring.cloud.oauth2.version>
+        <spring.security.oauth2-jose.version>6.1.2</spring.security.oauth2-jose.version>
 
         <mysql.version>8.0.32</mysql.version>
         <druid.version>1.2.9</druid.version>
@@ -71,20 +73,20 @@
 
         <easypoi.version>4.4.0</easypoi.version>
         <lombok.version>1.18.26</lombok.version>
-        <hutool.version>5.8.18</hutool.version>
-        <easyexcel.version>3.1.1</easyexcel.version>
+        <hutool.version>5.8.21</hutool.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
         <commons-io.version>2.11.0</commons-io.version>
         <commons-lan3.version>3.12.0</commons-lan3.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <jakarta.validation.version>3.0.2</jakarta.validation.version>
-        <jackson.version>2.15.0</jackson.version>
+        <jackson.version>2.15.2</jackson.version>
         <gson.version>2.10.1</gson.version>
-        <fastjson.version>2.0.29</fastjson.version>
-        <nimbus.version>9.31</nimbus.version>
+        <fastjson.version>2.0.39</fastjson.version>
+        <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
         <reactor-core.version>3.5.5</reactor-core.version>
         <transmittable-thread-local.version>2.14.2</transmittable-thread-local.version>
-        <snakeyaml.version>2.0</snakeyaml.version>
+        <snakeyaml.version>2.1</snakeyaml.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <nashorn-core.version>15.4</nashorn-core.version>
         <aws-java-sdk-s3.version>1.12.423</aws-java-sdk-s3.version>
@@ -213,24 +215,24 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${alibaba.cloud.version}</version>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>${spring-boot-admin.version}</version>
+                <version>${spring-admin-server.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-server-ui</artifactId>
-                <version>${spring-boot-admin.version}</version>
+                <version>${spring-admin-server.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>${spring-boot-admin.version}</version>
+                <version>${spring-admin-server.version}</version>
             </dependency>
 
             <dependency>
@@ -386,7 +388,7 @@
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
-                <version>${nimbus.version}</version>
+                <version>${nimbus-jose-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

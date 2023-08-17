@@ -5,7 +5,6 @@ import com.auiucloud.auth.extension.captcha.ValidateCodeProcessorHolder;
 import com.auiucloud.core.common.api.ApiResult;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.log.annotation.Log;
-import com.auiucloud.core.security.config.SocialConfig;
 import com.xkcoding.justauth.AuthRequestFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

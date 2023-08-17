@@ -11,7 +11,6 @@ import com.auiucloud.core.cloud.props.MetaApiProperties;
 import com.auiucloud.core.common.constant.Oauth2Constant;
 import com.auiucloud.core.redis.core.RedisService;
 import com.auiucloud.core.security.model.MetaUser;
-import com.auiucloud.core.security.service.impl.SingleLoginTokenServices;
 import com.xkcoding.justauth.AuthRequestFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
