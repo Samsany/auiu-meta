@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WsMsgModel implements Serializable {
+public class WsMsgModel<T> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -6300281648506773897L;
@@ -51,6 +51,6 @@ public class WsMsgModel implements Serializable {
     /**
      * 内容
      */
-    private Object content;
+    private T content;
 
 }

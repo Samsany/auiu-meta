@@ -88,7 +88,7 @@ public class MateSentinelInvocationHandler implements InvocationHandler {
 
         Object result;
         InvocationHandlerFactory.MethodHandler methodHandler = this.dispatch.get(method);
-        // only handle by HardCodedTarget
+        // only handler by HardCodedTarget
         if (target instanceof Target.HardCodedTarget) {
             Target.HardCodedTarget hardCodedTarget = (Target.HardCodedTarget) target;
             MethodMetadata methodMetadata = SentinelContractHolder.METADATA_MAP
@@ -105,7 +105,7 @@ public class MateSentinelInvocationHandler implements InvocationHandler {
                     entry = SphU.entry(resourceName, EntryType.OUT, 1, args);
                     result = methodHandler.invoke(args);
                 } catch (Throwable ex) {
-                    // fallback handle
+                    // fallback handler
                     if (!BlockException.isBlockException(ex)) {
                         Tracer.trace(ex);
                     }

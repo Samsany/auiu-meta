@@ -1,4 +1,4 @@
-package com.auiucloud.component.websocket.handle;
+package com.auiucloud.component.websocket.handler;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
@@ -28,7 +28,7 @@ import java.util.Map;
  **/
 @Slf4j
 @RequiredArgsConstructor
-public class SpringSocketHandle extends AbstractWebSocketHandler {
+public class MyWebSocketHandler extends AbstractWebSocketHandler {
 
     private final IAiDrawService aiDrawService;
     private final StreamBridge streamBridge;
@@ -40,7 +40,7 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
         String token = (String) attributes.get(Oauth2Constant.META_USER_TOKEN);
         Long userId = (Long) attributes.get(Oauth2Constant.META_USER_ID);
 
-        log.info("SpringSocketHandle, 收到新的连接: {}, 用户：{}", session.getId(), userId);
+        log.info("MyWebSocketHandler, 收到新的连接: {}, 用户：{}", session.getId(), userId);
         WebSocketUtil.putUser(loginType + StringPool.AT + token, String.valueOf(userId), session);
     }
 
@@ -52,14 +52,13 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
      * @throws Exception 异常信息
      */
     @Override
-    protected void handleTextMessage(@NotNull WebSocketSession session, TextMessage message) throws Exception {
-        // log.info("SpringSocketHandle, 连接：{}, 已收到消息。", session.getId());
+    protected void handleTextMessage(@NotNull WebSocketSession session, @NotNull TextMessage message) throws Exception {
+        // log.info("MyWebSocketHandler, 连接：{}, 已收到消息。", session.getId());
         Map<String, Object> attributes = session.getAttributes();
         Long userId = (Long) attributes.get("userId");
         // String token = (String) attributes.get("token");
-        log.debug("处理WS消息异常：{}", message.getPayload());
         try {
-            WsMsgModel payload = JSONUtil.toBean(message.getPayload(), WsMsgModel.class);
+            WsMsgModel<Object> payload = JSONUtil.toBean(message.getPayload(), WsMsgModel.class, true);
             payload.setFrom(String.valueOf(userId));
             String code = payload.getCode();
             // 获取消息类型
@@ -131,8 +130,8 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
      * @throws Exception
      */
     @Override
-    protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {
-        log.info("SpringSocketHandle, 连接：{}, 已收到二进制消息。", session.getId());
+    protected void handleBinaryMessage(WebSocketSession session, @NotNull BinaryMessage message) throws Exception {
+        log.info("MyWebSocketHandler, 连接：{}, 已收到二进制消息。", session.getId());
         super.handleBinaryMessage(session, message);
     }
 
@@ -144,18 +143,18 @@ public class SpringSocketHandle extends AbstractWebSocketHandler {
      * @throws Exception
      */
     @Override
-    protected void handlePongMessage(WebSocketSession session, PongMessage message) throws Exception {
-        log.info("SpringSocketHandle, 连接：{}, 已收到pong消息。", session.getId());
+    protected void handlePongMessage(WebSocketSession session, @NotNull PongMessage message) throws Exception {
+        log.info("MyWebSocketHandler, 连接：{}, 已收到pong消息。", session.getId());
         super.handlePongMessage(session, message);
     }
 
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    public void handleTransportError(@NotNull WebSocketSession session, @NotNull Throwable exception) throws Exception {
         log.error("WS 连接发生错误");
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
+    public void afterConnectionClosed(WebSocketSession session, @NotNull CloseStatus closeStatus) throws Exception {
         log.info("WS 关闭连接");
         Map<String, Object> attributes = session.getAttributes();
         String loginType = (String) attributes.get(Oauth2Constant.META_LOGIN_TYPE);

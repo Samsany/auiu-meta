@@ -562,37 +562,44 @@ public class AiDrawServiceImpl implements IAiDrawService {
     @Override
     public SdImg2ImgConfigDTO generatorSdImg2ImgParams(SdImg2ImgDTO sdDrawParam) {
 
-        // 参考图
-        String initImage = sdDrawParam.getInitImages().get(0);
-        // MultipartFile multipartFile = FileUtil.base64ToMultipartFile(initImage);
-        byte[] bytes = ThumbUtil.compressPicForScale(initImage.getBytes(), 1024);
-        String base64Img = FileUtil.byteToBase64(bytes);
+        List<String> initImages = sdDrawParam.getInitImages();
+        if (CollUtil.isEmpty(initImages)) {
+            throw new ApiException("请上传参考图");
+        }
 
+        List<CompletableFuture> futureList = new ArrayList<>();
+        // 参考图
         // 校验内容
         String platform = sdDrawParam.getPlatform();
         String[] split = platform.split(StringPool.COLON);
         String clientId = split[0];
         String appId = split[1];
-        CompletableFuture<Void> checkImgFuture = CompletableFuture.runAsync(() -> {
-            boolean checkPrompt = false;
-            try {
-                if (clientId.equalsIgnoreCase(AuthenticationIdentityEnum.DOUYIN_APPLET.name())) {
-                    DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
-                    String result = douyinAppletService.checkBase64Image(base64Img);
-                    if (StrUtil.isNotBlank(result)) {
-                        checkPrompt = true;
+        for (String initImage : initImages) {
+            futureList.add(CompletableFuture.runAsync(() -> {
+                // MultipartFile multipartFile = FileUtil.base64ToMultipartFile(initImage);
+                boolean checkPrompt = false;
+                try {
+                    byte[] bytes = ThumbUtil.compressPicForScale(initImage.getBytes(), 1024);
+                    String base64Img = FileUtil.byteToBase64(bytes);
+                    if (clientId.equalsIgnoreCase(AuthenticationIdentityEnum.DOUYIN_APPLET.name())) {
+                        DouyinAppletsService douyinAppletService = AppletsConfiguration.getDouyinAppletService(appId);
+                        String result = douyinAppletService.checkBase64Image(base64Img);
+                        if (StrUtil.isNotBlank(result)) {
+                            checkPrompt = true;
+                        }
                     }
+                } catch (Exception e) {
+                    log.error("图生图参考图校验异常: {}", e.getMessage());
+                    // throw new ApiException(ResultCode.USER_ERROR_A0500);
                 }
-            } catch (Exception e) {
-                log.error("图生图参考图校验异常: {}", e.getMessage());
-                // throw new ApiException(ResultCode.USER_ERROR_A0500);
-            }
-            if (checkPrompt) {
-                throw new ApiException(ResultCode.USER_ERROR_A0432);
-            }
-        }, taskExecutor);
+                if (checkPrompt) {
+                    throw new ApiException(ResultCode.USER_ERROR_A0432);
+                }
+            }, taskExecutor));
+        }
 
-        CompletableFuture<Void> checkTextFuture = CompletableFuture.runAsync(() -> {
+
+        futureList.add(CompletableFuture.runAsync(() -> {
             boolean checkPrompt = false;
             try {
                 List<Integer> resultList = checkTextContent(clientId, appId, sdDrawParam.getPrompt(), sdDrawParam.getNegativePrompt());
@@ -606,7 +613,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
             if (checkPrompt) {
                 throw new ApiException(ResultCode.USER_ERROR_A0431);
             }
-        }, taskExecutor);
+        }, taskExecutor));
 
         Long userId = sdDrawParam.getUserId();
         // 用户
@@ -617,6 +624,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
             }
             return userInfo;
         }, taskExecutor);
+        futureList.add(getUserFuture);
 
         // 3.获取Model
         CompletableFuture<SdModel> getSdModelFuture = CompletableFuture.supplyAsync(() -> {
@@ -626,8 +634,9 @@ public class AiDrawServiceImpl implements IAiDrawService {
             }
             return model;
         }, taskExecutor);
+        futureList.add(getSdModelFuture);
 
-        CompletableFuture.allOf(checkImgFuture, checkTextFuture, getUserFuture, getSdModelFuture).get();
+        CompletableFuture.allOf(futureList.toArray(new CompletableFuture[0])).join();
         UserInfoVO userInfo = getUserFuture.get();
         SdModel model = getSdModelFuture.get();
         SdModelVO sdModelVO = this.covert2SdModelVO(model);
@@ -655,7 +664,7 @@ public class AiDrawServiceImpl implements IAiDrawService {
             config.setSdDrawType(SdDrawEnums.DrawType.TXT2IMG.getValue());
             config.setTaskId(sdDrawParam.getTaskId());
             config.setConsumeIntegral(consumeIntegral);
-            config.setInit_images(List.of(base64Img));
+            config.setInit_images(initImages);
 
             // 覆盖配置 model、clip_skip、eta、ENSD
             JSONObject obj = JSONUtil.createObj();

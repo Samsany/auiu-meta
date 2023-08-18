@@ -164,7 +164,7 @@ public class JobCompleteHelper {
             // etc
         }
 
-        // handle msg
+        // handler msg
         StringBuffer handleMsg = new StringBuffer();
         if (log.getHandleMsg() != null) {
             handleMsg.append(log.getHandleMsg()).append("<br>");

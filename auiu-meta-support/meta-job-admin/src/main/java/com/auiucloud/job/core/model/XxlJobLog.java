@@ -34,7 +34,7 @@ public class XxlJobLog {
 
     private String triggerMsg;
 
-    // handle info
+    // handler info
     private Date handleTime;
 
     private int handleCode;

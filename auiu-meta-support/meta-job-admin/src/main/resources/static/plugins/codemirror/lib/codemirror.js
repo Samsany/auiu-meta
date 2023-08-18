@@ -5615,7 +5615,7 @@
         // On some browsers, horizontal scrolling will cause redraws to
         // happen before the gutter has been realigned, causing it to
         // wriggle around in a most unseemly way. When we have an
-        // estimated pixels/delta value, we just handle horizontal
+        // estimated pixels/delta value, we just handler horizontal
         // scrolling entirely here. It'll be slightly off from native, but
         // better than glitching out.
         if (dx && !gecko && !presto && wheelPixelsPerUnit != null) {
@@ -6878,7 +6878,7 @@
         rebaseHistArray(hist.undone, from, to, diff);
     }
 
-    // Utility for applying a change to a line by handle or number,
+    // Utility for applying a change to a line by handler or number,
     // returning the number and optionally registering the line as
     // changed.
     function changeLine(doc, handle, changeType, op) {
@@ -7209,7 +7209,7 @@
     // TEXTMARKERS
 
     // Created with markText and setBookmark methods. A TextMarker is a
-    // handle that can be used to clear or find a marked position in the
+    // handler that can be used to clear or find a marked position in the
     // document. Line objects hold arrays (markedSpans) containing
     // {from, to, marker} object pointing to such marker objects, and
     // indicating that such a marker is present on that line. Multiple
@@ -9414,7 +9414,7 @@
         var dragStart = function () {
             return moved = true;
         };
-        // Let the drag handler handle this.
+        // Let the drag handler handler this.
         if (webkit) {
             display.scroller.draggable = true;
         }
@@ -11800,7 +11800,7 @@
             return badPos(found, bad)
         }
 
-        // FIXME this is all really shaky. might handle the few cases it needs to handle, but likely to cause problems
+        // FIXME this is all really shaky. might handler the few cases it needs to handler, but likely to cause problems
         for (var after = topNode.nextSibling, dist = textNode ? textNode.nodeValue.length - offset : 0; after; after = after.nextSibling) {
             found = find(after, after.firstChild, 0);
             if (found) {
@@ -11902,7 +11902,7 @@
             input.focus();
         });
 
-        // Prevent normal selection in the editor (we handle our own)
+        // Prevent normal selection in the editor (we handler our own)
         on(display.lineSpace, "selectstart", function (e) {
             if (!eventInWidget(display, e)) {
                 e_preventDefault(e);

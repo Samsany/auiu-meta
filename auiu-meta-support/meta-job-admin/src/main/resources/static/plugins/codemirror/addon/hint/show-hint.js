@@ -30,7 +30,7 @@
         if (selections.length > 1) return;
         // By default, don't allow completion when something is selected.
         // A hint function can have a `supportsSelection` property to
-        // indicate that it can handle selections.
+        // indicate that it can handler selections.
         if (this.somethingSelected()) {
             if (!options.hint.supportsSelection) return;
             // Don't try with cross-line selections

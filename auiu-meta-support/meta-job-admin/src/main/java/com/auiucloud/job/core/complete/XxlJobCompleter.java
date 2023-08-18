@@ -21,7 +21,7 @@ public class XxlJobCompleter {
     private static Logger logger = LoggerFactory.getLogger(XxlJobCompleter.class);
 
     /**
-     * common fresh handle entrance (limit only once)
+     * common fresh handler entrance (limit only once)
      *
      * @param xxlJobLog
      * @return
@@ -36,7 +36,7 @@ public class XxlJobCompleter {
             xxlJobLog.setHandleMsg(xxlJobLog.getHandleMsg().substring(0, 15000));
         }
 
-        // fresh handle
+        // fresh handler
         return XxlJobAdminConfig.getAdminConfig().getXxlJobLogDao().updateHandleInfo(xxlJobLog);
     }
 
@@ -45,7 +45,7 @@ public class XxlJobCompleter {
      */
     private static void finishJob(XxlJobLog xxlJobLog) {
 
-        // 1、handle success, to trigger child job
+        // 1、handler success, to trigger child job
         String triggerChildMsg = null;
         if (XxlJobContext.HANDLE_CODE_SUCCESS == xxlJobLog.getHandleCode()) {
             XxlJobInfo xxlJobInfo = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao()

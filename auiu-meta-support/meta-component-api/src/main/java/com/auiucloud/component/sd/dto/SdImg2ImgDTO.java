@@ -64,9 +64,9 @@ public class SdImg2ImgDTO implements Serializable {
     /**
      * 生成张数
      */
-    // @Min(value = 1, message = "每次可生成1~4张")
-    // @Max(value = 4, message = "每次可生成1~4张")
-    // private Integer batchSize = 1;
+    @Min(value = 1, message = "每次可生成1~4张")
+    @Max(value = 4, message = "每次可生成1~4张")
+    private Integer batchSize = 1;
 
     /**
      * 提示词
@@ -85,15 +85,15 @@ public class SdImg2ImgDTO implements Serializable {
     /**
      * 采样方法
      */
-    // @Xss(message = "采样方法不能包含脚本字符")
-    // private String samplerName = "Euler a";
+    @Xss(message = "采样方法不能包含脚本字符")
+    private String samplerName = "Euler a";
 
     /**
      * 采样迭代步数
      */
-    // @Min(value = 1, message = "采样迭代步数取值在1~150之间")
-    // @Max(value = 150, message = "采样迭代步数取值在1~150之间")
-    // private Integer steps = 30;
+    @Min(value = 1, message = "采样迭代步数取值在1~150之间")
+    @Max(value = 150, message = "采样迭代步数取值在1~150之间")
+    private Integer steps = 30;
 
     /**
      * 风格

@@ -120,7 +120,7 @@ package com.auiucloud.job.core.old;// package com.auiucloud.job.core.schedule;
 // }
 // public static void invokeAdminService(HttpServletRequest request, HttpServletResponse
 // response) throws IOException, ServletException {
-// servletServerHandler.handle(null, request, response);
+// servletServerHandler.handler(null, request, response);
 // }
 //
 //
